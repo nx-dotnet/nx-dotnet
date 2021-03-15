@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-dotnet",
+  "version": "0.0.1",
+  "generators": {
+    "nx-dotnet": {
+      "factory": "./src/generators/nx-dotnet/generator",
+      "schema": "./src/generators/nx-dotnet/schema.json",
+      "description": "nx-dotnet generator"
+    }
+  }
+}
