@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "nx-dotnet/nx-dotnet": ["packages/nx-dotnet/src/index.ts"]
+      "@nx-dotnet/core": ["packages/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

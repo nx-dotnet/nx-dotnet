@@ -1,61 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "nx-dotnet": {
-      "root": "packages/nx-dotnet",
-      "sourceRoot": "packages/nx-dotnet/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "packages/nx-dotnet/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/packages/nx-dotnet"
-          ],
-          "options": {
-            "jestConfig": "packages/nx-dotnet/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/packages/nx-dotnet",
-            "tsConfig": "packages/nx-dotnet/tsconfig.lib.json",
-            "packageJson": "packages/nx-dotnet/package.json",
-            "main": "packages/nx-dotnet/src/index.ts",
-            "assets": [
-              "packages/nx-dotnet/*.md",
-              {
-                "input": "./packages/nx-dotnet/src",
-                "glob": "**/*.!(ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nx-dotnet",
-                "glob": "generators.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/nx-dotnet",
-                "glob": "executors.json",
-                "output": "."
-              }
-            ]
-          }
-        }
-      }
-    },
     "nx-dotnet-e2e": {
       "projectType": "application",
       "root": "e2e\\nx-dotnet-e2e",
@@ -64,10 +9,59 @@
         "e2e": {
           "executor": "@nrwl/nx-plugin:e2e",
           "options": {
-            "target": "nx-dotnet:build",
-            "npmPackageName": "@nx-dotnet/nx-dotnet",
-            "pluginOutputPath": "dist/packages/nx-dotnet",
+            "target": "core:build",
+            "npmPackageName": "@nx-dotnet/core",
+            "pluginOutputPath": "dist/packages/core",
             "jestConfig": "e2e/nx-dotnet-e2e/jest.config.js"
+          }
+        }
+      }
+    },
+    "core": {
+      "root": "packages/core",
+      "sourceRoot": "packages/core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/core/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/core"],
+          "options": {
+            "jestConfig": "packages/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/core",
+            "tsConfig": "packages/core/tsconfig.lib.json",
+            "packageJson": "packages/core/package.json",
+            "main": "packages/core/src/index.ts",
+            "assets": [
+              "packages/core/*.md",
+              {
+                "input": "./packages/core/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/core",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/core",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
           }
         }
       }

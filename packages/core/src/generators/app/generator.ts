@@ -1,19 +1,20 @@
 import {
   addProjectConfiguration,
   formatFiles,
-  generateFiles,
   getWorkspaceLayout,
   names,
-  offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
 import { NxDotnetGeneratorSchema } from './schema';
+import { execSync } from 'child_process';
 
 interface NormalizedSchema extends NxDotnetGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
+  projectLanguage: string;
+  projectTemplate: string;
   parsedTags: string[];
 }
 
@@ -26,7 +27,7 @@ function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
+  const projectRoot = `${getWorkspaceLayout(host).appsDir}/${projectDirectory}`;
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
@@ -37,37 +38,26 @@ function normalizeOptions(
     projectRoot,
     projectDirectory,
     parsedTags,
+    projectLanguage: options.language,
+    projectTemplate: options.template,
   };
-}
-
-function addFiles(host: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    ...names(options.name),
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
-  };
-  generateFiles(
-    host,
-    path.join(__dirname, 'files'),
-    options.projectRoot,
-    templateOptions
-  );
 }
 
 export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
   const normalizedOptions = normalizeOptions(host, options);
   addProjectConfiguration(host, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
-    projectType: 'library',
+    projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nx-dotnet/nx-dotnet:build',
+        executor: '@nx-dotnet/core:build',
       },
     },
     tags: normalizedOptions.parsedTags,
   });
-  addFiles(host, normalizedOptions);
+  execSync(
+    `dotnet new ${normalizedOptions.template} --language ${normalizedOptions.language} --name ${normalizedOptions.projectName} --output ${normalizedOptions.projectRoot}`
+  );
   await formatFiles(host);
 }

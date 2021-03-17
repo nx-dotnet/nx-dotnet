@@ -25,7 +25,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help"
   },
-  "private": true,
+  "private": false,
   "dependencies": {},
   "devDependencies": {
     "@nrwl/cli": "11.5.1",
@@ -39,6 +39,7 @@
     "@nrwl/workspace": "11.5.1",
     "@types/jest": "26.0.8",
     "@types/node": "12.12.38",
+    "@types/rimraf": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
     "dotenv": "6.2.0",
@@ -46,6 +47,7 @@
     "eslint-config-prettier": "8.1.0",
     "jest": "26.2.2",
     "prettier": "2.2.1",
+    "rimraf": "^3.0.2",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",
     "tslib": "^2.0.0",
