@@ -3,7 +3,7 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import * as rimraf from 'rimraf';
+import { rimraf } from '../shared';
 
 describe('nx-dotnet generator', () => {
   let appTree: Tree;
@@ -18,7 +18,7 @@ describe('nx-dotnet generator', () => {
   });
 
   afterEach(async () => {
-    await new Promise<void>((resolve, reject) => rimraf('apps/test', () => {resolve()}))
+    await rimraf('apps/test');
   })
 
   it('should run successfully', async () => {
