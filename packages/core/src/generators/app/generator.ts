@@ -59,5 +59,6 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
   execSync(
     `dotnet new ${normalizedOptions.template} --language ${normalizedOptions.language} --name ${normalizedOptions.projectName} --output ${normalizedOptions.projectRoot}`
   );
+  
   await formatFiles(host);
 }

@@ -5,7 +5,7 @@ import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
 import { rimraf } from '../shared';
 
-describe('nx-dotnet generator', () => {
+describe('nx-dotnet app generator', () => {
   let appTree: Tree;
   const options: NxDotnetGeneratorSchema = {
     name: 'test',
