@@ -26,7 +26,9 @@
     "help": "nx help"
   },
   "private": false,
-  "dependencies": {},
+  "dependencies": {
+    "rxjs": "^6.6.6"
+  },
   "devDependencies": {
     "@nrwl/cli": "11.5.1",
     "@nrwl/devkit": "11.5.1",

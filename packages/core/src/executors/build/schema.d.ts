@@ -1,1 +1,5 @@
-export interface BuildExecutorSchema {} // eslint-disable-line
+export interface BuildExecutorSchema {
+  framework?: string;
+  versionSuffix: number;
+  configuration: 'Debug' | 'Release';
+}

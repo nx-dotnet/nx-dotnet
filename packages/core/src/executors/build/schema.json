@@ -4,6 +4,21 @@
   "title": "Build executor",
   "description": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "properties": {
+    "framework": {
+      "type": "string",
+       "description": "Compiles for a specific framework. The framework must be defined in the project file"
+    },
+    "versionSuffix": {
+      "type": "number",
+      "description": "Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn't set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash."
+    },
+    "configuration": {
+      "type": "string",
+      "enum": ["Debug", "Release"],
+      "default": "Debug",
+      "description": "Defines the build configuration. The default for most projects is Debug, but you can override the build configuration settings in your project"
+    }
+  },
+  "required": ["configuration"]
 }
