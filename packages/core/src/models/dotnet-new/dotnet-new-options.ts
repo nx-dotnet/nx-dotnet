@@ -1,4 +1,3 @@
-import { cmdLineParameter } from "../cmd-line-parameter";
 import { dotnetNewFlags } from "./dotnet-new-flags";
 
 

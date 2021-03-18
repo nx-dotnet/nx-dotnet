@@ -1,8 +1,5 @@
 import {
-    ProjectConfiguration,
-  readProjectConfiguration,
-  readWorkspaceConfiguration,
-  Tree,
+    ProjectConfiguration
 } from '@nrwl/devkit';
 import { glob } from './glob';
 

@@ -3,12 +3,9 @@ import {
   formatFiles,
   getWorkspaceLayout,
   names,
-  normalizePath,
   Tree,
 } from '@nrwl/devkit';
-import * as path from 'path';
 import { NxDotnetGeneratorSchema } from './schema';
-import { execSync } from 'child_process';
 import { DotNetClient, dotnetFactory } from '../../core';
 import { dotnetNewOptions } from '../../models';
 import { isDryRun } from '../../utils';

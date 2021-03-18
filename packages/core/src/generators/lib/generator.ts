@@ -1,14 +1,10 @@
 import {
   addProjectConfiguration,
   formatFiles,
-  generateFiles,
   getWorkspaceLayout,
   names,
-  offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-import { execSync } from 'child_process';
-import * as path from 'path';
 
 import { DotNetClient, dotnetFactory } from '../../core';
 import { dotnetNewOptions } from '../../models';

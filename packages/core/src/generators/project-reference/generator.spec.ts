@@ -3,13 +3,12 @@ import { Tree, readProjectConfiguration, addProjectConfiguration } from '@nrwl/d
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { rimraf } from '../../utils';
 import { DotNetClient } from '../../core';
 
 describe('nx-dotnet project reference', () => {
   let appTree: Tree;
-  let appId = 'TEST_APP';
-  let libId = 'TEST_LIB';
+  const appId = 'TEST_APP';
+  const libId = 'TEST_LIB';
   let client: DotNetClient;
 
   const options: NxDotnetGeneratorSchema = {
@@ -46,10 +45,6 @@ describe('nx-dotnet project reference', () => {
       tags: []
     });
   });
-
-  // afterEach(async () => {
-  //   await rimraf('libs/test');
-  // });
 
   it('should call dotnet cli', async () => {
     const spy = spyOn(client, 'addProjectReference');

@@ -6,8 +6,7 @@ import {
   cmdLineParameter,
 } from '../models';
 import { getParameterString } from '../utils/parameters';
-import { AllCommands, dotnetCLI } from './dotnet';
-import { dotnetFactory, LoadedCLI } from './dotnet.factory';
+import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI) {}
