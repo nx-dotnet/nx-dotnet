@@ -11,5 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/e2e\core-e2e',
-  testTimeout: 20000
+  testTimeout: 20000,
 };

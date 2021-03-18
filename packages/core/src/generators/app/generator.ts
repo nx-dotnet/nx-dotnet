@@ -10,6 +10,8 @@ import * as path from 'path';
 import { NxDotnetGeneratorSchema } from './schema';
 import { execSync } from 'child_process';
 import { DotNetClient, dotnetFactory } from '../../core';
+import { dotnetNewOptions } from '../../models';
+import { isDryRun } from '../../utils';
 
 interface NormalizedSchema extends NxDotnetGeneratorSchema {
   projectName: string;
@@ -59,7 +61,8 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
     },
     tags: normalizedOptions.parsedTags,
   });
-  dotnetClient.new(normalizedOptions.template, [
+
+  const newParams: dotnetNewOptions = [
     {
       flag: 'language',
       value: normalizedOptions.language,
@@ -72,7 +75,15 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
       flag: 'output',
       value: normalizedOptions.projectRoot,
     },
-  ]);
+  ];
+
+  if (isDryRun()) {
+    newParams.push({
+      flag: 'dryRun'
+    })
+  }
+
+  dotnetClient.new(normalizedOptions.template, newParams);
 
   await formatFiles(host);
 }

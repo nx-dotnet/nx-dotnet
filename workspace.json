@@ -1,22 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "nx-dotnet-e2e": {
-      "projectType": "application",
-      "root": "e2e\\nx-dotnet-e2e",
-      "sourceRoot": "e2e\\nx-dotnet-e2e/src",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "core:build",
-            "npmPackageName": "@nx-dotnet/core",
-            "pluginOutputPath": "dist/packages/core",
-            "jestConfig": "e2e/nx-dotnet-e2e/jest.config.js"
-          }
-        }
-      }
-    },
     "core": {
       "root": "packages/core",
       "sourceRoot": "packages/core/src",
@@ -62,6 +46,22 @@
                 "output": "."
               }
             ]
+          }
+        }
+      }
+    },
+    "core-e2e": {
+      "projectType": "application",
+      "root": "e2e\\core-e2e",
+      "sourceRoot": "e2e\\core-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "core:build",
+            "npmPackageName": "@nx-dotnet/core",
+            "pluginOutputPath": "dist/packages/core",
+            "jestConfig": "e2e/core-e2e/jest.config.js"
           }
         }
       }

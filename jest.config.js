@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/packages/core', '<rootDir>/e2e\\nx-dotnet-e2e'],
+  projects: ['<rootDir>/packages/core', '<rootDir>/e2e\\core-e2e'],
 };

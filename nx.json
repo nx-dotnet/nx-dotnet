@@ -23,12 +23,12 @@
     }
   },
   "projects": {
-    "nx-dotnet-e2e": {
-      "tags": [],
-      "implicitDependencies": ["core"]
-    },
     "core": {
       "tags": []
+    },
+    "core-e2e": {
+      "tags": [],
+      "implicitDependencies": ["core"]
     }
   },
   "workspaceLayout": {
