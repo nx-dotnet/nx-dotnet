@@ -12,6 +12,11 @@
       "factory": "./src/generators/app/generator",
       "schema": "./src/generators/app/schema.json",
       "description": "Generate a new C# project."
+    },
+    "project-reference": {
+      "factory": "./src/generators/project-reference/generator",
+      "schema": "./src/generators/project-reference/schema.json",
+      "description": "Adds a reference from one project to another."
     }
   }
 }

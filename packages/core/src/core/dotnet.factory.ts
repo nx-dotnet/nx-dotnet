@@ -12,13 +12,7 @@ import { execSync } from 'child_process';
  *   }
  * })}
  */
-export function dotnetFactory(): {
-  command: string,
-  info: {
-    global: boolean,
-    version: string | number
-  }
-} {
+export function dotnetFactory(): LoadedCLI {
   // return the command line for local or global dotnet
   // check if dotnet is installed
   try {
@@ -34,3 +28,5 @@ export function dotnetFactory(): {
     throw new Error('dotnet not installed. Local support not yet added https://github.com/AgentEnder/nx-dotnet/issues/3');
   }
 }
+
+export type LoadedCLI = { command: string; info: { global: boolean; version: string | number; }; };

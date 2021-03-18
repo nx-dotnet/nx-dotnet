@@ -3,7 +3,8 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { rimraf } from '../shared';
+import { rimraf } from '../../utils';
+import { promises as fs } from 'fs';
 
 describe('nx-dotnet app generator', () => {
   let appTree: Tree;
@@ -19,11 +20,13 @@ describe('nx-dotnet app generator', () => {
 
   afterEach(async () => {
     await rimraf('apps/test');
-  })
+  });
 
   it('should run successfully', async () => {
     await generator(appTree, options);
     const config = readProjectConfiguration(appTree, 'test');
     expect(config).toBeDefined();
+    const directoryCreated = await (await fs.stat(config.sourceRoot)).isDirectory();
+    expect(directoryCreated).toBeTruthy();
   });
 });

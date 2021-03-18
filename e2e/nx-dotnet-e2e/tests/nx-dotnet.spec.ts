@@ -6,18 +6,26 @@ import {
   uniq,
 } from '@nrwl/nx-plugin/testing';
 describe('nx-dotnet e2e', () => {
-  // it('should create nx-dotnet', async (done) => {
-  //   const plugin = uniq('nx-dotnet');
-  //   ensureNxProject('@nx-dotnet/core', 'dist/packages/nx-dotnet');
-  //   await runNxCommandAsync(
-  //     `generate @nx-dotnet/core:nx-dotnet ${plugin}`
-  //   );
+  it('should create apps, libs, and project references', async (done) => {
+    const testApp = uniq('app');
+    const testLib = uniq('lib');
+    ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+    await runNxCommandAsync(
+      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`
+    );
+    await runNxCommandAsync(
+      `generate @nx-dotnet/core:lib ${testLib} --language="C#" --template="classlib"` 
+    );
 
-  //   const result = await runNxCommandAsync(`build ${plugin}`);
-  //   expect(result.stdout).toContain('Executor ran');
+    const output = await runNxCommandAsync(
+      `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`,
+    )
 
-  //   done();
-  // });
+    // const result = await runNxCommandAsync(`build ${plugin}`);
+    // expect(result.stdout).toContain('Executor ran');
+
+    done();
+  });
 
   // describe('--directory', () => {
   //   it('should create src in the specified directory', async (done) => {

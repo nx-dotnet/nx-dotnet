@@ -3,11 +3,13 @@ import {
   formatFiles,
   getWorkspaceLayout,
   names,
+  normalizePath,
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
 import { NxDotnetGeneratorSchema } from './schema';
 import { execSync } from 'child_process';
+import { DotNetClient, dotnetFactory } from '../../core';
 
 interface NormalizedSchema extends NxDotnetGeneratorSchema {
   projectName: string;
@@ -44,11 +46,12 @@ function normalizeOptions(
 }
 
 export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
+  const dotnetClient = new DotNetClient(dotnetFactory());
   const normalizedOptions = normalizeOptions(host, options);
   addProjectConfiguration(host, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
+    sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
       build: {
         executor: '@nx-dotnet/core:build',
@@ -56,9 +59,20 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
     },
     tags: normalizedOptions.parsedTags,
   });
-  execSync(
-    `dotnet new ${normalizedOptions.template} --language ${normalizedOptions.language} --name ${normalizedOptions.projectName} --output ${normalizedOptions.projectRoot}`
-  );
-  
+  dotnetClient.new(normalizedOptions.template, [
+    {
+      flag: 'language',
+      value: normalizedOptions.language,
+    },
+    {
+      flag: 'name',
+      value: normalizedOptions.name,
+    },
+    {
+      flag: 'output',
+      value: normalizedOptions.projectRoot,
+    },
+  ]);
+
   await formatFiles(host);
 }
