@@ -40,9 +40,6 @@ export async function main(all = false, specific?: string) {
       }
     }
   });
-  if (!isDryRun()) {
-    execSync(`git push`, { stdio: 'inherit' });
-  }
 }
 
 function readProjectConfiguration(projectName) {
