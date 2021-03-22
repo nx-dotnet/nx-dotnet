@@ -7,7 +7,7 @@
   "properties": {
     "framework": {
       "type": "string",
-       "description": "Compiles for a specific framework. The framework must be defined in the project file"
+      "description": "Compiles for a specific framework. The framework must be defined in the project file"
     },
     "versionSuffix": {
       "type": "number",

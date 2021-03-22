@@ -41,12 +41,12 @@ describe('nx-dotnet e2e', () => {
       try {
         checkFilesExist(`apps/${app}`);
       } catch (ex) {
-        exists = false
+        exists = false;
       }
 
       expect(exists).toBeFalsy();
     });
-    
+
     it('should generate an app', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
@@ -59,13 +59,13 @@ describe('nx-dotnet e2e', () => {
       try {
         checkFilesExist(`apps/${app}`);
       } catch (ex) {
-        exists = false
+        exists = false;
       }
 
       expect(exists).toBeTruthy();
     });
   });
-  
+
   describe('nx g lib', () => {
     it('should obey dry-run', async () => {
       const lib = uniq('lib');
@@ -77,12 +77,12 @@ describe('nx-dotnet e2e', () => {
       try {
         checkFilesExist(`libs/${lib}`);
       } catch (ex) {
-        exists = false
+        exists = false;
       }
 
       expect(exists).toBeFalsy();
     });
-    
+
     it('should generate an lib', async () => {
       const lib = uniq('lib');
       await runNxCommandAsync(
@@ -95,7 +95,7 @@ describe('nx-dotnet e2e', () => {
       try {
         checkFilesExist(`libs/${lib}`);
       } catch (ex) {
-        exists = false
+        exists = false;
       }
 
       expect(exists).toBeTruthy();

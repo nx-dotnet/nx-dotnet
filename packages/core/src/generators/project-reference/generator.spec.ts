@@ -1,5 +1,9 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration, addProjectConfiguration } from '@nrwl/devkit';
+import {
+  Tree,
+  readProjectConfiguration,
+  addProjectConfiguration,
+} from '@nrwl/devkit';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
@@ -13,7 +17,7 @@ describe('nx-dotnet project reference', () => {
 
   const options: NxDotnetGeneratorSchema = {
     project: appId,
-    reference: libId
+    reference: libId,
   };
 
   beforeAll(() => {
@@ -21,11 +25,11 @@ describe('nx-dotnet project reference', () => {
       command: '',
       info: {
         global: false,
-        version: 0
-      }
+        version: 0,
+      },
     });
     client.addProjectReference = () => Buffer.from([]);
-  })
+  });
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
@@ -35,28 +39,28 @@ describe('nx-dotnet project reference', () => {
       root: `apps/${appId}`,
       sourceRoot: `apps/${appId}`,
       targets: {},
-      tags: []
+      tags: [],
     });
 
     addProjectConfiguration(appTree, libId, {
       root: `libs/${libId}`,
       sourceRoot: `libs/${libId}`,
       targets: {},
-      tags: []
+      tags: [],
     });
   });
 
   it('should call dotnet cli', async () => {
     const spy = spyOn(client, 'addProjectReference');
     await generator(appTree, options, client);
-    
+
     expect(spy).toHaveBeenCalled();
   });
-  
+
   it('should update dependencies', async () => {
     await generator(appTree, options, client);
-    expect(readProjectConfiguration(appTree, appId).implicitDependencies).toContain(libId);
+    expect(
+      readProjectConfiguration(appTree, appId).implicitDependencies
+    ).toContain(libId);
   });
-
-
 });

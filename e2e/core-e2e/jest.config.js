@@ -10,6 +10,6 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/e2e\core-e2e',
+  coverageDirectory: '../../coverage/e2ecore-e2e',
   testTimeout: 40000,
 };

@@ -3,9 +3,9 @@ name: Run CI checks
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
   NX_BRANCH: ${{ github.event.number }}
@@ -25,7 +25,7 @@ jobs:
           name: dist
           path: |
             dist
-  
+
   test:
     runs-on: ubuntu-latest
     name: Testing affected apps
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected -- --target=test --base=origin/master~1 --parallel
-  
+
   lint:
     runs-on: ubuntu-latest
     name: Linting affected apps
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected -- --target=lint --base=origin/master~1 --parallel
-  
+
   e2e:
     runs-on: ubuntu-latest
     name: E2E testing affected apps
@@ -49,7 +49,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected -- --target=e2e --base=origin/master~1 --parallel
-  
+
   publish:
     runs-on: ubuntu-latest
     needs: build
@@ -61,6 +61,5 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - run: yarn nx workspace-schematic publish-dev
-
-    

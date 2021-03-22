@@ -26,7 +26,9 @@ describe('nx-dotnet app generator', () => {
     await generator(appTree, options);
     const config = readProjectConfiguration(appTree, 'test');
     expect(config).toBeDefined();
-    const directoryCreated = await (await fs.stat(config.sourceRoot)).isDirectory();
+    const directoryCreated = await (
+      await fs.stat(config.sourceRoot)
+    ).isDirectory();
     expect(directoryCreated).toBeTruthy();
   });
 });

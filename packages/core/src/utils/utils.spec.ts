@@ -5,6 +5,6 @@ describe('Utils', () => {
     const before = isDryRun();
     process.argv.push('--dry-run');
     const after = isDryRun();
-    expect({before, after}).toStrictEqual({before: false, after: true})
+    expect({ before, after }).toStrictEqual({ before: false, after: true });
   });
 });

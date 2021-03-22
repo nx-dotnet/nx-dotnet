@@ -1,13 +1,20 @@
 import {
-    formatFiles, readProjectConfiguration, Tree, updateProjectConfiguration
+  formatFiles,
+  readProjectConfiguration,
+  Tree,
+  updateProjectConfiguration,
 } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '../../core';
 import { getProjectFileForNxProject } from '../../utils/workspace';
 import { NxDotnetGeneratorSchema } from './schema';
 
-export default async function (host: Tree, options: NxDotnetGeneratorSchema, client = new DotNetClient(dotnetFactory())) {
-  const hostProject = readProjectConfiguration(host, options.project)
+export default async function (
+  host: Tree,
+  options: NxDotnetGeneratorSchema,
+  client = new DotNetClient(dotnetFactory())
+) {
+  const hostProject = readProjectConfiguration(host, options.project);
   const sourceProject = readProjectConfiguration(host, options.reference);
   const [hostProjectFile, sourceProjectFile] = await Promise.all([
     getProjectFileForNxProject(hostProject),

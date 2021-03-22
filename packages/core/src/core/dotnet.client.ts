@@ -18,7 +18,7 @@ export class DotNetClient {
     }));
     const paramString = getParameterString(cmdParams);
     const cmd = `${this.cliCommand.command} new ${template} ${paramString}`;
-    return execSync(cmd, {stdio: 'inherit'});
+    return execSync(cmd, { stdio: 'inherit' });
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {

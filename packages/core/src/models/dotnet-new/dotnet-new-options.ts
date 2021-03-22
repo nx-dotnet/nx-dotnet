@@ -1,7 +1,6 @@
-import { dotnetNewFlags } from "./dotnet-new-flags";
-
+import { dotnetNewFlags } from './dotnet-new-flags';
 
 export type dotnetNewOptions = {
-    flag: dotnetNewFlags,
-    value?: string
+  flag: dotnetNewFlags;
+  value?: string;
 }[];

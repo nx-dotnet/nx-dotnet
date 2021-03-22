@@ -4,11 +4,10 @@ import { ExecutorContext } from '@nrwl/devkit';
 
 const options: BuildExecutorSchema = {
   configuration: 'Debug',
-  versionSuffix: 1
+  versionSuffix: 1,
 };
 
 describe('Build Executor', () => {
-
   let context: ExecutorContext;
 
   beforeEach(() => {
@@ -23,7 +22,7 @@ describe('Build Executor', () => {
       },
       isVerbose: false,
     };
-  })
+  });
 
   it('can run', async () => {
     const output = await executor(options, context);
