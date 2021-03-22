@@ -1,0 +1,15 @@
+{
+  "cli": "nx",
+  "id": "publish-dev",
+  "type": "object",
+  "properties": {
+    "all": {
+      "type": "boolean",
+      "description": "Should publish all projects?"
+    },
+    "specific": {
+      "type": "string",
+      "description": "Should publish specific project?"
+    }
+  }
+}
