@@ -17,11 +17,11 @@ export default async function (host: Tree, schema: {all?: boolean, specific?: st
       writeJson(host, pkg, {...v, version: newVersion});
       if (!isDryRun()) {
         execSync(`yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version`, {stdio: 'inherit', cwd: outputPath})
-        execSync(`git tag ${x}v${newVersion}`, {stdio: 'inherit'})
+        execSync(`git tag ${x}v${newVersion} && git add ${pkg}`, {stdio: 'inherit'})
       }
     }
   });
   if (!isDryRun()) {
-    execSync(`git add . && git commit -m "chore(): bump version" && git push --tags`)
+    execSync(`git commit -m "chore(): bump version" && git push --tags`)
   }
 }
