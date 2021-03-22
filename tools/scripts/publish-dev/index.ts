@@ -1,20 +1,17 @@
-import {
-  ProjectConfiguration,
-} from '@nrwl/devkit';
+import { ProjectConfiguration } from '@nrwl/devkit';
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import { existsSync, getAffectedProjects, isDryRun } from '../../utils';
 
-export async function main (
- all = false,
- specific?: string
-) {
+export async function main(all = false, specific?: string) {
   const projects = getAffectedProjects(all, specific);
-  
-  const files: {[key: string]: string[]} = {}
-  
+
+  const files: { [key: string]: string[] } = {};
+
   projects.forEach((x, idx) => {
-    const projectConfiguration: ProjectConfiguration = readProjectConfiguration(x);
+    const projectConfiguration: ProjectConfiguration = readProjectConfiguration(
+      x
+    );
     const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
     const pkg = `${projectConfiguration.root}/package.json`;
     if (outputPath && existsSync(pkg)) {
@@ -30,8 +27,13 @@ export async function main (
           `yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version`,
           { stdio: 'inherit', cwd: outputPath }
         );
-        execSync(`git add ${pkg}`, {stdio: ['ignore', 'inherit', 'inherit']});
-        execSync(`git commit ${idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'}`, {stdio: ['ignore', 'inherit', 'inherit']});
+        execSync(`git add ${pkg}`, { stdio: ['ignore', 'inherit', 'inherit'] });
+        execSync(
+          `git commit ${
+            idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'
+          }`,
+          { stdio: ['ignore', 'inherit', 'inherit'] }
+        );
         execSync(`git tag ${x}-v${newVersion}`, {
           stdio: 'inherit',
         });
@@ -39,12 +41,14 @@ export async function main (
     }
   });
   if (!isDryRun()) {
-    execSync(`git push`, {stdio: 'inherit'})
+    execSync(`git push`, { stdio: 'inherit' });
   }
 }
 
 function readProjectConfiguration(projectName) {
-  return JSON.parse(readFileSync('workspace.json').toString())['projects'][projectName];
+  return JSON.parse(readFileSync('workspace.json').toString())['projects'][
+    projectName
+  ];
 }
 
 function readJson(path: string) {
