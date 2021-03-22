@@ -1,12 +1,9 @@
 import {
   Tree,
-  formatFiles,
-  installPackagesTask,
   readProjectConfiguration,
   readJson,
   writeJson,
 } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/workspace/generators';
 import { execSync } from 'child_process';
 import { getAffectedProjects, isDryRun } from '../../utils';
 

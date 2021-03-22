@@ -56,6 +56,10 @@ jobs:
     name: Publish affected apps
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
       - uses: bahmutov/npm-install@v1.4.5
       - name: Download a single artifact
         uses: actions/download-artifact@v2
@@ -63,3 +67,5 @@ jobs:
           name: dist
           path: dist
       - run: yarn nx workspace-schematic publish-dev
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

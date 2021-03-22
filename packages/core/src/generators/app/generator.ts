@@ -55,6 +55,9 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
       build: {
         executor: '@nx-dotnet/core:build',
       },
+      test: {
+        executor: '@nx-dotnet/core:test'
+      }
     },
     tags: normalizedOptions.parsedTags,
   });
