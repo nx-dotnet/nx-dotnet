@@ -54,6 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     name: Publish affected apps
+    steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - name: Download a single artifact
