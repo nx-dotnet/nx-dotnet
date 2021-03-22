@@ -22,6 +22,6 @@ export default async function (host: Tree, schema: {all?: boolean, specific?: st
     }
   });
   if (!isDryRun()) {
-    execSync(`git add . && git commit -m "chore(): bump version" && git push --tags`)
+    execSync(`git add **/package.json && git commit -m "chore(): bump version" && git push --tags`)
   }
 }
