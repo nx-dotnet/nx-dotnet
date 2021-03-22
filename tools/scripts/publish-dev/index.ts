@@ -5,7 +5,7 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import { existsSync, getAffectedProjects, isDryRun } from '../../utils';
 
-export default async function (
+export async function main (
  all = false,
  specific?: string
 ) {
@@ -32,7 +32,7 @@ export default async function (
         );
         execSync(`git add ${pkg}`, {stdio: ['ignore', 'inherit', 'inherit']});
         execSync(`git commit ${idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'}`, {stdio: ['ignore', 'inherit', 'inherit']});
-        execSync(`git tag ${x}v${newVersion} &&`, {
+        execSync(`git tag ${x}-v${newVersion}`, {
           stdio: 'inherit',
         });
       }
@@ -44,7 +44,7 @@ export default async function (
 }
 
 function readProjectConfiguration(projectName) {
-  return JSON.parse(readFileSync('workspace.json').toString())['projects']['projectName'];
+  return JSON.parse(readFileSync('workspace.json').toString())['projects'][projectName];
 }
 
 function readJson(path: string) {
@@ -53,4 +53,8 @@ function readJson(path: string) {
 
 function writeJson(path: string, object) {
   return writeFileSync(path, JSON.stringify(object, null, 2));
+}
+
+if (require.main === module) {
+  main();
 }

@@ -71,7 +71,7 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: yarn nx workspace-schematic publish-dev
+      - run: yarn ts-node tools/scripts/publish-dev
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           
