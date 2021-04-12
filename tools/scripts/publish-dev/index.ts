@@ -18,25 +18,36 @@ export async function main(all = false, specific?: string) {
       files[x] = [];
       const v = readJson(pkg);
       const [prev, tag] = v.version.split('-');
-      const [branch, rev] = tag ? tag.split('.') : ['dev', '0'];
-      const newVersion = `${prev}-${branch}.${parseInt(rev) + 1}`;
-      writeJson(pkg, { ...v, version: newVersion });
-      files[x].push(pkg);
-      if (!isDryRun()) {
-        execSync(
-          `yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version`,
-          { stdio: 'inherit', cwd: outputPath }
-        );
-        execSync(`git add ${pkg}`, { stdio: ['ignore', 'inherit', 'inherit'] });
-        execSync(
-          `git commit ${
-            idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'
-          }`,
-          { stdio: ['ignore', 'inherit', 'inherit'] }
-        );
-        execSync(`git tag ${x}-v${newVersion}`, {
-          stdio: 'inherit',
-        });
+      let [branch, rev] = tag ? tag.split('.') : ['dev', '0'];
+      let succeeded = false;
+      while (!succeeded) {
+        rev = (parseInt(rev) + 1).toString();
+        const newVersion = `${prev}-${branch}.rev`;
+        writeJson(pkg, { ...v, version: newVersion });
+        files[x].push(pkg);
+        if (!isDryRun()) {
+          try {
+            execSync(
+              `yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version`,
+              { stdio: 'inherit', cwd: outputPath }
+            );
+            execSync(`git add ${pkg}`, { stdio: ['ignore', 'inherit', 'inherit'] });
+            execSync(
+              `git commit ${
+                idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'
+              }`,
+              { stdio: ['ignore', 'inherit', 'inherit'] }
+            );
+            execSync(`git tag ${x}-v${newVersion}`, {
+              stdio: 'inherit',
+            });
+            succeeded = true;
+          } catch{
+            succeeded = false;
+          }
+        } else {
+          succeeded = true;
+        }
       }
     }
   });
