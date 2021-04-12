@@ -13,8 +13,12 @@ export default async function runExecutor(
   const nxProjectConfiguration = context.workspace.projects[context.projectName];
   const projectFilePath = await glob(`${nxProjectConfiguration.root}/**/*.*proj`);
 
-  if (!projectFilePath) {
+  if (!projectFilePath || projectFilePath.length === 0) {
     throw new Error('Unable to find a build-able project within project\'s source directory!');
+  }
+
+  if (projectFilePath.length > 1) {
+    throw new Error('More than one build-able projects are contained within the project\'s source directory!')
   }
 
   dotnetClient.build(projectFilePath, Object.keys(options).map((x: dotnetBuildFlags) => ({

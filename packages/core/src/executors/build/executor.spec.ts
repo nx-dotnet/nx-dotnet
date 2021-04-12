@@ -17,14 +17,19 @@ describe('Build Executor', () => {
       targetName: 'build',
       workspace: {
         version: 2,
-        projects: {},
+        projects: {
+          'my-app': {
+            root: 'apps/my-app',
+            targets: {}
+          }
+        },
       },
       isVerbose: false,
     };
   });
 
-  it('can run', async () => {
-    const output = await executor(options, context);
-    expect(output).toBeTruthy();
+  it('detects no dotnet project', () => {
+    const promise = executor(options, context);
+    expect(promise).rejects.toBeCalled();
   });
 });
