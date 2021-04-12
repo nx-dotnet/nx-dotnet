@@ -22,7 +22,7 @@ export async function main(all = false, specific?: string) {
       let succeeded = false;
       while (!succeeded) {
         rev = (parseInt(rev) + 1).toString();
-        const newVersion = `${prev}-${branch}.rev`;
+        const newVersion = `${prev}-${branch}.${rev}`;
         writeJson(pkg, { ...v, version: newVersion });
         files[x].push(pkg);
         if (!isDryRun()) {
