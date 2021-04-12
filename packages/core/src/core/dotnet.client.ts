@@ -12,13 +12,12 @@ export class DotNetClient {
   constructor(private cliCommand: LoadedCLI) {}
 
   new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
-    const cmdParams: cmdLineParameter[] = parameters.map((x) => ({
-      ...x,
-      flag: dotnetNewFlagMap[x.flag] || x.flag,
-    }));
-    const paramString = getParameterString(cmdParams);
+    const paramString = getParameterString(parameters);
     const cmd = `${this.cliCommand.command} new ${template} ${paramString}`;
     return execSync(cmd, { stdio: 'inherit' });
+  }
+
+  build(csproj) {
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
@@ -27,10 +26,3 @@ export class DotNetClient {
     );
   }
 }
-
-export const dotnetNewFlagMap: { [key in dotnetNewFlags]?: string } = {
-  dryRun: 'dry-run',
-  nugetSource: 'nuget-source',
-  updateApply: 'update-apply',
-  updateCheck: 'update-check',
-};

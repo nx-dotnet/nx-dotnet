@@ -77,7 +77,7 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
 
   if (isDryRun()) {
     newParams.push({
-      flag: 'dryRun',
+      flag: 'dry-run',
     });
   }
 

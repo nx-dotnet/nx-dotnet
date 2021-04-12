@@ -1,0 +1,15 @@
+export type dotnetBuildFlags =
+  | 'configuration'
+  | 'framework'
+  | 'force'
+  | 'help'
+  | 'interactive'
+  | 'no-dependencies'
+  | 'no-incremental'
+  | 'no-restore'
+  | 'nologo'
+  | 'output'
+  | 'source'
+  | 'verbosity'
+  | 'version-suffix'
+  | 'runtime';

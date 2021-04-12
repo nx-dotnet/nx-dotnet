@@ -6,7 +6,7 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import { NxDotnetGeneratorSchema } from './schema';
-import { DotNetClient, dotnetFactory } from '../../core';
+import { DotNetClient, dotnetFactory, LoadedCLI } from '../../core';
 import { dotnetNewOptions } from '../../models';
 import { isDryRun } from '../../utils';
 
@@ -44,8 +44,8 @@ function normalizeOptions(
   };
 }
 
-export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
-  const dotnetClient = new DotNetClient(dotnetFactory());
+export default async function (host: Tree, options: NxDotnetGeneratorSchema, cliCommand: LoadedCLI = dotnetFactory()) {
+  const dotnetClient = new DotNetClient(cliCommand);
   const normalizedOptions = normalizeOptions(host, options);
   addProjectConfiguration(host, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
@@ -79,7 +79,7 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
 
   if (isDryRun()) {
     newParams.push({
-      flag: 'dryRun',
+      flag: 'dry-run',
     });
   }
 

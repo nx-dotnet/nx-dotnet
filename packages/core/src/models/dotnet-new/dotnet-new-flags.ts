@@ -1,11 +1,11 @@
 export type dotnetNewFlags =
-  | 'dryRun'
+  | 'dry-run'
   | 'force'
   | 'language'
   | 'name'
   | 'install'
-  | 'nugetSource'
+  | 'nuget-source'
   | 'output'
   | 'uninstall'
-  | 'updateApply'
-  | 'updateCheck';
+  | 'update-apply'
+  | 'update-check';
