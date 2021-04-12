@@ -13,18 +13,23 @@ export class DotNetClient {
   new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
     const paramString = getParameterString(parameters);
     const cmd = `${this.cliCommand.command} new ${template} ${paramString}`;
-    return execSync(cmd, { stdio: 'inherit' });
+    return this.logAndExecute(cmd);
   }
 
   build(project, parameters?: dotnetBuildOptions): Buffer {
     const paramString = getParameterString(parameters);
     const cmd = `${this.cliCommand.command} build ${project} ${paramString}`;
-    return execSync(cmd, {stdio: 'inherit'})
+    return this.logAndExecute(cmd)
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
-    return execSync(
+    return this.logAndExecute(
       `${this.cliCommand.command} add ${hostCsProj} reference ${targetCsProj}`
     );
+  }
+
+  private logAndExecute(cmd): Buffer {
+    console.log(`Executing Command: ${cmd}`);
+    return execSync(cmd, {stdio: 'inherit'});
   }
 }
