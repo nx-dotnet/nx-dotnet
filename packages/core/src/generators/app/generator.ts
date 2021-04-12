@@ -54,6 +54,15 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema, cli
     targets: {
       build: {
         executor: '@nx-dotnet/core:build',
+        options: {
+          output: `dist/${normalizedOptions.name}`,
+          configuration: 'Debug'
+        },
+        configurations: {
+          production: {
+            configuration: 'Release'
+          }
+        }
       },
       test: {
         executor: '@nx-dotnet/core:test',
