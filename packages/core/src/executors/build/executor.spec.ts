@@ -4,7 +4,6 @@ import { ExecutorContext } from '@nrwl/devkit';
 
 const options: BuildExecutorSchema = {
   configuration: 'Debug',
-  versionSuffix: 1,
 };
 
 describe('Build Executor', () => {
@@ -26,6 +25,6 @@ describe('Build Executor', () => {
 
   it('can run', async () => {
     const output = await executor(options, context);
-    // expect(output.success).toBe(true);
+    expect(output).toBeTruthy();
   });
 });

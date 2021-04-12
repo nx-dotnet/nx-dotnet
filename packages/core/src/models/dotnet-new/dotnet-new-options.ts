@@ -2,5 +2,5 @@ import { dotnetNewFlags } from './dotnet-new-flags';
 
 export type dotnetNewOptions = {
   flag: dotnetNewFlags;
-  value?: string;
+  value?: string | boolean;
 }[];

@@ -1,5 +1,5 @@
-export interface BuildExecutorSchema {
-  framework?: string;
-  versionSuffix: number;
-  configuration: 'Debug' | 'Release';
+import { dotnetBuildFlags } from '../../models';
+
+export type BuildExecutorSchema = {
+  [key in dotnetBuildFlags]?: string
 }

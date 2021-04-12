@@ -2,9 +2,8 @@ import { execSync } from 'child_process';
 import {
   dotnetTemplate,
   dotnetNewOptions,
-  dotnetNewFlags,
-  cmdLineParameter,
 } from '../models';
+import { dotnetBuildOptions } from '../models/dotnet-build/dotnet-build-options';
 import { getParameterString } from '../utils/parameters';
 import { LoadedCLI } from './dotnet.factory';
 
@@ -17,7 +16,10 @@ export class DotNetClient {
     return execSync(cmd, { stdio: 'inherit' });
   }
 
-  build(csproj) {
+  build(project, parameters?: dotnetBuildOptions): Buffer {
+    const paramString = getParameterString(parameters);
+    const cmd = `${this.cliCommand.command} build ${project} ${paramString}`;
+    return execSync(cmd, {stdio: 'inherit'})
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {

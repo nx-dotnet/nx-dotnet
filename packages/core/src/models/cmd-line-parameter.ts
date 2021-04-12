@@ -1,4 +1,4 @@
 export type cmdLineParameter = {
   flag: string;
-  value?: string;
+  value?: string | boolean;
 };
