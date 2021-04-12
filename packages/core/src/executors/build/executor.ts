@@ -20,7 +20,7 @@ export default async function runExecutor(
   }
 
   if (projectFilePath.length > 1) {
-    throw new Error(`More than one build-able projects are contained within the project\'s source directory! \r\n ${projectFilePath}`)
+    throw new Error(`More than one build-able projects are contained within the project's source directory! \r\n ${projectFilePath}`)
   }
 
   dotnetClient.build(projectFilePath[0], Object.keys(options).map((x: dotnetBuildFlags) => ({
