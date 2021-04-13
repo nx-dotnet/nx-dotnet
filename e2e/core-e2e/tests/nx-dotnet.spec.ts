@@ -11,15 +11,15 @@ describe('nx-dotnet e2e', () => {
     const testLib = uniq('lib');
     ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
 
-    let output = await runNxCommandAsync(
+    await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`
     );
 
-    output = await runNxCommandAsync(
+    await runNxCommandAsync(
       `generate @nx-dotnet/core:lib ${testLib} --language="C#" --template="classlib"`
     );
 
-    output = await runNxCommandAsync(
+    const output = await runNxCommandAsync(
       `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`
     );
 
