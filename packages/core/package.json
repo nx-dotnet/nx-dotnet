@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/core",
-  "version": "0.0.6-dev.23",
+  "version": "0.0.6-dev.24",
   "main": "src/index.js",
   "generators": "./generators.json",
   "builders": "./executors.json",
