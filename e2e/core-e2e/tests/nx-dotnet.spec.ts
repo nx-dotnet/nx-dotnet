@@ -1,31 +1,29 @@
 import {
   checkFilesExist,
   ensureNxProject,
-  readJson,
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
-
-import { promises as fs, Stats } from 'fs';
 
 describe('nx-dotnet e2e', () => {
   it('should create apps, libs, and project references', async (done) => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
     ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
-    await runNxCommandAsync(
+
+    let output = await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`
     );
-    await runNxCommandAsync(
+
+    output = await runNxCommandAsync(
       `generate @nx-dotnet/core:lib ${testLib} --language="C#" --template="classlib"`
     );
 
-    const output = await runNxCommandAsync(
+    output = await runNxCommandAsync(
       `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`
     );
 
-    // const result = await runNxCommandAsync(`build ${plugin}`);
-    // expect(result.stdout).toContain('Executor ran');
+    expect(output.stdout).toMatch('Reference .* added to the project');
 
     done();
   });
@@ -52,8 +50,6 @@ describe('nx-dotnet e2e', () => {
       await runNxCommandAsync(
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`
       );
-
-      let stats: Stats = null;
 
       let exists = true;
       try {
@@ -88,8 +84,6 @@ describe('nx-dotnet e2e', () => {
       await runNxCommandAsync(
         `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi"`
       );
-
-      let stats: Stats = null;
 
       let exists = true;
       try {

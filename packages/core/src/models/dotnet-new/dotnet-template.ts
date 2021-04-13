@@ -16,7 +16,6 @@ export type dotnetTemplate =
   | 'viewimports'
   | 'proto'
   | 'blazorserver'
-  | 'blazorserver'
   | 'blazorwasm'
   | 'web'
   | 'mvc'
