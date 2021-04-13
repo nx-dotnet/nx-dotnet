@@ -23,7 +23,7 @@ describe('nx-dotnet e2e', () => {
       `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`
     );
 
-    expect(output.stdout).toMatch('Reference .* added to the project');
+    expect(output.stdout).toMatch(/Reference .* added to the project/);
 
     done();
   });
