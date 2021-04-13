@@ -12,9 +12,28 @@ env:
   NX_RUN_GROUP: ${{ github.run_id }}
 
 jobs:
+
+  pre-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 3
+
+      - name: Detect changed directories
+        uses: gagle/nx-check-changes@v1.0.0
+        id: nx-changes
+
+    outputs:
+      changed-dirs: ${{ steps.nx-changes.outputs.changed-dirs }}
+      skip: ${{ steps.nx-changes.outputs.not-affected }}
+
   build:
     runs-on: ubuntu-latest
     name: Building affected apps
+    needs: [pre-run]
+    if: needs.pre-run.outputs.skip == 'false'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
@@ -29,6 +48,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Testing affected apps
+    needs: [pre-run]
+    if: needs.pre-run.outputs.skip == 'false'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
@@ -37,6 +58,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Linting affected apps
+    needs: [pre-run]
+    if: needs.pre-run.outputs.skip == 'false'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
@@ -45,6 +68,8 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     name: E2E testing affected apps
+    needs: [pre-run]
+    if: needs.pre-run.outputs.skip == 'false'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
@@ -52,9 +77,9 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [pre-run, build]
     name: Publish affected apps
-    if: ${{github.ref == 'refs/heads/master'}}
+    if: needs.pre-run.outputs.skip == 'false' && ${{github.ref == 'refs/heads/master'}}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
