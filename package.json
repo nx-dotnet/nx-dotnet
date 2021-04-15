@@ -8,7 +8,6 @@
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
-    "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
@@ -23,7 +22,10 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "e2e-registry": "yarn verdaccio --config ./tools/scripts/local-registry/config.yml --listen 4872",
+    "e2e-tests": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
+    "e2e": "run-p -r e2e-registry \"e2e-tests {@}\" --"
   },
   "private": false,
   "dependencies": {
@@ -51,9 +53,11 @@
     "jest": "26.2.2",
     "prettier": "2.2.1",
     "rimraf": "^3.0.2",
+    "run-p": "*",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",
     "tslib": "^2.0.0",
-    "typescript": "4.1.4"
+    "typescript": "4.1.4",
+    "verdaccio": "^5.0.1"
   }
 }

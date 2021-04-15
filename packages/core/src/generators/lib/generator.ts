@@ -6,8 +6,7 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
-import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
-import { dotnetNewOptions } from '@nx-dotnet/dotnet';
+import { dotnetNewOptions, DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { isDryRun } from '@nx-dotnet/utils';
 import { NxDotnetGeneratorSchema } from './schema';
 
@@ -46,9 +45,8 @@ function normalizeOptions(
   };
 }
 
-export default async function (host: Tree, options: NxDotnetGeneratorSchema) {
+export default async function (host: Tree, options: NxDotnetGeneratorSchema, dotnetClient = new DotNetClient(dotnetFactory())) {
   const normalizedOptions = normalizeOptions(host, options);
-  const dotnetClient = new DotNetClient(dotnetFactory());
   addProjectConfiguration(host, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
     projectType: 'library',
