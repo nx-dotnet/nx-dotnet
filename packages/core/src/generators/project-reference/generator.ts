@@ -5,8 +5,8 @@ import {
   updateProjectConfiguration,
 } from '@nrwl/devkit';
 
-import { DotNetClient, dotnetFactory } from '../../core';
-import { getProjectFileForNxProject } from '../../utils/workspace';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
+import { getProjectFileForNxProject } from '@nx-dotnet/utils';
 import { NxDotnetGeneratorSchema } from './schema';
 
 export default async function (

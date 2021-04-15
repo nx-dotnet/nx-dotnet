@@ -3,7 +3,7 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { rimraf } from '../../utils';
+import { rimraf } from '@nx-dotnet/utils';
 
 describe('nx-dotnet library generator', () => {
   let appTree: Tree;

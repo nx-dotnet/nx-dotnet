@@ -6,9 +6,8 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import { NxDotnetGeneratorSchema } from './schema';
-import { DotNetClient, dotnetFactory, LoadedCLI } from '../../core';
-import { dotnetNewOptions } from '../../models';
-import { isDryRun } from '../../utils';
+import { DotNetClient, dotnetFactory, LoadedCLI, dotnetNewOptions } from '@nx-dotnet/dotnet';
+import { isDryRun } from '@nx-dotnet/utils';
 
 interface NormalizedSchema extends NxDotnetGeneratorSchema {
   projectName: string;

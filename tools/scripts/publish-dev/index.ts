@@ -1,7 +1,7 @@
 import { ProjectConfiguration } from '@nrwl/devkit';
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
-import { existsSync, getAffectedProjects, isDryRun } from '../../utils';
+import { existsSync, getAffectedProjects, isDryRun } from '@nx-dotnet/utils';
 
 export async function main(all = false, specific?: string) {
   const projects = getAffectedProjects(all, specific);

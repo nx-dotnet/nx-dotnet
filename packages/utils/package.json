@@ -1,0 +1,10 @@
+{
+  "name": "@nx-dotnet/utils",
+  "version": "0.0.6-dev.23",
+  "main": "src/index.js",
+  "private": false,
+  "peer-dependencies": {
+    "glob": "^7.1.6",
+    "rimraf": "^3.0.2"
+  }
+}

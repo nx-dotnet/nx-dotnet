@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { promises as fs } from 'fs';
-import { DotNetClient, mockDotnetFactory } from '../../core';
-import { rimraf } from '../../utils';
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { rimraf } from '@nx-dotnet/utils';
 
 import executor from './executor';
 import { BuildExecutorSchema } from './schema';

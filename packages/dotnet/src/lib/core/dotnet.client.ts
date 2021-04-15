@@ -1,10 +1,6 @@
 import { execSync } from 'child_process';
-import {
-  dotnetTemplate,
-  dotnetNewOptions,
-} from '../models';
-import { dotnetBuildOptions } from '../models/dotnet-build/dotnet-build-options';
-import { getParameterString } from '../utils/parameters';
+import { dotnetBuildOptions, dotnetTemplate, dotnetNewOptions } from '../models';
+import { getParameterString } from '@nx-dotnet/utils';
 import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {
@@ -19,7 +15,7 @@ export class DotNetClient {
   build(project, parameters?: dotnetBuildOptions): Buffer {
     const paramString = getParameterString(parameters);
     const cmd = `${this.cliCommand.command} build ${project} ${paramString}`;
-    return this.logAndExecute(cmd)
+    return this.logAndExecute(cmd);
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
@@ -30,6 +26,6 @@ export class DotNetClient {
 
   private logAndExecute(cmd): Buffer {
     console.log(`Executing Command: ${cmd}`);
-    return execSync(cmd, {stdio: 'inherit'});
+    return execSync(cmd, { stdio: 'inherit' });
   }
 }

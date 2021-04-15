@@ -1,9 +1,14 @@
 {
   "npmScope": "nx-dotnet",
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -12,14 +17,35 @@
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
     }
   },
   "projects": {
-    "core": { "tags": [] },
-    "core-e2e": { "tags": [], "implicitDependencies": ["core"] },
-    "typescript": { "tags": [] },
-    "typescript-e2e": { "tags": [], "implicitDependencies": ["typescript"] }
+    "core": {
+      "tags": []
+    },
+    "core-e2e": {
+      "tags": [],
+      "implicitDependencies": ["core"]
+    },
+    "typescript": {
+      "tags": []
+    },
+    "typescript-e2e": {
+      "tags": [],
+      "implicitDependencies": ["typescript"]
+    },
+    "utils": {
+      "tags": []
+    },
+    "dotnet": {
+      "tags": []
+    }
   },
-  "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" }
+  "workspaceLayout": {
+    "appsDir": "e2e",
+    "libsDir": "packages"
+  }
 }

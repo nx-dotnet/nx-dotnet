@@ -7,7 +7,7 @@ import {
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { DotNetClient } from '../../core';
+import { DotNetClient } from '@nx-dotnet/dotnet';
 
 describe('nx-dotnet project reference', () => {
   let appTree: Tree;

@@ -3,7 +3,7 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { rimraf } from '../../utils';
+import { rimraf } from '@nx-dotnet/utils';
 import { promises as fs } from 'fs';
 
 describe('nx-dotnet app generator', () => {
