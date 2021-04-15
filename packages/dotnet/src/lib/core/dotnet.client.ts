@@ -20,9 +20,9 @@ export class DotNetClient {
   
   run(project, parameters?: dotnetRunOptions): ChildProcess {
     const paramString = getParameterString(parameters);
-    const cmd = `${this.cliCommand} run ${project} ${paramString}`
+    const cmd = `run --project ${project} ${paramString}`
     console.log(`Executing Command: ${cmd}`);
-    return spawn(cmd, {stdio: 'inherit'});
+    return spawn(this.cliCommand.command, cmd.split(' '), {stdio: 'inherit'});
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {

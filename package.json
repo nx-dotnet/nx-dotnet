@@ -1,6 +1,6 @@
 {
   "name": "nx-dotnet",
-  "version": "0.0.0",
+  "version": "0.0.6-dev.55",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -23,6 +23,7 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
+    "publish-dev": "ts-node tools/scripts/publish-dev",
     "e2e-registry": "yarn verdaccio --config ./tools/scripts/local-registry/config.yml --listen 4872",
     "e2e-tests": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
     "e2e": "run-p -r e2e-registry \"e2e-tests {@}\" --"

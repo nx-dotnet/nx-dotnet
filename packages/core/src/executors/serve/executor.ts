@@ -2,6 +2,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
+  rimraf,
 } from '@nx-dotnet/utils';
 import { ServeExecutorSchema } from './schema';
 
@@ -11,6 +12,8 @@ import { ChildProcess } from 'node:child_process';
 
 let resolver: (returnObject: { success: boolean }) => void;
 let childProcess: ChildProcess;
+let timeout: NodeJS.Timeout;
+let projectDirectory: string;
 
 export default function dotnetRunExecutor(
   options: ServeExecutorSchema,
@@ -18,31 +21,60 @@ export default function dotnetRunExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory())
 ): Promise<{ success: boolean }> {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
-  const projectFilePath = getProjectFileForNxProject(nxProjectConfiguration);
+  return getProjectFileForNxProject(nxProjectConfiguration).then((project) => {
+    projectDirectory = nxProjectConfiguration.root;
+    
+    return new Promise((resolve) => {
+      resolver = resolve;
 
-  return new Promise((resolve) => {
-    resolver = resolve;
+      const watcher = chockidar
+        .watch(nxProjectConfiguration.root);
+      watcher.unwatch('**/bin/*');
+      watcher.unwatch('**/obj/*');
+      
+      watcher
+        .on('all', (event, path) => {
+          if (path.includes('bin')) {
+            return;
+          }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const watcher = chockidar
-      .watch(nxProjectConfiguration.root)
-      .on('all', () => {
-        if (childProcess) {
-          childProcess.kill(0);
-        }
+          if (timeout) {
+            clearTimeout(timeout);
+          }
 
-        dotnetClient.run(
-          projectFilePath,
-          Object.keys(options).map((x: dotnetRunFlags) => ({
-            flag: x,
-            value: options[x],
-          }))
-        );
-      });
+          timeout = setTimeout(() => {
+            setupDotnetRun(dotnetClient, project, options);
+          }, 1000)
+
+          console.log(event, path)
+        });
+    });
   });
 }
 
-const exitHandler = (options, exitCode = 0) => {
+const setupDotnetRun = (dotnetClient, project, options) => {
+  if (childProcess) {
+    childProcess.kill(0);
+  }
+
+  childProcess = dotnetClient.run(
+    project,
+    Object.keys(options).map((x: dotnetRunFlags) => ({
+      flag: x,
+      value: options[x],
+    }))
+  );
+
+  childProcess.on('error', (err) => {
+    console.error(err);
+  })
+}
+
+const exitHandler = async (options, exitCode = 0) => {
+  console.log('Exit Handler Called');
+
+  rimraf(projectDirectory + '/bin')
+
   if (options.cleanup) console.log('clean');
   if (exitCode || exitCode === 0) console.log(exitCode);
 
@@ -63,7 +95,7 @@ process.on('exit', () => exitHandler({ cleanup: true }));
 process.on('SIGINT', () => exitHandler({ exit: true }));
 
 // catches "kill pid" (for example: nodemon restart)
-process.on('SIGUSR1', () => exitHandler.bind(null, { exit: true }));
+process.on('SIGUSR1', () => exitHandler({ exit: true }));
 process.on('SIGUSR2', () => exitHandler({ exit: true }));
 
 //catches uncaught exceptions

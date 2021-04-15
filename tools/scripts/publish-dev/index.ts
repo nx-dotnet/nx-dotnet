@@ -1,67 +1,57 @@
-import { ProjectConfiguration } from '@nrwl/devkit';
+import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
-import { existsSync, getAffectedProjects, isDryRun } from '../../utils';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 
 const MAX_ATTEMPTS = 5;
 
 export async function main(all = false, specific?: string) {
-  const projects = getAffectedProjects(all, specific);
+  execSync('npx nx run-many --all --target="build" --with-deps', {stdio: 'inherit'});
 
-  const files: { [key: string]: string[] } = {};
+  const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
+  const rootPkg = readJson('package.json');
 
-  projects.forEach((x, idx) => {
-    const projectConfiguration: ProjectConfiguration = readProjectConfiguration(
-      x
-    );
+  const [prev, tag] = rootPkg.version.split('-');
+  let [branch, rev] = tag ? tag.split('.') : ['dev', '0'];
+  rev = (parseInt(rev) + 1).toString();
+  rev = rev === 'NaN' ? '0' : rev;
+  const newVersion = `${prev}-${branch}.${rev}`;
+
+  rootPkg.version = newVersion;
+  writeJson('package.json', rootPkg);
+
+  const projects = Object.values(workspace.projects);
+
+  projects.forEach((projectConfiguration, idx) => {
     const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
-    const pkg = `${projectConfiguration.root}/package.json`;
-    if (outputPath && existsSync(pkg)) {
-      files[x] = [];
-      const v = readJson(pkg);
-      const [prev, tag] = v.version.split('-');
-      let [branch, rev] = tag ? tag.split('.') : ['dev', '0'];
-      let succeeded = false;
-      let attempt = 0;
-      while (!succeeded && attempt < MAX_ATTEMPTS) {
-        rev = (parseInt(rev) + 1).toString();
-        rev = rev === 'NaN' ? '0' : rev;
-        const newVersion = `${prev}-${branch}.${rev}`;
-        writeJson(pkg, { ...v, version: newVersion });
-        files[x].push(pkg);
-        if (!isDryRun()) {
-          try {
-            execSync(
-              `yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version --access public`,
-              { stdio: 'inherit', cwd: outputPath }
-            );
-            execSync(`git add ${pkg}`, { stdio: ['ignore', 'inherit', 'inherit'] });
-            execSync(
-              `git commit ${
-                idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'
-              }`,
-              { stdio: ['ignore', 'inherit', 'inherit'] }
-            );
-            execSync(`git tag ${x}-v${newVersion}`, {
-              stdio: 'inherit',
-            });
-            succeeded = true;
-          } catch (ex) {
-            succeeded = false;
-          }
-        } else {
-          succeeded = true;
-        }
-        attempt++;
-      }
+    const pkgPath = `${projectConfiguration.root}/package.json`;
+    if (!existsSync(pkgPath)) {
+      return;
     }
+    const pkg = readJson(pkgPath);
+    pkg.version = newVersion;
+    Object.entries(pkg.dependencies || {}).forEach(([dep, version]) => {
+      if (dep.includes('@nx-dotnet')) pkg.dependencies[dep] = newVersion;
+    });
+    writeJson(pkgPath, pkg);
+    writeJson(outputPath + '/package.json', pkg);
+    execSync(
+      `npm publish ${outputPath} --tag=dev --new-version=${newVersion} --access=public`,
+      { stdio: 'inherit' }
+    );
+    execSync(`git add ${pkgPath}`, {
+      stdio: ['ignore', 'inherit', 'inherit'],
+    });
+    execSync(
+      `git commit ${
+        idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'
+      }`,
+      { stdio: ['ignore', 'inherit', 'inherit'] }
+    );
   });
-}
 
-function readProjectConfiguration(projectName) {
-  return JSON.parse(readFileSync('workspace.json').toString())['projects'][
-    projectName
-  ];
+  execSync(`git tag v${newVersion}`, {
+    stdio: 'inherit',
+  });
 }
 
 function readJson(path: string) {
