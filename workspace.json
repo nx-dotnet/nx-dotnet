@@ -9,12 +9,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/core/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/core/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/core"],
+          "outputs": [
+            "coverage/packages/core"
+          ],
           "options": {
             "jestConfig": "packages/core/jest.config.js",
             "passWithNoTests": true
@@ -22,7 +26,9 @@
         },
         "build": {
           "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/core",
             "tsConfig": "packages/core/tsconfig.lib.json",
@@ -62,6 +68,77 @@
             "npmPackageName": "@nx-dotnet/core",
             "pluginOutputPath": "dist/packages/core",
             "jestConfig": "e2e/core-e2e/jest.config.js"
+          }
+        }
+      }
+    },
+    "typescript": {
+      "root": "packages/typescript",
+      "sourceRoot": "packages/typescript/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/typescript/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/typescript"
+          ],
+          "options": {
+            "jestConfig": "packages/typescript/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/typescript",
+            "tsConfig": "packages/typescript/tsconfig.lib.json",
+            "packageJson": "packages/typescript/package.json",
+            "main": "packages/typescript/src/index.ts",
+            "assets": [
+              "packages/typescript/*.md",
+              {
+                "input": "./packages/typescript/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/typescript",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/typescript",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "typescript-e2e": {
+      "projectType": "application",
+      "root": "e2e\\typescript-e2e",
+      "sourceRoot": "e2e\\typescript-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "typescript:build",
+            "npmPackageName": "@nx-dotnet/typescript",
+            "pluginOutputPath": "dist/packages/typescript",
+            "jestConfig": "e2e/typescript-e2e/jest.config.js"
           }
         }
       }
