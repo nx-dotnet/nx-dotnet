@@ -28,7 +28,11 @@ describe('Build Executor', () => {
           'my-app': {
             root: `${root}/apps/my-app`,
             sourceRoot: `${root}/apps/my-app`,
-            targets: {},
+            targets: {
+              build: {
+                executor: '@nx-dotnet/core:build'
+              }
+            },
           },
         },
       },

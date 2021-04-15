@@ -47,8 +47,7 @@ export async function main(all = false, specific?: string) {
             });
             succeeded = true;
           } catch (ex) {
-            console.log(ex)
-            succeeded = true;
+            succeeded = false;
           }
         } else {
           succeeded = true;
