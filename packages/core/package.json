@@ -1,12 +1,12 @@
 {
   "name": "@nx-dotnet/core",
-  "version": "0.0.6-dev.33",
+  "version": "0.0.6-dev.34",
   "main": "src/index.js",
   "generators": "./generators.json",
   "builders": "./executors.json",
   "private": false,
   "dependencies": {
-    "glob": "0.0.6-dev.33",
-    "rimraf": "0.0.6-dev.33"
+    "glob": "0.0.6-dev.34",
+    "rimraf": "0.0.6-dev.34"
   }
 }
