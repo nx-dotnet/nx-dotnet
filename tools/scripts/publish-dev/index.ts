@@ -32,7 +32,7 @@ export async function main(all = false, specific?: string) {
         if (!isDryRun()) {
           try {
             execSync(
-              `yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version`,
+              `yarn publish --tag dev --new-version ${newVersion} --no-git-tag-version --access public`,
               { stdio: 'inherit', cwd: outputPath }
             );
             execSync(`git add ${pkg}`, { stdio: ['ignore', 'inherit', 'inherit'] });

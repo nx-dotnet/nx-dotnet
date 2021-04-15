@@ -15,7 +15,7 @@ export function findProjectFileInPath(path: string): Promise<string> {
     `Looking for project files at '${path}/**/*.*proj'`
   );
 
-  const results = glob(
+  return glob(
     `${path}/**/*.*proj`
   ).then(results => {
     if (!results || results.length === 0) {
@@ -31,8 +31,4 @@ export function findProjectFileInPath(path: string): Promise<string> {
     }
     return results[0];
   });
-
-
-
-  return results;
 }
