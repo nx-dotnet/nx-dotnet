@@ -4,6 +4,6 @@ import { findProjectFileInPath } from './glob';
 export async function getProjectFileForNxProject(
   project: ProjectConfiguration
 ) {
-  const srcDirectory = project.sourceRoot;
+  const srcDirectory = project.root;
   return findProjectFileInPath(srcDirectory);
 }

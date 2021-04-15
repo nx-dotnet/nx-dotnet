@@ -3,6 +3,8 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import { existsSync, getAffectedProjects, isDryRun } from '../../utils';
 
+const MAX_ATTEMPTS = 5;
+
 export async function main(all = false, specific?: string) {
   const projects = getAffectedProjects(all, specific);
 
@@ -20,7 +22,8 @@ export async function main(all = false, specific?: string) {
       const [prev, tag] = v.version.split('-');
       let [branch, rev] = tag ? tag.split('.') : ['dev', '0'];
       let succeeded = false;
-      while (!succeeded) {
+      let attempt = 0;
+      while (!succeeded && attempt < MAX_ATTEMPTS) {
         rev = (parseInt(rev) + 1).toString();
         rev = rev === 'NaN' ? '0' : rev;
         const newVersion = `${prev}-${branch}.${rev}`;
@@ -43,12 +46,14 @@ export async function main(all = false, specific?: string) {
               stdio: 'inherit',
             });
             succeeded = true;
-          } catch{
-            succeeded = false;
+          } catch (ex) {
+            console.log(ex)
+            succeeded = true;
           }
         } else {
           succeeded = true;
         }
+        attempt++;
       }
     }
   });

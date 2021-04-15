@@ -13,7 +13,7 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory())
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
-  const projectFilePath = getProjectFileForNxProject(nxProjectConfiguration);  
+  const projectFilePath = await getProjectFileForNxProject(nxProjectConfiguration);  
 
   dotnetClient.build(
     projectFilePath[0],

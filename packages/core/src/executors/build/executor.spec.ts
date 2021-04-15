@@ -27,6 +27,7 @@ describe('Build Executor', () => {
         projects: {
           'my-app': {
             root: `${root}/apps/my-app`,
+            sourceRoot: `${root}/apps/my-app`,
             targets: {},
           },
         },
