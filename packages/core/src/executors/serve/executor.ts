@@ -38,8 +38,6 @@ export default function dotnetRunExecutor(
           }))
         );
       });
-
-    console.log(watcher.listeners('all').length)
   });
 }
 
