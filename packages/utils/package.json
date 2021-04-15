@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/utils",
-  "version": "0.0.6-dev.25",
+  "version": "0.0.6-dev.26",
   "main": "src/index.js",
   "private": false,
   "peer-dependencies": {
