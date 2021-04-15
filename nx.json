@@ -16,10 +16,26 @@
     }
   },
   "projects": {
-    "core": { "tags": [] },
-    "core-e2e": { "tags": [], "implicitDependencies": ["core"] },
-    "typescript": { "tags": [] },
-    "typescript-e2e": { "tags": [], "implicitDependencies": ["typescript"] }
+    "core": {
+      "tags": []
+    },
+    "core-e2e": {
+      "tags": [],
+      "implicitDependencies": ["core"]
+    },
+    "typescript": {
+      "tags": []
+    },
+    "typescript-e2e": {
+      "tags": [],
+      "implicitDependencies": ["typescript"]
+    },
+    "utils": {
+      "tags": []
+    },
+    "dotnet": {
+      "tags": []
+    }
   },
   "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" }
 }

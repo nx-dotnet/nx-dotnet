@@ -3,10 +3,12 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { rimraf } from '../../utils';
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
 describe('nx-dotnet library generator', () => {
   let appTree: Tree;
+  let dotnetClient: DotNetClient;
+
   const options: NxDotnetGeneratorSchema = {
     name: 'test',
     language: 'C#',
@@ -15,14 +17,11 @@ describe('nx-dotnet library generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
-  });
-
-  afterEach(async () => {
-    await rimraf('libs/test');
+    dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, options);
+    await generator(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, 'test');
     expect(config).toBeDefined();
   });

@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=build --base=origin/master~1 --parallel
+      - run: yarn nx affected -- --target=build --base=origin/master~1 --parallel --with-deps
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -68,24 +68,30 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     name: E2E testing affected apps
-    needs: [pre-run]
+    needs: [pre-run, build]
     if: needs.pre-run.outputs.skip == 'false'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=e2e --base=origin/master~1 --parallel
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - run: yarn e2e
 
   publish:
     runs-on: ubuntu-latest
     needs: [pre-run, build]
     name: Publish affected apps
-    if: needs.pre-run.outputs.skip == 'false' && ${{github.ref == 'refs/heads/master'}}
+    if: ${{needs.pre-run.outputs.skip == 'false' && github.ref == 'refs/heads/master' && github.event == 'push'}}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           registry-url: 'https://registry.npmjs.org'
-          always-auth: true
+          always-auth: true,
+          node-version: 14
       - uses: bahmutov/npm-install@v1.4.5
       - name: Git Config
         run: |

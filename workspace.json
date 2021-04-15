@@ -66,7 +66,7 @@
           "options": {
             "target": "core:build",
             "npmPackageName": "@nx-dotnet/core",
-            "pluginOutputPath": "dist/packages/core",
+            "pluginOutputPath": "dist\\packages\\core",
             "jestConfig": "e2e/core-e2e/jest.config.js"
           }
         }
@@ -139,6 +139,74 @@
             "npmPackageName": "@nx-dotnet/typescript",
             "pluginOutputPath": "dist/packages/typescript",
             "jestConfig": "e2e/typescript-e2e/jest.config.js"
+          }
+        }
+      }
+    },
+    "utils": {
+      "root": "packages/utils",
+      "sourceRoot": "packages/utils/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/utils/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/utils"],
+          "options": {
+            "jestConfig": "packages/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/utils",
+            "tsConfig": "packages/utils/tsconfig.lib.json",
+            "packageJson": "packages/utils/package.json",
+            "main": "packages/utils/src/index.ts",
+            "assets": [
+              "packages/utils/*.md"
+            ]
+          }
+        }
+      }
+    },
+    "dotnet": {
+      "root": "packages/dotnet",
+      "sourceRoot": "packages/dotnet/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/dotnet/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/dotnet"],
+          "options": {
+            "jestConfig": "packages/dotnet/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/dotnet",
+            "tsConfig": "packages/dotnet/tsconfig.lib.json",
+            "packageJson": "packages/dotnet/package.json",
+            "main": "packages/dotnet/src/index.ts",
+            "assets": [
+              "packages/dotnet/*.md"
+            ]
           }
         }
       }
