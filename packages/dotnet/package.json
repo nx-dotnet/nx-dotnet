@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/dotnet",
-  "version": "0.0.6-dev.34",
+  "version": "0.0.6-dev.35",
   "private": false,
   "peerDependencies": {
     "glob": "^7.1.6",
