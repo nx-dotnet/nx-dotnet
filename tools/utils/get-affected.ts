@@ -10,7 +10,7 @@ export function getAffectedProjects(
   } else {
     const cmd = `npx nx print-affected ${
       all ? '--all' : '--base="HEAD~1"'
-    } --target="build" --select=tasks.target.project`;
+    } --target="build" --select=tasks.target.project --with-deps`;
 
     console.log(cmd);
 

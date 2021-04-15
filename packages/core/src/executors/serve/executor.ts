@@ -23,6 +23,7 @@ export default function dotnetRunExecutor(
   return new Promise((resolve) => {
     resolver = resolve;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const watcher = chockidar
       .watch(nxProjectConfiguration.root)
       .on('all', () => {
