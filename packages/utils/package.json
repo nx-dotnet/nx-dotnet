@@ -1,9 +1,9 @@
 {
   "name": "@nx-dotnet/utils",
-  "version": "0.0.6-dev.43",
+  "version": "0.0.6-dev.44",
   "main": "src/index.js",
   "private": false,
-  "peer-dependencies": {
+  "peerDependencies": {
     "glob": "^7.1.6",
     "rimraf": "^3.0.2"
   }
