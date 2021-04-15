@@ -73,7 +73,7 @@ const setupDotnetRun = (dotnetClient, project, options) => {
 const exitHandler = async (options, exitCode = 0) => {
   console.log('Exit Handler Called');
 
-  rimraf(projectDirectory + '/bin')
+  await rimraf(projectDirectory + '/bin')
 
   if (options.cleanup) console.log('clean');
   if (exitCode || exitCode === 0) console.log(exitCode);
