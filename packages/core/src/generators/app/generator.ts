@@ -63,6 +63,17 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema, dot
           }
         }
       },
+      serve: {
+        executor: '@nx-dotnet/core:build',
+        options: {
+          configuration: 'Debug'
+        },
+        configurations: {
+          production: {
+            configuration: 'Release'
+          }
+        }
+      },
       test: {
         executor: '@nx-dotnet/core:test',
       },
