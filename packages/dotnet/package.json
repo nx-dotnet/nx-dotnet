@@ -2,5 +2,8 @@
   "name": "@nx-dotnet/dotnet",
   "private": false,
   "main": "src/index.js",
-  "dependencies": {}
+  "dependencies": {
+    "@nx-dotnet/utils": "0.1.0-dev.5"
+  },
+  "version": "0.1.0-dev.5"
 }
