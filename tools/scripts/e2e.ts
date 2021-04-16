@@ -124,7 +124,7 @@ async function runTest() {
     } else {
       execSync(`yarn nx run-many --target=e2e --all`, {
         stdio: [0, 1, 2],
-        env: { ...process.env, NX_TERMINAL_CAPTURE_STDERR: 'true' },
+        env: { ...process.env, NX_TERMINAL_CAPTURE_STDERR: 'true', NPM_CONFIG_REGISTRY: 'http://localhost:4872', YARN_REGISTRY: 'http://localhost:4872' },
       });
     }
     cleanUp(0);
