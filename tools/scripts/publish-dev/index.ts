@@ -2,6 +2,7 @@ import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
 import { execSync } from 'child_process';
 import { existsSync, readJson } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
+import { PublishAll } from '../publish-all';
 
 export function main(all = false, specific?: string) {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
@@ -13,19 +14,8 @@ export function main(all = false, specific?: string) {
   rev = rev === 'NaN' ? '0' : rev;
   const newVersion = `${prev}-${branch}.${rev}`;
   console.log('New Version: ', { newVersion, prev, tag, branch, rev });
-  PatchPackageVersions(newVersion);
-
-  const projects = Object.values(workspace.projects);
-
-  projects.forEach((projectConfiguration, idx) => {
-    const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
-    if (existsSync(`${outputPath}/package.json`)) {
-      execSync(
-        `npm publish ${outputPath} --tag=dev --new-version=${newVersion} --access=public`,
-        { stdio: 'inherit' }
-      );
-    }
-  });
+  
+  PublishAll(newVersion, branch);
 }
 
 if (require.main === module) {
