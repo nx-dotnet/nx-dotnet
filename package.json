@@ -1,6 +1,5 @@
 {
   "name": "nx-dotnet",
-  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -30,8 +29,10 @@
   },
   "private": false,
   "dependencies": {
+    "@types/xmldoc": "^1.1.5",
     "chokidar": "^2.1.8",
-    "rxjs": "^6.6.6"
+    "rxjs": "^6.6.6",
+    "xmldoc": "^1.1.2"
   },
   "devDependencies": {
     "@nrwl/cli": "12.0.1",
