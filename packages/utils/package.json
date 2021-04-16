@@ -6,5 +6,5 @@
     "glob": "^7.1.6",
     "rimraf": "^3.0.2"
   },
-  "version": "1.0"
+  "version": "1.0-dev.1"
 }

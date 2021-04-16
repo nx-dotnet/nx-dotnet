@@ -3,5 +3,5 @@
   "private": false,
   "main": "src/index.js",
   "dependencies": {},
-  "version": "1.0"
+  "version": "1.0-dev.1"
 }
