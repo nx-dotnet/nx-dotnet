@@ -1,12 +1,9 @@
 import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { readJson, writeJson } from '../../utils';
+import { readJson } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
 
-const MAX_ATTEMPTS = 5;
-
-export async function main(all = false, specific?: string) {
+export function main(all = false, specific?: string) {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
 
@@ -15,7 +12,8 @@ export async function main(all = false, specific?: string) {
   rev = (parseInt(rev) + 1).toString();
   rev = rev === 'NaN' ? '0' : rev;
   const newVersion = `${prev}-${branch}.${rev}`;
-
+  console.log('New Version: ', { newVersion, prev, tag, branch, rev });
+  console.log(`${newVersion} | ${prev} | ${tag} | ${branch} | ${rev} `);
   PatchPackageVersions(newVersion);
 
   const projects = Object.values(workspace.projects);

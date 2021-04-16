@@ -48,6 +48,6 @@ export function PatchPackageVersions(newVersion: string) {
   });
 }
 
-if (require.main) {
+if (require.main === module) {
     PatchPackageVersions(process.argv[2])
 }

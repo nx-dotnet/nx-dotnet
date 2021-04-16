@@ -2,7 +2,6 @@ import {
   formatFiles,
   readProjectConfiguration,
   Tree,
-  updateProjectConfiguration,
 } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
@@ -28,10 +27,6 @@ export default async function (
   }
 
   client.addProjectReference(hostProjectFile, sourceProjectFile);
-
-  hostProject.implicitDependencies = hostProject.implicitDependencies || [];
-  hostProject.implicitDependencies.push(options.reference);
-  updateProjectConfiguration(host, options.project, hostProject);
 
   await formatFiles(host);
 }
