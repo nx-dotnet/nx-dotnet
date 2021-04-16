@@ -1,6 +1,17 @@
-import { statSync } from 'fs';
+import { readFileSync, statSync, writeFileSync } from 'fs';
 
 export function existsSync(path: string) {
-  const results = statSync(path);
+  let results 
+  try {
+    results = statSync(path);
+  } catch {}
   return !!results;
+}
+
+export function readJson(path: string) {
+  return JSON.parse(readFileSync(path).toString());
+}
+
+export function writeJson(path: string, object) {
+  return writeFileSync(path, JSON.stringify(object, null, 2));
 }
