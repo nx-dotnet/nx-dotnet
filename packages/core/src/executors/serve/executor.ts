@@ -29,12 +29,10 @@ export default function dotnetRunExecutor(
 
       const watcher = chockidar
         .watch(nxProjectConfiguration.root);
-      watcher.unwatch('**/bin/*');
-      watcher.unwatch('**/obj/*');
       
       watcher
         .on('all', (event, path) => {
-          if (path.includes('bin')) {
+          if (path.includes('bin') || path.includes('obj')) {
             return;
           }
 
@@ -54,7 +52,7 @@ export default function dotnetRunExecutor(
 
 const setupDotnetRun = (dotnetClient, project, options) => {
   if (childProcess) {
-    childProcess.kill(0);
+    childProcess.kill('SIGTERM');
   }
 
   childProcess = dotnetClient.run(
@@ -74,12 +72,13 @@ const exitHandler = async (options, exitCode = 0) => {
   console.log('Exit Handler Called');
 
   await rimraf(projectDirectory + '/bin')
+  await rimraf(projectDirectory + '/obj')
 
   if (options.cleanup) console.log('clean');
   if (exitCode || exitCode === 0) console.log(exitCode);
 
   if (childProcess) {
-    childProcess.kill(0);
+    childProcess.kill('SIGINT');
   }
   resolver({
     success: true,

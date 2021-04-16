@@ -17,6 +17,11 @@
       "factory": "./src/generators/project-reference/generator",
       "schema": "./src/generators/project-reference/schema.json",
       "description": "Adds a reference from one project to another."
+    },
+    "init": {
+      "factory": "./src/generators/init/generator",
+      "schema": "./src/generators/init/schema.json",
+      "description": "init generator"
     }
   }
 }
