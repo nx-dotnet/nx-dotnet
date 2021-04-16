@@ -1,24 +1,10 @@
 import {
-  addProjectConfiguration,
   formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-import * as path from 'path';
-import { InitGeneratorSchema } from './schema';
-
-interface NormalizedSchema extends InitGeneratorSchema {
-  projectName: string;
-  projectRoot: string;
-  projectDirectory: string;
-  parsedTags: string[];
-}
 
 export default async function (host: Tree) {
-  const initialized = host.isFile('nx-dotnet.config.ts');
+  const initialized = host.isFile('nx-dotnet.config.js');
   if (initialized) {
     return;
   }
