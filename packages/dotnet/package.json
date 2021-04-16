@@ -3,7 +3,7 @@
   "private": false,
   "main": "src/index.js",
   "dependencies": {
-    "@nx-dotnet/utils": "0.1.0-dev.3"
+    "@nx-dotnet/utils": "0.1.0-dev.4"
   },
-  "version": "0.1.0-dev.3"
+  "version": "0.1.0-dev.4"
 }
