@@ -16,7 +16,7 @@ export default async function runExecutor(
   const projectFilePath = await getProjectFileForNxProject(nxProjectConfiguration);  
 
   dotnetClient.build(
-    projectFilePath[0],
+    projectFilePath,
     Object.keys(options).map((x: dotnetBuildFlags) => ({
       flag: x,
       value: options[x],
