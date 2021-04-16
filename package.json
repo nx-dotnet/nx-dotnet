@@ -1,6 +1,6 @@
 {
   "name": "nx-dotnet",
-  "version": "0.0.6-dev.60",
+  "version": "0.0.6-dev.63",
   "license": "MIT",
   "scripts": {
     "nx": "nx",

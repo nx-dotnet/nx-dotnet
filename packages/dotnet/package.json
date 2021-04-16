@@ -1,10 +1,7 @@
 {
   "name": "@nx-dotnet/dotnet",
-  "version": "0.0.6-dev.62",
+  "version": "0.0.6-dev.63",
   "private": false,
   "main": "src/index.js",
-  "peerDependencies": {
-    "glob": "^7.1.6",
-    "rimraf": "^3.0.2"
-  }
+  "dependencies": {}
 }

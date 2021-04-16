@@ -8,7 +8,7 @@ import {
 import { NxDotnetGeneratorSchema } from './schema';
 import { DotNetClient, dotnetFactory, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { isDryRun } from '@nx-dotnet/utils';
-
+import initSchematic from '../init/generator';
 interface NormalizedSchema extends NxDotnetGeneratorSchema {
   projectName: string;
   projectRoot: string;
@@ -45,6 +45,8 @@ function normalizeOptions(
 }
 
 export default async function (host: Tree, options: NxDotnetGeneratorSchema, dotnetClient = new DotNetClient(dotnetFactory())) {
+  initSchematic(host);
+
   const normalizedOptions = normalizeOptions(host, options);
   addProjectConfiguration(host, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,

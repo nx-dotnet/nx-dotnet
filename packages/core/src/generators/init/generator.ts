@@ -14,56 +14,31 @@ interface NormalizedSchema extends InitGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
-  parsedTags: string[]
+  parsedTags: string[];
 }
 
-function normalizeOptions(host: Tree, options: InitGeneratorSchema): NormalizedSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
+export default async function (host: Tree) {
+  const initialized = host.isFile('nx-dotnet.config.ts');
+  if (initialized) {
+    return;
+  }
 
-  return {
-    ...options,
-    projectName,
-    projectRoot,
-    projectDirectory,
-    parsedTags,
-  };
+  host.write('nx-dotnet.config.js', `
+module.exports = {
+
 }
-
-function addFiles(host: Tree, options: NormalizedSchema) {
-    const templateOptions = {
-      ...options,
-      ...names(options.name),
-      offsetFromRoot: offsetFromRoot(options.projectRoot),
-      template: ''
-    };
-    generateFiles(host, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
-}
-
-export default async function (host: Tree, options: InitGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(host, options);
-  addProjectConfiguration(
-    host,
-    normalizedOptions.projectName,
-    {
-      root: normalizedOptions.projectRoot,
-      projectType: 'library',
-      sourceRoot: `${normalizedOptions.projectRoot}/src`,
-      targets: {
-        build: {
-          executor: "@nx-dotnet/init:build",
-        },
-      },
-      tags: normalizedOptions.parsedTags,
-    }
-  );
-  addFiles(host, normalizedOptions);
+  `)
+  updateGitIgnore(host);
   await formatFiles(host);
+}
+
+function updateGitIgnore(host: Tree) {
+  if (!host.isFile('.gitignore')) {
+    console.warn('Not updating gitignore because it is not present!')
+    return;
+  }
+  let lines = host.read('.gitignore').toString();
+  lines += '\r\napps/*/bin'
+  lines += '\r\napps/*/obj'
+  host.write('.gitignore', lines);
 }
