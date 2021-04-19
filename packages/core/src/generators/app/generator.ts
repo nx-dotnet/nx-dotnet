@@ -4,6 +4,8 @@ import {
 
 import { DotNetClient, dotnetFactory, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { isDryRun } from '@nx-dotnet/utils';
+import { GetBuildExecutorConfiguration } from '../../models/build-executor-configuration';
+import { GetServeExecutorConfig } from '../../models/serve-executor-configuration';
 
 import initSchematic from '../init/generator';
 import { NxDotnetGeneratorSchema } from './schema';
@@ -52,32 +54,8 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema, dot
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
-      build: {
-        executor: '@nx-dotnet/core:build',
-        options: {
-          output: `dist/${normalizedOptions.name}`,
-          configuration: 'Debug'
-        },
-        configurations: {
-          production: {
-            configuration: 'Release'
-          }
-        }
-      },
-      serve: {
-        executor: '@nx-dotnet/core:serve',
-        options: {
-          configuration: 'Debug'
-        },
-        configurations: {
-          production: {
-            configuration: 'Release'
-          }
-        }
-      },
-      test: {
-        executor: '@nx-dotnet/core:test',
-      },
+      build: GetBuildExecutorConfiguration(normalizeOptions.name),
+      serve: GetServeExecutorConfig()
     },
     tags: normalizedOptions.parsedTags,
   });
