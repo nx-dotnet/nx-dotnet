@@ -22,6 +22,7 @@ export default function dotnetRunExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory())
 ): Promise<{ success: boolean }> {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
+  
   return getProjectFileForNxProject(nxProjectConfiguration).then((project) => {
     projectDirectory = nxProjectConfiguration.root;
     
@@ -31,8 +32,8 @@ export default function dotnetRunExecutor(
       const watcher = chockidar
         .watch(nxProjectConfiguration.root);
 
-      getDependantProjectsForNxProject(context.projectName, context.workspace, (project) => {
-        watcher.add(project.root)
+      getDependantProjectsForNxProject(context.projectName, context.workspace, (dependency) => {
+        watcher.add(dependency.root)
       });
       
       watcher

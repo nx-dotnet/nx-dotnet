@@ -1,5 +1,4 @@
 import * as _glob from 'glob';
-import { sync as globSync } from 'glob';
 
 /**
  * Wraps the glob package in a promise api.
@@ -35,7 +34,7 @@ export function findProjectFileInPath(path: string): Promise<string> {
 export function findProjectFileInPathSync(path: string): string {
   console.log(`Looking for project files at '${path}/**/*.*proj'`);
 
-  const results = globSync(`${path}/**/*.*proj`);
+  const results = _glob.sync(`${path}/**/*.*proj`);
   if (!results || results.length === 0) {
     throw new Error(
       "Unable to find a build-able project within project's source directory!"
