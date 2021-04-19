@@ -4,7 +4,7 @@ import { existsSync } from 'fs';
 import { readJson } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
 
-export function PublishAll(version, tag) {
+export function PublishAll(version, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
   PatchPackageVersions(version);
@@ -24,5 +24,5 @@ export function PublishAll(version, tag) {
 }
 
 if (require.main === module) {
-  PublishAll(process.argv[2], process.argv[3]);
+  PublishAll(process.argv[2], process.argv[3] || 'latest');
 }
