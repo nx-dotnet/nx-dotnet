@@ -1,5 +1,6 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import {
+  getDependantProjectsForNxProject,
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
   rimraf,
@@ -29,6 +30,10 @@ export default function dotnetRunExecutor(
 
       const watcher = chockidar
         .watch(nxProjectConfiguration.root);
+
+      getDependantProjectsForNxProject(context.projectName, context.workspace, (project) => {
+        watcher.add(project.root)
+      });
       
       watcher
         .on('all', (event, path) => {
