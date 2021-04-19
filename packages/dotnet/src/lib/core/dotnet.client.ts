@@ -1,6 +1,8 @@
 import { ChildProcess, execSync, spawn } from 'child_process';
-import { dotnetBuildOptions, dotnetTemplate, dotnetNewOptions, dotnetRunOptions } from '../models';
+
 import { getParameterString } from '@nx-dotnet/utils';
+
+import { dotnetBuildOptions, dotnetNewOptions, dotnetRunOptions, dotnetTemplate } from '../models';
 import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {

@@ -1,11 +1,9 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { BuildExecutorSchema } from './schema';
+
+import { dotnetBuildFlags, DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { getExecutedProjectConfiguration, getProjectFileForNxProject } from '@nx-dotnet/utils';
-import {
-  dotnetBuildFlags,
-  DotNetClient,
-  dotnetFactory,
-} from '@nx-dotnet/dotnet';
+
+import { BuildExecutorSchema } from './schema';
 
 export default async function runExecutor(
   options: BuildExecutorSchema,

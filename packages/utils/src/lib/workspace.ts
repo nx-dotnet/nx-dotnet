@@ -1,8 +1,10 @@
 import { ProjectConfiguration, WorkspaceJsonConfiguration } from '@nrwl/devkit';
-import { findProjectFileInPath, findProjectFileInPathSync } from './glob';
+
 import { readFileSync } from 'fs';
-import { XmlDocument, XmlElement } from 'xmldoc';
 import { isAbsolute, resolve } from 'path';
+import { XmlDocument, XmlElement } from 'xmldoc';
+
+import { findProjectFileInPath, findProjectFileInPathSync } from './glob';
 
 export async function getProjectFileForNxProject(
   project: ProjectConfiguration

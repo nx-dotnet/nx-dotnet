@@ -1,13 +1,10 @@
 import {
-  addProjectConfiguration,
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
+    addProjectConfiguration, formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot,
+    Tree
 } from '@nrwl/devkit';
+
 import * as path from 'path';
+
 import { TypescriptGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends TypescriptGeneratorSchema {

@@ -7,5 +7,28 @@
     "nuget",
     "webapi",
     "writefile"
-  ]
+  ],
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "regex": "^[@]nrwl",
+      "orderLevel": 10
+    },
+    {
+      "regex": "^[@]nx-dotnet",
+      "orderLevel": 25
+    },
+    {
+      "type": "importMember",
+      "regex": "^$",
+      "orderLevel": 30
+    },
+    {
+      "regex": "^[\\.\\.]",
+      "orderLevel": 35
+    },
+    {
+      "regex": "^[\\.]",
+      "orderLevel": 40
+    }
+  ],
 }

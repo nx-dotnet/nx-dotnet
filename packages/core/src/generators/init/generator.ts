@@ -1,10 +1,4 @@
-import {
-  formatFiles,
-  NxJsonConfiguration,
-  readJson,
-  Tree,
-  writeJson,
-} from '@nrwl/devkit';
+import { formatFiles, NxJsonConfiguration, readJson, Tree, writeJson } from '@nrwl/devkit';
 
 export default async function (host: Tree) {
   const initialized = host.isFile('nx-dotnet.config.js');

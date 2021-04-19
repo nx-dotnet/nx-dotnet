@@ -1,11 +1,8 @@
-import {
-  formatFiles,
-  readProjectConfiguration,
-  Tree,
-} from '@nrwl/devkit';
+import { formatFiles, readProjectConfiguration, Tree } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { getProjectFileForNxProject } from '@nx-dotnet/utils';
+
 import { NxDotnetGeneratorSchema } from './schema';
 
 export default async function (

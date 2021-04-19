@@ -1,13 +1,10 @@
+import { addProjectConfiguration, readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import {
-  Tree,
-  readProjectConfiguration,
-  addProjectConfiguration,
-} from '@nrwl/devkit';
+
+import { DotNetClient } from '@nx-dotnet/dotnet';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import { DotNetClient } from '@nx-dotnet/dotnet';
 
 describe('nx-dotnet project reference', () => {
   let appTree: Tree;

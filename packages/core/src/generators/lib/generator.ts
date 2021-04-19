@@ -1,15 +1,12 @@
 import {
-  addProjectConfiguration,
-  formatFiles,
-  getWorkspaceLayout,
-  names,
-  Tree,
+    addProjectConfiguration, formatFiles, getWorkspaceLayout, names, Tree
 } from '@nrwl/devkit';
 
-import { dotnetNewOptions, DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { isDryRun } from '@nx-dotnet/utils';
+
+import initSchematic from '../init/generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import initSchematic from '../init/generator'
 
 interface NormalizedSchema extends NxDotnetGeneratorSchema {
   projectName: string;

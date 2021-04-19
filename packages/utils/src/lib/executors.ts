@@ -1,3 +1,3 @@
-import { ExecutorContext } from "@nrwl/devkit";
+import { ExecutorContext } from '@nrwl/devkit';
 
 export const getExecutedProjectConfiguration = (context: ExecutorContext) => context.workspace.projects[context.projectName];
