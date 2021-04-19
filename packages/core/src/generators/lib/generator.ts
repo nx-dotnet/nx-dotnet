@@ -4,6 +4,7 @@ import {
 
 import { DotNetClient, dotnetFactory, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { isDryRun } from '@nx-dotnet/utils';
+import { GetBuildExecutorConfiguration } from '../../models/build-executor-configuration';
 
 import initSchematic from '../init/generator';
 import { NxDotnetGeneratorSchema } from './schema';
@@ -52,18 +53,7 @@ export default async function (host: Tree, options: NxDotnetGeneratorSchema, dot
     projectType: 'library',
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
-      build: {
-        executor: '@nx-dotnet/core:build',
-        options: {
-          output: `dist/${normalizedOptions.name}`,
-          configuration: 'Debug',
-        },
-        configurations: {
-          production: {
-            configuration: 'Release',
-          },
-        },
-      },
+      build: GetBuildExecutorConfiguration(normalizedOptions.name)
     },
     tags: normalizedOptions.parsedTags,
   });

@@ -53,11 +53,4 @@ describe('nx-dotnet project reference', () => {
 
     expect(spy).toHaveBeenCalled();
   });
-
-  it('should update dependencies', async () => {
-    await generator(appTree, options, client);
-    expect(
-      readProjectConfiguration(appTree, appId).implicitDependencies
-    ).toContain(libId);
-  });
 });
