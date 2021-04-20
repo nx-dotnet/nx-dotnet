@@ -1,12 +1,14 @@
-import {
-    Tree
-} from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 import { GenerateProject } from '../utils/generate-project';
 import { NxDotnetGeneratorSchema } from './schema';
 
-export default function (host: Tree, options: NxDotnetGeneratorSchema, dotnetClient = new DotNetClient(dotnetFactory())) {
+export default function (
+  host: Tree,
+  options: NxDotnetGeneratorSchema,
+  dotnetClient = new DotNetClient(dotnetFactory())
+) {
   return GenerateProject(host, options, dotnetClient, 'application');
 }

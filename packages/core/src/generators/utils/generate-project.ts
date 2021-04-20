@@ -1,28 +1,15 @@
 import {
-  addProjectConfiguration,
-  formatFiles,
-  getWorkspaceLayout,
-  names,
-  NxJsonProjectConfiguration,
-  ProjectConfiguration,
-  ProjectType,
-  TargetConfiguration,
-  Tree,
+    addProjectConfiguration, formatFiles, getWorkspaceLayout, names, NxJsonProjectConfiguration,
+    ProjectConfiguration, ProjectType, TargetConfiguration, Tree
 } from '@nrwl/devkit';
 
-import {
-  DotNetClient,
-  dotnetFactory,
-  dotnetNewOptions,
-} from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
-import {
-  GetBuildExecutorConfiguration,
-  GetServeExecutorConfig,
-  GetTestExecutorConfig,
-  NxDotnetProjectGeneratorSchema,
-} from '../../models';
 
+import {
+    GetBuildExecutorConfiguration, GetServeExecutorConfig, GetTestExecutorConfig,
+    NxDotnetProjectGeneratorSchema
+} from '../../models';
 import initSchematic from '../init/generator';
 
 interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {

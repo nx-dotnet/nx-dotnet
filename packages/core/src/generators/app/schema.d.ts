@@ -1,3 +1,3 @@
-import { NxDotnetProjectGeneratorSchema } from "../../models";
+import { NxDotnetProjectGeneratorSchema } from '../../models';
 
 export type NxDotnetGeneratorSchema = NxDotnetProjectGeneratorSchema

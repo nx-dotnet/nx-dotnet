@@ -1,7 +1,3 @@
-export interface NxDotnetGeneratorSchema {
-  name: string;
-  tags?: string;
-  directory?: string;
-  template: string;
-  language: string;
-}
+import { NxDotnetProjectGeneratorSchema } from '../../models';
+
+export type NxDotnetGeneratorSchema = NxDotnetProjectGeneratorSchema

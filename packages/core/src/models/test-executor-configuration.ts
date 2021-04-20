@@ -1,4 +1,4 @@
-import { TargetConfiguration } from "@nrwl/devkit"
+import { TargetConfiguration } from '@nrwl/devkit';
 
 export function GetTestExecutorConfig(projectName?: string): TestTargetConfiguration {
     return ({
