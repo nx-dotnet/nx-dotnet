@@ -1,14 +1,25 @@
 import {
-    addProjectConfiguration, formatFiles, getWorkspaceLayout, names, NxJsonProjectConfiguration,
-    ProjectConfiguration, ProjectType, Tree
+  addProjectConfiguration,
+  formatFiles,
+  getWorkspaceLayout,
+  names,
+  NxJsonProjectConfiguration,
+  ProjectConfiguration,
+  ProjectType,
+  Tree,
 } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
+import { readFileSync, writeFileSync } from 'fs';
+import { XmlDocument, XmlNode, XmlTextNode } from 'xmldoc';
+import { relative, dirname } from 'path';
 
 import {
-    GetBuildExecutorConfiguration, GetServeExecutorConfig, GetTestExecutorConfig,
-    NxDotnetProjectGeneratorSchema
+  GetBuildExecutorConfiguration,
+  GetServeExecutorConfig,
+  GetTestExecutorConfig,
+  NxDotnetProjectGeneratorSchema,
 } from '../../models';
 import initSchematic from '../init/generator';
 
@@ -71,7 +82,7 @@ async function GenerateTestProject(
     sourceRoot: `${testRoot}`,
     targets: {
       build: GetBuildExecutorConfiguration(testName),
-      test: GetTestExecutorConfig()
+      test: GetTestExecutorConfig(),
     },
     tags: schema.parsedTags,
   });
@@ -98,16 +109,50 @@ async function GenerateTestProject(
   }
 
   dotnetClient.new(schema['test-template'], newParams);
-  
+
   if (!isDryRun()) {
     const testCsProj = await findProjectFileInPath(testRoot);
+    SetOutputPath(host, testProjectName, testCsProj);
     const baseCsProj = await findProjectFileInPath(schema.projectRoot);
+    SetOutputPath(host, schema.projectName, baseCsProj);
     dotnetClient.addProjectReference(testCsProj, baseCsProj);
-  } 
-
+  }
 }
 
-export async function GenerateProject (
+function SetOutputPath(
+  host: Tree,
+  projectName: string,
+  projectFilePath: string
+): void {
+  const xml: XmlDocument = new XmlDocument(
+    readFileSync(projectFilePath).toString()
+  );
+  
+  const textNode: Partial<XmlTextNode> = {
+    text: `${relative(dirname(projectFilePath), process.cwd())}\\dist\\${projectName}`,
+    type: 'text'
+  };
+  textNode.toString = () => textNode.text ?? '';
+  textNode.toStringWithIndent = () => textNode.text ?? '';
+
+  const el: Partial<XmlNode> = {
+    name: 'OutputPath',
+    attr: {},
+    type: 'element',
+    children: [textNode as XmlTextNode],
+    firstChild: null,
+    lastChild: null
+  };
+
+  el.toStringWithIndent = xml.toStringWithIndent.bind(el);
+  el.toString = xml.toString.bind(el);
+
+  xml.childNamed('PropertyGroup')?.children.push(el as XmlNode);
+
+  writeFileSync(projectFilePath, xml.toString());
+}
+
+export async function GenerateProject(
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
   dotnetClient: DotNetClient,
@@ -119,22 +164,29 @@ export async function GenerateProject (
 
   const normalizedOptions = normalizeOptions(host, options, projectType);
 
-  const projectConfiguration: ProjectConfiguration & NxJsonProjectConfiguration = {
+  const projectConfiguration: ProjectConfiguration &
+    NxJsonProjectConfiguration = {
     root: normalizedOptions.projectRoot,
     projectType: projectType,
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
       build: GetBuildExecutorConfiguration(normalizedOptions.name),
-      serve: GetServeExecutorConfig()
+      serve: GetServeExecutorConfig(),
     },
     tags: normalizedOptions.parsedTags,
-  }
+  };
 
   if (options['test-template'] !== 'none') {
-    projectConfiguration.targets.test = GetTestExecutorConfig(normalizedOptions.projectName + '-test') 
+    projectConfiguration.targets.test = GetTestExecutorConfig(
+      normalizedOptions.projectName + '-test'
+    );
   }
 
-  addProjectConfiguration(host, normalizedOptions.projectName, projectConfiguration);
+  addProjectConfiguration(
+    host,
+    normalizedOptions.projectName,
+    projectConfiguration
+  );
 
   const newParams: dotnetNewOptions = [
     {
@@ -160,7 +212,18 @@ export async function GenerateProject (
   dotnetClient.new(normalizedOptions.template, newParams);
 
   if (options['test-template'] !== 'none') {
-    await GenerateTestProject(normalizedOptions, host, dotnetClient, projectType);
+    await GenerateTestProject(
+      normalizedOptions,
+      host,
+      dotnetClient,
+      projectType
+    );
+  } else {
+    SetOutputPath(
+      host,
+      normalizedOptions.projectName,
+      await findProjectFileInPath(normalizedOptions.projectRoot)
+    );
   }
 
   await formatFiles(host);
