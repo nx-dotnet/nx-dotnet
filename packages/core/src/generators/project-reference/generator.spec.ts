@@ -1,4 +1,4 @@
-import { addProjectConfiguration, readProjectConfiguration, Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient } from '@nx-dotnet/dotnet';

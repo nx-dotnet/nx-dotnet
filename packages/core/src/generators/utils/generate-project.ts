@@ -1,9 +1,9 @@
 import {
     addProjectConfiguration, formatFiles, getWorkspaceLayout, names, NxJsonProjectConfiguration,
-    ProjectConfiguration, ProjectType, TargetConfiguration, Tree
+    ProjectConfiguration, ProjectType, Tree
 } from '@nrwl/devkit';
 
-import { DotNetClient, dotnetFactory, dotnetNewOptions } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
 
 import {
@@ -110,7 +110,7 @@ async function GenerateTestProject(
 export async function GenerateProject (
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
-  dotnetClient = new DotNetClient(dotnetFactory()),
+  dotnetClient: DotNetClient,
   projectType: ProjectType
 ) {
   initSchematic(host);
