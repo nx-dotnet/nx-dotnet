@@ -115,6 +115,8 @@ export async function GenerateProject (
 ) {
   initSchematic(host);
 
+  options['test-template'] = options['test-template'] ?? 'none';
+
   const normalizedOptions = normalizeOptions(host, options, projectType);
 
   const projectConfiguration: ProjectConfiguration & NxJsonProjectConfiguration = {
