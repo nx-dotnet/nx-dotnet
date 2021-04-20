@@ -15,9 +15,9 @@ export default async function runExecutor(
 
   dotnetClient.build(
     projectFilePath,
-    Object.keys(options).map((x: dotnetBuildFlags) => ({
-      flag: x,
-      value: options[x],
+    Object.keys(options).map((x) => ({
+      flag: x as dotnetBuildFlags,
+      value: (options as Record<string, string|boolean>)[x],
     }))
   );
 

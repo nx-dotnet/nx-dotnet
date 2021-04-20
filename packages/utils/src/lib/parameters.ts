@@ -1,4 +1,4 @@
-import { cmdLineParameter } from '../models';
+import { cmdLineParameter } from './models';
 
 export function getParameterString(parameters: cmdLineParameter[]): string {
   return parameters.reduce((acc, current) => {

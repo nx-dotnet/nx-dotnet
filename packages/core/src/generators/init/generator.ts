@@ -23,7 +23,7 @@ function updateGitIgnore(host: Tree) {
     console.warn('Not updating gitignore because it is not present!')
     return;
   }
-  let lines = host.read('.gitignore').toString();
+  let lines = (host.read('.gitignore') ?? '').toString();
   lines += '\r\napps/*/bin'
   lines += '\r\napps/*/obj'
   host.write('.gitignore', lines);

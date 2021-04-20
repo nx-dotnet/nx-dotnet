@@ -3,7 +3,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 import { ChildProcess } from 'child_process';
 import * as chockidar from 'chokidar';
 
-import { DotNetClient, dotnetFactory, dotnetRunFlags } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory, dotnetRunFlags, dotnetRunOptions } from '@nx-dotnet/dotnet';
 import {
     getDependantProjectsForNxProject, getExecutedProjectConfiguration, getProjectFileForNxProject,
     rimraf
@@ -32,7 +32,7 @@ export default function dotnetRunExecutor(
       const watcher = chockidar
         .watch(nxProjectConfiguration.root);
 
-      getDependantProjectsForNxProject(context.projectName, context.workspace, (dependency) => {
+      getDependantProjectsForNxProject(context.projectName as string, context.workspace, (dependency) => {
         watcher.add(dependency.root)
       });
       
@@ -56,17 +56,19 @@ export default function dotnetRunExecutor(
   });
 }
 
-const setupDotnetRun = (dotnetClient, project, options) => {
+const setupDotnetRun = (dotnetClient: DotNetClient, project: string, options: ServeExecutorSchema) => {
   if (childProcess) {
     childProcess.kill('SIGTERM');
   }
 
+  const opts: dotnetRunOptions = Object.keys(options).map((x) => ({
+    flag: x as dotnetRunFlags,
+    value: (options as Record<string, string|boolean>)[x],
+  }));
+
   childProcess = dotnetClient.run(
     project,
-    Object.keys(options).map((x: dotnetRunFlags) => ({
-      flag: x,
-      value: options[x],
-    }))
+    opts
   );
 
   childProcess.on('error', (err) => {
@@ -74,13 +76,12 @@ const setupDotnetRun = (dotnetClient, project, options) => {
   })
 }
 
-const exitHandler = async (options, exitCode = 0) => {
+const exitHandler = async (options: {exit: boolean}, exitCode = 0) => {
   console.log('Exit Handler Called');
 
   await rimraf(projectDirectory + '/bin')
   await rimraf(projectDirectory + '/obj')
 
-  if (options.cleanup) console.log('clean');
   if (exitCode || exitCode === 0) console.log(exitCode);
 
   if (childProcess) {
@@ -94,7 +95,7 @@ const exitHandler = async (options, exitCode = 0) => {
 };
 
 //do something when app is closing
-process.on('exit', () => exitHandler({ cleanup: true }));
+process.on('exit', () => exitHandler({ exit: false }));
 
 //catches ctrl+c event
 process.on('SIGINT', () => exitHandler({ exit: true }));

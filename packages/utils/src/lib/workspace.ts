@@ -26,7 +26,7 @@ export function getDependantProjectsForNxProject(
   [projectName: string]: ProjectConfiguration;
 } {
   const projectRoots: { [key: string]: string } = {};
-  const dependantProjects = {};
+  const dependantProjects: {[key: string]: ProjectConfiguration} = {};
 
   Object.entries(workspaceConfiguration.projects).forEach(([name, project]) => {
     projectRoots[name] = resolve(project.root);

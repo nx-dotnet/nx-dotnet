@@ -1,7 +1,6 @@
 import { TargetConfiguration } from '@nrwl/devkit';
 
-export function GetServeExecutorConfig(
-): TargetConfiguration {
+export function GetServeExecutorConfig(): ServeTargetConfiguration {
   return {
     executor: '@nx-dotnet/core:serve',
     options: {
@@ -12,5 +11,11 @@ export function GetServeExecutorConfig(
         configuration: 'Release',
       },
     },
+  };
+}
+
+export interface ServeTargetConfiguration extends TargetConfiguration {
+  options: {
+    configuration: 'Debug' | 'Release';
   };
 }

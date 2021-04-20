@@ -2,7 +2,7 @@ import { TargetConfiguration } from '@nrwl/devkit';
 
 export function GetBuildExecutorConfiguration(
   projectName: string
-): TargetConfiguration {
+): BuildExecutorConfiguration {
   const outputDirectory = `dist/${projectName}`;
 
   return {
@@ -18,4 +18,11 @@ export function GetBuildExecutorConfiguration(
       },
     },
   };
+}
+
+export interface BuildExecutorConfiguration extends TargetConfiguration {
+    options: {
+        output: string,
+        configuration: 'Debug' | 'Release'
+    }
 }

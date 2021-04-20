@@ -12,18 +12,17 @@ export default async function (
 ) {
   const hostProject = readProjectConfiguration(host, options.project);
   const sourceProject = readProjectConfiguration(host, options.reference);
-  let [hostProjectFile, sourceProjectFile] = [null, null];
+  let [hostProjectFile, sourceProjectFile] = ['', ''];
 
   try {
     [hostProjectFile, sourceProjectFile] = await Promise.all([
       getProjectFileForNxProject(hostProject),
       getProjectFileForNxProject(sourceProject),
     ]);
+    client.addProjectReference(hostProjectFile, sourceProjectFile);
   } catch {
-    console.warn('Unable to find project files to add dependency!')
+    console.warn('Unable to find project files to add dependency!');
   }
-
-  client.addProjectReference(hostProjectFile, sourceProjectFile);
 
   await formatFiles(host);
 }
