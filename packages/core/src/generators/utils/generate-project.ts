@@ -55,8 +55,9 @@ function normalizeOptions(
     ? options.tags.split(',').map((s) => s.trim())
     : [];
 
-  const { npmScope } = readWorkspaceConfiguration(host);
-  const namespaceName = names(npmScope).className + '.' + className;
+  const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
+  const featureScope = projectDirectory.split('/').map(part => names(part).className);
+  const namespaceName = [npmScope, ...featureScope].join('.');
 
   return {
     ...options,
