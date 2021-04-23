@@ -6,6 +6,7 @@ import {
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
+  readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
 
@@ -31,6 +32,7 @@ interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   projectTemplate: string;
   parsedTags: string[];
   className: string;
+  namespaceName: string;
 }
 
 function normalizeOptions(
@@ -53,6 +55,9 @@ function normalizeOptions(
     ? options.tags.split(',').map((s) => s.trim())
     : [];
 
+  const { npmScope } = readWorkspaceConfiguration(host);
+  const namespaceName = names(npmScope).className + '.' + className;
+
   return {
     ...options,
     name,
@@ -63,6 +68,7 @@ function normalizeOptions(
     parsedTags,
     projectLanguage: options.language,
     projectTemplate: options.template,
+    namespaceName,
   };
 }
 
@@ -94,7 +100,7 @@ async function GenerateTestProject(
     },
     {
       flag: 'name',
-      value: schema.className + '.Test',
+      value: schema.namespaceName + '.Test',
     },
     {
       flag: 'output',
@@ -127,10 +133,13 @@ function SetOutputPath(
   const xml: XmlDocument = new XmlDocument(
     readFileSync(projectFilePath).toString()
   );
-  
+
   const textNode: Partial<XmlTextNode> = {
-    text: `${relative(dirname(projectFilePath), process.cwd())}\\dist\\${projectName}`,
-    type: 'text'
+    text: `${relative(
+      dirname(projectFilePath),
+      process.cwd()
+    )}\\dist\\${projectName}`,
+    type: 'text',
   };
   textNode.toString = () => textNode.text ?? '';
   textNode.toStringWithIndent = () => textNode.text ?? '';
@@ -141,7 +150,7 @@ function SetOutputPath(
     type: 'element',
     children: [textNode as XmlTextNode],
     firstChild: null,
-    lastChild: null
+    lastChild: null,
   };
 
   el.toStringWithIndent = xml.toStringWithIndent.bind(el);
@@ -195,7 +204,7 @@ export async function GenerateProject(
     },
     {
       flag: 'name',
-      value: normalizedOptions.className,
+      value: normalizedOptions.namespaceName,
     },
     {
       flag: 'output',
