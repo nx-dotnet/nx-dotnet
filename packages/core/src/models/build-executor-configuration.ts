@@ -1,5 +1,8 @@
 import { TargetConfiguration } from '@nrwl/devkit';
 
+/**
+ * Returns a TargetConfiguration for the nx-dotnet/core:build executor
+ */
 export function GetBuildExecutorConfiguration(
   projectName: string
 ): BuildExecutorConfiguration {
@@ -20,6 +23,9 @@ export function GetBuildExecutorConfiguration(
   };
 }
 
+/**
+ * Configuration options relevant for the build executor
+ */
 export interface BuildExecutorConfiguration extends TargetConfiguration {
   options: {
     output: string;

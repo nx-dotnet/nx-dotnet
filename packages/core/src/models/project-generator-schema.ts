@@ -1,3 +1,6 @@
+/**
+ * Typing for the shared project generator's options
+ */
 export interface NxDotnetProjectGeneratorSchema {
   name: string;
   tags?: string;

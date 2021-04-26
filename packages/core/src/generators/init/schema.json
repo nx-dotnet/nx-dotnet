@@ -1,8 +1,9 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "id": "Init",
-  "title": "",
+  "id": "@nx-dotnet/core:init",
+  "title": "Initialize NxDotnet",
+  "description": "Update's user's gitignore file + initializes a blank config",
   "type": "object",
   "properties": {},
   "required": []
