@@ -138,11 +138,14 @@ function SetOutputPath(
     readFileSync(projectFilePath).toString()
   );
 
+  let outputPath = `${relative(
+    dirname(projectFilePath),
+    process.cwd()
+  )}/dist/${projectName}`;
+  outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
+
   const textNode: Partial<XmlTextNode> = {
-    text: `${relative(
-      dirname(projectFilePath),
-      process.cwd()
-    )}\\dist\\${projectName}`,
+    text: outputPath,
     type: 'text',
   };
   textNode.toString = () => textNode.text ?? '';

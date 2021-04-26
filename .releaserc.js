@@ -37,7 +37,7 @@ module.exports = {
       {
         publishCmd: [
           'yarn ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
-        ],
+        ].join(' && '),
       },
     ],
     [
