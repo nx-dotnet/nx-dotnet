@@ -1,3 +1,10 @@
+# [0.2.0-dev.3](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.2...v0.2.0-dev.3) (2021-04-26)
+
+
+### Features
+
+* **core:** test sr deployment ([fbc5bbf](https://github.com/nx-dotnet/nx-dotnet/commit/fbc5bbf6665a91b44356a518452650596aad3292))
+
 # [0.2.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.1...v0.2.0-dev.2) (2021-04-26)
 
 
