@@ -3,5 +3,5 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
-  "version": "0.1.5-dev.16"
+  "version": "0.1.5-dev.17"
 }

@@ -1,7 +1,7 @@
 {
   "name": "nx-dotnet",
   "license": "MIT",
-  "version": "0.1.5-dev.16",
+  "version": "0.1.5-dev.17",
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
