@@ -34,7 +34,7 @@ export function PatchPackageVersions(newVersion: string, updateGit = true) {
       });
       execSync(
         `git commit ${
-          idx > 0 ? '--amend --no-edit' : '-m "chore(): bump version"'
+          idx > 0 ? '--amend --no-edit' : '-m "chore(release): bump version"'
         }`,
         { stdio: ['ignore', 'inherit', 'inherit'] }
       );

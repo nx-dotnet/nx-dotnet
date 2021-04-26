@@ -8,7 +8,7 @@ export function PublishAll(version, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
 
-  PatchPackageVersions(version);
+  PatchPackageVersions(version, false);
 
   execSync('npx nx run-many --all --target="build" --with-deps', {
     stdio: 'inherit',
