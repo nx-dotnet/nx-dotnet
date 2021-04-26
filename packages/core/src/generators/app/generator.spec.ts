@@ -14,7 +14,8 @@ describe('nx-dotnet app generator', () => {
     name: 'test',
     language: 'C#',
     template: 'mvc',
-    "test-template": 'none'
+    "test-template": 'none',
+    skipOutputPathManipulation: true
   };
 
   beforeEach(() => {

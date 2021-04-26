@@ -14,7 +14,8 @@ describe('nx-dotnet library generator', () => {
     name: 'test',
     language: 'C#',
     template: 'classlib',
-    "test-template": 'none'
+    "test-template": 'none',
+    skipOutputPathManipulation: true
   };
 
   beforeEach(() => {

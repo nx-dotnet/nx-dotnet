@@ -117,7 +117,7 @@ async function GenerateTestProject(
 
   dotnetClient.new(schema['test-template'], newParams);
 
-  if (!isDryRun()) {
+  if (!isDryRun() && !schema.skipOutputPathManipulation) {
     const testCsProj = await findProjectFileInPath(testRoot);
     SetOutputPath(host, testProjectName, testCsProj);
     const baseCsProj = await findProjectFileInPath(schema.projectRoot);
@@ -228,7 +228,7 @@ export async function GenerateProject(
       dotnetClient,
       projectType
     );
-  } else {
+  } else if (!options.skipOutputPathManipulation) {
     SetOutputPath(
       host,
       normalizedOptions.projectName,

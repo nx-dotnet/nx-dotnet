@@ -5,4 +5,5 @@ export interface NxDotnetProjectGeneratorSchema {
     template: string;
     language: string;
     "test-template": 'nunit' | 'mstest' | 'xunit' | 'none';
+    skipOutputPathManipulation: boolean;
   }
