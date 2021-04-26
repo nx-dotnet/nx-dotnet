@@ -3,10 +3,6 @@ import { execSync } from 'child_process';
 import { existsSync, readJson, writeJson } from '../../utils';
 
 export function PatchPackageVersions(newVersion: string) {
-  execSync('npx nx run-many --all --target="build" --with-deps', {
-    stdio: 'inherit',
-  });
-
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
 
@@ -29,7 +25,6 @@ export function PatchPackageVersions(newVersion: string) {
     pkg.version = newVersion;
 
     writeJson(pkgPath, pkg);
-    writeJson(outputPath + '/package.json', pkg);
     execSync(`git add ${pkgPath}`, {
       stdio: ['ignore', 'inherit', 'inherit'],
     });
