@@ -5,7 +5,7 @@ import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-
+import * as mockedProjectGenerator from '../utils/generate-project';
 
 jest.mock('../utils/generate-project');
 
@@ -17,8 +17,8 @@ describe('nx-dotnet library generator', () => {
     name: 'test',
     language: 'C#',
     template: 'classlib',
-    "test-template": 'none',
-    skipOutputPathManipulation: true
+    'test-template': 'none',
+    skipOutputPathManipulation: true,
   };
 
   beforeEach(() => {
@@ -28,5 +28,14 @@ describe('nx-dotnet library generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options, dotnetClient);
+  });
+
+  it('should call project generator with library project type', async () => {
+    const projectGenerator = (mockedProjectGenerator as jest.Mocked<
+      typeof mockedProjectGenerator
+    >).GenerateProject;
+
+    await generator(appTree, options, dotnetClient);
+    expect(projectGenerator).toHaveBeenCalledWith(appTree, options, dotnetClient, 'library');
   });
 });
