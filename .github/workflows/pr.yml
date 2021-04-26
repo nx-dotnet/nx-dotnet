@@ -3,7 +3,7 @@ name: Run PR checks
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   pull_request:
-    branches: [master]
+    branches: [master, dev]
 
 env:
   NX_BRANCH: ${{ github.event.number }}

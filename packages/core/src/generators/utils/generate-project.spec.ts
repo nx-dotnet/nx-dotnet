@@ -70,10 +70,11 @@ describe('nx-dotnet project generator', () => {
       .childNamed('PropertyGroup')
       ?.childNamed('OutputPath')?.val as string;
     expect(outputPath).toBeTruthy();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const absolute = resolve(config.root, outputPath);
-    const relativeOutput = relative(process.cwd(), absolute);
 
-    expect(relativeOutput).toMatch(/^dist/);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const absoluteDistPath = resolve(config.root, outputPath);
+    const expectedDistPath = resolve('./dist/test');
+
+    expect(absoluteDistPath).toEqual(expectedDistPath);
   });
 });
