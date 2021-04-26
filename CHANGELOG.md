@@ -1,3 +1,10 @@
+# [0.2.0-dev.4](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.3...v0.2.0-dev.4) (2021-04-26)
+
+
+### Features
+
+* **core:** fix deployments ([561f462](https://github.com/nx-dotnet/nx-dotnet/commit/561f462e288c3a6eae35683ff8e5e6eeae0b73f1))
+
 # [0.2.0-dev.3](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.2...v0.2.0-dev.3) (2021-04-26)
 
 
