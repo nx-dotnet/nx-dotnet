@@ -27,9 +27,7 @@ export function PatchPackageVersions(newVersion: string) {
     }
     const pkg = readJson(pkgPath);
     pkg.version = newVersion;
-    Object.entries(pkg.dependencies || {}).forEach(([dep, version]) => {
-      if (dep.includes('@nx-dotnet')) pkg.dependencies[dep] = newVersion;
-    });
+
     writeJson(pkgPath, pkg);
     writeJson(outputPath + '/package.json', pkg);
     execSync(`git add ${pkgPath}`, {

@@ -1,7 +1,7 @@
 {
   "name": "nx-dotnet",
   "license": "MIT",
-  "version": "0.1.5-dev.10",
+  "version": "0.1.5-dev.11",
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
@@ -33,7 +33,9 @@
     "@types/xmldoc": "^1.1.5",
     "chokidar": "^2.1.8",
     "rxjs": "^6.6.6",
-    "xmldoc": "^1.1.2"
+    "xmldoc": "^1.1.2",
+    "rimraf": "^3.0.2",
+    "glob": "^7.1.6"
   },
   "devDependencies": {
     "@nrwl/cli": "12.0.1",
@@ -53,10 +55,8 @@
     "dotenv": "8.2.0",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
-    "glob": "^7.1.6",
     "jest": "26.2.2",
     "prettier": "2.2.1",
-    "rimraf": "^3.0.2",
     "run-p": "*",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",

@@ -38,12 +38,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected -- --target=build --base=origin/master~1 --parallel --with-deps
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: |
-            dist
 
   test:
     runs-on: ubuntu-latest
@@ -64,18 +58,44 @@ jobs:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected -- --target=lint --base=origin/master~1 --parallel
-
-  e2e:
+  
+  publish-dev:
     runs-on: ubuntu-latest
-    name: E2E testing affected apps
-    needs: [pre-run, build]
-    if: needs.pre-run.outputs.skip == 'false'
+    name: Publish packages to dev
+    needs: [pre-run]
+    if: ${{needs.pre-run.outputs.skip == 'false' && github.ref == 'refs/heads/master' && github.event_name == 'push'}}
     steps:
       - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - name: Download a single artifact
-        uses: actions/download-artifact@v2
+      - uses: actions/setup-node@v1
         with:
-          name: dist
-          path: dist
-      - run: yarn e2e
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true,
+          node-version: 14
+      - uses: bahmutov/npm-install@v1.4.5
+      - name: Git Config
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - run: yarn ts-node tools/scripts/publish-dev
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   name: E2E testing affected apps
+  #   needs: [pre-run, build]
+  #   if: needs.pre-run.outputs.skip == 'false'
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: bahmutov/npm-install@v1.4.5
+  #     - name: Download a single artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: dist
+  #         path: dist
+  #     - run: yarn e2e

@@ -2,10 +2,6 @@
   "name": "@nx-dotnet/utils",
   "main": "src/index.js",
   "private": false,
-  "dependencies": {
-    "glob": "^7.1.6",
-    "rimraf": "^3.0.2",
-    "xmldoc": "^1.1.2"
-  },
-  "version": "0.1.5-dev.10"
+  "dependencies": {},
+  "version": "0.1.5-dev.11"
 }

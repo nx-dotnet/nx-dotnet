@@ -34,6 +34,7 @@
             "tsConfig": "packages/core/tsconfig.lib.json",
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": true,
             "assets": [
               "packages/core/*.md",
               {
@@ -105,6 +106,7 @@
             "tsConfig": "packages/typescript/tsconfig.lib.json",
             "packageJson": "packages/typescript/package.json",
             "main": "packages/typescript/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": true,
             "assets": [
               "packages/typescript/*.md",
               {
@@ -169,6 +171,7 @@
             "outputPath": "dist/packages/utils",
             "tsConfig": "packages/utils/tsconfig.lib.json",
             "packageJson": "packages/utils/package.json",
+            "updateBuildableProjectDepsInPackageJson": true,
             "main": "packages/utils/src/index.ts",
             "assets": [
               "packages/utils/*.md"
@@ -204,6 +207,7 @@
             "tsConfig": "packages/dotnet/tsconfig.lib.json",
             "packageJson": "packages/dotnet/package.json",
             "main": "packages/dotnet/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": true,
             "assets": [
               "packages/dotnet/*.md"
             ]
