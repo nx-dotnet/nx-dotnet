@@ -1,0 +1,60 @@
+name: Run PR checks
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  pull_request:
+    branches: [master]
+
+env:
+  NX_BRANCH: ${{ github.event.number }}
+  NX_RUN_GROUP: ${{ github.run_id }}
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    name: Building affected apps
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx affected -- --target=build --base=origin/master --parallel --with-deps
+
+  test:
+    runs-on: ubuntu-latest
+    name: Testing affected apps
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx affected -- --target=test --base=origin/master --parallel
+
+  lint:
+    runs-on: ubuntu-latest
+    name: Linting affected apps
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx affected -- --target=lint --base=origin/master --parallel
+
+  commitlint:
+    runs-on: ubuntu-latest
+    name: Check commit message for consistency
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn commitlint --from origin/master --to HEAD --verbose
+
+  
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   name: E2E testing affected apps
+  #   needs: [pre-run, build]
+  #   if: needs.pre-run.outputs.skip == 'false'
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: bahmutov/npm-install@v1.4.5
+  #     - name: Download a single artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: dist
+  #         path: dist
+  #     - run: yarn e2e

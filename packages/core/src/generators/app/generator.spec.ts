@@ -3,9 +3,9 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
+import * as mockedProjectGenerator from '../utils/generate-project';
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
-import * as mockedProjectGenerator from '../utils/generate-project';
 
 jest.mock('../utils/generate-project');
 
@@ -36,6 +36,11 @@ describe('nx-dotnet library generator', () => {
     >).GenerateProject;
 
     await generator(appTree, options, dotnetClient);
-    expect(projectGenerator).toHaveBeenCalledWith(appTree, options, dotnetClient, 'application');
+    expect(projectGenerator).toHaveBeenCalledWith(
+      appTree,
+      options,
+      dotnetClient,
+      'application'
+    );
   });
 });

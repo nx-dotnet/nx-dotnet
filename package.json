@@ -8,6 +8,8 @@
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
@@ -26,7 +28,8 @@
     "publish-dev": "ts-node tools/scripts/publish-dev",
     "e2e-registry": "yarn verdaccio --config ./tools/scripts/local-registry/config.yml --listen 4872",
     "e2e-tests": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
-    "e2e": "run-p -r e2e-registry \"e2e-tests {@}\" --"
+    "e2e": "run-p -r e2e-registry \"e2e-tests {@}\" --",
+    "semantic-release": "semantic-release"
   },
   "private": false,
   "dependencies": {
@@ -38,6 +41,9 @@
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "@commitlint/types": "^12.1.1",
     "@nrwl/cli": "12.0.8",
     "@nrwl/devkit": "12.0.8",
     "@nrwl/eslint-plugin-nx": "12.0.8",
@@ -56,13 +62,25 @@
     "dotenv": "8.2.0",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
+    "husky": "^6.0.0",
     "jest": "26.2.2",
+    "lint-staged": "^10.5.4",
     "prettier": "2.2.1",
     "run-p": "*",
+    "semantic-release": "^17.4.2",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",
     "tslib": "^2.0.0",
     "typescript": "4.1.4",
     "verdaccio": "^5.0.1"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   }
 }
