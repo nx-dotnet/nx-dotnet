@@ -56,7 +56,7 @@
     "skipOutputPathManipulation": {
       "type": "boolean",
       "description": "Skip XML changes for default build path",
-      "default": "false"
+      "default": false
     }
   },
   "required": ["name", "template", "language"]

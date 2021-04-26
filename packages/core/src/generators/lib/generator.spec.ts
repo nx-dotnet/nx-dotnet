@@ -1,10 +1,13 @@
-import { readProjectConfiguration, Tree } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
+
+
+jest.mock('../utils/generate-project');
 
 describe('nx-dotnet library generator', () => {
   let appTree: Tree;
@@ -25,7 +28,5 @@ describe('nx-dotnet library generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, 'test');
-    expect(config).toBeDefined();
   });
 });
