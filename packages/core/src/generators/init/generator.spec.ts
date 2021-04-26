@@ -15,4 +15,11 @@ describe('init generator', () => {
     const config = appTree.isFile('nx-dotnet.config.js');
     expect(config).toBeTruthy();
   });
+
+  it('should update gitignore', async () => {
+    appTree.write('.gitignore', '');
+    await generator(appTree);
+    const gitignoreValue = appTree.read('.gitignore')?.toString();
+    expect(gitignoreValue).toBeTruthy();
+  });
 });
