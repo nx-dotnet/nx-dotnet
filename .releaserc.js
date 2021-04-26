@@ -36,7 +36,8 @@ module.exports = {
       '@semantic-release/exec',
       {
         publishCmd: [
-          'yarn ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
+          `npm set https://registry.npmjs.org/:_authToken ${process.env.NPM_TOKEN}`,
+          'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
         ].join(' && '),
       },
     ],
