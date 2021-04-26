@@ -2,7 +2,7 @@ import { readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { readFileSync } from 'fs';
-import { relative, resolve } from 'path';
+import { resolve } from 'path';
 import { XmlDocument } from 'xmldoc';
 
 import {
