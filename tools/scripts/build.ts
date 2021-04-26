@@ -19,12 +19,9 @@ export function build(
   const BUILD_DIR = 'dist/packages';
 
   const files = [
-    ...[
-      'core',
-      'dotnet',
-      'typescript',
-      'utils',
-    ].map((f) => `${f}/package.json`),
+    ...['core', 'dotnet', 'typescript', 'utils'].map(
+      (f) => `${f}/package.json`
+    ),
   ].map((f) => `${BUILD_DIR}/${f}`);
 
   files.forEach((f) => {

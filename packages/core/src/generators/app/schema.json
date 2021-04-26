@@ -46,10 +46,10 @@
         "message": "Which template should be used for creating the tests project",
         "type": "list",
         "items": [
-          {"value": "nunit", "label": "NUnit 3 Test Project"},
-          {"value": "xunit", "label": "xUnit Test Project"},
-          {"value": "mstest", "label": "Unit Test Project"},
-          {"value": "none", "label": "No Unit Test Project"}
+          { "value": "nunit", "label": "NUnit 3 Test Project" },
+          { "value": "xunit", "label": "xUnit Test Project" },
+          { "value": "mstest", "label": "Unit Test Project" },
+          { "value": "none", "label": "No Unit Test Project" }
         ]
       }
     },

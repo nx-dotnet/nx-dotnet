@@ -16,14 +16,19 @@ export const getDirectories = (source) =>
     .map((dirent) => dirent.name);
 
 function updateVersion(packagePath) {
-  const content = JSON.parse(readFileSync(packagePath + '/package.json').toString());
-  content.version = process.env.PUBLISHED_VERSION
+  const content = JSON.parse(
+    readFileSync(packagePath + '/package.json').toString()
+  );
+  content.version = process.env.PUBLISHED_VERSION;
   Object.entries(content.dependencies || {}).forEach(([key, value]) => {
     if (key.includes('@nx-dotnet')) {
       content.dependencies[key] = 'latest';
     }
   });
-  writeFileSync(packagePath + '/package.json', JSON.stringify(content, null, 2))
+  writeFileSync(
+    packagePath + '/package.json',
+    JSON.stringify(content, null, 2)
+  );
 }
 
 function publishPackage(packagePath, npmMajorVersion: number) {
@@ -118,13 +123,23 @@ async function runTest() {
         `yarn nx run-many --target=e2e --projects=${selectedProjects} ${testNamePattern}`,
         {
           stdio: [0, 1, 2],
-          env: { ...process.env, NX_TERMINAL_CAPTURE_STDERR: 'true', NPM_CONFIG_REGISTRY: 'http://localhost:4872', YARN_REGISTRY: 'http://localhost:4872' },
+          env: {
+            ...process.env,
+            NX_TERMINAL_CAPTURE_STDERR: 'true',
+            NPM_CONFIG_REGISTRY: 'http://localhost:4872',
+            YARN_REGISTRY: 'http://localhost:4872',
+          },
         }
       );
     } else {
       execSync(`yarn nx run-many --target=e2e --all`, {
         stdio: [0, 1, 2],
-        env: { ...process.env, NX_TERMINAL_CAPTURE_STDERR: 'true', NPM_CONFIG_REGISTRY: 'http://localhost:4872', YARN_REGISTRY: 'http://localhost:4872' },
+        env: {
+          ...process.env,
+          NX_TERMINAL_CAPTURE_STDERR: 'true',
+          NPM_CONFIG_REGISTRY: 'http://localhost:4872',
+          YARN_REGISTRY: 'http://localhost:4872',
+        },
       });
     }
     cleanUp(0);

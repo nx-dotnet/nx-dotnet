@@ -22,8 +22,8 @@ export default async function (
   } catch {
     console.warn('Unable to find project files to add dependency!');
   }
-  
+
   client.addProjectReference(hostProjectFile, sourceProjectFile);
-  
+
   await formatFiles(host);
 }

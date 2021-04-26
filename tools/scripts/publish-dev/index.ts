@@ -14,7 +14,7 @@ export function main(all = false, specific?: string) {
   rev = rev === 'NaN' ? '0' : rev;
   const newVersion = `${prev}-${tag}.${rev}`;
   console.log('New Version: ', { newVersion, prev, tag, rev });
-  
+
   PublishAll(newVersion, tag);
 }
 

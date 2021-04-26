@@ -1,6 +1,9 @@
 import {
-    DependencyType, ProjectConfiguration, ProjectGraph, ProjectGraphBuilder,
-    ProjectGraphProcessorContext
+  DependencyType,
+  ProjectConfiguration,
+  ProjectGraph,
+  ProjectGraphBuilder,
+  ProjectGraphProcessorContext,
 } from '@nrwl/devkit';
 
 import { getDependantProjectsForNxProject } from '@nx-dotnet/utils';

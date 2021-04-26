@@ -3,5 +3,6 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "license": "MIT",
   "version": "0.1.5-dev.19"
 }

@@ -10,7 +10,6 @@ env:
   NX_RUN_GROUP: ${{ github.run_id }}
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     name: Building affected apps
@@ -43,7 +42,6 @@ jobs:
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn commitlint --from origin/master --to HEAD --verbose
 
-  
   # e2e:
   #   runs-on: ubuntu-latest
   #   name: E2E testing affected apps

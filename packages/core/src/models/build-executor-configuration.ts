@@ -21,8 +21,8 @@ export function GetBuildExecutorConfiguration(
 }
 
 export interface BuildExecutorConfiguration extends TargetConfiguration {
-    options: {
-        output: string,
-        configuration: 'Debug' | 'Release'
-    }
+  options: {
+    output: string;
+    configuration: 'Debug' | 'Release';
+  };
 }

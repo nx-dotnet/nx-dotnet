@@ -14,5 +14,5 @@ describe('init generator', () => {
     await generator(appTree);
     const config = appTree.isFile('nx-dotnet.config.js');
     expect(config).toBeTruthy();
-  })
+  });
 });
