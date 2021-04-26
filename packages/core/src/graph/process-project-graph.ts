@@ -16,9 +16,13 @@ export function processProjectGraph(
 
   Object.entries(context.workspace.projects).forEach(([name, project]) => {
     try {
-      visitProject(builder, context, project, name);
+      if (project.tags?.some((x) => x === 'nx-dotnet')) {
+        visitProject(builder, context, project, name);
+      }
     } catch {
-      console.warn(`Failed to generate .NET dependencies for ${name}`);
+      console.warn(
+        `nx-dotnet encountered an error parsing dependencies for ${name}`
+      );
     }
   });
 
@@ -31,7 +35,6 @@ function visitProject(
   project: ProjectConfiguration,
   projectName: string
 ) {
-  console.log('Looking for dependencies for ', projectName);
   getDependantProjectsForNxProject(
     projectName,
     context.workspace,

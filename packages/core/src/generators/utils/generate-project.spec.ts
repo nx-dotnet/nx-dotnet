@@ -42,6 +42,12 @@ describe('nx-dotnet project generator', () => {
     expect(config).toBeDefined();
   });
 
+  it('should tag generated projects', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const config = readProjectConfiguration(appTree, 'test');
+    expect(config.tags).toContain('nx-dotnet');
+  });
+
   it('should run successfully for applications', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');

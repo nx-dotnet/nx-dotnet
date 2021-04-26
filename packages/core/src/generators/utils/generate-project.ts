@@ -55,6 +55,7 @@ function normalizeOptions(
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
+  parsedTags.push('nx-dotnet');
 
   const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
   const featureScope = projectDirectory
