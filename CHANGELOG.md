@@ -1,3 +1,10 @@
+# [0.2.0-dev.5](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.4...v0.2.0-dev.5) (2021-04-26)
+
+
+### Features
+
+* **core:** fix CD ([9d5b787](https://github.com/nx-dotnet/nx-dotnet/commit/9d5b787af0537946f640820c003e70275df4bda6))
+
 # [0.2.0-dev.4](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.3...v0.2.0-dev.4) (2021-04-26)
 
 
