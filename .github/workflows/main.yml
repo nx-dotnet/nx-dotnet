@@ -36,9 +36,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected --target=lint --base=origin/master~1 --parallel
+      - run: yarn nx affected -- --target=lint --base=origin/master~1 --parallel
 
-  semantic-release:
+  publish-dev:
     runs-on: ubuntu-latest
     name: Publish packages via semantic release
     needs: [test]
