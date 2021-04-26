@@ -6,9 +6,9 @@
   "private": false,
   "dependencies": {
     "chokidar": "^3.5.1",
-    "@nx-dotnet/dotnet": "0.1.5-dev.10",
-    "@nx-dotnet/utils": "0.1.5-dev.10",
+    "@nx-dotnet/dotnet": "0.1.5-dev.11",
+    "@nx-dotnet/utils": "0.1.5-dev.11",
     "xmldoc": "^1.1.2"
   },
-  "version": "0.1.5-dev.10"
+  "version": "0.1.5-dev.11"
 }
