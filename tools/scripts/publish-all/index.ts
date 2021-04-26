@@ -7,7 +7,13 @@ import { PatchPackageVersions } from '../patch-package-versions';
 export function PublishAll(version, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
+  
   PatchPackageVersions(version);
+  
+  execSync('npx nx run-many --all --target="build" --with-deps', {
+    stdio: 'inherit',
+  });
+  
   const projects = Object.values(workspace.projects);
 
   projects.forEach((projectConfiguration, idx) => {
