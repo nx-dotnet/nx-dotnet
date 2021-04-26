@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Serve executor",
-  "description": "",
+  "title": "NxDotnet Serve Executor",
+  "description": "Uses `dotnet run` and chokidar to run a .NET app.",
   "type": "object",
   "properties": {
     "configuration": {
