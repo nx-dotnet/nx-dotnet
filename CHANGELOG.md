@@ -1,3 +1,17 @@
+# [0.2.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.1...v0.2.0-dev.2) (2021-04-26)
+
+
+### Bug Fixes
+
+* **core:** output paths still use windows separator on linux / mac ([b729fed](https://github.com/nx-dotnet/nx-dotnet/commit/b729fed5116feaeae7bcc13c35aceeed1dbfe16c))
+* **core:** packages not published by last CI run ([d07b9f3](https://github.com/nx-dotnet/nx-dotnet/commit/d07b9f306677110c491da2c9a2eb075d79835c1a))
+
+
+### Features
+
+* **ci:** fix publish script ([4c6e91a](https://github.com/nx-dotnet/nx-dotnet/commit/4c6e91ab6e9450542f7bbce5c81a5ad482a5aea1))
+* **core:** tag nx-dotnet projects ([6442d94](https://github.com/nx-dotnet/nx-dotnet/commit/6442d94dd82e30d0b6537e97eddbcccedd799ef9))
+
 # [0.2.0-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0-dev.1) (2021-04-26)
 
 
