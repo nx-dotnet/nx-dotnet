@@ -20,7 +20,6 @@ module.exports = {
 
 function updateGitIgnore(host: Tree) {
   if (!host.isFile('.gitignore')) {
-    console.warn('Not updating gitignore because it is not present!')
     return;
   }
   let lines = (host.read('.gitignore') ?? '').toString();
