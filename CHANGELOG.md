@@ -1,3 +1,10 @@
+# [0.2.0-dev.6](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.5...v0.2.0-dev.6) (2021-04-26)
+
+
+### Bug Fixes
+
+* **core:** misc ([7661829](https://github.com/nx-dotnet/nx-dotnet/commit/76618298474f555d4fb950fdbe69b8a2c65539f5))
+
 # [0.2.0-dev.5](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.4...v0.2.0-dev.5) (2021-04-26)
 
 
