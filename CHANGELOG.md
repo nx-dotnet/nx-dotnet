@@ -1,3 +1,16 @@
+# [0.2.0-dev.7](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.6...v0.2.0-dev.7) (2021-04-26)
+
+
+### Bug Fixes
+
+* **repo:** deployment errors ([0d92c44](https://github.com/nx-dotnet/nx-dotnet/commit/0d92c4408ecc4e49a30544b927771cd8329f6b1e))
+
+
+### Features
+
+* **core:** semantic-release ([799dc55](https://github.com/nx-dotnet/nx-dotnet/commit/799dc557d168dbc8fa5cf2741d99c12c1ddbaa54))
+* **repo:** semantic-release ([895eb22](https://github.com/nx-dotnet/nx-dotnet/commit/895eb22b15c1078687b68ec63b1d2d577a642ecd))
+
 # [0.2.0-dev.6](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.5...v0.2.0-dev.6) (2021-04-26)
 
 
