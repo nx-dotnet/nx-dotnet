@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn commitlint --from origin/master --to HEAD --verbose
+      - run: yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
 
   # e2e:
   #   runs-on: ubuntu-latest
