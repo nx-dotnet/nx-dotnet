@@ -42,6 +42,12 @@ describe('nx-dotnet project generator', () => {
     expect(config).toBeDefined();
   });
 
+  it('should not include serve target for libraries', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const config = readProjectConfiguration(appTree, 'test');
+    expect(config.targets.serve).not.toBeDefined();
+  })
+
   it('should tag generated projects', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'library');
     const config = readProjectConfiguration(appTree, 'test');
@@ -65,6 +71,12 @@ describe('nx-dotnet project generator', () => {
 
     expect(absoluteDistPath).toEqual(expectedDistPath);
   });
+
+  it('should include serve target for applications', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(appTree, 'test');
+    expect(config.targets.serve).toBeDefined();
+  })
 
   /**
    * This test requires a live dotnet client.
