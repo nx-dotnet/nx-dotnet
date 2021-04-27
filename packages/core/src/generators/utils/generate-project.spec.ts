@@ -54,10 +54,22 @@ describe('nx-dotnet project generator', () => {
     expect(config).toBeDefined();
   });
 
+  it('should set output paths in build target', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(appTree, 'test');
+    const outputPath = config.targets.build.options.output;
+    expect(outputPath).toBeTruthy();
+
+    const absoluteDistPath = resolve(appTree.root, outputPath);
+    const expectedDistPath = resolve(appTree.root, './dist/apps/test');
+
+    expect(absoluteDistPath).toEqual(expectedDistPath);
+  });
+
   /**
    * This test requires a live dotnet client.
    */
-  it('should update output paths', async () => {
+  it('should update output paths in project file', async () => {
     await GenerateProject(
       appTree,
       {
@@ -79,7 +91,7 @@ describe('nx-dotnet project generator', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const absoluteDistPath = resolve(config.root, outputPath);
-    const expectedDistPath = resolve('./dist/test');
+    const expectedDistPath = resolve('./dist/libs/test');
 
     expect(absoluteDistPath).toEqual(expectedDistPath);
   });
