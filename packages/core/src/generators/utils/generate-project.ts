@@ -10,11 +10,12 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
+import { readFileSync, writeFileSync } from 'fs';
+import { dirname, relative } from 'path';
+import { XmlDocument, XmlNode, XmlTextNode } from 'xmldoc';
+
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
-import { readFileSync, writeFileSync } from 'fs';
-import { XmlDocument, XmlNode, XmlTextNode } from 'xmldoc';
-import { relative, dirname } from 'path';
 
 import {
   GetBuildExecutorConfiguration,
@@ -54,9 +55,12 @@ function normalizeOptions(
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
+  parsedTags.push('nx-dotnet');
 
   const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
-  const featureScope = projectDirectory.split('/').map(part => names(part).className);
+  const featureScope = projectDirectory
+    .split('/')
+    .map((part) => names(part).className);
   const namespaceName = [npmScope, ...featureScope].join('.');
 
   return {
@@ -135,11 +139,14 @@ function SetOutputPath(
     readFileSync(projectFilePath).toString()
   );
 
+  let outputPath = `${relative(
+    dirname(projectFilePath),
+    process.cwd()
+  )}/dist/${projectName}`;
+  outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
+
   const textNode: Partial<XmlTextNode> = {
-    text: `${relative(
-      dirname(projectFilePath),
-      process.cwd()
-    )}\\dist\\${projectName}`,
+    text: outputPath,
     type: 'text',
   };
   textNode.toString = () => textNode.text ?? '';

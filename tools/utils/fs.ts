@@ -1,7 +1,7 @@
 import { readFileSync, statSync, writeFileSync } from 'fs';
 
 export function existsSync(path: string) {
-  let results 
+  let results;
   try {
     results = statSync(path);
   } catch {}

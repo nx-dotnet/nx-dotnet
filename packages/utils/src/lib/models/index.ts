@@ -1,1 +1,1 @@
-export * from './cmd-line-parameter'
+export * from './cmd-line-parameter';

@@ -14,6 +14,8 @@ const options: BuildExecutorSchema = {
 
 const root = process.cwd() + '/tmp';
 
+jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
+
 describe('Build Executor', () => {
   let context: ExecutorContext;
   let dotnetClient: DotNetClient;
@@ -32,15 +34,14 @@ describe('Build Executor', () => {
             sourceRoot: `${root}/apps/my-app`,
             targets: {
               build: {
-                executor: '@nx-dotnet/core:build'
-              }
+                executor: '@nx-dotnet/core:build',
+              },
             },
           },
         },
       },
       isVerbose: false,
     };
-
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
@@ -94,6 +95,9 @@ describe('Build Executor', () => {
     }
 
     const res = await executor(options, context, dotnetClient);
+    expect(
+      (dotnetClient as jest.Mocked<DotNetClient>).build
+    ).toHaveBeenCalled();
     expect(res.success).toBeTruthy();
   });
 });

@@ -14,7 +14,7 @@ describe('nx-dotnet project reference', () => {
 
   const options: NxDotnetGeneratorSchema = {
     project: appId,
-    reference: libId
+    reference: libId,
   };
 
   beforeAll(() => {

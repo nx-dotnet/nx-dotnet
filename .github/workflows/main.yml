@@ -3,9 +3,7 @@ name: Run CI checks
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    branches: [master, dev]
 
 env:
   NX_BRANCH: ${{ github.event.number }}
@@ -13,58 +11,38 @@ env:
 
 jobs:
 
-  pre-run:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
-
-      - name: Detect changed directories
-        uses: gagle/nx-check-changes@v1.0.0
-        id: nx-changes
-        continue-on-error: true
-
-    outputs:
-      changed-dirs: ${{ steps.nx-changes.outputs.changed-dirs }}
-      skip: ${{ steps.nx-changes.outputs.not-affected }}
-
   build:
     runs-on: ubuntu-latest
     name: Building affected apps
-    needs: [pre-run]
     if: needs.pre-run.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=build --base=origin/master~1 --parallel --with-deps
+      - run: yarn nx affected --target=build --base=origin/master~1 --parallel --with-deps
 
   test:
     runs-on: ubuntu-latest
     name: Testing affected apps
-    needs: [pre-run]
     if: needs.pre-run.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=test --base=origin/master~1 --parallel
+      - run: yarn nx affected --target=test --base=origin/master~1 --parallel
 
   lint:
     runs-on: ubuntu-latest
     name: Linting affected apps
-    needs: [pre-run]
     if: needs.pre-run.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=lint --base=origin/master~1 --parallel
-  
-  publish-dev:
+      - run: yarn nx affected --target=lint --base=origin/master~1 --parallel
+
+  semantic-release:
     runs-on: ubuntu-latest
-    name: Publish packages to dev
-    needs: [pre-run]
-    if: ${{needs.pre-run.outputs.skip != 'true' && github.ref == 'refs/heads/master' && github.event_name == 'push'}}
+    name: Publish packages via semantic release
+    needs: [test]
+    if: ${{needs.pre-run.outputs.skip != 'true' && github.event_name == 'push'}}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -77,15 +55,16 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-      - run: yarn ts-node tools/scripts/publish-dev
+      - name: Setup NPM Auth
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          npm whoami
+      - name: Release
+        run: npx semantic-release
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          tags: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   # e2e:
   #   runs-on: ubuntu-latest
   #   name: E2E testing affected apps

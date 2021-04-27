@@ -14,6 +14,9 @@ export function GetServeExecutorConfig(): ServeTargetConfiguration {
   };
 }
 
+/**
+ * Target configuration for nx-dotnet/core:serve
+ */
 export interface ServeTargetConfiguration extends TargetConfiguration {
   options: {
     configuration: 'Debug' | 'Release';

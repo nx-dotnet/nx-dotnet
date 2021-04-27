@@ -8,24 +8,22 @@ export function PublishAll(version, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
 
-  PatchPackageVersions(version);
+  PatchPackageVersions(version, false);
 
   execSync('npx nx run-many --all --target="build" --with-deps', {
     stdio: 'inherit',
   });
 
   const projects = Object.values(workspace.projects);
-  const environment = { ...process.env, npm_config_registry: undefined };
+  const environment = { ...process.env, NPM_CONFIG_REGISTRY: undefined };
 
   projects.forEach((projectConfiguration, idx) => {
     const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
     if (existsSync(`${outputPath}/package.json`)) {
-      execSync(
-        `npm publish ${outputPath} --tag=${tag} --new-version=${
-          version || rootPkg.version
-        } --access=public`,
-        { stdio: 'inherit', env: environment }
-      );
+      execSync(`npm publish ${outputPath} --tag=${tag} --access=public`, {
+        stdio: 'inherit',
+        env: environment,
+      });
     }
   });
 }

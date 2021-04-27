@@ -1,4 +1,10 @@
-import { formatFiles, NxJsonConfiguration, readJson, Tree, writeJson } from '@nrwl/devkit';
+import {
+  formatFiles,
+  NxJsonConfiguration,
+  readJson,
+  Tree,
+  writeJson,
+} from '@nrwl/devkit';
 
 export default async function (host: Tree) {
   const initialized = host.isFile('nx-dotnet.config.js');
@@ -6,12 +12,14 @@ export default async function (host: Tree) {
     return;
   }
 
-  host.write('nx-dotnet.config.js', `
+  host.write(
+    'nx-dotnet.config.js',
+    `
 module.exports = {
 
 }
-  `)
-
+  `
+  );
 
   updateNxJson(host);
   updateGitIgnore(host);
@@ -23,15 +31,15 @@ function updateGitIgnore(host: Tree) {
     return;
   }
   let lines = (host.read('.gitignore') ?? '').toString();
-  lines += '\r\napps/*/bin'
-  lines += '\r\napps/*/obj'
+  lines += '\r\napps/*/bin';
+  lines += '\r\napps/*/obj';
   host.write('.gitignore', lines);
 }
 
 function updateNxJson(host: Tree) {
   const nxJson: NxJsonConfiguration = readJson(host, 'nx.json');
   nxJson.plugins = nxJson.plugins || [];
-  if (!nxJson.plugins.some(x => x === '@nx-dotnet/core')) {
+  if (!nxJson.plugins.some((x) => x === '@nx-dotnet/core')) {
     nxJson.plugins.push('@nx-dotnet/core');
   }
   writeJson(host, 'nx.json', nxJson);

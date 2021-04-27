@@ -1,5 +1,5 @@
-import { TestExecutorSchema } from './schema';
 import executor from './executor';
+import { TestExecutorSchema } from './schema';
 
 const options: TestExecutorSchema = {};
 

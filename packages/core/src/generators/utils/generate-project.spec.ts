@@ -2,7 +2,7 @@ import { readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { readFileSync } from 'fs';
-import { relative, resolve } from 'path';
+import { resolve } from 'path';
 import { XmlDocument } from 'xmldoc';
 
 import {
@@ -42,6 +42,12 @@ describe('nx-dotnet project generator', () => {
     expect(config).toBeDefined();
   });
 
+  it('should tag generated projects', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const config = readProjectConfiguration(appTree, 'test');
+    expect(config.tags).toContain('nx-dotnet');
+  });
+
   it('should run successfully for applications', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
@@ -70,10 +76,11 @@ describe('nx-dotnet project generator', () => {
       .childNamed('PropertyGroup')
       ?.childNamed('OutputPath')?.val as string;
     expect(outputPath).toBeTruthy();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const absolute = resolve(config.root, outputPath);
-    const relativeOutput = relative(process.cwd(), absolute);
 
-    expect(relativeOutput).toMatch(/^dist/);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const absoluteDistPath = resolve(config.root, outputPath);
+    const expectedDistPath = resolve('./dist/test');
+
+    expect(absoluteDistPath).toEqual(expectedDistPath);
   });
 });
