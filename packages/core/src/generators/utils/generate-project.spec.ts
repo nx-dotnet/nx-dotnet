@@ -79,7 +79,7 @@ describe('nx-dotnet project generator', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const absoluteDistPath = resolve(config.root, outputPath);
-    const expectedDistPath = resolve('./dist/test');
+    const expectedDistPath = resolve('./dist/libs/test');
 
     expect(absoluteDistPath).toEqual(expectedDistPath);
   });

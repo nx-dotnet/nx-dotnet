@@ -123,16 +123,16 @@ async function GenerateTestProject(
 
   if (!isDryRun() && !schema.skipOutputPathManipulation) {
     const testCsProj = await findProjectFileInPath(testRoot);
-    SetOutputPath(host, testProjectName, testCsProj);
+    SetOutputPath(host, testRoot, testCsProj);
     const baseCsProj = await findProjectFileInPath(schema.projectRoot);
-    SetOutputPath(host, schema.projectName, baseCsProj);
+    SetOutputPath(host, schema.projectRoot, baseCsProj);
     dotnetClient.addProjectReference(testCsProj, baseCsProj);
   }
 }
 
 function SetOutputPath(
   host: Tree,
-  projectName: string,
+  projectRootPath: string,
   projectFilePath: string
 ): void {
   const xml: XmlDocument = new XmlDocument(
@@ -142,7 +142,7 @@ function SetOutputPath(
   let outputPath = `${relative(
     dirname(projectFilePath),
     process.cwd()
-  )}/dist/${projectName}`;
+  )}/dist/${projectRootPath}`;
   outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
 
   const textNode: Partial<XmlTextNode> = {
@@ -238,7 +238,7 @@ export async function GenerateProject(
   } else if (!options.skipOutputPathManipulation) {
     SetOutputPath(
       host,
-      normalizedOptions.projectName,
+      normalizedOptions.projectRoot,
       await findProjectFileInPath(normalizedOptions.projectRoot)
     );
   }
