@@ -1,3 +1,10 @@
+# [0.2.0-dev.8](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.7...v0.2.0-dev.8) (2021-04-27)
+
+
+### Bug Fixes
+
+* **core:** use full project path in output directory ([d9e5988](https://github.com/nx-dotnet/nx-dotnet/commit/d9e5988e5fbc0cfac15c3b5808bcce27835cfeb3)), closes [#27](https://github.com/nx-dotnet/nx-dotnet/issues/27)
+
 # [0.2.0-dev.7](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.6...v0.2.0-dev.7) (2021-04-26)
 
 
