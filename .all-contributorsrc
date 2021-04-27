@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "bcallaghan-et",
+      "name": "Ben Callaghan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44448874?v=4",
+      "profile": "https://github.com/bcallaghan-et",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "nx-dotnet",
+  "projectOwner": "nx-dotnet",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
