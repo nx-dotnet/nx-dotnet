@@ -1,3 +1,17 @@
+## [0.2.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.2.1) (2021-04-27)
+
+
+### Bug Fixes
+
+* **core:** include serve target only for applications ([#30](https://github.com/nx-dotnet/nx-dotnet/issues/30)) ([d3a54ce](https://github.com/nx-dotnet/nx-dotnet/commit/d3a54cefbd937f2817a676a7d0f3bd449a6f8ced)), closes [#28](https://github.com/nx-dotnet/nx-dotnet/issues/28)
+* **core:** output paths still use windows separator on linux / mac ([ed1c53a](https://github.com/nx-dotnet/nx-dotnet/commit/ed1c53af9f703106dbc3abec87424ae149c14feb))
+* **core:** use full project path in output directory ([7748f9c](https://github.com/nx-dotnet/nx-dotnet/commit/7748f9cf509d067bbc21867253d1d38bd2795264)), closes [#27](https://github.com/nx-dotnet/nx-dotnet/issues/27)
+
+
+### Features
+
+* **repo:** enable semantic-release ([298c5af](https://github.com/nx-dotnet/nx-dotnet/commit/298c5afd6c8bf4e09af60a83dfb5bc97a302eaf4))
+
 # [0.3.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.1...v0.3.0-dev.2) (2021-04-27)
 
 
