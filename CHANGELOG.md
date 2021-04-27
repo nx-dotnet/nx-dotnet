@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0) (2021-04-27)
+
+
+### Features
+
+* **core:** Set output path in generated project files ([96b48f8](https://github.com/nx-dotnet/nx-dotnet/commit/96b48f80054cef14e6185d123b86f96b5f463cb9))
+* **repo:** enable semantic release ([#26](https://github.com/nx-dotnet/nx-dotnet/issues/26)) ([04b1cbd](https://github.com/nx-dotnet/nx-dotnet/commit/04b1cbdd12160b37d72a6cc0ac69490d334f7cef))
+* **repo:** Update build script to utilize Nx's capabilities regarding package.json patching. ([ee80435](https://github.com/nx-dotnet/nx-dotnet/commit/ee80435dad5226f111208c98cd83cc4e3ae66b58))
+
 # [0.2.0-dev.7](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.6...v0.2.0-dev.7) (2021-04-26)
 
 
