@@ -4,5 +4,16 @@
   "main": "src/index.js",
   "dependencies": {},
   "license": "MIT",
-  "version": "0.2.0-dev.2"
+  "version": "0.2.0-dev.8",
+  "keywords": [
+    ".NET",
+    "dotnet"
+  ],
+  "author": {
+    "name": "NxDotnet",
+    "url": "https://github.com/nx-dotnet"
+  },
+  "bugs": {
+    "url": "https://github.com/nx-dotnet/nx-dotnet/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=%5BBUG%5D+"
+  }
 }
