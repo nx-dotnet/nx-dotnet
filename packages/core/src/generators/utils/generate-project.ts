@@ -188,7 +188,7 @@ export async function GenerateProject(
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
       build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
-      serve: GetServeExecutorConfig(),
+      ...(projectType === 'application' && { serve: GetServeExecutorConfig() }),
     },
     tags: normalizedOptions.parsedTags,
   };
