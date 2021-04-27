@@ -92,7 +92,7 @@ async function GenerateTestProject(
     projectType: projectType,
     sourceRoot: `${testRoot}`,
     targets: {
-      build: GetBuildExecutorConfiguration(testName),
+      build: GetBuildExecutorConfiguration(testRoot),
       test: GetTestExecutorConfig(),
     },
     tags: schema.parsedTags,
@@ -187,7 +187,7 @@ export async function GenerateProject(
     projectType: projectType,
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
-      build: GetBuildExecutorConfiguration(normalizedOptions.name),
+      build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
       serve: GetServeExecutorConfig(),
     },
     tags: normalizedOptions.parsedTags,
