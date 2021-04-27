@@ -1,6 +1,9 @@
 # NxDotnet
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Join the chat at https://gitter.im/nx-dotnet-plugin/community](https://badges.gitter.im/nx-dotnet-plugin/community.svg)](https://gitter.im/nx-dotnet-plugin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Run CI checks](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml)
@@ -108,7 +111,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/bcallaghan-et"><img src="https://avatars.githubusercontent.com/u/44448874?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Callaghan</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=bcallaghan-et" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/agentender"><img src="https://avatars.githubusercontent.com/u/6933928?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Craigory Coppola</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=AgentEnder" title="Code">💻</a> <a href="#design-AgentEnder" title="Design">🎨</a> <a href="#ideas-AgentEnder" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/bcallaghan-et"><img src="https://avatars.githubusercontent.com/u/44448874?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Callaghan</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=bcallaghan-et" title="Code">💻</a> <a href="#design-bcallaghan-et" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/jordan-hall"><img src="https://avatars.githubusercontent.com/u/2092344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jordan Hall</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=Jordan-Hall" title="Code">💻</a> <a href="#design-Jordan-Hall" title="Design">🎨</a> <a href="#ideas-Jordan-Hall" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
