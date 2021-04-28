@@ -37,18 +37,14 @@ module.exports = {
       {
         publishCmd: [
           'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
+          'git status',
         ].join(' && '),
       },
     ],
     [
       '@semantic-release/git',
       {
-        assets: [
-          'CHANGELOG.md',
-          'package.json',
-          `packages/*/package.json`,
-          'package.json',
-        ],
+        assets: ['CHANGELOG.md', 'package.json', 'packages/*/package.json'],
         message:
           'release(): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
