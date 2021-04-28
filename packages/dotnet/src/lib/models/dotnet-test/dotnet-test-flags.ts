@@ -1,22 +1,36 @@
 export type dotnetTestFlags =
-  | 'blame-crash-collect-always'
-  | 'blame-crash-dump-type'
-  | 'blame-crash'
-  | 'blame-hang-dump'
-  | 'blame-hang-timeout'
-  | 'blame-hang'
+  | 'blameCrashCollectAlways'
+  | 'blameCrashDumpType'
+  | 'blameCrash'
+  | 'blameHangDump'
+  | 'blameHangTimeout'
+  | 'blameHang'
   | 'blame'
   | 'collect'
   | 'configuration'
   | 'diag'
   | 'filter'
   | 'framework'
-  | 'list-tests'
+  | 'listTests'
   | 'logger'
-  | 'no-build'
-  | 'no-restore'
+  | 'noBuild'
+  | 'noRestore'
   | 'nologo'
-  | 'results-directory'
+  | 'resultsDirectory'
   | 'settings'
-  | 'test-adapter-path'
+  | 'testAdapterPath'
   | 'verbosity';
+
+export const testKeyMap: Partial<{ [key in dotnetTestFlags]: string }> = {
+  blameCrashCollectAlways: 'blame-crash-collect-always',
+  blameCrash: 'blame-crash',
+  blameCrashDumpType: 'blame-crash-dump-type',
+  blameHangDump: 'blame-hang-dump',
+  blameHang: 'blame-hang',
+  blameHangTimeout: 'blame-hang-timeout',
+  listTests: 'list-tests',
+  noBuild: 'no-build',
+  noRestore: 'no-restore',
+  resultsDirectory: 'results-directory',
+  testAdapterPath: 'test-adapter-path',
+};

@@ -1,0 +1,2 @@
+; Set a new registry for a scoped package
+@nx-dotnet:registry=http://localhost:4873

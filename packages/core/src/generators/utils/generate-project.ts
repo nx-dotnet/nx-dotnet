@@ -188,16 +188,12 @@ export async function GenerateProject(
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
       build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
-      ...(projectType === 'application' ? { serve: GetServeExecutorConfig() } : {}),
+      ...(projectType === 'application'
+        ? { serve: GetServeExecutorConfig() }
+        : {}),
     },
     tags: normalizedOptions.parsedTags,
   };
-
-  if (options['test-template'] !== 'none') {
-    projectConfiguration.targets.test = GetTestExecutorConfig(
-      normalizedOptions.projectName + '-test'
-    );
-  }
 
   addProjectConfiguration(
     host,

@@ -1,12 +1,17 @@
 import { ChildProcess, execSync, spawn } from 'child_process';
 
-import { getParameterString } from '@nx-dotnet/utils';
+import {
+  getParameterString,
+  swapArrayFieldValueUsingMap,
+} from '@nx-dotnet/utils';
 
 import {
   dotnetBuildOptions,
   dotnetNewOptions,
   dotnetRunOptions,
   dotnetTemplate,
+  dotnetTestOptions,
+  testKeyMap,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
 
@@ -30,6 +35,17 @@ export class DotNetClient {
     const cmd = `run --project ${project} ${paramString}`;
     console.log(`Executing Command: ${cmd}`);
     return spawn(this.cliCommand.command, cmd.split(' '), { stdio: 'inherit' });
+  }
+
+  test(project: string, parameters?: dotnetTestOptions): Buffer {
+    let cmd = `${this.cliCommand.command} test ${project}`;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
+    console.log(`Executing Command: ${cmd}`);
+    return this.logAndExecute(cmd);
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
