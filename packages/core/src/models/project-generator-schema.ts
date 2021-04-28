@@ -7,6 +7,6 @@ export interface NxDotnetProjectGeneratorSchema {
   directory?: string;
   template: string;
   language: string;
-  'test-template': 'nunit' | 'mstest' | 'xunit' | 'none';
+  testTemplate: 'nunit' | 'mstest' | 'xunit' | 'none';
   skipOutputPathManipulation: boolean;
 }

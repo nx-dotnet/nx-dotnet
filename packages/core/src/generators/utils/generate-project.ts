@@ -83,7 +83,6 @@ async function GenerateTestProject(
   dotnetClient: DotNetClient,
   projectType: ProjectType
 ) {
-  const testName = schema.name + '-test';
   const testRoot = schema.projectRoot + '-test';
   const testProjectName = schema.projectName + '-test';
 
@@ -115,11 +114,11 @@ async function GenerateTestProject(
 
   if (isDryRun()) {
     newParams.push({
-      flag: 'dry-run',
+      flag: 'dryRun',
     });
   }
 
-  dotnetClient.new(schema['test-template'], newParams);
+  dotnetClient.new(schema.testTemplate, newParams);
 
   if (!isDryRun() && !schema.skipOutputPathManipulation) {
     const testCsProj = await findProjectFileInPath(testRoot);
@@ -177,7 +176,7 @@ export async function GenerateProject(
 ) {
   initSchematic(host);
 
-  options['test-template'] = options['test-template'] ?? 'none';
+  options.testTemplate = options.testTemplate ?? 'none';
 
   const normalizedOptions = normalizeOptions(host, options, projectType);
 
@@ -218,13 +217,13 @@ export async function GenerateProject(
 
   if (isDryRun()) {
     newParams.push({
-      flag: 'dry-run',
+      flag: 'dryRun',
     });
   }
 
   dotnetClient.new(normalizedOptions.template, newParams);
 
-  if (options['test-template'] !== 'none') {
+  if (options['testTemplate'] !== 'none') {
     await GenerateTestProject(
       normalizedOptions,
       host,

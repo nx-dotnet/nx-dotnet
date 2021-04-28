@@ -1,11 +1,18 @@
 export type dotnetNewFlags =
-  | 'dry-run'
+  | 'dryRun'
   | 'force'
   | 'language'
   | 'name'
   | 'install'
-  | 'nuget-source'
+  | 'nugetSource'
   | 'output'
   | 'uninstall'
-  | 'update-apply'
-  | 'update-check';
+  | 'updateApply'
+  | 'updateCheck';
+
+export const newKeyMap: Partial<{ [key in dotnetNewFlags]: string }> = {
+  dryRun: 'dry-run',
+  updateApply: 'update-apply',
+  updateCheck: 'update-check',
+  nugetSource: 'nuget-source',
+};

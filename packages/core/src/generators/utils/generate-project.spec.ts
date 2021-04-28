@@ -23,7 +23,7 @@ describe('nx-dotnet project generator', () => {
     name: 'test',
     language: 'C#',
     template: 'classlib',
-    'test-template': 'none',
+    testTemplate: 'none',
     skipOutputPathManipulation: true,
   };
 
@@ -46,7 +46,7 @@ describe('nx-dotnet project generator', () => {
     await GenerateProject(appTree, options, dotnetClient, 'library');
     const config = readProjectConfiguration(appTree, 'test');
     expect(config.targets.serve).not.toBeDefined();
-  })
+  });
 
   it('should tag generated projects', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'library');
@@ -76,7 +76,14 @@ describe('nx-dotnet project generator', () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
     expect(config.targets.serve).toBeDefined();
-  })
+  });
+
+  it('should generate test project', async () => {
+    options.testTemplate = 'nunit';
+    await GenerateProject(appTree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(appTree, 'test');
+    expect(config.targets.serve).toBeDefined();
+  });
 
   /**
    * This test requires a live dotnet client.
@@ -101,7 +108,6 @@ describe('nx-dotnet project generator', () => {
       ?.childNamed('OutputPath')?.val as string;
     expect(outputPath).toBeTruthy();
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const absoluteDistPath = resolve(config.root, outputPath);
     const expectedDistPath = resolve('./dist/libs/test');
 

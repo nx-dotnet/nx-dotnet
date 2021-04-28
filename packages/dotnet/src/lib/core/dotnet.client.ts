@@ -6,6 +6,7 @@ import {
 } from '@nx-dotnet/utils';
 
 import {
+  buildKeyMap,
   dotnetBuildOptions,
   dotnetNewOptions,
   dotnetRunOptions,
@@ -19,20 +20,32 @@ export class DotNetClient {
   constructor(private cliCommand: LoadedCLI) {}
 
   new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
-    const paramString = parameters ? getParameterString(parameters) : '';
-    const cmd = `${this.cliCommand.command} new ${template} ${paramString}`;
+    let cmd = `${this.cliCommand.command} new ${template}`;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
     return this.logAndExecute(cmd);
   }
 
   build(project: string, parameters?: dotnetBuildOptions): Buffer {
-    const paramString = parameters ? getParameterString(parameters) : '';
-    const cmd = `${this.cliCommand.command} build ${project} ${paramString}`;
+    let cmd = `${this.cliCommand.command} build ${project}`;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', buildKeyMap);
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
     return this.logAndExecute(cmd);
   }
 
   run(project: string, parameters?: dotnetRunOptions): ChildProcess {
-    const paramString = parameters ? getParameterString(parameters) : '';
-    const cmd = `run --project ${project} ${paramString}`;
+    let cmd = `run --project ${project} `;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
     console.log(`Executing Command: ${cmd}`);
     return spawn(this.cliCommand.command, cmd.split(' '), { stdio: 'inherit' });
   }

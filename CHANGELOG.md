@@ -1,3 +1,16 @@
+# [0.3.0-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.1-dev.1...v0.3.0-dev.1) (2021-04-28)
+
+
+### Bug Fixes
+
+* **core:** [#20](https://github.com/nx-dotnet/nx-dotnet/issues/20) test template arg cannot be passed from command line ([f74900a](https://github.com/nx-dotnet/nx-dotnet/commit/f74900a1eac1d323813fda3f571112137b67c8ef))
+* **repo:** semantic-release not updating package.json ([de9fcd9](https://github.com/nx-dotnet/nx-dotnet/commit/de9fcd9cf5accfe99f602a04cbfd9a44f72f1deb))
+
+
+### Features
+
+* **core:** dotnet test support ([adbb532](https://github.com/nx-dotnet/nx-dotnet/commit/adbb5328b7d80e02418d7b5fbf3aed54b3a0ee33))
+
 ## [0.2.1-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.2.1-dev.1) (2021-04-27)
 
 

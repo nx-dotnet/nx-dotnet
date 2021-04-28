@@ -2,12 +2,19 @@ export type dotnetRunFlags =
   | 'configuration'
   | 'framework'
   | 'force'
-  | 'no-dependencies'
-  | 'no-incremental'
-  | 'no-restore'
+  | 'noDependencies'
+  | 'noIncremental'
+  | 'noRestore'
   | 'nologo'
   | 'output'
   | 'source'
   | 'verbosity'
-  | 'version-suffix'
+  | 'versionSuffix'
   | 'runtime';
+
+export const runKeyMap: Partial<{ [key in dotnetRunFlags]: string }> = {
+  noDependencies: 'no-dependencies',
+  noRestore: 'no-restore',
+  versionSuffix: 'version-suffix',
+  noIncremental: 'no-incremental',
+};
