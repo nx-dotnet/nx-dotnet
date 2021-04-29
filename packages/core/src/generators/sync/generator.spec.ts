@@ -1,5 +1,5 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 
 import generator from './generator';
 import { SyncGeneratorSchema } from './schema';
@@ -13,7 +13,7 @@ describe('sync generator', () => {
   });
 
   it('should run successfully', async () => {
-    // await generator(appTree, options);
+    await generator(appTree, options);
     expect(true).toBeTruthy();
   });
 });

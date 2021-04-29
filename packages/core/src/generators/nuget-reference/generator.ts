@@ -5,30 +5,64 @@ import {
   DotNetClient,
   dotnetFactory,
 } from '@nx-dotnet/dotnet';
-import { getProjectFileForNxProject } from '@nx-dotnet/utils';
+
+import {
+  ALLOW_MISMATCH,
+  getProjectFileForNxProject,
+  readConfig,
+  updateConfig,
+} from '@nx-dotnet/utils';
 
 import { NugetReferenceGeneratorSchema } from './schema';
+import { UpdateDependencyVersions } from '../utils/update-dependency-version';
+import { resolveVersionMismatch } from '../utils/resolve-version-mismatch';
 
 export default async function (
   host: Tree,
   options: NugetReferenceGeneratorSchema,
-  dotnetClient = new DotNetClient(dotnetFactory())
+  dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
   const project = readProjectConfiguration(host, options.project);
   const projectFilePath = await getProjectFileForNxProject(project);
 
-  dotnetClient.addPackageReference(
-    projectFilePath,
-    options.packageName,
-    Object.keys(options)
-      .filter((x) => x !== 'packageName' && x !== 'project')
-      .map((x) => ({
-        flag: x as dotnetAddPackageFlags,
-        value: options[x as keyof NugetReferenceGeneratorSchema],
-      }))
+  const config = readConfig(host);
+  const configuredPkgVersion = config.nugetPackages[options.packageName];
+  const resolvedVersion = await resolveVersionMismatch(
+    options.version,
+    configuredPkgVersion,
+    options.allowVersionMismatch,
   );
+  config.nugetPackages[options.packageName] = resolvedVersion;
+  if (
+    resolvedVersion !== options.version &&
+    resolvedVersion !== ALLOW_MISMATCH
+  ) {
+    options.version = resolvedVersion;
+  }
 
-  return {
-    success: true,
-  };
+  try {
+    dotnetClient.addPackageReference(
+      projectFilePath,
+      options.packageName,
+      Object.keys(options)
+        .filter((x) => x !== 'packageName' && x !== 'project')
+        .map((x) => ({
+          flag: x as dotnetAddPackageFlags,
+          value: options[x as keyof NugetReferenceGeneratorSchema],
+        })),
+    );
+
+    updateConfig(host, config);
+
+    if (
+      resolvedVersion !== ALLOW_MISMATCH &&
+      resolvedVersion !== configuredPkgVersion &&
+      resolvedVersion
+    ) {
+      UpdateDependencyVersions(host, options.packageName, resolvedVersion);
+    }
+  } catch (e: unknown) {
+    console.warn('Config not updated since dotnet failed to add dependency!');
+    throw e;
+  }
 }

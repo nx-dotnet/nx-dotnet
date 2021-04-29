@@ -1,13 +1,18 @@
-import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
+import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { updateConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
 import { NugetReferenceGeneratorSchema } from './schema';
-import { rimraf } from '@nx-dotnet/utils';
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+
+import { prompt } from 'inquirer';
+import PromptUI = require('inquirer/lib/ui/prompt');
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
-jest.mock('../../../../utils/src/lib/workspace');
+jest.mock('../../../../utils/src/lib/utility-functions/workspace');
+jest.mock('inquirer');
 
 describe('nuget-reference generator', () => {
   let appTree: Tree;
@@ -15,6 +20,7 @@ describe('nuget-reference generator', () => {
   const options: NugetReferenceGeneratorSchema = {
     packageName: 'test',
     project: 'test',
+    allowVersionMismatch: false,
   };
 
   let dotnetClient: DotNetClient;
@@ -27,7 +33,7 @@ describe('nuget-reference generator', () => {
         projects: {
           test: {},
         },
-      })
+      }),
     );
     appTree.write(
       'nx.json',
@@ -37,16 +43,27 @@ describe('nuget-reference generator', () => {
             tags: [],
           },
         },
-      })
+      }),
     );
+
+    updateConfig(appTree, { nugetPackages: {} });
+    (prompt as jest.MockedFunction<typeof prompt>)
+      .mockReset()
+      .mockImplementation((async () => {
+        return {};
+      }) as () => Promise<unknown> & { ui: PromptUI });
 
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
   it('runs calls dotnet add package reference', async () => {
-    const output = await generator(appTree, options, dotnetClient);
-    expect(output.success).toBe(true);
+    await generator(appTree, options, dotnetClient);
     const mock = dotnetClient as jest.Mocked<DotNetClient>;
     expect(mock.addPackageReference).toHaveBeenCalledTimes(1);
+  });
+
+  it('only prompts user once on version mismatch / miss', async () => {
+    await generator(appTree, options, dotnetClient);
+    expect(prompt).toHaveBeenCalledTimes(1);
   });
 });

@@ -15,7 +15,11 @@ import { dirname, relative } from 'path';
 import { XmlDocument, XmlNode, XmlTextNode } from 'xmldoc';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
-import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
+import {
+  findProjectFileInPath,
+  isDryRun,
+  NXDOTNET_TAG,
+} from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -39,7 +43,7 @@ interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
 function normalizeOptions(
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
-  projectType: ProjectType
+  projectType: ProjectType,
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const className = names(options.name).className;
@@ -55,7 +59,7 @@ function normalizeOptions(
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
-  parsedTags.push('nx-dotnet');
+  parsedTags.push(NXDOTNET_TAG);
 
   const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
   const featureScope = projectDirectory
@@ -81,7 +85,7 @@ async function GenerateTestProject(
   schema: NormalizedSchema,
   host: Tree,
   dotnetClient: DotNetClient,
-  projectType: ProjectType
+  projectType: ProjectType,
 ) {
   const testRoot = schema.projectRoot + '-test';
   const testProjectName = schema.projectName + '-test';
@@ -132,15 +136,15 @@ async function GenerateTestProject(
 function SetOutputPath(
   host: Tree,
   projectRootPath: string,
-  projectFilePath: string
+  projectFilePath: string,
 ): void {
   const xml: XmlDocument = new XmlDocument(
-    readFileSync(projectFilePath).toString()
+    readFileSync(projectFilePath).toString(),
   );
 
   let outputPath = `${relative(
     dirname(projectFilePath),
-    process.cwd()
+    process.cwd(),
   )}/dist/${projectRootPath}`;
   outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
 
@@ -172,7 +176,7 @@ export async function GenerateProject(
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
   dotnetClient: DotNetClient,
-  projectType: ProjectType
+  projectType: ProjectType,
 ) {
   initSchematic(host);
 
@@ -197,7 +201,7 @@ export async function GenerateProject(
   addProjectConfiguration(
     host,
     normalizedOptions.projectName,
-    projectConfiguration
+    projectConfiguration,
   );
 
   const newParams: dotnetNewOptions = [
@@ -228,13 +232,13 @@ export async function GenerateProject(
       normalizedOptions,
       host,
       dotnetClient,
-      projectType
+      projectType,
     );
   } else if (!options.skipOutputPathManipulation) {
     SetOutputPath(
       host,
       normalizedOptions.projectRoot,
-      await findProjectFileInPath(normalizedOptions.projectRoot)
+      await findProjectFileInPath(normalizedOptions.projectRoot),
     );
   }
 

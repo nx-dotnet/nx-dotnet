@@ -10,7 +10,7 @@ import {
   dotnetFactory,
   mockDotnetFactory,
 } from '@nx-dotnet/dotnet';
-import { findProjectFileInPath, rimraf } from '@nx-dotnet/utils';
+import { findProjectFileInPath, NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
@@ -40,6 +40,12 @@ describe('nx-dotnet project generator', () => {
     await GenerateProject(appTree, options, dotnetClient, 'library');
     const config = readProjectConfiguration(appTree, 'test');
     expect(config).toBeDefined();
+  });
+
+  it('should tag nx-dotnet projects', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const config = readProjectConfiguration(appTree, options.name);
+    expect(config.tags).toContain(NXDOTNET_TAG);
   });
 
   it('should not include serve target for libraries', async () => {
@@ -96,12 +102,12 @@ describe('nx-dotnet project generator', () => {
         skipOutputPathManipulation: false,
       },
       new DotNetClient(dotnetFactory()),
-      'library'
+      'library',
     );
     const config = readProjectConfiguration(appTree, 'test');
     const projectFilePath = await findProjectFileInPath(config.root);
     const projectXml = new XmlDocument(
-      readFileSync(projectFilePath).toString()
+      readFileSync(projectFilePath).toString(),
     );
     const outputPath = projectXml
       .childNamed('PropertyGroup')

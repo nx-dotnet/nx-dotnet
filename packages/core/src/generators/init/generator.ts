@@ -5,21 +5,20 @@ import {
   Tree,
   writeJson,
 } from '@nrwl/devkit';
+import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 export default async function (host: Tree) {
-  const initialized = host.isFile('nx-dotnet.config.js');
-  if (initialized) {
-    return;
-  }
+  const initialized = host.isFile(CONFIG_FILE_PATH);
 
-  host.write(
-    'nx-dotnet.config.js',
-    `
-module.exports = {
+  const configObject: NxDotnetConfig = initialized
+    ? readJson(host, CONFIG_FILE_PATH)
+    : {
+        nugetPackages: {},
+      };
 
-}
-  `
-  );
+  configObject.nugetPackages = configObject.nugetPackages || {};
+
+  host.write(CONFIG_FILE_PATH, JSON.stringify(configObject, null, 2));
 
   updateNxJson(host);
   updateGitIgnore(host);
