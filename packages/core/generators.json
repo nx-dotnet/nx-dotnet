@@ -24,6 +24,16 @@
       "description": "init generator",
       "alias": ["ng-add"],
       "hidden": true
+    },
+    "sync": {
+      "factory": "./src/generators/sync/generator",
+      "schema": "./src/generators/sync/schema.json",
+      "description": "sync generator"
+    },
+    "nuget-reference": {
+      "factory": "./src/generators/nuget-reference/generator",
+      "schema": "./src/generators/nuget-reference/schema.json",
+      "description": "nuget-reference generator"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { formatFiles, readProjectConfiguration, Tree } from '@nrwl/devkit';
+import { readProjectConfiguration, Tree } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { getProjectFileForNxProject } from '@nx-dotnet/utils';
@@ -24,6 +24,4 @@ export default async function (
   }
 
   client.addProjectReference(hostProjectFile, sourceProjectFile);
-
-  await formatFiles(host);
 }

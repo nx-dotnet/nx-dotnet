@@ -6,7 +6,9 @@ import {
 } from '@nx-dotnet/utils';
 
 import {
+  addPackageKeyMap,
   buildKeyMap,
+  dotnetAddPackageOptions,
   dotnetBuildOptions,
   dotnetNewOptions,
   dotnetRunOptions,
@@ -54,6 +56,25 @@ export class DotNetClient {
     let cmd = `${this.cliCommand.command} test ${project}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
+    console.log(`Executing Command: ${cmd}`);
+    return this.logAndExecute(cmd);
+  }
+
+  addPackageReference(
+    project: string,
+    pkg: string,
+    parameters?: dotnetAddPackageOptions
+  ): Buffer {
+    let cmd = `${this.cliCommand.command} add ${project} package ${pkg}`;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(
+        parameters,
+        'flag',
+        addPackageKeyMap
+      );
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
