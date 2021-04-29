@@ -49,5 +49,5 @@ export function PatchPackageVersions(newVersion: string, updateGit = true) {
 }
 
 if (require.main === module) {
-  PatchPackageVersions(process.argv[2]);
+  PatchPackageVersions(process.argv[2], false);
 }

@@ -27,6 +27,7 @@ module.exports = {
             { type: 'refactor', hidden: true },
             { type: 'test', hidden: true },
             { type: 'release', hidden: true },
+            { scope: 'repo', hidden: true },
           ],
         },
       },
@@ -35,9 +36,9 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
+        prepareCmd: 'npx ts-node toools/scripts/patch-package-versions ${nextRelease.version}',
         publishCmd: [
           'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
-          'git status',
         ].join(' && '),
       },
     ],
