@@ -87,5 +87,5 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "0.1.5-dev.19"
+  "version": "0.3.0-dev.4"
 }
