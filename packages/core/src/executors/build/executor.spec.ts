@@ -45,8 +45,8 @@ describe('Build Executor', () => {
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
-  afterEach(() => {
-    return rimraf(root);
+  afterEach(async () => {
+    await rimraf(root);
   });
 
   it('detects no dotnet project', async () => {
