@@ -1,0 +1,4 @@
+{
+  "list": ["@nx-dotnet/core", "@nx-dotnet/dotnet", "@nx-dotnet/utils"],
+  "secret": "cfc2c62011becaa79d6c1eaab8c84030989169c717fb87dcd5ef927487633d72"
+}

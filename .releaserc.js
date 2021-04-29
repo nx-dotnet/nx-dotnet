@@ -36,7 +36,8 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        prepareCmd: 'npx ts-node toools/scripts/patch-package-versions ${nextRelease.version}',
+        prepareCmd:
+          'npx ts-node tools/scripts/patch-package-versions ${nextRelease.version}',
         publishCmd: [
           'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
         ].join(' && '),
