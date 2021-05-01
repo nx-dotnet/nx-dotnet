@@ -4,7 +4,7 @@ import { existsSync } from 'fs';
 import { readJson } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
 
-export function PublishAll(version, tag = 'latest') {
+export function PublishAll(version: string, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
 

@@ -5,7 +5,7 @@ export function build(
   nxVersion,
   ngCliVersion,
   typescriptVersion,
-  prettierVersion
+  prettierVersion,
 ) {
   try {
     execSync('npx nx run-many --target=build --all', {
@@ -20,7 +20,7 @@ export function build(
 
   const files = [
     ...['core', 'dotnet', 'typescript', 'utils'].map(
-      (f) => `${f}/package.json`
+      (f) => `${f}/package.json`,
     ),
   ].map((f) => `${BUILD_DIR}/${f}`);
 
@@ -29,7 +29,7 @@ export function build(
     content = content
       .replace(
         /exports.nxVersion = '\*'/g,
-        `exports.nxVersion = '${nxVersion}'`
+        `exports.nxVersion = '${nxVersion}'`,
       )
       .replace(/NX_VERSION/g, nxVersion)
       .replace(/TYPESCRIPT_VERSION/g, typescriptVersion)

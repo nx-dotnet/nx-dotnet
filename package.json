@@ -28,13 +28,17 @@
     "e2e-registry": "yarn verdaccio --config ./tools/scripts/local-registry/config.yml --listen 4872",
     "e2e-tests": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
     "e2e": "run-p -r e2e-registry \"e2e-tests {@}\" --",
-    "semantic-release": "semantic-release"
+    "publish-local": "run-p \"rimraf tmp\" e2e-registry \"ts-node ./tools/scripts/publish-all 99.99.99 local\"",
+    "semantic-release": "semantic-release",
+    "ts-node": "ts-node",
+    "rimraf": "rimraf"
   },
   "private": false,
   "dependencies": {
     "@types/xmldoc": "^1.1.5",
     "chokidar": "^3.5.1",
     "glob": "^7.1.6",
+    "inquirer": "^8.0.0",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "xmldoc": "^1.1.2"
@@ -58,6 +62,7 @@
     "@semantic-release/exec": "^5.0.0",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/release-notes-generator": "^9.0.2",
+    "@types/inquirer": "^7.3.1",
     "@types/jest": "26.0.8",
     "@types/node": "14.14.33",
     "@types/rimraf": "^3.0.0",

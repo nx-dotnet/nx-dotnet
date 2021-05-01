@@ -4,7 +4,7 @@ import { TargetConfiguration } from '@nrwl/devkit';
  * Returns a TargetConfiguration for the nx-dotnet/core:build executor
  */
 export function GetBuildExecutorConfiguration(
-  projectRoot: string
+  projectRoot: string,
 ): BuildExecutorConfiguration {
   const outputDirectory = `dist/${projectRoot}`;
 

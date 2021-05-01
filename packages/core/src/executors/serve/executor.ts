@@ -26,7 +26,7 @@ let projectDirectory: string;
 export default function dotnetRunExecutor(
   options: ServeExecutorSchema,
   context: ExecutorContext,
-  dotnetClient: DotNetClient = new DotNetClient(dotnetFactory())
+  dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ): Promise<{ success: boolean }> {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
 
@@ -43,7 +43,7 @@ export default function dotnetRunExecutor(
         context.workspace,
         (dependency) => {
           watcher.add(dependency.root);
-        }
+        },
       );
 
       watcher.on('all', (event, path) => {
@@ -68,7 +68,7 @@ export default function dotnetRunExecutor(
 const setupDotnetRun = (
   dotnetClient: DotNetClient,
   project: string,
-  options: ServeExecutorSchema
+  options: ServeExecutorSchema,
 ) => {
   if (childProcess) {
     childProcess.kill('SIGTERM');

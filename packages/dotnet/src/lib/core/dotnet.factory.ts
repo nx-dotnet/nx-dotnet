@@ -26,7 +26,7 @@ export function dotnetFactory(): LoadedCLI {
     };
   } catch (e) {
     throw new Error(
-      'dotnet not installed. Local support not yet added https://github.com/AgentEnder/nx-dotnet/issues/3'
+      'dotnet not installed. Local support not yet added https://github.com/AgentEnder/nx-dotnet/issues/3',
     );
   }
 }

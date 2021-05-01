@@ -7,4 +7,5 @@ export interface NugetReferenceGeneratorSchema {
   prerelease?: boolean;
   source?: string;
   noRestore?: boolean;
+  allowVersionMismatch: boolean;
 }

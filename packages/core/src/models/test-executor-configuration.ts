@@ -1,7 +1,7 @@
 import { TargetConfiguration } from '@nrwl/devkit';
 
 export function GetTestExecutorConfig(
-  projectName?: string
+  projectName?: string,
 ): TestTargetConfiguration {
   return {
     executor: '@nx-dotnet/core:test',
