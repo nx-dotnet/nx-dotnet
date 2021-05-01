@@ -1,3 +1,16 @@
+# [0.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0...v0.4.0) (2021-05-01)
+
+
+### Bug Fixes
+
+* **repo:** update .releaserc to commit package.json version back ([36d2f30](https://github.com/nx-dotnet/nx-dotnet/commit/36d2f30af70c864ad689123486a3471622a8cd01))
+
+
+### Features
+
+* **core:** schematic for adding npm package [#5](https://github.com/nx-dotnet/nx-dotnet/issues/5) ([4f37be7](https://github.com/nx-dotnet/nx-dotnet/commit/4f37be7065d351539fe22c30d94866382693ed3f)), closes [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6)
+* **core:** support for single version principle [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6) ([#32](https://github.com/nx-dotnet/nx-dotnet/issues/32)) ([8e60a13](https://github.com/nx-dotnet/nx-dotnet/commit/8e60a131d2e6522c3ad01788ab06cdf234d99cf3))
+
 # [0.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.1...v0.3.0) (2021-04-28)
 
 ### Bug Fixes
