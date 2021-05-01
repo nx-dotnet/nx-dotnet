@@ -66,25 +66,24 @@ export class DotNetClient {
   addPackageReference(
     project: string,
     pkg: string,
-    parameters?: dotnetAddPackageOptions
+    parameters?: dotnetAddPackageOptions,
   ): Buffer {
     let cmd = `${this.cliCommand.command} add ${project} package ${pkg}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(
         parameters,
         'flag',
-        addPackageKeyMap
+        addPackageKeyMap,
       );
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
-    console.log(`Executing Command: ${cmd}`);
     return this.logAndExecute(cmd);
   }
 
   addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
     return this.logAndExecute(
-      `${this.cliCommand.command} add ${hostCsProj} reference ${targetCsProj}`
+      `${this.cliCommand.command} add ${hostCsProj} reference ${targetCsProj}`,
     );
   }
 

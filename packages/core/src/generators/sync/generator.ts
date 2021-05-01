@@ -1,73 +1,54 @@
+import { Tree } from '@nrwl/devkit';
+
 import {
-  addProjectConfiguration,
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
-} from '@nrwl/devkit';
-import * as path from 'path';
-import { SyncGeneratorSchema } from './schema';
+  ALLOW_MISMATCH,
+  getNxDotnetProjects,
+  getProjectFilesForProject,
+  iterateChildrenByPath,
+  readConfig,
+  readXml,
+  updateConfig,
+} from '@nx-dotnet/utils';
 
-interface NormalizedSchema extends SyncGeneratorSchema {
-  projectName: string;
-  projectRoot: string;
-  projectDirectory: string;
-  parsedTags: string[];
-}
+import { resolveVersionMismatch } from '../utils/resolve-version-mismatch';
+import { updateDependencyVersions } from '../utils/update-dependency-version';
 
-function normalizeOptions(
-  host: Tree,
-  options: SyncGeneratorSchema
-): NormalizedSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
+export default async function (host: Tree) {
+  const config = readConfig(host);
+  const projects = getNxDotnetProjects(host);
 
-  return {
-    ...options,
-    projectName,
-    projectRoot,
-    projectDirectory,
-    parsedTags,
-  };
-}
+  for (const [projectName, configuration] of projects.entries()) {
+    const projectFiles = getProjectFilesForProject(host, configuration);
+    for (const f of projectFiles) {
+      const xmldoc = readXml(host, f);
+      console.log(`Scanning packages for ${projectName} (${f})`);
+      await iterateChildrenByPath(
+        xmldoc,
+        'ItemGroup.PackageReference',
+        async (reference) => {
+          const pkg = reference.attr['Include'];
+          const version = reference.attr['Version'];
+          const configuredVersion = config.nugetPackages[pkg];
 
-function addFiles(host: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    ...names(options.name),
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
-  };
-  generateFiles(
-    host,
-    path.join(__dirname, 'files'),
-    options.projectRoot,
-    templateOptions
-  );
-}
-
-export default async function (host: Tree, options: SyncGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(host, options);
-  addProjectConfiguration(host, normalizedOptions.projectName, {
-    root: normalizedOptions.projectRoot,
-    projectType: 'library',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
-    targets: {
-      build: {
-        executor: '@nx-dotnet/core:build',
-      },
-    },
-    tags: normalizedOptions.parsedTags,
-  });
-  addFiles(host, normalizedOptions);
-  await formatFiles(host);
+          if (
+            version &&
+            version !== configuredVersion &&
+            configuredVersion !== ALLOW_MISMATCH
+          ) {
+            const resolved = await resolveVersionMismatch(
+              version,
+              configuredVersion,
+              false,
+            );
+            // console.log('Resolved:', resolved)
+            config.nugetPackages[pkg] = resolved;
+            if (resolved !== ALLOW_MISMATCH) {
+              updateDependencyVersions(host, pkg, resolved);
+            }
+          }
+        },
+      );
+    }
+  }
+  updateConfig(host, config);
 }

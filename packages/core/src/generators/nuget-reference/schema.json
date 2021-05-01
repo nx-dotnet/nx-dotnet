@@ -49,6 +49,11 @@
     "noRestore": {
       "type": "boolean",
       "description": "Adds a package reference without performing a restore preview and compatibility check."
+    },
+    "allowVersionMismatch": {
+      "type": "boolean",
+      "description": "Ignores single version principle for this package across all apps in the workspace",
+      "default": false
     }
   },
   "required": ["packageName", "project"]

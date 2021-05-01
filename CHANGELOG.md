@@ -1,14 +1,12 @@
 # [0.3.0-dev.4](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.3...v0.3.0-dev.4) (2021-04-29)
 
-
 ### Bug Fixes
 
-* **repo:** update .releaserc to commit package.json version back ([dea86e3](https://github.com/nx-dotnet/nx-dotnet/commit/dea86e3c2015ede2c10c508f8c79f2877ed9ee4d))
-
+- **repo:** update .releaserc to commit package.json version back ([dea86e3](https://github.com/nx-dotnet/nx-dotnet/commit/dea86e3c2015ede2c10c508f8c79f2877ed9ee4d))
 
 ### Features
 
-* **core:** schematic for adding npm package [#5](https://github.com/nx-dotnet/nx-dotnet/issues/5) ([b97c097](https://github.com/nx-dotnet/nx-dotnet/commit/b97c0972f1cbc87045e9047bf0222e90d3940cfe)), closes [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6)
+- **core:** schematic for adding npm package [#5](https://github.com/nx-dotnet/nx-dotnet/issues/5) ([b97c097](https://github.com/nx-dotnet/nx-dotnet/commit/b97c0972f1cbc87045e9047bf0222e90d3940cfe)), closes [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6)
 
 ## [0.2.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.2.1) (2021-04-27)
 

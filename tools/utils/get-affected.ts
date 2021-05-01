@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 
 export function getAffectedProjects(
   all = process.env.ALL === 'true',
-  specific = process.env.SPECIFIC_PROJECT
+  specific = process.env.SPECIFIC_PROJECT,
 ) {
   let projects = [];
   if (specific && specific !== 'null') {

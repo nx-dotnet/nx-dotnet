@@ -1,4 +1,4 @@
-import { cmdLineParameter } from './models';
+import { cmdLineParameter } from '../models';
 
 /**
  * Transforms an array of cmdLineParameter into a string.

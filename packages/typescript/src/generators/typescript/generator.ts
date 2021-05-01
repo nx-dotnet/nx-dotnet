@@ -21,7 +21,7 @@ interface NormalizedSchema extends TypescriptGeneratorSchema {
 
 function normalizeOptions(
   host: Tree,
-  options: TypescriptGeneratorSchema
+  options: TypescriptGeneratorSchema,
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
@@ -53,7 +53,7 @@ function addFiles(host: Tree, options: NormalizedSchema) {
     host,
     path.join(__dirname, 'files'),
     options.projectRoot,
-    templateOptions
+    templateOptions,
   );
 }
 

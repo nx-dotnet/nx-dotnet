@@ -10,7 +10,6 @@ env:
   NX_RUN_GROUP: ${{ github.run_id }}
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     name: Building affected apps

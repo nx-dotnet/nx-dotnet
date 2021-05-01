@@ -10,7 +10,7 @@ import { getDependantProjectsForNxProject } from '@nx-dotnet/utils';
 
 export function processProjectGraph(
   graph: ProjectGraph,
-  context: ProjectGraphProcessorContext
+  context: ProjectGraphProcessorContext,
 ) {
   const builder = new ProjectGraphBuilder(graph);
 
@@ -21,7 +21,7 @@ export function processProjectGraph(
       }
     } catch {
       console.warn(
-        `nx-dotnet encountered an error parsing dependencies for ${name}`
+        `nx-dotnet encountered an error parsing dependencies for ${name}`,
       );
     }
   });
@@ -33,13 +33,13 @@ function visitProject(
   builder: ProjectGraphBuilder,
   context: ProjectGraphProcessorContext,
   project: ProjectConfiguration,
-  projectName: string
+  projectName: string,
 ) {
   getDependantProjectsForNxProject(
     projectName,
     context.workspace,
     (projectConfig, dependencyName) => {
       builder.addDependency(DependencyType.static, projectName, dependencyName);
-    }
+    },
   );
 }
