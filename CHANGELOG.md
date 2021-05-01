@@ -1,3 +1,10 @@
+# [0.3.0-dev.5](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.4...v0.3.0-dev.5) (2021-05-01)
+
+
+### Features
+
+* **core:** support for single version principle [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6) ([#32](https://github.com/nx-dotnet/nx-dotnet/issues/32)) ([81301b6](https://github.com/nx-dotnet/nx-dotnet/commit/81301b6eedac4f36962ab56294f3048434381374))
+
 # [0.3.0-dev.4](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.3...v0.3.0-dev.4) (2021-04-29)
 
 ### Bug Fixes
