@@ -5,7 +5,6 @@ import {
   DotNetClient,
   dotnetFactory,
 } from '@nx-dotnet/dotnet';
-
 import {
   ALLOW_MISMATCH,
   getProjectFileForNxProject,
@@ -13,9 +12,9 @@ import {
   updateConfig,
 } from '@nx-dotnet/utils';
 
-import { NugetReferenceGeneratorSchema } from './schema';
-import { UpdateDependencyVersions } from '../utils/update-dependency-version';
 import { resolveVersionMismatch } from '../utils/resolve-version-mismatch';
+import { updateDependencyVersions } from '../utils/update-dependency-version';
+import { NugetReferenceGeneratorSchema } from './schema';
 
 export default async function (
   host: Tree,
@@ -59,7 +58,7 @@ export default async function (
       resolvedVersion !== configuredPkgVersion &&
       resolvedVersion
     ) {
-      UpdateDependencyVersions(host, options.packageName, resolvedVersion);
+      updateDependencyVersions(host, options.packageName, resolvedVersion);
     }
   } catch (e: unknown) {
     console.warn('Config not updated since dotnet failed to add dependency!');

@@ -56,7 +56,7 @@ describe('Build Executor', () => {
     } catch (e) {
       console.log(e.message);
       expect(e.message).toMatch(
-        "Unable to find a build-able project within project's source directory!"
+        "Unable to find a build-able project within project's source directory!",
       );
     }
   });
@@ -80,7 +80,7 @@ describe('Build Executor', () => {
     } catch (e) {
       console.log(e.message);
       expect(e.message).toMatch(
-        "More than one build-able projects are contained within the project's source directory!"
+        "More than one build-able projects are contained within the project's source directory!",
       );
     }
   });
@@ -96,7 +96,7 @@ describe('Build Executor', () => {
 
     const res = await executor(options, context, dotnetClient);
     expect(
-      (dotnetClient as jest.Mocked<DotNetClient>).build
+      (dotnetClient as jest.Mocked<DotNetClient>).build,
     ).toHaveBeenCalled();
     expect(res.success).toBeTruthy();
   });

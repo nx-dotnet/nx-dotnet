@@ -1,5 +1,6 @@
 import { readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';

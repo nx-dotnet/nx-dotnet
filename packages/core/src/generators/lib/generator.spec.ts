@@ -40,7 +40,7 @@ describe('nx-dotnet library generator', () => {
       appTree,
       options,
       dotnetClient,
-      'library'
+      'library',
     );
   });
 });

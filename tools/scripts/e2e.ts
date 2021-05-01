@@ -17,7 +17,7 @@ export const getDirectories = (source) =>
 
 function updateVersion(packagePath) {
   const content = JSON.parse(
-    readFileSync(packagePath + '/package.json').toString()
+    readFileSync(packagePath + '/package.json').toString(),
   );
   content.version = process.env.PUBLISHED_VERSION;
   Object.entries(content.dependencies || {}).forEach(([key, value]) => {
@@ -27,7 +27,7 @@ function updateVersion(packagePath) {
   });
   writeFileSync(
     packagePath + '/package.json',
-    JSON.stringify(content, null, 2)
+    JSON.stringify(content, null, 2),
   );
 }
 
@@ -51,8 +51,8 @@ function publishPackage(packagePath, npmMajorVersion: number) {
           process.env.npm_config_registry
         }\n${process.env.npm_config_registry.replace(
           'http:',
-          ''
-        )}/:_authToken=fake`
+          '',
+        )}/:_authToken=fake`,
       );
     }
 
@@ -92,7 +92,7 @@ async function runTest() {
 
   if (process.argv[3] === 'affected') {
     const affected = execSync(
-      `npx nx print-affected --base=origin/master --select=projects`
+      `npx nx print-affected --base=origin/master --select=projects`,
     )
       .toString()
       .split(',')
@@ -129,7 +129,7 @@ async function runTest() {
             NPM_CONFIG_REGISTRY: 'http://localhost:4872',
             YARN_REGISTRY: 'http://localhost:4872',
           },
-        }
+        },
       );
     } else {
       execSync(`yarn nx run-many --target=e2e --all`, {

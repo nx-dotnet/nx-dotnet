@@ -15,11 +15,11 @@ import { BuildExecutorSchema } from './schema';
 export default async function runExecutor(
   options: BuildExecutorSchema,
   context: ExecutorContext,
-  dotnetClient: DotNetClient = new DotNetClient(dotnetFactory())
+  dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
   const projectFilePath = await getProjectFileForNxProject(
-    nxProjectConfiguration
+    nxProjectConfiguration,
   );
 
   dotnetClient.build(
@@ -27,7 +27,7 @@ export default async function runExecutor(
     Object.keys(options).map((x) => ({
       flag: x as dotnetBuildFlags,
       value: (options as Record<string, string | boolean>)[x],
-    }))
+    })),
   );
 
   return {

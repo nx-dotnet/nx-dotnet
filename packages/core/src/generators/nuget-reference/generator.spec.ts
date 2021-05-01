@@ -1,13 +1,14 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
+import { prompt } from 'inquirer';
+
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import { updateConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
 import { NugetReferenceGeneratorSchema } from './schema';
 
-import { prompt } from 'inquirer';
 import PromptUI = require('inquirer/lib/ui/prompt');
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');

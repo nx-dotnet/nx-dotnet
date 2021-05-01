@@ -15,11 +15,11 @@ import { TestExecutorSchema } from './schema';
 export default async function runExecutor(
   options: TestExecutorSchema,
   context: ExecutorContext,
-  dotnetClient: DotNetClient = new DotNetClient(dotnetFactory())
+  dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
   const projectFilePath = await getProjectFileForNxProject(
-    nxProjectConfiguration
+    nxProjectConfiguration,
   );
 
   dotnetClient.test(
@@ -27,7 +27,7 @@ export default async function runExecutor(
     Object.keys(options).map((x) => ({
       flag: x as dotnetTestFlags,
       value: (options as Record<string, string | boolean>)[x],
-    }))
+    })),
   );
 
   return {

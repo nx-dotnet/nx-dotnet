@@ -8,7 +8,7 @@ import { NxDotnetGeneratorSchema } from './schema';
 export default function (
   host: Tree,
   options: NxDotnetGeneratorSchema,
-  dotnetClient = new DotNetClient(dotnetFactory())
+  dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
   return GenerateProject(host, options, dotnetClient, 'library');
 }

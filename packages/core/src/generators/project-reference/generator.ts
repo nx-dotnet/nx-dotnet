@@ -8,7 +8,7 @@ import { NxDotnetGeneratorSchema } from './schema';
 export default async function (
   host: Tree,
   options: NxDotnetGeneratorSchema,
-  client = new DotNetClient(dotnetFactory())
+  client = new DotNetClient(dotnetFactory()),
 ) {
   const hostProject = readProjectConfiguration(host, options.project);
   const sourceProject = readProjectConfiguration(host, options.reference);

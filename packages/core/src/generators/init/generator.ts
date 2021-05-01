@@ -5,6 +5,7 @@ import {
   Tree,
   writeJson,
 } from '@nrwl/devkit';
+
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 export default async function (host: Tree) {

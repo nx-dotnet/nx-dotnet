@@ -42,7 +42,7 @@ export function workspaceConfigName() {
 }
 
 export function updateWorkspaceConfig(
-  callback: (json: { [key: string]: any }) => Object
+  callback: (json: { [key: string]: any }) => Object,
 ) {
   const file = workspaceConfigName();
   updateFile(file, JSON.stringify(callback(readJson(file)), null, 2));
@@ -66,7 +66,7 @@ export function runCreateWorkspace(
     packageManager?: 'npm' | 'yarn' | 'pnpm';
     cli?: string;
     extraArgs?: string;
-  }
+  },
 ) {
   projName = name;
 
@@ -197,7 +197,7 @@ export function runCommandAsync(
   opts: RunCmdOpts = {
     silenceError: false,
     env: process.env,
-  }
+  },
 ): Promise<{ stdout: string; stderr: string; combinedOutput: string }> {
   return new Promise((resolve, reject) => {
     exec(
@@ -211,7 +211,7 @@ export function runCommandAsync(
           reject(err);
         }
         resolve({ stdout, stderr, combinedOutput: `${stdout}${stderr}` });
-      }
+      },
     );
   });
 }
@@ -219,7 +219,7 @@ export function runCommandAsync(
 export function runCommandUntil(
   command: string,
   criteria: (output: string) => boolean,
-  { kill = true } = {}
+  { kill = true } = {},
 ): Promise<{ process: ChildProcess }> {
   const pm = getPackageManagerCommand();
   const p = exec(`${pm.runNx} ${command}`, {
@@ -259,12 +259,12 @@ export function runCLIAsync(
     silenceError: false,
     env: process.env,
     silent: false,
-  }
+  },
 ): Promise<{ stdout: string; stderr: string; combinedOutput: string }> {
   const pm = getPackageManagerCommand();
   return runCommandAsync(
     `${opts.silent ? pm.runNxSilent : pm.runNx} ${command}`,
-    opts
+    opts,
   );
 }
 
@@ -274,7 +274,7 @@ export function runNgAdd(
     silenceError: false,
     env: process.env,
     cwd: tmpProjPath(),
-  }
+  },
 ): string {
   try {
     packageInstall('@nrwl/workspace');
@@ -283,12 +283,12 @@ export function runNgAdd(
       {
         cwd: tmpProjPath(),
         env: opts.env as any,
-      }
+      },
     )
       .toString()
       .replace(
         /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-        ''
+        '',
       );
   } catch (e) {
     if (opts.silenceError) {
@@ -305,7 +305,7 @@ export function runCLI(
   opts: RunCmdOpts = {
     silenceError: false,
     env: process.env,
-  }
+  },
 ): string {
   try {
     const pm = getPackageManagerCommand();
@@ -315,7 +315,7 @@ export function runCLI(
     }).toString();
     r = r.replace(
       /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-      ''
+      '',
     );
     if (process.env.VERBOSE_OUTPUT) {
       console.log(r);
@@ -402,7 +402,7 @@ export function createFile(f: string, content: string = ''): void {
 
 export function updateFile(
   f: string,
-  content: string | ((content: string) => string)
+  content: string | ((content: string) => string),
 ): void {
   ensureDirSync(path.dirname(tmpProjPath(f)));
   if (typeof content === 'string') {
@@ -410,7 +410,7 @@ export function updateFile(
   } else {
     writeFileSync(
       tmpProjPath(f),
-      content(readFileSync(tmpProjPath(f)).toString())
+      content(readFileSync(tmpProjPath(f)).toString()),
     );
   }
 }

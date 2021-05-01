@@ -12,15 +12,15 @@ describe('nx-dotnet e2e', () => {
     ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
 
     await runNxCommandAsync(
-      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`
+      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
     );
 
     await runNxCommandAsync(
-      `generate @nx-dotnet/core:lib ${testLib} --language="C#" --template="classlib"`
+      `generate @nx-dotnet/core:lib ${testLib} --language="C#" --template="classlib"`,
     );
 
     const output = await runNxCommandAsync(
-      `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`
+      `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`,
     );
 
     expect(output.stdout).toMatch(/Reference .* added to the project/);
@@ -32,7 +32,7 @@ describe('nx-dotnet e2e', () => {
     it('should obey dry-run', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --dry-run`
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --dry-run`,
       );
 
       let exists = true;
@@ -48,7 +48,7 @@ describe('nx-dotnet e2e', () => {
     it('should generate an app', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
       );
 
       let exists = true;
@@ -66,7 +66,7 @@ describe('nx-dotnet e2e', () => {
     it('should obey dry-run', async () => {
       const lib = uniq('lib');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi" --dry-run`
+        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi" --dry-run`,
       );
 
       let exists = true;
@@ -82,7 +82,7 @@ describe('nx-dotnet e2e', () => {
     it('should generate an lib', async () => {
       const lib = uniq('lib');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi"`
+        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi"`,
       );
 
       let exists = true;

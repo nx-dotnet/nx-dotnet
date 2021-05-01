@@ -1,19 +1,20 @@
-import { ALLOW_MISMATCH } from '@nx-dotnet/utils';
 import { prompt } from 'inquirer';
+
+import { ALLOW_MISMATCH } from '@nx-dotnet/utils';
 
 export async function resolveVersionMismatch(
   desired: string | undefined,
   configured: string | undefined,
   allowVersionMismatch: boolean,
-): Promise<string | undefined> {
+): Promise<string> {
   if (configured) {
     if (configured !== desired) {
       if (allowVersionMismatch || configured === ALLOW_MISMATCH) {
         return ALLOW_MISMATCH;
-      } else if (!desired && configured !== ALLOW_MISMATCH) {
+      } else if (!desired) {
         console.log(`Installing with pre-configured version ${configured}`);
         return configured;
-      } else if (desired) {
+      } else {
         const { resolution } = await prompt([
           {
             type: 'list',
