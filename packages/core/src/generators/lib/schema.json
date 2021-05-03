@@ -38,7 +38,22 @@
         "type": "list",
         "items": ["C#", "F#", "VB"]
       }
+    },
+    "testTemplate": {
+      "type": "string",
+      "description": "Which template should be used for creating the tests project?",
+      "default": "nunit",
+      "x-prompt": {
+        "message": "Which template should be used for creating the tests project",
+        "type": "list",
+        "items": [
+          { "value": "nunit", "label": "NUnit 3 Test Project" },
+          { "value": "xunit", "label": "xUnit Test Project" },
+          { "value": "mstest", "label": "Unit Test Project" },
+          { "value": "none", "label": "No Unit Test Project" }
+        ]
+      }
     }
   },
-  "required": ["name", "template", "language"]
+  "required": ["name", "template", "language", "testTemplate"]
 }
