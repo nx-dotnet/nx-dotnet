@@ -4,7 +4,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "license": "MIT",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "keywords": [
     "Nx",
     ".NET",

@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.0...v0.4.1) (2021-05-03)
+
+
+### Bug Fixes
+
+* **core:** test projects not generating ([28d3d1e](https://github.com/nx-dotnet/nx-dotnet/commit/28d3d1ef14ba41169cb33a73bb4de8fda2da13c0))
+
 # [0.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0...v0.4.0) (2021-05-01)
 
 
