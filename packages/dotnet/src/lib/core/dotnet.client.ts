@@ -15,6 +15,7 @@ import {
   dotnetRunOptions,
   dotnetTemplate,
   dotnetTestOptions,
+  newKeyMap,
   publishKeyMap,
   testKeyMap,
 } from '../models';
@@ -26,7 +27,7 @@ export class DotNetClient {
   new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
     let cmd = `${this.cliCommand.command} new ${template}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
+      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', newKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }

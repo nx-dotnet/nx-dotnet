@@ -33,7 +33,7 @@
               "packages/core/*.md",
               {
                 "input": "./packages/core/src",
-                "glob": "**/*.!(ts)",
+                "glob": "**/*.!(ts|spec.ts)",
                 "output": "./src"
               },
               {
@@ -102,7 +102,7 @@
               "packages/typescript/*.md",
               {
                 "input": "./packages/typescript/src",
-                "glob": "**/*.!(ts)",
+                "glob": "**/*.!(ts|spec.ts)",
                 "output": "./src"
               },
               {

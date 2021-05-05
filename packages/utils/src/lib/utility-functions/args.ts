@@ -22,6 +22,6 @@ export function swapArrayFieldValueUsingMap<T>(
 ) {
   return array.map((x) => ({
     ...x,
-    field: map[x[field]] ?? x[field],
+    [field]: map[x[field]] ?? x[field],
   }));
 }

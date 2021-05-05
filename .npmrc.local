@@ -1,2 +1,3 @@
 ; Set a new registry for a scoped package
-@nx-dotnet:registry=http://localhost:4873
+@nx-dotnet:registry=http://localhost:4872
+//localhost:4872/:_authToken="fake=="
