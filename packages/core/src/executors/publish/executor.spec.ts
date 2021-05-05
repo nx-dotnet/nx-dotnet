@@ -34,7 +34,7 @@ describe('Publish Executor', () => {
             sourceRoot: `${root}/apps/my-app`,
             targets: {
               publish: {
-                executor: 'nx-dotnet/core:publish',
+                executor: '@nx-dotnet/core:publish',
               },
             },
           },
