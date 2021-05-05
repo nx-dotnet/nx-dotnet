@@ -117,9 +117,7 @@ async function GenerateTestProject(
   ];
 
   if (isDryRun()) {
-    newParams.push({
-      flag: 'dryRun',
-    });
+    addDryRunParameter(newParams);
   }
 
   dotnetClient.new(schema.testTemplate, newParams);
@@ -220,9 +218,7 @@ export async function GenerateProject(
   ];
 
   if (isDryRun()) {
-    newParams.push({
-      flag: 'dryRun',
-    });
+    addDryRunParameter(newParams);
   }
 
   dotnetClient.new(normalizedOptions.template, newParams);
@@ -243,4 +239,11 @@ export async function GenerateProject(
   }
 
   await formatFiles(host);
+}
+
+function addDryRunParameter(parameters: dotnetNewOptions): void {
+  parameters.push({
+    flag: 'dryRun',
+    value: true,
+  });
 }

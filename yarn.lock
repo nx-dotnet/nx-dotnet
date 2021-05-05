@@ -838,6 +838,17 @@
     node-gyp "^7.1.0"
     read-package-json-fast "^2.0.1"
 
+"@nrwl/cli@*":
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-12.1.1.tgz#853f04314b584173e54ad427770731da2e74a029"
+  integrity sha512-Svsq0qFu6RnP8piVS69mxgQCYKLvhhCLVVa9/mGLY6guXApk2pc6fHQMmB2HgYZuAUtwDADw/qe8LBh4Hr4PRQ==
+  dependencies:
+    "@nrwl/tao" "12.1.1"
+    chalk "4.1.0"
+    v8-compile-cache "2.3.0"
+    yargs "15.4.1"
+    yargs-parser "20.0.0"
+
 "@nrwl/cli@12.0.8":
   version "12.0.8"
   resolved "https://registry.npmjs.org/@nrwl/cli/-/cli-12.0.8.tgz"
@@ -957,6 +968,22 @@
     enquirer "~2.3.6"
     fs-extra "7.0.1"
     minimist "^1.2.5"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    strip-json-comments "^3.1.1"
+    tmp "~0.2.1"
+    tslib "^2.0.0"
+    yargs-parser "20.0.0"
+
+"@nrwl/tao@12.1.1":
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-12.1.1.tgz#b00273390a1f7dc136954328bb76a94cd95a4e6d"
+  integrity sha512-qzJpQ6YAmAEy1toYM1JPZtNMo+GFNnly53FV4j1c/1gnQpmpT3PU3gFwEx/tzseafX6DKlxF/KSAbPdhsNnkdw==
+  dependencies:
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    fs-extra "^9.1.0"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -4454,7 +4481,7 @@ fs-extra@7.0.1:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
-fs-extra@^9.0.0:
+fs-extra@^9.0.0, fs-extra@^9.1.0:
   version "9.1.0"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
   integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
@@ -7496,6 +7523,13 @@ nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.0.tgz"
   integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
+
+nx@^12.1.1:
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-12.1.1.tgz#86f07c2cd1edf1ee4ba5b3f4337055c7ba29ff39"
+  integrity sha512-RLMlWwMw+JyKL+rxhRpx0NHCIZWtdP16Kv8eNA0p4X6aMnoI6wxrZBjFxLterg9CoHyY6fMnDXo6VCTMjFEiLw==
+  dependencies:
+    "@nrwl/cli" "*"
 
 oauth-sign@~0.9.0:
   version "0.9.0"
