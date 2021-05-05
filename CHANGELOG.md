@@ -1,3 +1,11 @@
+## [0.4.2-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.1...v0.4.2-dev.1) (2021-05-05)
+
+
+### Bug Fixes
+
+* **core:** [#34](https://github.com/nx-dotnet/nx-dotnet/issues/34) remove spec files from built plugin ([f075046](https://github.com/nx-dotnet/nx-dotnet/commit/f07504625a62ea79afb48b5d3c390ace8202e2ea))
+* **core:** [#35](https://github.com/nx-dotnet/nx-dotnet/issues/35) dry run is not passed to dotnet new ([8e0b398](https://github.com/nx-dotnet/nx-dotnet/commit/8e0b3986ad4f5f780bd28f0f69ef5502bb75e2d7))
+
 ## [0.4.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.0...v0.4.1) (2021-05-03)
 
 
