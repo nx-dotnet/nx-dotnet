@@ -22,12 +22,16 @@ export default async function runExecutor(
     nxProjectConfiguration,
   );
 
+  const { publishProfile, extraParameters, ...flags } = options;
+
   dotnetClient.publish(
     projectFilePath,
-    Object.keys(options).map((x) => ({
+    Object.keys(flags).map((x) => ({
       flag: x as dotnetPublishFlags,
       value: (options as Record<string, string | boolean>)[x],
     })),
+    publishProfile,
+    extraParameters,
   );
 
   return {

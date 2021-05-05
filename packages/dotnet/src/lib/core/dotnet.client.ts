@@ -89,7 +89,12 @@ export class DotNetClient {
     );
   }
 
-  publish(project: string, parameters?: dotnetPublishOptions): Buffer {
+  publish(
+    project: string,
+    parameters?: dotnetPublishOptions,
+    publishProfile?: string,
+    extraParameters?: string,
+  ): Buffer {
     let cmd = `${this.cliCommand.command} publish ${project}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(
@@ -99,6 +104,12 @@ export class DotNetClient {
       );
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
+    }
+    if (publishProfile) {
+      cmd = `${cmd} -p:PublishProfile=${publishProfile}`;
+    }
+    if (extraParameters) {
+      cmd = `${cmd} ${extraParameters}`;
     }
     return this.logAndExecute(cmd);
   }

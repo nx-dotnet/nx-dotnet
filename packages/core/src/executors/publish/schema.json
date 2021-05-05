@@ -43,10 +43,26 @@
       "type": "boolean",
       "description": "Publishes the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. Default is true if a runtime identifier is specified and the project is an executable project (not a library project)."
     },
+    "runtime": {
+      "type": "string",
+      "description": "Publishes the application for a given runtime."
+    },
     "verbosity": {
       "type": "string",
       "enum": ["quiet", "minimal", "normal", "detailed", "diagnostic"],
       "default": "minimal"
+    },
+    "versionSuffix": {
+      "type": "string",
+      "description": "Defines the version suffix to replace the asterisk (*) in the version field of the project file."
+    },
+    "publishProfile": {
+      "type": "string",
+      "description": "Specifies the name of the publish profile to use while publishing. Do not include the file path or the file extension. MSBuild by default looks in the Properties/PublishProfiles folder and assumes the pubxml file extension."
+    },
+    "extraParameters": {
+      "type": "string",
+      "description": "Extra command-line arguments that are passed verbatim to the dotnet command."
     }
   },
   "required": []
