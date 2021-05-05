@@ -24,7 +24,7 @@
     },
     "version": {
       "type": "string",
-      "description": "A directory where the project is placed",
+      "description": "The package version to add.",
       "$default": {
         "$source": "argv",
         "index": 2
