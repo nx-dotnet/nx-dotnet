@@ -9,10 +9,10 @@
 
 ### Branching structure
 
-- Main is our release branch. It targets latest on npm.
-- dev is our development trunk.
+- Most changes should be branched directly from master. The exceptions are limited to breaking changes.
+- Breaking changes should branch off of and pull requests should target "dev".
 
-When working on an issue for NxDotnet, branch off of dev. Pull requests should target dev as well.
+Dev is kept in sync with master, but breaking changes go here first to limit the frequency with which library consumers should expect a breaking change. New features are fine in master, we just want to avoid alienating our users.
 
 ### Commit structure
 
