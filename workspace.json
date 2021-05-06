@@ -33,7 +33,12 @@
               "packages/core/*.md",
               {
                 "input": "./packages/core/src",
-                "glob": "**/*.!(ts|spec.ts)",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/core/src",
+                "glob": "**/*.d.ts",
                 "output": "./src"
               },
               {
@@ -101,8 +106,13 @@
             "assets": [
               "packages/typescript/*.md",
               {
-                "input": "./packages/typescript/src",
-                "glob": "**/*.!(ts|spec.ts)",
+                "input": "./packages/core/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/core/src",
+                "glob": "**/*.d.ts",
                 "output": "./src"
               },
               {
