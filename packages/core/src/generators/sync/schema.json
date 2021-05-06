@@ -4,5 +4,6 @@
   "id": "Sync",
   "title": "",
   "type": "object",
+  "description": "Syncs package versions across the workspace with nx-dotnet config.",
   "properties": {}
 }

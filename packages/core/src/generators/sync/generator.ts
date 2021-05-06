@@ -39,6 +39,7 @@ export default async function (host: Tree) {
               version,
               configuredVersion,
               false,
+              pkg,
             );
             // console.log('Resolved:', resolved)
             config.nugetPackages[pkg] = resolved;

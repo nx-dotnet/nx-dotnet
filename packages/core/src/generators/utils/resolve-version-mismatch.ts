@@ -6,6 +6,7 @@ export async function resolveVersionMismatch(
   desired: string | undefined,
   configured: string | undefined,
   allowVersionMismatch: boolean,
+  packageName: string | undefined,
 ): Promise<string> {
   if (configured) {
     if (configured !== desired) {
@@ -28,8 +29,9 @@ export async function resolveVersionMismatch(
                 short: 'Allow mismatch',
               },
             ],
-            message:
-              'There appears to be a mismatch between your current package preferences and the requested version. Which version would you like to use?',
+            message: `There appears to be a mismatch between your current package preferences and the requested version ${
+              packageName ? 'for ' + packageName : ''
+            }. Which version would you like to use?`,
           },
         ]);
         return resolution;
@@ -40,7 +42,9 @@ export async function resolveVersionMismatch(
       const { choice } = await prompt([
         {
           name: 'choice',
-          message: `You have not yet set a version for this package. Which version would you like to install?`,
+          message: `You have not yet set a version for ${
+            packageName ? packageName : 'this package'
+          }. Which version would you like to install?`,
         },
       ]);
       return choice;
