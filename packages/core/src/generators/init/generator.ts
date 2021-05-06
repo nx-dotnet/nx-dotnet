@@ -1,8 +1,9 @@
 import {
-  formatFiles,
   NxJsonConfiguration,
   readJson,
+  readWorkspaceConfiguration,
   Tree,
+  WorkspaceConfiguration,
   writeJson,
 } from '@nrwl/devkit';
 
@@ -22,17 +23,31 @@ export default async function (host: Tree) {
   host.write(CONFIG_FILE_PATH, JSON.stringify(configObject, null, 2));
 
   updateNxJson(host);
-  updateGitIgnore(host);
-  await formatFiles(host);
+  if (!initialized) {
+    updateGitIgnore(host, readWorkspaceConfiguration(host));
+  }
 }
 
-function updateGitIgnore(host: Tree) {
+function updateGitIgnore(
+  host: Tree,
+  workspaceConfiguration: WorkspaceConfiguration,
+) {
   if (!host.isFile('.gitignore')) {
     return;
   }
   let lines = (host.read('.gitignore') ?? '').toString();
-  lines += '\r\napps/*/bin';
-  lines += '\r\napps/*/obj';
+  lines += `\n${
+    workspaceConfiguration.workspaceLayout?.appsDir || 'apps'
+  }/*/bin`;
+  lines += `\n${
+    workspaceConfiguration.workspaceLayout?.appsDir || 'apps'
+  }/*/obj`;
+  lines += `\n${
+    workspaceConfiguration.workspaceLayout?.libsDir || 'libs'
+  }/*/bin`;
+  lines += `\n${
+    workspaceConfiguration.workspaceLayout?.libsDir || 'libs'
+  }/*/obj`;
   host.write('.gitignore', lines);
 }
 
