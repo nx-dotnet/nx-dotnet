@@ -30,6 +30,7 @@ export default async function (
     options.version,
     configuredPkgVersion,
     options.allowVersionMismatch,
+    options.packageName,
   );
   config.nugetPackages[options.packageName] = resolvedVersion;
   if (
