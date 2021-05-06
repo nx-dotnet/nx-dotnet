@@ -1,3 +1,11 @@
+## [0.5.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.0...v0.5.1) (2021-05-06)
+
+
+### Bug Fixes
+
+* **core:** [#38](https://github.com/nx-dotnet/nx-dotnet/issues/38) - Misc fixes for .gitignore updates ([#40](https://github.com/nx-dotnet/nx-dotnet/issues/40)) ([5f2d5c9](https://github.com/nx-dotnet/nx-dotnet/commit/5f2d5c9407927992398df3d3827256da952ab3e5))
+* **core:** sync command should list package names ([#41](https://github.com/nx-dotnet/nx-dotnet/issues/41)) ([8bdc66a](https://github.com/nx-dotnet/nx-dotnet/commit/8bdc66aaf02e2c18c051a5ebf6da99e6438ae318)), closes [#39](https://github.com/nx-dotnet/nx-dotnet/issues/39)
+
 # [0.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.2...v0.5.0) (2021-05-06)
 
 
