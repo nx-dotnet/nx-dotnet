@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "NxDotnet Publish",
+  "description": "Publishes an app via the `dotnet` cli command.",
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "enum": ["Debug", "Release"],
+      "default": "Debug",
+      "description": "Defines the build configuration The default for most projects is Debug, but you can override the build configuration settings in your project."
+    },
+    "framework": {
+      "type": "string",
+      "description": "Publishes the application for the specified target framework. You must specify the target framework in the project file."
+    },
+    "force": {
+      "type": "boolean",
+      "description": "Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file."
+    },
+    "noBuild": {
+      "type": "boolean",
+      "description": "Doesn't build the project before publishing. It also implicitly sets the --no-restore flag."
+    },
+    "noDependencies": {
+      "type": "boolean",
+      "description": "Ignores project-to-project references and only restores the root project."
+    },
+    "nologo": {
+      "type": "boolean",
+      "description": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+    },
+    "noRestore": {
+      "type": "boolean",
+      "description": "Doesn't execute an implicit restore when running the command."
+    },
+    "output": {
+      "type": "string",
+      "description": "Specifies the path for the output directory."
+    },
+    "selfContained": {
+      "type": "boolean",
+      "description": "Publishes the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. Default is true if a runtime identifier is specified and the project is an executable project (not a library project)."
+    },
+    "runtime": {
+      "type": "string",
+      "description": "Publishes the application for a given runtime."
+    },
+    "verbosity": {
+      "type": "string",
+      "enum": ["quiet", "minimal", "normal", "detailed", "diagnostic"],
+      "default": "minimal"
+    },
+    "versionSuffix": {
+      "type": "string",
+      "description": "Defines the version suffix to replace the asterisk (*) in the version field of the project file."
+    },
+    "publishProfile": {
+      "type": "string",
+      "description": "Specifies the name of the publish profile to use while publishing. Do not include the file path or the file extension. MSBuild by default looks in the Properties/PublishProfiles folder and assumes the pubxml file extension."
+    },
+    "extraParameters": {
+      "type": "string",
+      "description": "Extra command-line arguments that are passed verbatim to the dotnet command."
+    }
+  },
+  "required": []
+}

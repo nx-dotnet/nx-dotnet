@@ -11,10 +11,12 @@ import {
   dotnetAddPackageOptions,
   dotnetBuildOptions,
   dotnetNewOptions,
+  dotnetPublishOptions,
   dotnetRunOptions,
   dotnetTemplate,
   dotnetTestOptions,
   newKeyMap,
+  publishKeyMap,
   testKeyMap,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
@@ -86,6 +88,31 @@ export class DotNetClient {
     return this.logAndExecute(
       `${this.cliCommand.command} add ${hostCsProj} reference ${targetCsProj}`,
     );
+  }
+
+  publish(
+    project: string,
+    parameters?: dotnetPublishOptions,
+    publishProfile?: string,
+    extraParameters?: string,
+  ): Buffer {
+    let cmd = `${this.cliCommand.command} publish ${project}`;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(
+        parameters,
+        'flag',
+        publishKeyMap,
+      );
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
+    if (publishProfile) {
+      cmd = `${cmd} -p:PublishProfile=${publishProfile}`;
+    }
+    if (extraParameters) {
+      cmd = `${cmd} ${extraParameters}`;
+    }
+    return this.logAndExecute(cmd);
   }
 
   private logAndExecute(cmd: string): Buffer {
