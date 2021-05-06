@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.2...v0.5.0) (2021-05-06)
+
+
+### Features
+
+* **core:** add executor for dotnet publish [#33](https://github.com/nx-dotnet/nx-dotnet/issues/33) ([#36](https://github.com/nx-dotnet/nx-dotnet/issues/36)) ([ac8c898](https://github.com/nx-dotnet/nx-dotnet/commit/ac8c89825bfcdd9cd2432e1325bfc2a83255652e))
+
 ## [0.4.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.1...v0.4.2) (2021-05-05)
 
 ### Bug Fixes

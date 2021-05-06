@@ -92,5 +92,5 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "0.4.2-dev.1"
+  "version": "0.5.0"
 }
