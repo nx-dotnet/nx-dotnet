@@ -176,7 +176,7 @@ export async function GenerateProject(
   dotnetClient: DotNetClient,
   projectType: ProjectType,
 ) {
-  await initSchematic(host);
+  await initSchematic(host, dotnetClient);
 
   options.testTemplate = options.testTemplate ?? 'none';
 

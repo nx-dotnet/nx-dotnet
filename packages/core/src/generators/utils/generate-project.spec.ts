@@ -33,7 +33,7 @@ describe('nx-dotnet project generator', () => {
   });
 
   afterEach(async () => {
-    await Promise.all([rimraf('apps'), rimraf('libs')]);
+    await Promise.all([rimraf('apps'), rimraf('libs'), rimraf('.config')]);
   });
 
   it('should run successfully for libraries', async () => {
