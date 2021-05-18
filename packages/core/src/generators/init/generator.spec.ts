@@ -1,4 +1,4 @@
-import { readJson, Tree } from '@nrwl/devkit';
+import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
@@ -13,6 +13,9 @@ describe('init generator', () => {
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
     dotnetClient = new DotNetClient(mockDotnetFactory());
+
+    const packageJson = { scripts: {} };
+    writeJson(appTree, 'package.json', packageJson);
   });
 
   it('should create config', async () => {
@@ -45,5 +48,21 @@ describe('init generator', () => {
     const spy = spyOn(dotnetClient, 'new');
     await generator(appTree, dotnetClient);
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should add restore to prepare script', async () => {
+    await generator(appTree, dotnetClient);
+    const updated = readJson(appTree, 'package.json');
+    expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
+  });
+
+  it('should not add restore if it already exists', async () => {
+    const packageJson = {
+      scripts: { prepare: 'nx g @nx-dotnet/core:restore' },
+    };
+    writeJson(appTree, 'package.json', packageJson);
+    await generator(appTree, dotnetClient);
+    const updated = readJson(appTree, 'package.json');
+    expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
   });
 });

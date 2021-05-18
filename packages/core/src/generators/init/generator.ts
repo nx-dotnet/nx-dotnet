@@ -3,6 +3,7 @@ import {
   readJson,
   readWorkspaceConfiguration,
   Tree,
+  updateWorkspaceConfiguration,
   WorkspaceConfiguration,
   writeJson,
 } from '@nrwl/devkit';
@@ -32,6 +33,7 @@ export default async function (
   }
 
   initToolManifest(host, dotnetClient);
+  addPrepareScript(host);
 }
 
 function updateGitIgnore(
@@ -72,4 +74,18 @@ function initToolManifest(host: Tree, dotnetClient: DotNetClient) {
     console.log('Tool Manifest created for managing local .NET tools');
     dotnetClient.new('tool-manifest');
   }
+}
+
+function addPrepareScript(host: Tree) {
+  const packageJson = readJson(host, 'package.json');
+  const prepareSteps: string[] =
+    packageJson.scripts.prepare?.split('&&').map((x: string) => x.trim()) ?? [];
+
+  const restoreScript = 'nx g @nx-dotnet/core:restore';
+  if (!prepareSteps.includes(restoreScript)) {
+    prepareSteps.push(restoreScript);
+  }
+
+  packageJson.scripts.prepare = prepareSteps.join(' && ');
+  writeJson(host, 'package.json', packageJson);
 }
