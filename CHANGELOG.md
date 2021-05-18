@@ -1,3 +1,10 @@
+## [0.5.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.1...v0.5.2) (2021-05-18)
+
+
+### Bug Fixes
+
+* **core:** dep-graph with various directory separators ([3beccb4](https://github.com/nx-dotnet/nx-dotnet/commit/3beccb468e17053ee6c121f408c83cb4c1dafb1d)), closes [#43](https://github.com/nx-dotnet/nx-dotnet/issues/43)
+
 ## [0.5.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.0...v0.5.1) (2021-05-06)
 
 
