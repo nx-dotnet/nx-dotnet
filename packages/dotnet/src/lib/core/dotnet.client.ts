@@ -115,6 +115,11 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
+  installTool(tool: string): Buffer {
+    const cmd = `${this.cliCommand.command} tool install ${tool}`;
+    return this.logAndExecute(cmd);
+  }
+
   private logAndExecute(cmd: string): Buffer {
     console.log(`Executing Command: ${cmd}`);
     return execSync(cmd, { stdio: 'inherit' });
