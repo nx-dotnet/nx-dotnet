@@ -65,4 +65,16 @@ describe('init generator', () => {
     const updated = readJson(appTree, 'package.json');
     expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
   });
+
+  it('should add restore to existing prepare steps', async () => {
+    const packageJson = {
+      scripts: { prepare: 'npm run clean && npm run build' },
+    };
+    writeJson(appTree, 'package.json', packageJson);
+    await generator(appTree, dotnetClient);
+    const updated = readJson(appTree, 'package.json');
+    expect(updated.scripts.prepare).toBe(
+      'npm run clean && npm run build && nx g @nx-dotnet/core:restore',
+    );
+  });
 });
