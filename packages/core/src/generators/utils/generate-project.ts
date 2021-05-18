@@ -63,7 +63,7 @@ function normalizeOptions(
 
   const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
   const featureScope = projectDirectory
-    .split('/')
+    .split(/(\/|\\)/gm)
     .map((part) => names(part).className);
   const namespaceName = [npmScope, ...featureScope].join('.');
 
