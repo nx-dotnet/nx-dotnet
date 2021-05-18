@@ -7,7 +7,7 @@ import {
 } from '@nrwl/devkit';
 
 import { readFileSync } from 'fs';
-import { isAbsolute, resolve } from 'path';
+import { isAbsolute, resolve, dirname } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 import { NXDOTNET_TAG } from '../constants';
@@ -58,7 +58,7 @@ export function getDependantProjectsForNxProject(
         absoluteFilePath = includeFilePath;
       } else {
         absoluteFilePath = resolve(
-          netProjectFilePath.split('/').slice(0, -1).join('/'),
+          dirname(netProjectFilePath),
           includeFilePath,
         );
       }
