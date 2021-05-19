@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Format executor",
+  "description": "Formats and lints a project using the dotnet-format tool",
+  "type": "object",
+  "properties": {
+    "noRestore": {
+      "type": "boolean",
+      "description": "Doesn't execute an implicit restore before formatting"
+    },
+    "fixWhitespace": {
+      "type": "boolean",
+      "alias": ["w"],
+      "description": "Run whitespace formatting. Run by default when not applying fixes."
+    },
+    "fixStyle": {
+      "type": "string",
+      "alias": ["s"],
+      "description": "Run code style analyzers and apply fixes."
+    },
+    "fixAnalyzers": {
+      "type": "string",
+      "alias": ["a"],
+      "description": "Run 3rd party analyzers and apply fixes."
+    },
+    "diagnostics": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers."
+        },
+        {
+          "type": "array",
+          "description": "A list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "include": {
+      "type": "array",
+      "description": "A list of relative file or folder paths to include in formatting. All files are formatted if empty",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclude": {
+      "type": "array",
+      "description": "A list of relative file or folder paths to exclude from formatting.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "check": {
+      "type": "boolean",
+      "description": "Formats files without saving changes to disk. Terminates with a non-zero exit code if any files were formatted.",
+      "default": true
+    },
+    "report": {
+      "type": "string",
+      "description": "Accepts a file path, which if provided, will produce a json report in the given directory."
+    },
+    "binarylog": {
+      "type": "string",
+      "description": "Log all project or solution load information to a binary log file."
+    },
+    "verbosity": {
+      "type": "string",
+      "description": "Set the verbosity level.",
+      "enum": [
+        "q",
+        "quiet",
+        "m",
+        "minimal",
+        "n",
+        "normal",
+        "d",
+        "detailed",
+        "diag",
+        "diagnostic"
+      ],
+      "default": "minimal"
+    },
+    "fix": {
+      "type": "boolean",
+      "description": "Formats files and saves changes to disk. Equivalent to setting --check=false."
+    }
+  },
+  "required": []
+}

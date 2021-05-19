@@ -20,6 +20,11 @@
       "implementation": "./src/executors/publish/executor",
       "schema": "./src/executors/publish/schema.json",
       "description": "publish executor"
+    },
+    "format": {
+      "implementation": "./src/executors/format/executor",
+      "schema": "./src/executors/format/schema.json",
+      "description": "Formats and lints a project using the dotnet-format tool"
     }
   },
   "builders": {
