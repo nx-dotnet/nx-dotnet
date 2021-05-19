@@ -53,7 +53,12 @@
               },
               "LICENSE",
               "CHANGELOG.md",
-              "README.md"
+              "README.md",
+              {
+                "input": "./packages/core",
+                "glob": "migrations.json",
+                "output": "."
+              }
             ]
           }
         }

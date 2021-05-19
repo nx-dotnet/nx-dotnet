@@ -1,0 +1,10 @@
+{
+  "generators": {
+    "add-lint-target": {
+      "version": "0.7.0",
+      "description": "Adds lint target to all existing dotnet projects",
+      "cli": "nx",
+      "implementation": "./src/migrations/add-lint-target/add-lint-target"
+    }
+  }
+}
