@@ -1,4 +1,4 @@
-import { readProjectConfiguration, Tree } from '@nrwl/devkit';
+import { readProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { readFileSync } from 'fs';
@@ -30,10 +30,13 @@ describe('nx-dotnet project generator', () => {
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
     dotnetClient = new DotNetClient(mockDotnetFactory());
+
+    const packageJson = { scripts: {} };
+    writeJson(appTree, 'package.json', packageJson);
   });
 
   afterEach(async () => {
-    await Promise.all([rimraf('apps'), rimraf('libs')]);
+    await Promise.all([rimraf('apps'), rimraf('libs'), rimraf('.config')]);
   });
 
   it('should run successfully for libraries', async () => {
