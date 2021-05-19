@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.0...v0.6.1) (2021-05-19)
+
+
+### Bug Fixes
+
+* **core:** add unused options parameter for restore ([c8b0334](https://github.com/nx-dotnet/nx-dotnet/commit/c8b033403b1ba7d1365526dc5306338912adcf4c))
+
 # [0.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.2...v0.6.0) (2021-05-19)
 
 
