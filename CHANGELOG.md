@@ -1,3 +1,10 @@
+## [0.6.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.1...v0.6.2) (2021-05-19)
+
+
+### Bug Fixes
+
+* **utils:** getDependantProjectsForNxProject should work on Unix ([96cbc33](https://github.com/nx-dotnet/nx-dotnet/commit/96cbc33ec6b5e9d0492fba4902ee76938230b146)), closes [#43](https://github.com/nx-dotnet/nx-dotnet/issues/43)
+
 ## [0.6.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.0...v0.6.1) (2021-05-19)
 
 
