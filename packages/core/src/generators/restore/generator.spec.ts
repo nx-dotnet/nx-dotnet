@@ -32,7 +32,7 @@ describe('restore generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(appTree);
+    await generator(appTree, null);
     expect(true).toBeTruthy();
   });
 });
