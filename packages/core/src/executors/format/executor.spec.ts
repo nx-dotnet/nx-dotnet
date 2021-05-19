@@ -86,7 +86,7 @@ describe('Format Executor', () => {
     }
   });
 
-  it('calls build when 1 project file is found', async () => {
+  it('calls format when 1 project file is found', async () => {
     try {
       const directoryPath = `${root}/apps/my-app`;
       await fs.mkdir(directoryPath, { recursive: true });
