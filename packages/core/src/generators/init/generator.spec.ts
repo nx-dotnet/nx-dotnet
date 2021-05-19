@@ -19,39 +19,39 @@ describe('init generator', () => {
   });
 
   it('should create config', async () => {
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     const config = appTree.isFile(CONFIG_FILE_PATH);
     expect(config).toBeTruthy();
   });
 
   it('should update gitignore', async () => {
     appTree.write('.gitignore', '');
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     const gitignoreValue = appTree.read('.gitignore')?.toString();
     expect(gitignoreValue).toBeTruthy();
   });
 
   it('should put dependency array inside config', async () => {
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     const config: NxDotnetConfig = readJson(appTree, CONFIG_FILE_PATH);
     expect(config.nugetPackages).toBeDefined();
   });
 
   it('should create tool manifest', async () => {
     const spy = spyOn(dotnetClient, 'new');
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     expect(spy).toHaveBeenCalledWith('tool-manifest');
   });
 
   it('should not create tool manifest if it exists', async () => {
     appTree.write('.config/dotnet-tools.json', '');
     const spy = spyOn(dotnetClient, 'new');
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('should add restore to prepare script', async () => {
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     const updated = readJson(appTree, 'package.json');
     expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
   });
@@ -61,7 +61,7 @@ describe('init generator', () => {
       scripts: { prepare: 'nx g @nx-dotnet/core:restore' },
     };
     writeJson(appTree, 'package.json', packageJson);
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     const updated = readJson(appTree, 'package.json');
     expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
   });
@@ -71,7 +71,7 @@ describe('init generator', () => {
       scripts: { prepare: 'npm run clean && npm run build' },
     };
     writeJson(appTree, 'package.json', packageJson);
-    await generator(appTree, dotnetClient);
+    await generator(appTree, null, dotnetClient);
     const updated = readJson(appTree, 'package.json');
     expect(updated.scripts.prepare).toBe(
       'npm run clean && npm run build && nx g @nx-dotnet/core:restore',
