@@ -1,3 +1,19 @@
+# [0.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.2...v0.6.0) (2021-05-19)
+
+
+### Bug Fixes
+
+* **core:** add unused options parameter ([c434d32](https://github.com/nx-dotnet/nx-dotnet/commit/c434d32bc4d145bbf5fe417fa9fe5fabed25fc31))
+* **core:** pass client through to init schematic ([5908947](https://github.com/nx-dotnet/nx-dotnet/commit/59089474f4d4c2378715a07d5629f802b0513cee))
+
+
+### Features
+
+* **core:** add a generator for dotnet restore ([96082a1](https://github.com/nx-dotnet/nx-dotnet/commit/96082a1ae582acb8d0fe3bb9ab45adcd112ce398))
+* **core:** add restore to prepare script during init ([c2b1c23](https://github.com/nx-dotnet/nx-dotnet/commit/c2b1c236d6a556f920f0d96f1197daaf92c6c35f)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
+* **core:** create tool manifest during init ([996aaee](https://github.com/nx-dotnet/nx-dotnet/commit/996aaee4d76beeb3068edb60a6dde3daebe53a55)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
+* **dotnet:** add a method to install local tools ([6ab5d4a](https://github.com/nx-dotnet/nx-dotnet/commit/6ab5d4ae115f9c8419c14c2bb86879dd3f72764e)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
+
 ## [0.5.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.1...v0.5.2) (2021-05-18)
 
 
