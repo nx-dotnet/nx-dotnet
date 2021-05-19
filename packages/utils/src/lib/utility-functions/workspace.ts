@@ -45,6 +45,7 @@ export function getDependantProjectsForNxProject(
   const netProjectFilePath = getProjectFileForNxProjectSync(
     workspaceConfiguration.projects[targetProject],
   );
+  const hostProjectDirectory = dirname(netProjectFilePath).replace(/\\/g, '/');
 
   const xml: XmlDocument = new XmlDocument(
     readFileSync(netProjectFilePath).toString(),
@@ -52,15 +53,12 @@ export function getDependantProjectsForNxProject(
 
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
-      const includeFilePath = x.attr['Include'];
+      const includeFilePath = x.attr['Include'].replace(/\\/g, '/');
       let absoluteFilePath: string;
       if (isAbsolute(includeFilePath)) {
         absoluteFilePath = includeFilePath;
       } else {
-        absoluteFilePath = resolve(
-          dirname(netProjectFilePath),
-          includeFilePath,
-        );
+        absoluteFilePath = resolve(hostProjectDirectory, includeFilePath);
       }
 
       Object.entries(projectRoots).forEach(([dependency, path]) => {
