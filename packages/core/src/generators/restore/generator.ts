@@ -7,6 +7,7 @@ import {
 
 export default async function (
   host: Tree,
+  _: null, // Nx will populate this with options, which are currently unused.
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
   const projects = getNxDotnetProjects(host);
