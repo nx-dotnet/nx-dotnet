@@ -1,3 +1,12 @@
+## [0.7.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.0...v0.7.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* **core:** format files after successful migration ([c92814a](https://github.com/nx-dotnet/nx-dotnet/commit/c92814a9b906b2370a4ffd90a4fe3282c61828e8))
+* **core:** rename migrations key to nx-migrations ([c6993b9](https://github.com/nx-dotnet/nx-dotnet/commit/c6993b96207b06e7d0ec8a6b252d19a5670ed0fd))
+* **repo:** e2e tests run in CI again ([f7ed139](https://github.com/nx-dotnet/nx-dotnet/commit/f7ed139d499673848ddde0f4b8936f7652f9eaec))
+
 # [0.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.2...v0.7.0) (2021-05-20)
 
 
