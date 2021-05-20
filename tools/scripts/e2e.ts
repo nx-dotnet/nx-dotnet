@@ -1,85 +1,23 @@
-import { execSync } from 'child_process';
+import { execSync, ChildProcess, spawn } from 'child_process';
 import { readdirSync } from 'fs';
-import { removeSync, writeFileSync } from 'fs-extra';
+import { copySync, removeSync, writeFileSync } from 'fs-extra';
 import { readFileSync } from 'fs';
 import { e2eRoot } from '../../e2e/utils';
 const kill = require('tree-kill');
-import { build } from './build';
 
-process.env.PUBLISHED_VERSION = `9999.0.2`;
-process.env.npm_config_registry = `http://localhost:4872`;
-process.env.YARN_REGISTRY = process.env.npm_config_registry;
+let verdaccioInstance: ChildProcess;
 
-export const getDirectories = (source) =>
+export const getDirectories = (source: string) =>
   readdirSync(source, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-function updateVersion(packagePath) {
-  const content = JSON.parse(
-    readFileSync(packagePath + '/package.json').toString(),
-  );
-  content.version = process.env.PUBLISHED_VERSION;
-  Object.entries(content.dependencies || {}).forEach(([key, value]) => {
-    if (key.includes('@nx-dotnet')) {
-      content.dependencies[key] = 'latest';
-    }
-  });
-  writeFileSync(
-    packagePath + '/package.json',
-    JSON.stringify(content, null, 2),
-  );
-}
-
-function publishPackage(packagePath, npmMajorVersion: number) {
-  if (process.env.npm_config_registry.indexOf('http://localhost') === -1) {
-    throw Error(`
-      ------------------
-      💣 ERROR 💣 => $NPM_REGISTRY does not look like a local registry'
-      ------------------
-    `);
-  }
-  try {
-    console.log(` 📦 ${packagePath}`);
-
-    // NPM@7 requires a token to publish, thus, is just a matter of fake a token to bypass npm.
-    // See: https://twitter.com/verdaccio_npm/status/1357798427283910660
-    if (npmMajorVersion === 7) {
-      writeFileSync(
-        `${packagePath}/.npmrc`,
-        `registry=${
-          process.env.npm_config_registry
-        }\n${process.env.npm_config_registry.replace(
-          'http:',
-          '',
-        )}/:_authToken=fake`,
-      );
-    }
-
-    execSync(`npm publish`, {
-      cwd: packagePath,
-      env: process.env,
-      stdio: ['ignore', 'ignore', 'ignore'],
-    });
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 export function setup() {
-  const npmMajorVersion = execSync(`npm --version`)
-    .toString('utf-8')
-    .trim()
-    .split('.')[0];
-
   // Remove previous packages with the same version
   // before publishing the new ones
   removeSync('../../tmp/local-registry');
-
-  getDirectories('./dist/packages').map((pkg) => {
-    updateVersion(`./dist/packages/${pkg}`);
-    publishPackage(`./dist/packages/${pkg}`, +npmMajorVersion);
-  });
+  copySync('.npmrc.local', '.npmrc');
+  execSync('ts-node ./tools/scripts/publish-all 99.99.99 local');
 }
 
 async function runTest() {
@@ -111,8 +49,6 @@ async function runTest() {
     removeSync('./dist');
     removeSync(e2eRoot);
   }
-
-  build(process.env.PUBLISHED_VERSION, '~10.0.0', '3.9.3', '2.1.2');
 
   try {
     setup();
@@ -149,7 +85,7 @@ async function runTest() {
   }
 }
 
-function cleanUp(code) {
+function cleanUp(code: number) {
   // try terminate everything first
   try {
     if (!process.env.CI) {
