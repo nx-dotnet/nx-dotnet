@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.2...v0.7.0) (2021-05-20)
+
+
+### Features
+
+* **core:** add lint config to generated projects ([d320ce8](https://github.com/nx-dotnet/nx-dotnet/commit/d320ce8579d62b2953d8646ae2bf4eec11018820))
+* **core:** add migration to add lint target ([e391744](https://github.com/nx-dotnet/nx-dotnet/commit/e391744c3cd261c6dc462a68335dfd602b928b58))
+* **core:** add new executor for dotnet-format ([92afd05](https://github.com/nx-dotnet/nx-dotnet/commit/92afd051527cf00cbbfe20c9a1d9b1e6e5bd6140)), closes [#13](https://github.com/nx-dotnet/nx-dotnet/issues/13)
+
 ## [0.6.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.1...v0.6.2) (2021-05-19)
 
 
