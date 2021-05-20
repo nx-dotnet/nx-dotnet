@@ -18,7 +18,7 @@ import { dirSync } from 'tmp';
 
 interface RunCmdOpts {
   silenceError?: boolean;
-  env?: Record<string, string>;
+  env?: Record<string, string> | NodeJS.ProcessEnv;
   cwd?: string;
   silent?: boolean;
 }
@@ -146,21 +146,7 @@ export function newProject({ name = uniq('proj') } = {}): string {
         updateFile('.npmrc', 'prefer-frozen-lockfile=false');
       }
 
-      const packages = [
-        `@nrwl/angular`,
-        `@nrwl/express`,
-        `@nrwl/jest`,
-        `@nrwl/linter`,
-        `@nrwl/nest`,
-        `@nrwl/next`,
-        `@nrwl/gatsby`,
-        `@nrwl/node`,
-        `@nrwl/react`,
-        `@nrwl/storybook`,
-        `@nrwl/nx-plugin`,
-        `@nrwl/eslint-plugin-nx`,
-        `@nrwl/web`,
-      ];
+      const packages = [`@nx-dotnet/core`, `@nx-dotnet/typescript`];
       packageInstall(packages.join(` `), projScope);
 
       if (useBackupProject) {
@@ -231,7 +217,7 @@ export function runCommandUntil(
     let output = '';
     let complete = false;
 
-    function checkCriteria(c) {
+    function checkCriteria(c: any) {
       output += c.toString();
       if (criteria(output)) {
         complete = true;
@@ -242,8 +228,8 @@ export function runCommandUntil(
       }
     }
 
-    p.stdout.on('data', checkCriteria);
-    p.stderr.on('data', checkCriteria);
+    p.stdout?.on('data', checkCriteria);
+    p.stderr?.on('data', checkCriteria);
     p.on('exit', (code) => {
       if (code !== 0 && !complete) {
         console.log(output);
@@ -272,7 +258,7 @@ export function runNgAdd(
   command?: string,
   opts: RunCmdOpts = {
     silenceError: false,
-    env: process.env,
+    env: process.env as Record<string, string>,
     cwd: tmpProjPath(),
   },
 ): string {
@@ -322,7 +308,7 @@ export function runCLI(
     }
 
     const needsMaxWorkers = /g.*(express|nest|node|web|react):app.*/;
-    if (needsMaxWorkers.test(command)) {
+    if (command && needsMaxWorkers.test(command)) {
       setMaxWorkers();
     }
 

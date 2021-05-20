@@ -13,7 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Building affected apps
-    if: needs.pre-run.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
@@ -22,7 +21,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Testing affected apps
-    if: needs.pre-run.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
@@ -31,17 +29,26 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Linting affected apps
-    if: needs.pre-run.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected --target=lint --base=origin/master~1 --parallel
 
+  e2e:
+    runs-on: ubuntu-latest
+    name: E2E testing affected apps
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn e2e
+      - run: git reset --hard
+
   semantic-release:
     runs-on: ubuntu-latest
     name: Publish packages via semantic release
-    needs: [test]
-    if: ${{needs.pre-run.outputs.skip != 'true' && github.event_name == 'push'}}
+    needs: [test, e2e]
+    if: ${{github.event_name == 'push'}}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -63,18 +70,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  # e2e:
-  #   runs-on: ubuntu-latest
-  #   name: E2E testing affected apps
-  #   needs: [pre-run, build]
-  #   if: needs.pre-run.outputs.skip == 'false'
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: bahmutov/npm-install@v1.4.5
-  #     - name: Download a single artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: dist
-  #         path: dist
-  #     - run: yarn e2e

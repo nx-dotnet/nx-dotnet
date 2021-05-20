@@ -42,17 +42,16 @@ jobs:
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
 
-  # e2e:
-  #   runs-on: ubuntu-latest
-  #   name: E2E testing affected apps
-  #   needs: [pre-run, build]
-  #   if: needs.pre-run.outputs.skip == 'false'
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: bahmutov/npm-install@v1.4.5
-  #     - name: Download a single artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: dist
-  #         path: dist
-  #     - run: yarn e2e
+  e2e:
+    runs-on: ubuntu-latest
+    name: E2E testing affected apps
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      # - name: Download a single artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: dist
+      #     path: dist
+      - run: yarn e2e
