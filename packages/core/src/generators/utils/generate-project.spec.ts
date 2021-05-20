@@ -94,6 +94,19 @@ describe('nx-dotnet project generator', () => {
     expect(config.targets.serve).toBeDefined();
   });
 
+  it('should include lint target', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(appTree, 'test');
+    expect(config.targets.lint).toBeDefined();
+  });
+
+  it('should include lint target in test project', async () => {
+    options.testTemplate = 'nunit';
+    await GenerateProject(appTree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(appTree, 'test-test');
+    expect(config.targets.lint).toBeDefined();
+  });
+
   /**
    * This test requires a live dotnet client.
    */

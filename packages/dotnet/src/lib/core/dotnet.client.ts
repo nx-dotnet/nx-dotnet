@@ -10,11 +10,13 @@ import {
   buildKeyMap,
   dotnetAddPackageOptions,
   dotnetBuildOptions,
+  dotnetFormatOptions,
   dotnetNewOptions,
   dotnetPublishOptions,
   dotnetRunOptions,
   dotnetTemplate,
   dotnetTestOptions,
+  formatKeyMap,
   newKeyMap,
   publishKeyMap,
   testKeyMap,
@@ -127,6 +129,20 @@ export class DotNetClient {
 
   restoreTools(): Buffer {
     const cmd = `${this.cliCommand.command} tool restore`;
+    return this.logAndExecute(cmd);
+  }
+
+  format(project: string, parameters?: dotnetFormatOptions): Buffer {
+    let cmd = `${this.cliCommand.command} format ${project}`;
+    if (parameters) {
+      parameters = swapArrayFieldValueUsingMap(
+        parameters,
+        'flag',
+        formatKeyMap,
+      );
+      const paramString = parameters ? getParameterString(parameters) : '';
+      cmd = `${cmd} ${paramString}`;
+    }
     return this.logAndExecute(cmd);
   }
 

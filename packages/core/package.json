@@ -20,5 +20,8 @@
   },
   "bugs": {
     "url": "https://github.com/nx-dotnet/nx-dotnet/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=%5BBUG%5D+"
+  },
+  "nx-migrate": {
+    "migrations": "./migrations.json"
   }
 }

@@ -23,6 +23,7 @@ import {
 
 import {
   GetBuildExecutorConfiguration,
+  GetLintExecutorConfiguration,
   GetServeExecutorConfig,
   GetTestExecutorConfig,
   NxDotnetProjectGeneratorSchema,
@@ -97,6 +98,7 @@ async function GenerateTestProject(
     targets: {
       build: GetBuildExecutorConfiguration(testRoot),
       test: GetTestExecutorConfig(),
+      lint: GetLintExecutorConfiguration(),
     },
     tags: schema.parsedTags,
   });
@@ -192,6 +194,7 @@ export async function GenerateProject(
       ...(projectType === 'application'
         ? { serve: GetServeExecutorConfig() }
         : {}),
+      lint: GetLintExecutorConfiguration(),
     },
     tags: normalizedOptions.parsedTags,
   };
