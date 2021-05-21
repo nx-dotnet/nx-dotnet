@@ -1,6 +1,6 @@
 # <%= project.name %>
 
-<% if(Object.values(executors).length > 0) {%>
+<% if(Object.values(generators).length > 0) {%>
 
 ## Generators
 
