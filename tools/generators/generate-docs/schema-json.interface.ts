@@ -1,10 +1,27 @@
-export interface SchemaJSON {}
+export interface SchemaJSON {
+  title: string;
+  description: string;
+  properties: { [key: string]: PropertyConfiguration };
+  required: string[];
+}
+
+export interface PropertyConfiguration {
+  type: string;
+  description: string;
+  alias: string[];
+  anyOf?: PropertyConfiguration[];
+  items: {
+    type: string;
+  };
+  default: boolean | string | number;
+  enum: string[];
+}
 
 export interface GeneratorsCollection {
   name: string;
   version: string;
   generators: {
-      [key: string]: GeneratorConfiguration
+    [key: string]: GeneratorConfiguration;
   };
 }
 

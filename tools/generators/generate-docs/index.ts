@@ -1,28 +1,77 @@
 import {
   Tree,
-  formatFiles,
-  installPackagesTask,
   getProjects,
   ProjectConfiguration,
-  NxJsonProjectConfiguration,
   generateFiles,
   names,
   readJson,
 } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/workspace/generators';
+
 import * as path from 'path';
-import { ExecutorsCollection, GeneratorsCollection } from './schema-json.interface';
+import {
+  ExecutorsCollection,
+  GeneratorsCollection,
+  SchemaJSON,
+} from './schema-json.interface';
 
 export default async function (host: Tree, schema: any) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
-  projects.forEach((p) => {
-    const generators = readJson<GeneratorsCollection>(host, `${p.root}/generators.json`);
-    const executors = readJson<ExecutorsCollection>(host, `${p.root}/executors.json`);
-    generateFiles(host, path.join(__dirname, 'templates'), `docs`, {
-      projectFileName: names(p.name).fileName,
-      project: p,
-      generators: generators.generators,
-      executors: executors.executors
+  projects.forEach((project) => {
+    const generators = readJson<GeneratorsCollection>(
+      host,
+      `${project.root}/generators.json`,
+    ).generators;
+    const executors = readJson<ExecutorsCollection>(
+      host,
+      `${project.root}/executors.json`,
+    ).executors;
+    const projectFileName = names(project.name).fileName;
+
+    generateFiles(host, path.join(__dirname, 'templates/index'), `docs`, {
+      projectFileName,
+      project,
+      generators,
+      executors,
+    });
+
+    Object.entries(generators).forEach(([generatorName, config]) => {
+      const generatorFileName = names(generatorName).fileName;
+      const schema = readJson<SchemaJSON>(
+        host,
+        path.relative(process.cwd(), path.resolve(project.root, config.schema)),
+      );
+      generateFiles(
+        host,
+        path.join(__dirname, 'templates/detail'),
+        `docs/${projectFileName}/generators`,
+        {
+          projectFileName,
+          project,
+          generatorName,
+          generatorFileName,
+          schema,
+        },
+      );
+    });
+
+    Object.entries(generators).forEach(([generatorName, config]) => {
+      const generatorFileName = names(generatorName).fileName;
+      const schema = readJson<SchemaJSON>(
+        host,
+        path.relative(process.cwd(), path.resolve(project.root, config.schema)),
+      );
+      generateFiles(
+        host,
+        path.join(__dirname, 'templates/detail'),
+        `docs/${projectFileName}/executors`,
+        {
+          projectFileName,
+          project,
+          generatorName,
+          generatorFileName,
+          schema,
+        },
+      );
     });
   });
 }
