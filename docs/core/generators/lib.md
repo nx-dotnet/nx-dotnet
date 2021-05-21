@@ -1,4 +1,4 @@
-# lib
+# @nx-dotnet/core:lib
 
 ## NxDotnet Library Generator
 

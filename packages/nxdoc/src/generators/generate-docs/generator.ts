@@ -26,6 +26,8 @@ export default async function (host: Tree, options: Schema) {
       host,
       `${project.root}/executors.json`,
     ).executors;
+
+    const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;
 
     generateFiles(
@@ -56,6 +58,7 @@ export default async function (host: Tree, options: Schema) {
           generatorName,
           generatorFileName,
           schema,
+          packageName,
         },
       );
     });
@@ -76,6 +79,7 @@ export default async function (host: Tree, options: Schema) {
           generatorName,
           generatorFileName,
           schema,
+          packageName,
         },
       );
     });

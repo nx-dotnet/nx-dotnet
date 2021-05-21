@@ -1,4 +1,4 @@
-# project-reference
+# @nx-dotnet/core:project-reference
 
 ## NxDotnet Application Generator
 

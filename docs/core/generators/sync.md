@@ -1,1 +1,1 @@
-# sync
+# @nx-dotnet/core:sync

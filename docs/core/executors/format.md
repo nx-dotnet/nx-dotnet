@@ -1,4 +1,4 @@
-# format
+# @nx-dotnet/core:format
 
 ## Format executor
 

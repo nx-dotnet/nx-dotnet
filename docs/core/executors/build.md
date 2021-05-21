@@ -1,4 +1,4 @@
-# build
+# @nx-dotnet/core:build
 
 ## NxDotnet Build
 

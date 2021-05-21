@@ -1,4 +1,4 @@
-# serve
+# @nx-dotnet/core:serve
 
 ## NxDotnet Serve Executor
 
