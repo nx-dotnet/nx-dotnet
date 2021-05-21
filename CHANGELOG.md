@@ -1,3 +1,12 @@
+# [0.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.1...v0.8.0) (2021-05-21)
+
+
+### Features
+
+* **nxdoc:** scaffold plugin + generate-docs v1 ([80b0368](https://github.com/nx-dotnet/nx-dotnet/commit/80b03681908fa6ba374d935af463f9f79aeca3a9))
+* **repo:** docs generator prints options ([bddc5b5](https://github.com/nx-dotnet/nx-dotnet/commit/bddc5b58e2946c83a1c452ea8e68b6abf0a6608a))
+* **repo:** schematic to generate docs [#53](https://github.com/nx-dotnet/nx-dotnet/issues/53) ([a7828c5](https://github.com/nx-dotnet/nx-dotnet/commit/a7828c5eddc238d85e6bf56590d47c9cc71b4d5a))
+
 ## [0.7.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.0...v0.7.1) (2021-05-20)
 
 
