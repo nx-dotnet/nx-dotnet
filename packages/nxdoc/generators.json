@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nxdoc",
+  "version": "0.0.1",
+  "generators": {
+    "generate-docs": {
+      "factory": "./src/generators/generate-docs/index.ts",
+      "schema": "./src/generators/generate-docs/schema.json",
+      "description": "Automatic documentation generator for Nx Plugins"
+    }
+  }
+}

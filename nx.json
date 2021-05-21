@@ -45,6 +45,13 @@
     },
     "dotnet": {
       "tags": []
+    },
+    "nxdoc": {
+      "tags": []
+    },
+    "nxdoc-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nxdoc"]
     }
   },
   "workspaceLayout": {
