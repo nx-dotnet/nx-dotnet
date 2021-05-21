@@ -57,7 +57,7 @@
     "@nrwl/nx-plugin": "12.3.4",
     "@nrwl/tao": "12.3.4",
     "@nrwl/workspace": "12.3.4",
-    "@nx-dotnet/nxdoc": "^0.8.0",
+    "@nx-dotnet/nxdoc": "latest",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/exec": "^5.0.0",
