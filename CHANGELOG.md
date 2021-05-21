@@ -1,3 +1,10 @@
+## [0.8.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.0...v0.8.1) (2021-05-21)
+
+
+### Bug Fixes
+
+* **nxdoc:** invalid generators.json ([b3b03be](https://github.com/nx-dotnet/nx-dotnet/commit/b3b03be0134df68e603ee1cf6a3401662f67b6cb))
+
 # [0.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.1...v0.8.0) (2021-05-21)
 
 
