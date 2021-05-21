@@ -1,3 +1,10 @@
+## [0.8.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.1...v0.8.2) (2021-05-21)
+
+
+### Bug Fixes
+
+* **nxdoc:** generators do not appear in index if no executors are present ([c019467](https://github.com/nx-dotnet/nx-dotnet/commit/c019467a6ed4dad72da26c52e208e1be374a7d7d))
+
 ## [0.8.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.0...v0.8.1) (2021-05-21)
 
 
