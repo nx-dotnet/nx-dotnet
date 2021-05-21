@@ -8,5 +8,7 @@ module.exports = {
     '<rootDir>/packages/utils',
     '<rootDir>/packages/utils',
     '<rootDir>/packages/dotnet',
+    '<rootDir>/packages/nxdoc',
+    '<rootDir>/e2e\\nxdoc-e2e',
   ],
 };

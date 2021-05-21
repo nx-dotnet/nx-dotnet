@@ -4,7 +4,16 @@
     "scope-enum": [
       1,
       "always",
-      ["repo", "dotnet", "core", "utils", "typescript", "ci", "release"]
+      [
+        "repo",
+        "dotnet",
+        "core",
+        "utils",
+        "typescript",
+        "ci",
+        "release",
+        "nxdoc"
+      ]
     ],
     "type-enum": [1, "always", ["test", "docs", "chore", "feat", "fix"]]
   }

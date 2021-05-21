@@ -19,7 +19,8 @@
       "@nx-dotnet/utils": ["packages/utils/src/index.ts"],
       "@nx-dotnet/core": ["packages/core/src/index.ts"],
       "@nx-dotnet/typescript": ["packages/typescript/src/index.ts"],
-      "@nx-dotnet/dotnet": ["packages/dotnet/src/index.ts"]
+      "@nx-dotnet/dotnet": ["packages/dotnet/src/index.ts"],
+      "@nx-dotnet/nxdoc": ["packages/nxdoc/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

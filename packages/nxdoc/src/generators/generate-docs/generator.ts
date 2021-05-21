@@ -8,13 +8,14 @@ import {
 } from '@nrwl/devkit';
 
 import * as path from 'path';
+import { Schema } from './schema';
 import {
   ExecutorsCollection,
   GeneratorsCollection,
   SchemaJSON,
 } from './schema-json.interface';
 
-export default async function (host: Tree, schema: any) {
+export default async function (host: Tree, options: Schema) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
   projects.forEach((project) => {
     const generators = readJson<GeneratorsCollection>(
@@ -27,12 +28,17 @@ export default async function (host: Tree, schema: any) {
     ).executors;
     const projectFileName = names(project.name).fileName;
 
-    generateFiles(host, path.join(__dirname, 'templates/index'), `docs`, {
-      projectFileName,
-      project,
-      generators,
-      executors,
-    });
+    generateFiles(
+      host,
+      path.join(__dirname, 'templates/index'),
+      options.outputDirectory,
+      {
+        projectFileName,
+        project,
+        generators,
+        executors,
+      },
+    );
 
     Object.entries(generators).forEach(([generatorName, config]) => {
       const generatorFileName = names(generatorName).fileName;
@@ -43,7 +49,7 @@ export default async function (host: Tree, schema: any) {
       generateFiles(
         host,
         path.join(__dirname, 'templates/detail'),
-        `docs/${projectFileName}/generators`,
+        `${options.outputDirectory}/${projectFileName}/generators`,
         {
           projectFileName,
           project,
@@ -54,7 +60,7 @@ export default async function (host: Tree, schema: any) {
       );
     });
 
-    Object.entries(generators).forEach(([generatorName, config]) => {
+    Object.entries(executors).forEach(([generatorName, config]) => {
       const generatorFileName = names(generatorName).fileName;
       const schema = readJson<SchemaJSON>(
         host,
@@ -63,7 +69,7 @@ export default async function (host: Tree, schema: any) {
       generateFiles(
         host,
         path.join(__dirname, 'templates/detail'),
-        `docs/${projectFileName}/executors`,
+        `${options.outputDirectory}/${projectFileName}/executors`,
         {
           projectFileName,
           project,
