@@ -12,7 +12,8 @@
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    "docs": ["docs-site"]
   },
   "tasksRunnerOptions": {
     "default": {
@@ -52,6 +53,9 @@
     "nxdoc-e2e": {
       "tags": [],
       "implicitDependencies": ["nxdoc"]
+    },
+    "docs-site": {
+      "implicitDependencies": ["nxdoc", "typescript", "core"]
     }
   },
   "workspaceLayout": {

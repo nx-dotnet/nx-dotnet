@@ -18,14 +18,14 @@ import {
 export default async function (host: Tree, options: Schema) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
   projects.forEach((project) => {
-    const generators = readJson<GeneratorsCollection>(
-      host,
-      `${project.root}/generators.json`,
-    ).generators;
-    const executors = readJson<ExecutorsCollection>(
-      host,
-      `${project.root}/executors.json`,
-    ).executors;
+    const generators = project.generators
+      ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
+          .generators
+      : {};
+    const executors = project.executors
+      ? readJson<ExecutorsCollection>(host, `${project.root}/executors.json`)
+          .executors
+      : {};
 
     const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;
@@ -39,6 +39,12 @@ export default async function (host: Tree, options: Schema) {
         project,
         generators,
         executors,
+        frontMatter: options.skipFrontMatter
+          ? null
+          : {
+              title: `${packageName}`,
+              summary: `${packageName}`,
+            },
       },
     );
 

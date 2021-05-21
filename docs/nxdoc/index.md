@@ -1,4 +1,12 @@
-# nxdoc
+---
+title: '@nx-dotnet/nxdoc'
+summary: >-
+  @nx-dotnet/nxdoc
+---
+
+# Getting Started
+
+# API Reference
 
 ## Generators
 

@@ -6,6 +6,10 @@
     "outputDirectory": {
       "type": "string",
       "default": "docs"
+    },
+    "skipFrontMatter": {
+      "type": "boolean",
+      "default": false
     }
   },
   "required": ["outputDirectory"]

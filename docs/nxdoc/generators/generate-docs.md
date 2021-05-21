@@ -3,3 +3,5 @@
 ## Options
 
 ### outputDirectory (string)
+
+### skipFrontMatter (boolean)

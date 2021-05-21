@@ -5,14 +5,15 @@
       1,
       "always",
       [
-        "repo",
         "dotnet",
         "core",
         "utils",
         "typescript",
+        "nxdoc",
+        "docs-site",
         "ci",
-        "release",
-        "nxdoc"
+        "repo",
+        "release"
       ]
     ],
     "type-enum": [1, "always", ["test", "docs", "chore", "feat", "fix"]]

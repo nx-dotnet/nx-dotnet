@@ -1,4 +1,12 @@
-# core
+---
+title: '@nx-dotnet/core'
+summary: >-
+  @nx-dotnet/core
+---
+
+# Getting Started
+
+# API Reference
 
 ## Generators
 

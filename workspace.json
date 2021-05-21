@@ -286,6 +286,26 @@
           }
         }
       }
+    },
+    "docs-site": {
+      "projectType": "application",
+      "root": "apps/docs-site",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/workspace:run-commands",
+          "outputs": ["dist/apps/docs-site"],
+          "options": {
+            "commands": [
+              "nx workspace-schematic generate-docs",
+              "pip install mkdocs -qq",
+              "pip install mkdocs-material -qq",
+              "cp -r apps/docs-site/docs/ .",
+              "cd apps/docs-site && mkdocs build"
+            ],
+            "parallel": false
+          }
+        }
+      }
     }
   },
   "cli": {
