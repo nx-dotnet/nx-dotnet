@@ -994,10 +994,10 @@
     yargs "15.4.1"
     yargs-parser "20.0.0"
 
-"@nx-dotnet/nxdoc@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@nx-dotnet/nxdoc/-/nxdoc-0.0.2.tgz#accca388b63b0dd2ec0c8f72e7c5595a522dffe2"
-  integrity sha512-f3gvVjXs7fhnkmDOp/ILZaFXZtyDTxe8dovr2pnLHjlsPoIEVuh7kQiUE7UZ+fYdRf0kg3WYoD9+e5rbtyQOLQ==
+"@nx-dotnet/nxdoc@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@nx-dotnet/nxdoc/-/nxdoc-0.8.0.tgz#3378e49306b4544c65658335a00fc475d6d32d92"
+  integrity sha512-Q99ytDn1+ghbg9OWpepQ/wUexO70nSVVf+bdK+qvhhBgIHmnPkezlGjBHFv10M4o8n6Ojsn4ELOm2e1EznnBZg==
 
 "@octokit/auth-token@^2.4.4":
   version "2.4.5"
