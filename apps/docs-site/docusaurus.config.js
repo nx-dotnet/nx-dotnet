@@ -2,7 +2,7 @@ module.exports = {
   title: 'nx-dotnet',
   tagline: 'The tagline of my site',
   url: 'https://nx-dotnet.github.io',
-  baseUrl: '/nx-dotnet/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
