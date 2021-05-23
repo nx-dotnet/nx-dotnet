@@ -9,31 +9,33 @@ import styles from './styles.module.css';
 const features = [
   {
     title: 'Easy to Use',
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
+    imageUrl: 'img/undraw_coding.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        nx-dotnet was designed from the ground up to allow developers to
+        develop how they want to. Easily stick with Visual Studio or other IDE's,
+        or switch to a more lightweight environment such as VS Code. 
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
+    title: 'Computational Caching and Dependency Graph Tools for .NET',
+    imageUrl: 'img/undraw_adventure_map.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        All of the power of nx, brought to the .NET workflow. 
+        Easily build, test, and publish only what was changed in CI.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    imageUrl: 'img/undraw_docusaurus_react.svg',
+    title: 'Powered by Nx + .NET SDK',
+    imageUrl: 'img/undraw_code_thinking.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Built using the .NET SDK + CLI, nx-dotnet is easy to update and should never break due
+        to a new relase of .NET. Using a preview version? No worry, since nx-dotnet uses your
+        installed CLI you can choose exactly what to run.
       </>
     ),
   },

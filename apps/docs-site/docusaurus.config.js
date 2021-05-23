@@ -1,6 +1,6 @@
 module.exports = {
   title: 'nx-dotnet',
-  tagline: 'The tagline of my site',
+  tagline: 'Build what you love, where you love',
   url: 'https://nx-dotnet.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -77,7 +77,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} nx-dotnet. Built with Docusaurus.`,
     },
   },
   presets: [
