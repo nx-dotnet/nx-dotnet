@@ -1,1 +1,1 @@
-# restore
+# @nx-dotnet/core:restore

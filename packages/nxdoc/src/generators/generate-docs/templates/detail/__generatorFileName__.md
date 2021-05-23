@@ -1,4 +1,4 @@
-# <%= generatorName %>
+# <%= `${packageName}:${generatorName}` %>
 
 <%if(schema.title){%>
 

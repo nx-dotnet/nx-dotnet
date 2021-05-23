@@ -5,6 +5,7 @@ import {
   generateFiles,
   names,
   readJson,
+  formatFiles,
 } from '@nrwl/devkit';
 
 import * as path from 'path';
@@ -17,16 +18,23 @@ import {
 
 export default async function (host: Tree, options: Schema) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
+
+  const packageDetails: {packageName: string, projectFileName: string, project: Omit<ProjectConfiguration, 'generators'>, generators: number, executors: number}[] = [];
+
   projects.forEach((project) => {
-    const generators = readJson<GeneratorsCollection>(
-      host,
-      `${project.root}/generators.json`,
-    ).generators;
-    const executors = readJson<ExecutorsCollection>(
-      host,
-      `${project.root}/executors.json`,
-    ).executors;
+    const generators = project.generators
+      ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
+          .generators
+      : {};
+    const executors = project.executors
+      ? readJson<ExecutorsCollection>(host, `${project.root}/executors.json`)
+          .executors
+      : {};
+
+    const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;
+
+    packageDetails.push({packageName, projectFileName, project, generators: Object.keys(generators).length, executors: Object.keys(executors).length})
 
     generateFiles(
       host,
@@ -34,9 +42,17 @@ export default async function (host: Tree, options: Schema) {
       options.outputDirectory,
       {
         projectFileName,
+        packageName,
         project,
         generators,
         executors,
+        underscore: '_',
+        frontMatter: options.skipFrontMatter
+          ? null
+          : {
+              title: `${packageName}`,
+              summary: `${packageName}`,
+            },
       },
     );
 
@@ -56,6 +72,7 @@ export default async function (host: Tree, options: Schema) {
           generatorName,
           generatorFileName,
           schema,
+          packageName,
         },
       );
     });
@@ -76,10 +93,18 @@ export default async function (host: Tree, options: Schema) {
           generatorName,
           generatorFileName,
           schema,
+          packageName,
         },
       );
     });
   });
+
+  generateFiles(host, path.join(__dirname, 'templates/root'), options.outputDirectory, ({
+    packageDetails,
+    includeFrontMatter: !options.skipFrontMatter
+  }))
+
+  formatFiles(host);
 }
 
 export async function findProjectsWithGeneratorsOrExecutors(host: Tree) {

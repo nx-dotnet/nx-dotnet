@@ -1,4 +1,4 @@
-# app
+# @nx-dotnet/core:app
 
 ## NxDotnet Application Generator
 

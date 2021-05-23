@@ -1,4 +1,12 @@
-# <%= project.name %>
+<% if(frontMatter) {%>---
+<% if(frontMatter.title) { %>title: "<%= frontMatter.title %>"<%}%>
+sidebar_position: 0
+slug: /<%=projectFileName%>/
+<%}%>---
+
+# Getting Started
+
+# API Reference
 
 <% if(Object.values(generators).length > 0) {%>
 

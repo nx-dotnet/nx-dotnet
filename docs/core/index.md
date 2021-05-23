@@ -1,4 +1,12 @@
-# core
+---
+title: '@nx-dotnet/core'
+sidebar_position: 0
+slug: /core/
+---
+
+# Getting Started
+
+# API Reference
 
 ## Generators
 

@@ -1,4 +1,4 @@
-# test
+# @nx-dotnet/core:test
 
 ## Test executor
 

@@ -1,4 +1,4 @@
-# nuget-reference
+# @nx-dotnet/core:nuget-reference
 
 ## Options
 

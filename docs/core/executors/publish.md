@@ -1,4 +1,4 @@
-# publish
+# @nx-dotnet/core:publish
 
 ## NxDotnet Publish
 
