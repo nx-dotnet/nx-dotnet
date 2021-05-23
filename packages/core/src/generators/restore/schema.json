@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "id": "Restore",
-  "title": "",
+  "title": "Restore Generator",
   "type": "object",
   "description": "Restores NuGet packages and .NET tools used by the workspace.",
   "properties": {}

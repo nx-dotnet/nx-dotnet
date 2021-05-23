@@ -1,6 +1,6 @@
 # @nx-dotnet/core:test
 
-## Test executor
+## Runs test via the dotnet cli
 
 ## Options
 

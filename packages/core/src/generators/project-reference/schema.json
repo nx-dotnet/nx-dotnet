@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "id": "@nx-dotnet/core:project-reference",
-  "title": "NxDotnet Application Generator",
+  "title": "Project Reference Generator",
   "description": "Adds a project reference to the host project that points to the source project.",
   "type": "object",
   "properties": {

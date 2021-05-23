@@ -1,5 +1,7 @@
 # @nx-dotnet/core:nuget-reference
 
+## Nuget Reference
+
 ## Options
 
 ### project (string)

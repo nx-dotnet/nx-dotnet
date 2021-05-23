@@ -1,6 +1,6 @@
 # @nx-dotnet/core:project-reference
 
-## NxDotnet Application Generator
+## Project Reference Generator
 
 ## Options
 
