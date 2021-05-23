@@ -1,7 +1,7 @@
 ---
 title: '@nx-dotnet/nxdoc'
-summary: >-
-  @nx-dotnet/nxdoc
+sidebar_position: 0
+slug: /nxdoc/
 ---
 
 # Getting Started

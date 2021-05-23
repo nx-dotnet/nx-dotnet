@@ -5,6 +5,7 @@ import {
   generateFiles,
   names,
   readJson,
+  formatFiles,
 } from '@nrwl/devkit';
 
 import * as path from 'path';
@@ -17,6 +18,9 @@ import {
 
 export default async function (host: Tree, options: Schema) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
+
+  const packageDetails: {packageName: string, projectFileName: string, project: Omit<ProjectConfiguration, 'generators'>, generators: number, executors: number}[] = [];
+
   projects.forEach((project) => {
     const generators = project.generators
       ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
@@ -30,15 +34,19 @@ export default async function (host: Tree, options: Schema) {
     const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;
 
+    packageDetails.push({packageName, projectFileName, project, generators: Object.keys(generators).length, executors: Object.keys(executors).length})
+
     generateFiles(
       host,
       path.join(__dirname, 'templates/index'),
       options.outputDirectory,
       {
         projectFileName,
+        packageName,
         project,
         generators,
         executors,
+        underscore: '_',
         frontMatter: options.skipFrontMatter
           ? null
           : {
@@ -90,6 +98,13 @@ export default async function (host: Tree, options: Schema) {
       );
     });
   });
+
+  generateFiles(host, path.join(__dirname, 'templates/root'), options.outputDirectory, ({
+    packageDetails,
+    includeFrontMatter: !options.skipFrontMatter
+  }))
+
+  formatFiles(host);
 }
 
 export async function findProjectsWithGeneratorsOrExecutors(host: Tree) {

@@ -1,5 +1,0 @@
----
-template: home.html
----
-
-# Home

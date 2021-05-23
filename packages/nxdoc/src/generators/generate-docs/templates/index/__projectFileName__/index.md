@@ -1,10 +1,8 @@
----
-<% if(frontMatter) {%>
+<% if(frontMatter) {%>---
 <% if(frontMatter.title) { %>title: "<%= frontMatter.title %>"<%}%>
-<% if(frontMatter.summary) { %>summary: >-
-    <%= frontMatter.summary %><%}%>
-<%}%>
----
+sidebar_position: 0
+slug: /<%=projectFileName%>/
+<%}%>---
 
 # Getting Started
 

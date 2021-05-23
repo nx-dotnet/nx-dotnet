@@ -290,17 +290,27 @@
     "docs-site": {
       "projectType": "application",
       "root": "apps/docs-site",
+      "sourceRoot": "apps/docs-site/src",
       "targets": {
         "build": {
+          "executor": "@nx-plus/docusaurus:browser",
+          "options": {
+            "outputPath": "dist/apps/docs-site"
+          }
+        },
+        "serve": {
+          "executor": "@nx-plus/docusaurus:dev-server",
+          "options": {
+            "port": 3000
+          }
+        },
+        "deploy": {
           "executor": "@nrwl/workspace:run-commands",
-          "outputs": ["dist/apps/docs-site"],
           "options": {
             "commands": [
               "nx workspace-schematic generate-docs",
-              "pip install mkdocs -qq",
-              "pip install mkdocs-material -qq",
-              "cp -r apps/docs-site/docs/ .",
-              "cd apps/docs-site && mkdocs build"
+              "nx build docs-site",
+              "ts-node tools/scripts/publish-docs-site"
             ],
             "parallel": false
           }

@@ -1,7 +1,7 @@
 ---
 title: '@nx-dotnet/typescript'
-summary: >-
-  @nx-dotnet/typescript
+sidebar_position: 0
+slug: /typescript/
 ---
 
 # Getting Started

@@ -1,7 +1,7 @@
 ---
 title: '@nx-dotnet/core'
-summary: >-
-  @nx-dotnet/core
+sidebar_position: 0
+slug: /core/
 ---
 
 # Getting Started

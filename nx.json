@@ -55,11 +55,11 @@
       "implicitDependencies": ["nxdoc"]
     },
     "docs-site": {
-      "implicitDependencies": ["nxdoc", "typescript", "core"]
+      "tags": []
     }
   },
   "workspaceLayout": {
-    "appsDir": "e2e",
+    "appsDir": "apps",
     "libsDir": "packages"
   }
 }
