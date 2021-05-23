@@ -1,116 +1,114 @@
-## [0.9.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.9.2) (2021-05-23)
-
+# [0.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.10.0) (2021-05-23)
 
 ### Bug Fixes
 
-* **docs-site:** invalid baseUrl with custom domain ([5cf6c70](https://github.com/nx-dotnet/nx-dotnet/commit/5cf6c70fc57a0e4a2af1542419a12e969f62ffb7))
+- **docs-site:** invalid baseUrl with custom domain ([5cf6c70](https://github.com/nx-dotnet/nx-dotnet/commit/5cf6c70fc57a0e4a2af1542419a12e969f62ffb7))
+- **nxdoc:** include generator / executor description in detail file ([b0bf601](https://github.com/nx-dotnet/nx-dotnet/commit/b0bf6015ee25555d23f839237d0edb241257c55c))
+
+### Features
+
+- **nx-docs:** support for anyOf in schema.json files ([7ab15c6](https://github.com/nx-dotnet/nx-dotnet/commit/7ab15c61122605204047758ca565f4760498f255))
+- **nxdoc:** include getting started text ([db3ec62](https://github.com/nx-dotnet/nx-dotnet/commit/db3ec625d5998d96aed82edbbd2c2d017a7ea3be))
+- **nxdoc:** mark required properties ([8b8b01c](https://github.com/nx-dotnet/nx-dotnet/commit/8b8b01c87d8446ac7ec42b029825fb76463e7523))
+
+## [0.9.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.9.2) (2021-05-23)
+
+### Bug Fixes
+
+- **docs-site:** invalid baseUrl with custom domain ([5cf6c70](https://github.com/nx-dotnet/nx-dotnet/commit/5cf6c70fc57a0e4a2af1542419a12e969f62ffb7))
 
 ## [0.9.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.0...v0.9.1) (2021-05-23)
 
-
 ### Bug Fixes
 
-* **docs-site:** deploy on commit to master ([e259a28](https://github.com/nx-dotnet/nx-dotnet/commit/e259a28c5df552a3c85fa7b154c47fe2fc19ed61))
+- **docs-site:** deploy on commit to master ([e259a28](https://github.com/nx-dotnet/nx-dotnet/commit/e259a28c5df552a3c85fa7b154c47fe2fc19ed61))
 
 # [0.9.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.2...v0.9.0) (2021-05-23)
 
-
 ### Features
 
-* **docs-site:** setup docusaurus site ([#57](https://github.com/nx-dotnet/nx-dotnet/issues/57)) ([a268c70](https://github.com/nx-dotnet/nx-dotnet/commit/a268c7090c9ea5ad669ad9f080a42a6c42fec704)), closes [#53](https://github.com/nx-dotnet/nx-dotnet/issues/53)
+- **docs-site:** setup docusaurus site ([#57](https://github.com/nx-dotnet/nx-dotnet/issues/57)) ([a268c70](https://github.com/nx-dotnet/nx-dotnet/commit/a268c7090c9ea5ad669ad9f080a42a6c42fec704)), closes [#53](https://github.com/nx-dotnet/nx-dotnet/issues/53)
 
 ## [0.8.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.1...v0.8.2) (2021-05-21)
 
-
 ### Bug Fixes
 
-* **nxdoc:** generators do not appear in index if no executors are present ([c019467](https://github.com/nx-dotnet/nx-dotnet/commit/c019467a6ed4dad72da26c52e208e1be374a7d7d))
+- **nxdoc:** generators do not appear in index if no executors are present ([c019467](https://github.com/nx-dotnet/nx-dotnet/commit/c019467a6ed4dad72da26c52e208e1be374a7d7d))
 
 ## [0.8.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.0...v0.8.1) (2021-05-21)
 
-
 ### Bug Fixes
 
-* **nxdoc:** invalid generators.json ([b3b03be](https://github.com/nx-dotnet/nx-dotnet/commit/b3b03be0134df68e603ee1cf6a3401662f67b6cb))
+- **nxdoc:** invalid generators.json ([b3b03be](https://github.com/nx-dotnet/nx-dotnet/commit/b3b03be0134df68e603ee1cf6a3401662f67b6cb))
 
 # [0.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.1...v0.8.0) (2021-05-21)
 
-
 ### Features
 
-* **nxdoc:** scaffold plugin + generate-docs v1 ([80b0368](https://github.com/nx-dotnet/nx-dotnet/commit/80b03681908fa6ba374d935af463f9f79aeca3a9))
-* **repo:** docs generator prints options ([bddc5b5](https://github.com/nx-dotnet/nx-dotnet/commit/bddc5b58e2946c83a1c452ea8e68b6abf0a6608a))
-* **repo:** schematic to generate docs [#53](https://github.com/nx-dotnet/nx-dotnet/issues/53) ([a7828c5](https://github.com/nx-dotnet/nx-dotnet/commit/a7828c5eddc238d85e6bf56590d47c9cc71b4d5a))
+- **nxdoc:** scaffold plugin + generate-docs v1 ([80b0368](https://github.com/nx-dotnet/nx-dotnet/commit/80b03681908fa6ba374d935af463f9f79aeca3a9))
+- **repo:** docs generator prints options ([bddc5b5](https://github.com/nx-dotnet/nx-dotnet/commit/bddc5b58e2946c83a1c452ea8e68b6abf0a6608a))
+- **repo:** schematic to generate docs [#53](https://github.com/nx-dotnet/nx-dotnet/issues/53) ([a7828c5](https://github.com/nx-dotnet/nx-dotnet/commit/a7828c5eddc238d85e6bf56590d47c9cc71b4d5a))
 
 ## [0.7.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.0...v0.7.1) (2021-05-20)
 
-
 ### Bug Fixes
 
-* **core:** format files after successful migration ([c92814a](https://github.com/nx-dotnet/nx-dotnet/commit/c92814a9b906b2370a4ffd90a4fe3282c61828e8))
-* **core:** rename migrations key to nx-migrations ([c6993b9](https://github.com/nx-dotnet/nx-dotnet/commit/c6993b96207b06e7d0ec8a6b252d19a5670ed0fd))
-* **repo:** e2e tests run in CI again ([f7ed139](https://github.com/nx-dotnet/nx-dotnet/commit/f7ed139d499673848ddde0f4b8936f7652f9eaec))
+- **core:** format files after successful migration ([c92814a](https://github.com/nx-dotnet/nx-dotnet/commit/c92814a9b906b2370a4ffd90a4fe3282c61828e8))
+- **core:** rename migrations key to nx-migrations ([c6993b9](https://github.com/nx-dotnet/nx-dotnet/commit/c6993b96207b06e7d0ec8a6b252d19a5670ed0fd))
+- **repo:** e2e tests run in CI again ([f7ed139](https://github.com/nx-dotnet/nx-dotnet/commit/f7ed139d499673848ddde0f4b8936f7652f9eaec))
 
 # [0.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.2...v0.7.0) (2021-05-20)
 
-
 ### Features
 
-* **core:** add lint config to generated projects ([d320ce8](https://github.com/nx-dotnet/nx-dotnet/commit/d320ce8579d62b2953d8646ae2bf4eec11018820))
-* **core:** add migration to add lint target ([e391744](https://github.com/nx-dotnet/nx-dotnet/commit/e391744c3cd261c6dc462a68335dfd602b928b58))
-* **core:** add new executor for dotnet-format ([92afd05](https://github.com/nx-dotnet/nx-dotnet/commit/92afd051527cf00cbbfe20c9a1d9b1e6e5bd6140)), closes [#13](https://github.com/nx-dotnet/nx-dotnet/issues/13)
+- **core:** add lint config to generated projects ([d320ce8](https://github.com/nx-dotnet/nx-dotnet/commit/d320ce8579d62b2953d8646ae2bf4eec11018820))
+- **core:** add migration to add lint target ([e391744](https://github.com/nx-dotnet/nx-dotnet/commit/e391744c3cd261c6dc462a68335dfd602b928b58))
+- **core:** add new executor for dotnet-format ([92afd05](https://github.com/nx-dotnet/nx-dotnet/commit/92afd051527cf00cbbfe20c9a1d9b1e6e5bd6140)), closes [#13](https://github.com/nx-dotnet/nx-dotnet/issues/13)
 
 ## [0.6.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.1...v0.6.2) (2021-05-19)
 
-
 ### Bug Fixes
 
-* **utils:** getDependantProjectsForNxProject should work on Unix ([96cbc33](https://github.com/nx-dotnet/nx-dotnet/commit/96cbc33ec6b5e9d0492fba4902ee76938230b146)), closes [#43](https://github.com/nx-dotnet/nx-dotnet/issues/43)
+- **utils:** getDependantProjectsForNxProject should work on Unix ([96cbc33](https://github.com/nx-dotnet/nx-dotnet/commit/96cbc33ec6b5e9d0492fba4902ee76938230b146)), closes [#43](https://github.com/nx-dotnet/nx-dotnet/issues/43)
 
 ## [0.6.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.0...v0.6.1) (2021-05-19)
 
-
 ### Bug Fixes
 
-* **core:** add unused options parameter for restore ([c8b0334](https://github.com/nx-dotnet/nx-dotnet/commit/c8b033403b1ba7d1365526dc5306338912adcf4c))
+- **core:** add unused options parameter for restore ([c8b0334](https://github.com/nx-dotnet/nx-dotnet/commit/c8b033403b1ba7d1365526dc5306338912adcf4c))
 
 # [0.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.2...v0.6.0) (2021-05-19)
 
-
 ### Bug Fixes
 
-* **core:** add unused options parameter ([c434d32](https://github.com/nx-dotnet/nx-dotnet/commit/c434d32bc4d145bbf5fe417fa9fe5fabed25fc31))
-* **core:** pass client through to init schematic ([5908947](https://github.com/nx-dotnet/nx-dotnet/commit/59089474f4d4c2378715a07d5629f802b0513cee))
-
+- **core:** add unused options parameter ([c434d32](https://github.com/nx-dotnet/nx-dotnet/commit/c434d32bc4d145bbf5fe417fa9fe5fabed25fc31))
+- **core:** pass client through to init schematic ([5908947](https://github.com/nx-dotnet/nx-dotnet/commit/59089474f4d4c2378715a07d5629f802b0513cee))
 
 ### Features
 
-* **core:** add a generator for dotnet restore ([96082a1](https://github.com/nx-dotnet/nx-dotnet/commit/96082a1ae582acb8d0fe3bb9ab45adcd112ce398))
-* **core:** add restore to prepare script during init ([c2b1c23](https://github.com/nx-dotnet/nx-dotnet/commit/c2b1c236d6a556f920f0d96f1197daaf92c6c35f)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
-* **core:** create tool manifest during init ([996aaee](https://github.com/nx-dotnet/nx-dotnet/commit/996aaee4d76beeb3068edb60a6dde3daebe53a55)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
-* **dotnet:** add a method to install local tools ([6ab5d4a](https://github.com/nx-dotnet/nx-dotnet/commit/6ab5d4ae115f9c8419c14c2bb86879dd3f72764e)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
+- **core:** add a generator for dotnet restore ([96082a1](https://github.com/nx-dotnet/nx-dotnet/commit/96082a1ae582acb8d0fe3bb9ab45adcd112ce398))
+- **core:** add restore to prepare script during init ([c2b1c23](https://github.com/nx-dotnet/nx-dotnet/commit/c2b1c236d6a556f920f0d96f1197daaf92c6c35f)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
+- **core:** create tool manifest during init ([996aaee](https://github.com/nx-dotnet/nx-dotnet/commit/996aaee4d76beeb3068edb60a6dde3daebe53a55)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
+- **dotnet:** add a method to install local tools ([6ab5d4a](https://github.com/nx-dotnet/nx-dotnet/commit/6ab5d4ae115f9c8419c14c2bb86879dd3f72764e)), closes [#44](https://github.com/nx-dotnet/nx-dotnet/issues/44)
 
 ## [0.5.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.1...v0.5.2) (2021-05-18)
 
-
 ### Bug Fixes
 
-* **core:** dep-graph with various directory separators ([3beccb4](https://github.com/nx-dotnet/nx-dotnet/commit/3beccb468e17053ee6c121f408c83cb4c1dafb1d)), closes [#43](https://github.com/nx-dotnet/nx-dotnet/issues/43)
+- **core:** dep-graph with various directory separators ([3beccb4](https://github.com/nx-dotnet/nx-dotnet/commit/3beccb468e17053ee6c121f408c83cb4c1dafb1d)), closes [#43](https://github.com/nx-dotnet/nx-dotnet/issues/43)
 
 ## [0.5.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.0...v0.5.1) (2021-05-06)
 
-
 ### Bug Fixes
 
-* **core:** [#38](https://github.com/nx-dotnet/nx-dotnet/issues/38) - Misc fixes for .gitignore updates ([#40](https://github.com/nx-dotnet/nx-dotnet/issues/40)) ([5f2d5c9](https://github.com/nx-dotnet/nx-dotnet/commit/5f2d5c9407927992398df3d3827256da952ab3e5))
-* **core:** sync command should list package names ([#41](https://github.com/nx-dotnet/nx-dotnet/issues/41)) ([8bdc66a](https://github.com/nx-dotnet/nx-dotnet/commit/8bdc66aaf02e2c18c051a5ebf6da99e6438ae318)), closes [#39](https://github.com/nx-dotnet/nx-dotnet/issues/39)
+- **core:** [#38](https://github.com/nx-dotnet/nx-dotnet/issues/38) - Misc fixes for .gitignore updates ([#40](https://github.com/nx-dotnet/nx-dotnet/issues/40)) ([5f2d5c9](https://github.com/nx-dotnet/nx-dotnet/commit/5f2d5c9407927992398df3d3827256da952ab3e5))
+- **core:** sync command should list package names ([#41](https://github.com/nx-dotnet/nx-dotnet/issues/41)) ([8bdc66a](https://github.com/nx-dotnet/nx-dotnet/commit/8bdc66aaf02e2c18c051a5ebf6da99e6438ae318)), closes [#39](https://github.com/nx-dotnet/nx-dotnet/issues/39)
 
 # [0.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.2...v0.5.0) (2021-05-06)
 
-
 ### Features
 
-* **core:** add executor for dotnet publish [#33](https://github.com/nx-dotnet/nx-dotnet/issues/33) ([#36](https://github.com/nx-dotnet/nx-dotnet/issues/36)) ([ac8c898](https://github.com/nx-dotnet/nx-dotnet/commit/ac8c89825bfcdd9cd2432e1325bfc2a83255652e))
+- **core:** add executor for dotnet publish [#33](https://github.com/nx-dotnet/nx-dotnet/issues/33) ([#36](https://github.com/nx-dotnet/nx-dotnet/issues/36)) ([ac8c898](https://github.com/nx-dotnet/nx-dotnet/commit/ac8c89825bfcdd9cd2432e1325bfc2a83255652e))
 
 ## [0.4.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.1...v0.4.2) (2021-05-05)
 
