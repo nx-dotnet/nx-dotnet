@@ -1,3 +1,10 @@
+## [0.9.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.0...v0.9.1) (2021-05-23)
+
+
+### Bug Fixes
+
+* **docs-site:** deploy on commit to master ([e259a28](https://github.com/nx-dotnet/nx-dotnet/commit/e259a28c5df552a3c85fa7b154c47fe2fc19ed61))
+
 # [0.9.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.2...v0.9.0) (2021-05-23)
 
 
