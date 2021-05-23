@@ -1,3 +1,10 @@
+## [0.9.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.9.2) (2021-05-23)
+
+
+### Bug Fixes
+
+* **docs-site:** invalid baseUrl with custom domain ([5cf6c70](https://github.com/nx-dotnet/nx-dotnet/commit/5cf6c70fc57a0e4a2af1542419a12e969f62ffb7))
+
 ## [0.9.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.0...v0.9.1) (2021-05-23)
 
 
