@@ -1,14 +1,16 @@
 import {
-  Tree,
-  getProjects,
-  ProjectConfiguration,
-  generateFiles,
-  names,
-  readJson,
   formatFiles,
+  generateFiles,
+  getProjects,
+  names,
+  ProjectConfiguration,
+  readJson,
+  Tree,
 } from '@nrwl/devkit';
 
+import { readFileSync } from 'fs';
 import * as path from 'path';
+
 import { Schema } from './schema';
 import {
   ExecutorsCollection,
@@ -19,9 +21,20 @@ import {
 export default async function (host: Tree, options: Schema) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
 
-  const packageDetails: {packageName: string, projectFileName: string, project: Omit<ProjectConfiguration, 'generators'>, generators: number, executors: number}[] = [];
+  const packageDetails: {
+    packageName: string;
+    projectFileName: string;
+    project: Omit<ProjectConfiguration, 'generators'>;
+    generators: number;
+    executors: number;
+  }[] = [];
 
   projects.forEach((project) => {
+    const gettingStartedFile = options.gettingStartedFile.replace(
+      '<src>',
+      project.root,
+    );
+
     const generators = project.generators
       ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
           .generators
@@ -34,7 +47,13 @@ export default async function (host: Tree, options: Schema) {
     const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;
 
-    packageDetails.push({packageName, projectFileName, project, generators: Object.keys(generators).length, executors: Object.keys(executors).length})
+    packageDetails.push({
+      packageName,
+      projectFileName,
+      project,
+      generators: Object.keys(generators).length,
+      executors: Object.keys(executors).length,
+    });
 
     generateFiles(
       host,
@@ -47,6 +66,9 @@ export default async function (host: Tree, options: Schema) {
         generators,
         executors,
         underscore: '_',
+        gettingStartedMd: options.gettingStartedFile
+          ? readFileSync(gettingStartedFile).toString()
+          : '',
         frontMatter: options.skipFrontMatter
           ? null
           : {
@@ -99,12 +121,19 @@ export default async function (host: Tree, options: Schema) {
     });
   });
 
-  generateFiles(host, path.join(__dirname, 'templates/root'), options.outputDirectory, ({
-    packageDetails,
-    includeFrontMatter: !options.skipFrontMatter
-  }))
+  generateFiles(
+    host,
+    path.join(__dirname, 'templates/root'),
+    options.outputDirectory,
+    {
+      packageDetails,
+      includeFrontMatter: !options.skipFrontMatter,
+    },
+  );
 
-  formatFiles(host);
+  if (!options.skipFormat) {
+    formatFiles(host);
+  }
 }
 
 export async function findProjectsWithGeneratorsOrExecutors(host: Tree) {

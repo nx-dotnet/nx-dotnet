@@ -4,7 +4,9 @@ sidebar_position: 0
 slug: /<%=projectFileName%>/
 <%}%>---
 
-# Getting Started
+<%if (gettingStartedMd && gettingStartedMd.length) {%># Getting Started
+<%=gettingStartedMd%>
+<%}%>
 
 # API Reference
 

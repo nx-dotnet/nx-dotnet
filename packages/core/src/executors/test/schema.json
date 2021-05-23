@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Runs test via the dotnet cli",
-  "description": "",
+  "title": "NxDotnet Test Executor",
+  "description": "Runs test via the dotnet cli",
   "type": "object",
   "properties": {
     "testAdapterPath": {

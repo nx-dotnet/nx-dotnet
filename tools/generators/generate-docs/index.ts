@@ -6,6 +6,9 @@ export default async function (host: Tree, schema: any) {
   execSync('nx build nxdoc');
   const path = resolve('dist/packages/nxdoc/src');
   const generateDocs = require(path).generateDocs;
-  await generateDocs(host, { outputDirectory: 'docs' });
+  await generateDocs(host, {
+    outputDirectory: 'docs',
+    gettingStartedFile: '<src>/readme.md',
+  });
   await formatFiles(host);
 }
