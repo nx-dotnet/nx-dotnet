@@ -49,7 +49,7 @@ module.exports = {
       {
         assets: ['CHANGELOG.md', 'package.json', 'packages/*/package.json'],
         message:
-          'release(): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+          'release: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
     ],
     [

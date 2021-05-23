@@ -12,10 +12,14 @@
         "nxdoc",
         "docs-site",
         "ci",
-        "repo",
-        "release"
+        "repo"
       ]
     ],
-    "type-enum": [1, "always", ["test", "docs", "chore", "feat", "fix"]]
+    "type-enum": [
+      1,
+      "always",
+      ["test", "docs", "chore", "feat", "fix", "release"]
+    ],
+    "body-max-line-length": [1, "always", 400]
   }
 }
