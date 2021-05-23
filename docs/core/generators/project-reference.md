@@ -6,10 +6,10 @@ Adds a project reference to the host project that points to the source project.
 
 ## Options
 
-### project (string)
+### project <span style={{color:"red"}}>\*</span>
 
-Host project
+- (string): Host project
 
-### reference (string)
+### reference <span style={{color:"red"}}>\*</span>
 
-Source project
+- (string): Source project

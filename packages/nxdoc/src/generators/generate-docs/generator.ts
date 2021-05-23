@@ -35,14 +35,15 @@ export default async function (host: Tree, options: Schema) {
       project.root,
     );
 
-    const generators = project.generators
+    const generatorsCollection: GeneratorsCollection = project.generators
       ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
-          .generators
-      : {};
-    const executors = project.executors
+      : ({} as GeneratorsCollection);
+    const generators = generatorsCollection.generators;
+
+    const executorsCollection: ExecutorsCollection = project.executors
       ? readJson<ExecutorsCollection>(host, `${project.root}/executors.json`)
-          .executors
-      : {};
+      : ({} as ExecutorsCollection);
+    const executors = executorsCollection.executors;
 
     const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;

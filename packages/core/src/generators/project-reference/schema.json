@@ -8,7 +8,7 @@
   "properties": {
     "project": {
       "type": "string",
-      "description": "Host project",
+      "description": "The project to which the reference is added.",
       "$default": {
         "$source": "argv",
         "index": 0
@@ -17,7 +17,7 @@
     },
     "reference": {
       "type": "string",
-      "description": "Source project",
+      "description": "The project to which the reference points.",
       "$default": {
         "$source": "argv",
         "index": 1

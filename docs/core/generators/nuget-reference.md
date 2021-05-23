@@ -6,36 +6,38 @@ Add a nuget reference to a .NET project
 
 ## Options
 
-### project (string)
+### project <span style={{color:"red"}}>\*</span>
 
-### packageName (string)
+- (string):
 
-Which package should be added?
+### packageName <span style={{color:"red"}}>\*</span>
 
-### version (string)
+- (string): Which package should be added?
 
-The package version to add.
+### version
 
-### framework (string)
+- (string): The package version to add.
 
-Adds a package reference only when targeting a specific framework.
+### framework
 
-### packageDirectory (string)
+- (string): Adds a package reference only when targeting a specific framework.
 
-The directory where to restore the packages. The default package restore location is %userprofile%\.nuget\packages on Windows and ~/.nuget/packages on macOS and Linux. For more information, see [Managing the global packages, cache, and temp folders in NuGet](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders).
+### packageDirectory
 
-### prerelease (boolean)
+- (string): The directory where to restore the packages. The default package restore location is %userprofile%\.nuget\packages on Windows and ~/.nuget/packages on macOS and Linux. For more information, see [Managing the global packages, cache, and temp folders in NuGet](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders).
 
-Allows prerelease packages to be installed. Available since .NET Core 5 SDK
+### prerelease
 
-### source (string)
+- (boolean): Allows prerelease packages to be installed. Available since .NET Core 5 SDK
 
-The URI of the NuGet package source to use during the restore operation.
+### source
 
-### noRestore (boolean)
+- (string): The URI of the NuGet package source to use during the restore operation.
 
-Adds a package reference without performing a restore preview and compatibility check.
+### noRestore
 
-### allowVersionMismatch (boolean)
+- (boolean): Adds a package reference without performing a restore preview and compatibility check.
 
-Ignores single version principle for this package across all apps in the workspace
+### allowVersionMismatch
+
+- (boolean): Ignores single version principle for this package across all apps in the workspace

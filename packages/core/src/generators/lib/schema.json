@@ -8,7 +8,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "",
+      "description": "The name assigned to the library",
       "$default": {
         "$source": "argv",
         "index": 0

@@ -2,18 +2,18 @@
 
 ## Options
 
-### outputDirectory (string)
+### outputDirectory <span style={{color:"red"}}>\*</span>
 
-Where should the generated docs be placed?
+- (string): Where should the generated docs be placed?
 
-### gettingStartedFile (string)
+### gettingStartedFile
 
-File contents to place before the API reference section for each package. &lt;src&gt; is replaced by the package&#39;s root.
+- (string): File contents to place before the API reference section for each package. &lt;src&gt; is replaced by the package&#39;s root.
 
-### skipFrontMatter (boolean)
+### skipFrontMatter
 
-Nxdoc generates frontmatter suitable for docusaurus by default.
+- (boolean): Nxdoc generates frontmatter suitable for docusaurus by default.
 
-### skipFormat (boolean)
+### skipFormat
 
-Skips running the output through prettier
+- (boolean): Skips running the output through prettier

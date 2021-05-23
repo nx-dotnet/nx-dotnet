@@ -6,28 +6,30 @@ Generate a dotnet project under the application directory.
 
 ## Options
 
-### name (string)
+### name <span style={{color:"red"}}>\*</span>
 
-### tags (string)
+- (string):
 
-Add tags to the project (used for linting)
+### tags
 
-### directory (string)
+- (string): Add tags to the project (used for linting)
 
-A directory where the project is placed
+### directory
 
-### template (string)
+- (string): A directory where the project is placed
 
-The template to instantiate when the command is invoked. Each template might have specific options you can pass.
+### template <span style={{color:"red"}}>\*</span>
 
-### language (string)
+- (string): The template to instantiate when the command is invoked. Each template might have specific options you can pass.
 
-Which language should the project use?
+### language <span style={{color:"red"}}>\*</span>
 
-### testTemplate (string)
+- (string): Which language should the project use?
 
-Which template should be used for creating the tests project?
+### testTemplate
 
-### skipOutputPathManipulation (boolean)
+- (string): Which template should be used for creating the tests project?
 
-Skip XML changes for default build path
+### skipOutputPathManipulation
+
+- (boolean): Skip XML changes for default build path
