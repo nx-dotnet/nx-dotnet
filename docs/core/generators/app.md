@@ -6,9 +6,9 @@ Generate a dotnet project under the application directory.
 
 ## Options
 
-### name <span style={{color:"red"}}>\*</span>
+### <span className="required">name</span>
 
-- (string):
+- (string): The name assigned to the app
 
 ### tags
 
@@ -18,11 +18,11 @@ Generate a dotnet project under the application directory.
 
 - (string): A directory where the project is placed
 
-### template <span style={{color:"red"}}>\*</span>
+### <span className="required">template</span>
 
 - (string): The template to instantiate when the command is invoked. Each template might have specific options you can pass.
 
-### language <span style={{color:"red"}}>\*</span>
+### <span className="required">language</span>
 
 - (string): Which language should the project use?
 

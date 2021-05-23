@@ -14,7 +14,7 @@ Builds an app via the `dotnet` cli command.
 
 - (number): Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn&#39;t set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash.
 
-### configuration <span style={{color:"red"}}>\*</span>
+### <span className="required">configuration</span>
 
 - (string): Defines the build configuration. The default for most projects is Debug, but you can override the build configuration settings in your project
 

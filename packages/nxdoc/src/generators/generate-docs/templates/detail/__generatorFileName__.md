@@ -10,7 +10,7 @@
 
 ## Options <% Object.entries(schema.properties).forEach(([property, config]) => {%>
 
-### <%= property%> <%- (schema.required?.includes?.(property)) ? '<span style={{color:"red"}}>\*</span>' : '' %>
+### <%- (schema.required?.includes?.(property)) ? `<span className="required">${property}</span>` : property %>
 
 - <% if (!config.anyOf) { %>(<%=config.type%>): <%= config.description %>
   <%} else { config.anyOf.forEach(x => {%>

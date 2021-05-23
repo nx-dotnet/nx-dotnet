@@ -2,7 +2,7 @@
 
 ## Options
 
-### outputDirectory <span style={{color:"red"}}>\*</span>
+### <span className="required">outputDirectory</span>
 
 - (string): Where should the generated docs be placed?
 

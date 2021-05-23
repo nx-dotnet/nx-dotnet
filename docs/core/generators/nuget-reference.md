@@ -6,11 +6,11 @@ Add a nuget reference to a .NET project
 
 ## Options
 
-### project <span style={{color:"red"}}>\*</span>
+### <span className="required">project</span>
 
-- (string):
+- (string): The project to which the reference is added.
 
-### packageName <span style={{color:"red"}}>\*</span>
+### <span className="required">packageName</span>
 
 - (string): Which package should be added?
 
