@@ -2,6 +2,8 @@
 
 ## NxDotnet Publish
 
+Publishes an app via the `dotnet` cli command.
+
 ## Options
 
 ### configuration (string)

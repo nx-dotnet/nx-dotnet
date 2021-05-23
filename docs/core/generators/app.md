@@ -2,6 +2,8 @@
 
 ## NxDotnet Application Generator
 
+Generate a dotnet project under the application directory.
+
 ## Options
 
 ### name (string)

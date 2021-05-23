@@ -2,6 +2,8 @@
 
 ## Nuget Reference
 
+Add a nuget reference to a .NET project
+
 ## Options
 
 ### project (string)

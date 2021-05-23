@@ -2,6 +2,8 @@
 
 ## Format executor
 
+Formats and lints a project using the dotnet-format tool
+
 ## Options
 
 ### noRestore (boolean)

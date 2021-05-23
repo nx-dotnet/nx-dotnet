@@ -2,6 +2,8 @@
 
 ## NxDotnet Serve Executor
 
+Uses `dotnet run` and chokidar to run a .NET app.
+
 ## Options
 
 ### configuration (string)

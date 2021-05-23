@@ -2,6 +2,8 @@
 
 ## NxDotnet Build
 
+Builds an app via the `dotnet` cli command.
+
 ## Options
 
 ### framework (string)

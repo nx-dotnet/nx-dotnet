@@ -2,6 +2,8 @@
 
 ## NxDotnet Library Generator
 
+Generate a dotnet project under the library directory.
+
 ## Options
 
 ### name (string)
