@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.2...v0.9.0) (2021-05-23)
+
+
+### Features
+
+* **docs-site:** setup docusaurus site ([#57](https://github.com/nx-dotnet/nx-dotnet/issues/57)) ([a268c70](https://github.com/nx-dotnet/nx-dotnet/commit/a268c7090c9ea5ad669ad9f080a42a6c42fec704)), closes [#53](https://github.com/nx-dotnet/nx-dotnet/issues/53)
+
 ## [0.8.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.1...v0.8.2) (2021-05-21)
 
 
