@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/nxdoc",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json"
