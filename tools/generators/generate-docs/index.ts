@@ -8,7 +8,7 @@ export default async function (host: Tree, schema: any) {
   const generateDocs = require(path).generateDocs;
   await generateDocs(host, {
     outputDirectory: 'docs',
-    gettingStartedFile: '<src>/readme.md',
+    gettingStartedFile: '<src>/README.md',
   });
   await formatFiles(host);
 }

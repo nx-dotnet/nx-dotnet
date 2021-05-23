@@ -37,7 +37,7 @@ module.exports = {
       '@semantic-release/exec',
       {
         prepareCmd:
-          'npx ts-node tools/scripts/patch-package-versions ${nextRelease.version} && npx nx workspace-schematic generate-docs',
+          'npx ts-node tools/scripts/patch-package-versions ${nextRelease.version}',
         publishCmd: [
           'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
         ].join(' && '),
