@@ -1,7 +1,7 @@
 module.exports = {
   title: 'nx-dotnet',
   tagline: 'Build what you love, where you love',
-  url: 'https://nx-dotnet.github.io',
+  url: 'https://nx-dotnet.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
