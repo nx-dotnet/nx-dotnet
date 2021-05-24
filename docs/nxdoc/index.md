@@ -6,13 +6,39 @@ slug: /nxdoc/
 
 # Getting Started
 
-# nxdoc
+> This package is unstable! Documentation formatting could change in the future. See something that you think should be different? [Open an issue](https://github.com/nx-dotnet/nx-dotnet/issues) on github and help shape this plugin.
 
-This library was generated with [Nx](https://nx.dev).
+## Prerequisites
 
-## Running unit tests
+- Have an existing nx workspace containing an Nx plugin project. For creating this, see [nrwl's documentation](https://nx.dev/latest/angular/getting-started/nx-setup).
 
-Run `nx test nxdoc` to execute the unit tests via [Jest](https://jestjs.io).
+## Installation
+
+### NPM
+
+```shell
+npm i --save-dev @nx-dotnet/nxdoc
+```
+
+### PNPM
+
+```shell
+pnpm i --save-dev @nx-dotnet/nxdoc
+```
+
+### Yarn
+
+```shell
+yarn add --dev @nx-dotnet/nxdoc
+```
+
+## Generate Documentation
+
+Generate markdown docs in the /docs folder of your repository for each plugin in the workspace
+
+```shell
+npx nx g @nx-dotnet/nxdoc:generate-docs --outputPath docs
+```
 
 # API Reference
 

@@ -5,6 +5,11 @@
   "builders": "./executors.json",
   "private": false,
   "dependencies": {},
+  "homepage": "https://nx-dotnet.com/docs/core",
+  "bugs": {
+    "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen+is%3Aissue+label%3Anx-dotnet%2Fcore",
+    "email": "craigorycoppola+nxdotnet@gmail.com"
+  },
   "license": "MIT",
   "version": "0.10.2",
   "keywords": [
@@ -17,9 +22,6 @@
   "author": {
     "name": "NxDotnet",
     "url": "https://github.com/nx-dotnet"
-  },
-  "bugs": {
-    "url": "https://github.com/nx-dotnet/nx-dotnet/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=%5BBUG%5D+"
   },
   "nx-migrations": {
     "migrations": "./migrations.json"

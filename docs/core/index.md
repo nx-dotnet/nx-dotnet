@@ -8,8 +8,8 @@ slug: /core/
 
 ## Prerequisites
 
-- Have an existing nx workspace. For creating this, see [nrwl&#39;s documentation](https://nx.dev/latest/angular/getting-started/nx-setup).
-- .NET SDK is installed, and `dotnet` is available on the path. For help on this, see [Microsoft&#39;s documentation](https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/install)
+- Have an existing nx workspace. For creating this, see [nrwl's documentation](https://nx.dev/latest/angular/getting-started/nx-setup).
+- .NET SDK is installed, and `dotnet` is available on the path. For help on this, see [Microsoft's documentation](https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/install)
 
 ## Installation
 

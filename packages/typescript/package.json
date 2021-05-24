@@ -17,7 +17,9 @@
     "name": "NxDotnet",
     "url": "https://github.com/nx-dotnet"
   },
+  "homepage": "https://nx-dotnet.com/docs/typescript",
   "bugs": {
-    "url": "https://github.com/nx-dotnet/nx-dotnet/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=%5BBUG%5D+"
+    "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen",
+    "email": "craigorycoppola+nxdotnet@gmail.com"
   }
 }

@@ -5,7 +5,7 @@ slug: /<%=projectFileName%>/
 <%}%>---
 
 <%if (gettingStartedMd && gettingStartedMd.length) {%># Getting Started
-<%=gettingStartedMd%>
+<%-gettingStartedMd%>
 <%}%>
 
 # API Reference
