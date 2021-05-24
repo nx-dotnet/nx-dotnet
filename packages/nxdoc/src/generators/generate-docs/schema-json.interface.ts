@@ -9,7 +9,7 @@ export interface PropertyConfiguration {
   type: string;
   description: string;
   alias: string[];
-  anyOf?: PropertyConfiguration[];
+  oneOf?: PropertyConfiguration[];
   items: {
     type: string;
   };

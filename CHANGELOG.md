@@ -13,7 +13,7 @@
 
 ### Features
 
-- **nx-docs:** support for anyOf in schema.json files ([7ab15c6](https://github.com/nx-dotnet/nx-dotnet/commit/7ab15c61122605204047758ca565f4760498f255))
+- **nx-docs:** support for oneOf in schema.json files ([7ab15c6](https://github.com/nx-dotnet/nx-dotnet/commit/7ab15c61122605204047758ca565f4760498f255))
 - **nxdoc:** include getting started text ([db3ec62](https://github.com/nx-dotnet/nx-dotnet/commit/db3ec625d5998d96aed82edbbd2c2d017a7ea3be))
 - **nxdoc:** mark required properties ([8b8b01c](https://github.com/nx-dotnet/nx-dotnet/commit/8b8b01c87d8446ac7ec42b029825fb76463e7523))
 

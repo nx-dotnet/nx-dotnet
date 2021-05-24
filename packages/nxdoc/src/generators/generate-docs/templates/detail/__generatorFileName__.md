@@ -12,7 +12,7 @@
 
 ### <%- (schema.required?.includes?.(property)) ? `<span className="required">${property}</span>` : property %>
 
-- <% if (!config.anyOf) { %>(<%=config.type%>): <%= config.description %>
-  <%} else { config.anyOf.forEach(x => {%>
+- <% if (!config.oneOf) { %>(<%=config.type%>): <%= config.description %>
+  <%} else { config.oneOf.forEach(x => {%>
 - (<%= x.type %>): <%=x.description%>
   <% })}})} %>
