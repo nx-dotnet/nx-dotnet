@@ -1,3 +1,9 @@
+## [0.10.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.0...v0.10.1) (2021-05-24)
+
+### Bug Fixes
+
+- **docs-site:** correct docusaurus config ([c479567](https://github.com/nx-dotnet/nx-dotnet/commit/c47956766c354381a857cb29edc7c618d0d1fa2e))
+
 # [0.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.10.0) (2021-05-23)
 
 ### Bug Fixes
