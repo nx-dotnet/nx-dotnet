@@ -104,5 +104,5 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "0.10.1"
+  "version": "0.10.2"
 }

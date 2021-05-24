@@ -1,3 +1,9 @@
+## [0.10.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.1...v0.10.2) (2021-05-24)
+
+### Bug Fixes
+
+- **nxdoc:** anyOf is not officially supported by nx, but oneOf is ([70f484f](https://github.com/nx-dotnet/nx-dotnet/commit/70f484f31720979a8233aeb34162f48515bc2e5e))
+
 ## [0.10.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.0...v0.10.1) (2021-05-24)
 
 ### Bug Fixes
