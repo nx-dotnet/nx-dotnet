@@ -1,3 +1,10 @@
+## [0.10.3](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.2...v0.10.3) (2021-05-24)
+
+### Bug Fixes
+
+- **nxdoc:** nxdocs fails to run if any file does not have getting started text ([f6b800f](https://github.com/nx-dotnet/nx-dotnet/commit/f6b800fb05b8231570a32b63d22d149ccf632cfc))
+- **nxdoc:** template for oneOf includes extra bullet point ([ce0687d](https://github.com/nx-dotnet/nx-dotnet/commit/ce0687d1ee7bc0a59f29fc8f280cf64ba354912a))
+
 ## [0.10.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.1...v0.10.2) (2021-05-24)
 
 ### Bug Fixes
