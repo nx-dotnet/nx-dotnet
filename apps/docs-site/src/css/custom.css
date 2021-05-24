@@ -19,7 +19,8 @@
 
 .required::after {
   color: red;
-  content: '*'
+  content: '*';
+  margin-left: 0.25em;
 }
 
 .docusaurus-highlight-code-line {
