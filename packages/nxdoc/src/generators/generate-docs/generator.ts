@@ -30,10 +30,14 @@ export default async function (host: Tree, options: Schema) {
   }[] = [];
 
   projects.forEach((project) => {
-    const gettingStartedFile = options.gettingStartedFile.replace(
+    let gettingStartedFile: string | null = options.gettingStartedFile.replace(
       '<src>',
       project.root,
     );
+
+    gettingStartedFile = host.exists(gettingStartedFile)
+      ? gettingStartedFile
+      : null;
 
     const generatorsCollection: GeneratorsCollection = project.generators
       ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
@@ -67,7 +71,7 @@ export default async function (host: Tree, options: Schema) {
         generators,
         executors,
         underscore: '_',
-        gettingStartedMd: options.gettingStartedFile
+        gettingStartedMd: gettingStartedFile
           ? readFileSync(gettingStartedFile).toString()
           : '',
         frontMatter: options.skipFrontMatter
