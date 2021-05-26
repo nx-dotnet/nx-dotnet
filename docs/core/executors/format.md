@@ -25,6 +25,7 @@ Formats and lints a project using the dotnet-format tool
 ### diagnostics
 
 - (string): A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.
+
 - (array): A list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.
 
 ### include
