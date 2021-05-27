@@ -8,6 +8,7 @@ import { XmlDocument } from 'xmldoc';
 import {
   DotNetClient,
   dotnetFactory,
+  dotnetNewOptions,
   mockDotnetFactory,
 } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';
@@ -105,6 +106,15 @@ describe('nx-dotnet project generator', () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test-test');
     expect(config.targets.lint).toBeDefined();
+  });
+
+  it('should prepend directory name to project name', async () => {
+    options.directory = 'sub-dir';
+    const spy = spyOn(dotnetClient, 'new');
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const dotnetOptions: dotnetNewOptions = spy.calls.mostRecent().args[1];
+    const nameFlag = dotnetOptions.find((flag) => flag.flag === 'name');
+    expect(nameFlag?.value).toBe('Proj.SubDir.Test');
   });
 
   /**

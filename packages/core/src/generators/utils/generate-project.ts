@@ -64,7 +64,7 @@ function normalizeOptions(
 
   const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
   const featureScope = projectDirectory
-    .split(/(\/|\\)/gm)
+    .split(/\/|\\/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
     .map((part) => names(part).className);
   const namespaceName = [npmScope, ...featureScope].join('.');
 
