@@ -49,7 +49,7 @@ module.exports = {
       {
         assets: ['CHANGELOG.md', 'package.json', 'packages/*/package.json'],
         message:
-          'release: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+          "release: <%= nextRelease.version %> [skip ci]\n\n<%= nextRelease.notes %> \n\n<%= new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %>",
       },
     ],
     [
