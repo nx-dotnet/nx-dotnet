@@ -33,5 +33,6 @@
       "regex": "^[\\.]",
       "orderLevel": 40
     }
-  ]
+  ],
+  "liveServer.settings.port": 5501
 }
