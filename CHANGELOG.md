@@ -1,3 +1,13 @@
+# [0.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.3...v0.11.0) (2021-05-27)
+
+### Bug Fixes
+
+- **core:** Remove extra separator from project names ([#61](https://github.com/nx-dotnet/nx-dotnet/issues/61)) ([049367c](https://github.com/nx-dotnet/nx-dotnet/commit/049367cd38a40b41d296d2eaab7d19ca61c93c69)), closes [#60](https://github.com/nx-dotnet/nx-dotnet/issues/60)
+
+### Features
+
+- **docs-site:** support for docsearch ([#62](https://github.com/nx-dotnet/nx-dotnet/issues/62)) [skip ci] ([6d09f31](https://github.com/nx-dotnet/nx-dotnet/commit/6d09f31de4cb97881325fc4978589adcde3280bf))
+
 ## [0.10.3](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.2...v0.10.3) (2021-05-24)
 
 ### Bug Fixes
