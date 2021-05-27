@@ -19,14 +19,7 @@ import { GenerateProject } from './generate-project';
 describe('nx-dotnet project generator', () => {
   let appTree: Tree;
   let dotnetClient: DotNetClient;
-
-  const options: NxDotnetProjectGeneratorSchema = {
-    name: 'test',
-    language: 'C#',
-    template: 'classlib',
-    testTemplate: 'none',
-    skipOutputPathManipulation: true,
-  };
+  let options: NxDotnetProjectGeneratorSchema;
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
@@ -34,6 +27,14 @@ describe('nx-dotnet project generator', () => {
 
     const packageJson = { scripts: {} };
     writeJson(appTree, 'package.json', packageJson);
+
+    options = {
+      name: 'test',
+      language: 'C#',
+      template: 'classlib',
+      testTemplate: 'none',
+      skipOutputPathManipulation: true,
+    };
   });
 
   afterEach(async () => {
