@@ -310,7 +310,7 @@
             "commands": [
               "nx workspace-schematic generate-docs",
               "nx build docs-site",
-              "ts-node tools/scripts/publish-docs-site"
+              "npx ts-node tools/scripts/publish-docs-site"
             ],
             "parallel": false
           }
