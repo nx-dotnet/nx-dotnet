@@ -56,6 +56,13 @@
     },
     "docs-site": {
       "tags": []
+    },
+    "nx-ghpages": {
+      "tags": []
+    },
+    "nx-ghpages-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nx-ghpages"]
     }
   },
   "workspaceLayout": {

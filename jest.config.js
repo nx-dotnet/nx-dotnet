@@ -10,5 +10,7 @@ module.exports = {
     '<rootDir>/packages/dotnet',
     '<rootDir>/packages/nxdoc',
     '<rootDir>/e2e\\nxdoc-e2e',
+    '<rootDir>/packages/nx-ghpages',
+    '<rootDir>/apps\\nx-ghpages-e2e',
   ],
 };
