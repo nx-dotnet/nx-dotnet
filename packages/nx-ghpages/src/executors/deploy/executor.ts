@@ -40,14 +40,19 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     });
   }
 
-  await exec(
-    `git add . && git commit -m "deploy to gh-pages (nx-ghpages)" && git push --set-upstream ${options.remoteName} gh-pages`,
-    { cwd: directory },
-  );
-
-  return {
-    success: true,
-  };
+  await exec(`git add .`, { cwd: directory });
+  await exec(` git commit -m "deploy to gh-pages (nx-ghpages)"`, {
+    cwd: directory,
+  });
+  try {
+    await exec(`git checkout -b gh-pages`, { cwd: directory });
+  } catch {
+    console.warn('Resetting gh-pages branch, as it already exists.');
+    await exec(`git checkout -B gh-pages`, { cwd: directory });
+  }
+  await exec(`git push -f --set-upstream ${options.remoteName} gh-pages`, {
+    cwd: directory,
+  });
 }
 
 async function findWorkspaceRoot(dir: string = process.cwd()): Promise<string> {
