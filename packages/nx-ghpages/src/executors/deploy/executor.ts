@@ -23,6 +23,8 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     };
   }
 
+  logger.info('Setting up git remote');
+
   if (!(await exists(join(directory, '.git')))) {
     logger.info(
       `Git repository not found, initializing a blank repository ${directory}`,
@@ -40,19 +42,32 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     });
   }
 
+  logger.info('Setting up git remote -- COMPLETE');
+  logger.info('Authoring Commit');
+
   await exec(`git add .`, { cwd: directory });
   await exec(` git commit -m "deploy to gh-pages (nx-ghpages)"`, {
     cwd: directory,
   });
+
+  logger.info('Authoring Commit -- COMPLETE');
+  logger.info('Pushing to GH Pages');
   try {
     await exec(`git checkout -b gh-pages`, { cwd: directory });
   } catch {
-    console.warn('Resetting gh-pages branch, as it already exists.');
+    logger.warn('Resetting gh-pages branch, as it already exists.');
     await exec(`git checkout -B gh-pages`, { cwd: directory });
   }
   await exec(`git push -f --set-upstream ${options.remoteName} gh-pages`, {
     cwd: directory,
   });
+  logger.info('Pushing to GH Pages -- COMPLETE');
+
+  console.log('After exec statements');
+
+  return {
+    success: true,
+  };
 }
 
 async function findWorkspaceRoot(dir: string = process.cwd()): Promise<string> {
