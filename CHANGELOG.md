@@ -1,3 +1,13 @@
+# [0.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.11.0...v0.12.0) (2021-06-21)
+
+### Bug Fixes
+
+- **nx-ghpages:** deploy executor should work ([7d29f24](https://github.com/nx-dotnet/nx-dotnet/commit/7d29f246dd887b710acd4e1a1929be127e88b257))
+
+### Features
+
+- **nx-ghpages:** initial work ([621627d](https://github.com/nx-dotnet/nx-dotnet/commit/621627df1c34a5520bb0d7dcaaa178368c54ecec))
+
 # [0.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.3...v0.11.0) (2021-05-27)
 
 ### Bug Fixes
