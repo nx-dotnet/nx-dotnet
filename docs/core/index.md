@@ -1,6 +1,7 @@
 ---
 title: '@nx-dotnet/core'
 sidebar_position: 0
+sidebar_label: 'Getting Started'
 slug: /core/
 ---
 

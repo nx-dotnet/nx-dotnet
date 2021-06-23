@@ -1,6 +1,7 @@
 ---
 title: '@nx-dotnet/nxdoc'
 sidebar_position: 0
+sidebar_label: 'Getting Started'
 slug: /nxdoc/
 ---
 

@@ -1,6 +1,7 @@
 <% if(frontMatter) {%>---
 <% if(frontMatter.title) { %>title: "<%= frontMatter.title %>"<%}%>
 sidebar_position: 0
+sidebar_label: "Getting Started"
 slug: /<%=projectFileName%>/
 <%}%>---
 

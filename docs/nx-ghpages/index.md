@@ -1,6 +1,7 @@
 ---
 title: '@nx-dotnet/nx-ghpages'
 sidebar_position: 0
+sidebar_label: 'Getting Started'
 slug: /nx-ghpages/
 ---
 
