@@ -80,10 +80,10 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} nx-dotnet. Built with Docusaurus.`,
     },
     algolia: {
-      apiKey: '55355b87a61a3003ffe92359642573e0',
-      indexName: 'nxdoc',
+      apiKey: 'b2a91171189a7ed72178713e095603fd',
+      indexName: 'nx-dotnet',
       contextualSearch: false,
-      appId: 'ZFP36UMP1C',
+      appId: 'BH4D9OD16A',
     },
   },
   presets: [
