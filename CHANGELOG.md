@@ -1,3 +1,9 @@
+# [0.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.12.0...v0.13.0) (2021-06-23)
+
+### Features
+
+- **nxdoc:** support for docusaurus@2.0.0-beta.1 ([3be3d48](https://github.com/nx-dotnet/nx-dotnet/commit/3be3d4803aec74178433296667f70e68aa7a9646))
+
 # [0.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.11.0...v0.12.0) (2021-06-21)
 
 ### Bug Fixes
