@@ -6,6 +6,7 @@ import {
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
+  readProjectConfiguration,
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
@@ -27,6 +28,7 @@ import {
   GetServeExecutorConfig,
   GetTestExecutorConfig,
   NxDotnetProjectGeneratorSchema,
+  NxDotnetTestGeneratorSchema,
 } from '../../models';
 import initSchematic from '../init/generator';
 
@@ -39,13 +41,32 @@ interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   parsedTags: string[];
   className: string;
   namespaceName: string;
+  projectType: ProjectType;
 }
 
 function normalizeOptions(
   host: Tree,
-  options: NxDotnetProjectGeneratorSchema,
-  projectType: ProjectType,
+  options: NxDotnetProjectGeneratorSchema | NxDotnetTestGeneratorSchema,
+  projectType?: ProjectType,
 ): NormalizedSchema {
+  if (!('name' in options)) {
+    // Reconstruct the original parameters as if the test project were generated at the same time as the target project.
+    const project = readProjectConfiguration(host, options.project);
+    const projectPaths = project.root.split('/');
+    const directory = projectPaths.slice(1, -1).join('/'); // The middle portions contain the original path.
+    const [name] = projectPaths.slice(-1); // The final folder contains the original name.
+
+    options = {
+      name,
+      language: options.language,
+      skipOutputPathManipulation: options.skipOutputPathManipulation,
+      testTemplate: options.testTemplate,
+      directory,
+      tags: project.tags?.join(','),
+    } as NxDotnetProjectGeneratorSchema;
+    projectType = project.projectType;
+  }
+
   const name = names(options.name).fileName;
   const className = names(options.name).className;
   const projectDirectory = options.directory
@@ -79,21 +100,25 @@ function normalizeOptions(
     projectLanguage: options.language,
     projectTemplate: options.template,
     namespaceName,
+    projectType: projectType ?? 'library',
   };
 }
 
-async function GenerateTestProject(
-  schema: NormalizedSchema,
+export async function GenerateTestProject(
   host: Tree,
+  schema: NxDotnetTestGeneratorSchema | NormalizedSchema,
   dotnetClient: DotNetClient,
-  projectType: ProjectType,
 ) {
+  if (!('projectRoot' in schema)) {
+    schema = normalizeOptions(host, schema);
+  }
+
   const testRoot = schema.projectRoot + '-test';
   const testProjectName = schema.projectName + '-test';
 
   addProjectConfiguration(host, testProjectName, {
     root: testRoot,
-    projectType: projectType,
+    projectType: schema.projectType,
     sourceRoot: `${testRoot}`,
     targets: {
       build: GetBuildExecutorConfiguration(testRoot),
@@ -227,12 +252,7 @@ export async function GenerateProject(
   dotnetClient.new(normalizedOptions.template, newParams);
 
   if (options['testTemplate'] !== 'none') {
-    await GenerateTestProject(
-      normalizedOptions,
-      host,
-      dotnetClient,
-      projectType,
-    );
+    await GenerateTestProject(host, normalizedOptions, dotnetClient);
   } else if (!options.skipOutputPathManipulation) {
     SetOutputPath(
       host,
