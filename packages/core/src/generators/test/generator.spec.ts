@@ -7,7 +7,7 @@ import * as mockedProjectGenerator from '../utils/generate-test-project';
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
 
-jest.mock('../utils/generate-project');
+jest.mock('../utils/generate-test-project');
 
 describe('nx-dotnet test generator', () => {
   let appTree: Tree;
