@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
-import * as mockedProjectGenerator from '../utils/generate-project';
+import * as mockedProjectGenerator from '../utils/generate-test-project';
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
 
