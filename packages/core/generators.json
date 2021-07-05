@@ -39,6 +39,11 @@
       "factory": "./src/generators/restore/generator",
       "schema": "./src/generators/restore/schema.json",
       "description": "Restores NuGet packages and .NET tools used by the workspace"
+    },
+    "test": {
+      "factory": "./src/generators/test/generator",
+      "schema": "./src/generators/test/schema.json",
+      "description": "Generate a .NET test project for an existing application or library"
     }
   }
 }

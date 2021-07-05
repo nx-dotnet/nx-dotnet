@@ -6,6 +6,7 @@ import {
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
+  readProjectConfiguration,
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
@@ -25,12 +26,13 @@ import {
   GetBuildExecutorConfiguration,
   GetLintExecutorConfiguration,
   GetServeExecutorConfig,
-  GetTestExecutorConfig,
   NxDotnetProjectGeneratorSchema,
+  NxDotnetTestGeneratorSchema,
 } from '../../models';
 import initSchematic from '../init/generator';
+import { GenerateTestProject } from './generate-test-project';
 
-interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
+export interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -39,13 +41,32 @@ interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   parsedTags: string[];
   className: string;
   namespaceName: string;
+  projectType: ProjectType;
 }
 
-function normalizeOptions(
+export function normalizeOptions(
   host: Tree,
-  options: NxDotnetProjectGeneratorSchema,
-  projectType: ProjectType,
+  options: NxDotnetProjectGeneratorSchema | NxDotnetTestGeneratorSchema,
+  projectType?: ProjectType,
 ): NormalizedSchema {
+  if (!('name' in options)) {
+    // Reconstruct the original parameters as if the test project were generated at the same time as the target project.
+    const project = readProjectConfiguration(host, options.project);
+    const projectPaths = project.root.split('/');
+    const directory = projectPaths.slice(1, -1).join('/'); // The middle portions contain the original path.
+    const [name] = projectPaths.slice(-1); // The final folder contains the original name.
+
+    options = {
+      name,
+      language: options.language,
+      skipOutputPathManipulation: options.skipOutputPathManipulation,
+      testTemplate: options.testTemplate,
+      directory,
+      tags: project.tags?.join(','),
+    } as NxDotnetProjectGeneratorSchema;
+    projectType = project.projectType;
+  }
+
   const name = names(options.name).fileName;
   const className = names(options.name).className;
   const projectDirectory = options.directory
@@ -79,61 +100,11 @@ function normalizeOptions(
     projectLanguage: options.language,
     projectTemplate: options.template,
     namespaceName,
+    projectType: projectType ?? 'library',
   };
 }
 
-async function GenerateTestProject(
-  schema: NormalizedSchema,
-  host: Tree,
-  dotnetClient: DotNetClient,
-  projectType: ProjectType,
-) {
-  const testRoot = schema.projectRoot + '-test';
-  const testProjectName = schema.projectName + '-test';
-
-  addProjectConfiguration(host, testProjectName, {
-    root: testRoot,
-    projectType: projectType,
-    sourceRoot: `${testRoot}`,
-    targets: {
-      build: GetBuildExecutorConfiguration(testRoot),
-      test: GetTestExecutorConfig(),
-      lint: GetLintExecutorConfiguration(),
-    },
-    tags: schema.parsedTags,
-  });
-
-  const newParams: dotnetNewOptions = [
-    {
-      flag: 'language',
-      value: schema.language,
-    },
-    {
-      flag: 'name',
-      value: schema.namespaceName + '.Test',
-    },
-    {
-      flag: 'output',
-      value: schema.projectRoot + '-test',
-    },
-  ];
-
-  if (isDryRun()) {
-    addDryRunParameter(newParams);
-  }
-
-  dotnetClient.new(schema.testTemplate, newParams);
-
-  if (!isDryRun() && !schema.skipOutputPathManipulation) {
-    const testCsProj = await findProjectFileInPath(testRoot);
-    SetOutputPath(host, testRoot, testCsProj);
-    const baseCsProj = await findProjectFileInPath(schema.projectRoot);
-    SetOutputPath(host, schema.projectRoot, baseCsProj);
-    dotnetClient.addProjectReference(testCsProj, baseCsProj);
-  }
-}
-
-function SetOutputPath(
+export function SetOutputPath(
   host: Tree,
   projectRootPath: string,
   projectFilePath: string,
@@ -227,12 +198,7 @@ export async function GenerateProject(
   dotnetClient.new(normalizedOptions.template, newParams);
 
   if (options['testTemplate'] !== 'none') {
-    await GenerateTestProject(
-      normalizedOptions,
-      host,
-      dotnetClient,
-      projectType,
-    );
+    await GenerateTestProject(host, normalizedOptions, dotnetClient);
   } else if (!options.skipOutputPathManipulation) {
     SetOutputPath(
       host,
@@ -244,7 +210,7 @@ export async function GenerateProject(
   await formatFiles(host);
 }
 
-function addDryRunParameter(parameters: dotnetNewOptions): void {
+export function addDryRunParameter(parameters: dotnetNewOptions): void {
   parameters.push({
     flag: 'dryRun',
     value: true,

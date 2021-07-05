@@ -59,12 +59,6 @@ describe('nx-dotnet project generator', () => {
     expect(config.targets.serve).not.toBeDefined();
   });
 
-  it('should tag generated projects', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'library');
-    const config = readProjectConfiguration(appTree, 'test');
-    expect(config.tags).toContain('nx-dotnet');
-  });
-
   it('should run successfully for applications', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
@@ -99,13 +93,6 @@ describe('nx-dotnet project generator', () => {
   it('should include lint target', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
-    expect(config.targets.lint).toBeDefined();
-  });
-
-  it('should include lint target in test project', async () => {
-    options.testTemplate = 'nunit';
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, 'test-test');
     expect(config.targets.lint).toBeDefined();
   });
 
