@@ -1,3 +1,9 @@
+# [0.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.13.0...v0.14.0) (2021-07-05)
+
+### Features
+
+- **core:** add test project generator ([#69](https://github.com/nx-dotnet/nx-dotnet/issues/69)) ([7f7084f](https://github.com/nx-dotnet/nx-dotnet/commit/7f7084f1c4809acf9278a8dafbf255ba34c5ab0b))
+
 # [0.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.12.0...v0.13.0) (2021-06-23)
 
 ### Features
