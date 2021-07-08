@@ -1,0 +1,18 @@
+{
+  "projectType": "application",
+  "root": "e2e\\typescript-e2e",
+  "sourceRoot": "e2e\\typescript-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/nx-plugin:e2e",
+      "options": {
+        "target": "typescript:build",
+        "npmPackageName": "@nx-dotnet/typescript",
+        "pluginOutputPath": "dist/packages/typescript",
+        "jestConfig": "e2e/typescript-e2e/jest.config.js"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["typescript"]
+}

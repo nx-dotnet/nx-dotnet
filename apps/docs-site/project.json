@@ -1,0 +1,31 @@
+{
+  "projectType": "application",
+  "root": "apps/docs-site",
+  "sourceRoot": "apps/docs-site/src",
+  "targets": {
+    "build": {
+      "executor": "@nx-plus/docusaurus:browser",
+      "options": {
+        "outputPath": "dist/apps/docs-site"
+      }
+    },
+    "serve": {
+      "executor": "@nx-plus/docusaurus:dev-server",
+      "options": {
+        "port": 3000
+      }
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nx workspace-schematic generate-docs",
+          "nx build docs-site",
+          "npx ts-node tools/scripts/publish-docs-site"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

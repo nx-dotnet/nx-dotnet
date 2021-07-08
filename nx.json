@@ -26,45 +26,7 @@
       }
     }
   },
-  "projects": {
-    "core": {
-      "tags": []
-    },
-    "core-e2e": {
-      "tags": [],
-      "implicitDependencies": ["core"]
-    },
-    "docs-site": {
-      "tags": []
-    },
-    "dotnet": {
-      "tags": []
-    },
-    "nx-ghpages": {
-      "tags": []
-    },
-    "nx-ghpages-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-ghpages"]
-    },
-    "nxdoc": {
-      "tags": []
-    },
-    "nxdoc-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nxdoc"]
-    },
-    "typescript": {
-      "tags": []
-    },
-    "typescript-e2e": {
-      "tags": [],
-      "implicitDependencies": ["typescript"]
-    },
-    "utils": {
-      "tags": []
-    }
-  },
+  "projects": {},
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
