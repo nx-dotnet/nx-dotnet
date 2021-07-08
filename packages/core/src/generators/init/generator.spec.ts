@@ -38,14 +38,14 @@ describe('init generator', () => {
   });
 
   it('should create tool manifest', async () => {
-    const spy = spyOn(dotnetClient, 'new');
+    const spy = jest.spyOn(dotnetClient, 'new');
     await generator(appTree, null, dotnetClient);
     expect(spy).toHaveBeenCalledWith('tool-manifest');
   });
 
   it('should not create tool manifest if it exists', async () => {
     appTree.write('.config/dotnet-tools.json', '');
-    const spy = spyOn(dotnetClient, 'new');
+    const spy = jest.spyOn(dotnetClient, 'new');
     await generator(appTree, null, dotnetClient);
     expect(spy).not.toHaveBeenCalled();
   });

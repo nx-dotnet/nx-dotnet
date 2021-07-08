@@ -99,7 +99,7 @@ describe('nx-dotnet project generator', () => {
 
   it('should prepend directory name to project name', async () => {
     options.directory = 'sub-dir';
-    const spy = spyOn(dotnetClient, 'new');
+    const spy = jest.spyOn(dotnetClient, 'new');
     await GenerateProject(appTree, options, dotnetClient, 'library');
     const dotnetOptions: dotnetNewOptions = spy.calls.mostRecent().args[1];
     const nameFlag = dotnetOptions.find((flag) => flag.flag === 'name');
