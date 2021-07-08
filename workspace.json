@@ -80,6 +80,209 @@
         }
       }
     },
+    "docs-site": {
+      "projectType": "application",
+      "root": "apps/docs-site",
+      "sourceRoot": "apps/docs-site/src",
+      "targets": {
+        "build": {
+          "executor": "@nx-plus/docusaurus:browser",
+          "options": {
+            "outputPath": "dist/apps/docs-site"
+          }
+        },
+        "serve": {
+          "executor": "@nx-plus/docusaurus:dev-server",
+          "options": {
+            "port": 3000
+          }
+        },
+        "deploy": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx workspace-schematic generate-docs",
+              "nx build docs-site",
+              "npx ts-node tools/scripts/publish-docs-site"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "dotnet": {
+      "root": "packages/dotnet",
+      "sourceRoot": "packages/dotnet/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/dotnet/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/dotnet"],
+          "options": {
+            "jestConfig": "packages/dotnet/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/dotnet",
+            "tsConfig": "packages/dotnet/tsconfig.lib.json",
+            "packageJson": "packages/dotnet/package.json",
+            "main": "packages/dotnet/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": true,
+            "assets": ["packages/dotnet/*.md"]
+          }
+        }
+      }
+    },
+    "nx-ghpages": {
+      "root": "packages/nx-ghpages",
+      "sourceRoot": "packages/nx-ghpages/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-ghpages/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-ghpages"],
+          "options": {
+            "jestConfig": "packages/nx-ghpages/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-ghpages",
+            "tsConfig": "packages/nx-ghpages/tsconfig.lib.json",
+            "packageJson": "packages/nx-ghpages/package.json",
+            "main": "packages/nx-ghpages/src/index.ts",
+            "assets": [
+              "packages/nx-ghpages/*.md",
+              {
+                "input": "./packages/nx-ghpages/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-ghpages/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-ghpages",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-ghpages",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-ghpages-e2e": {
+      "projectType": "application",
+      "root": "apps\\nx-ghpages-e2e",
+      "sourceRoot": "apps\\nx-ghpages-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-ghpages:build",
+            "npmPackageName": "@nx-dotnet/nx-ghpages",
+            "pluginOutputPath": "dist/packages/nx-ghpages",
+            "jestConfig": "apps/nx-ghpages-e2e/jest.config.js"
+          }
+        }
+      }
+    },
+    "nxdoc": {
+      "root": "packages/nxdoc",
+      "sourceRoot": "packages/nxdoc/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nxdoc/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nxdoc"],
+          "options": {
+            "jestConfig": "packages/nxdoc/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nxdoc",
+            "tsConfig": "packages/nxdoc/tsconfig.lib.json",
+            "packageJson": "packages/nxdoc/package.json",
+            "main": "packages/nxdoc/src/index.ts",
+            "assets": [
+              "packages/nxdoc/*.md",
+              {
+                "input": "./packages/nxdoc/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nxdoc/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nxdoc",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nxdoc",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nxdoc-e2e": {
+      "projectType": "application",
+      "root": "e2e\\nxdoc-e2e",
+      "sourceRoot": "e2e\\nxdoc-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nxdoc:build",
+            "npmPackageName": "@nx-dotnet/nxdoc",
+            "pluginOutputPath": "dist/packages/nxdoc",
+            "jestConfig": "e2e/nxdoc-e2e/jest.config.js"
+          }
+        }
+      }
+    },
     "typescript": {
       "root": "packages/typescript",
       "sourceRoot": "packages/typescript/src",
@@ -180,209 +383,6 @@
             "updateBuildableProjectDepsInPackageJson": true,
             "main": "packages/utils/src/index.ts",
             "assets": ["packages/utils/*.md"]
-          }
-        }
-      }
-    },
-    "dotnet": {
-      "root": "packages/dotnet",
-      "sourceRoot": "packages/dotnet/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/dotnet/**/*.ts"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/dotnet"],
-          "options": {
-            "jestConfig": "packages/dotnet/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/dotnet",
-            "tsConfig": "packages/dotnet/tsconfig.lib.json",
-            "packageJson": "packages/dotnet/package.json",
-            "main": "packages/dotnet/src/index.ts",
-            "updateBuildableProjectDepsInPackageJson": true,
-            "assets": ["packages/dotnet/*.md"]
-          }
-        }
-      }
-    },
-    "nxdoc": {
-      "root": "packages/nxdoc",
-      "sourceRoot": "packages/nxdoc/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/nxdoc/**/*.ts"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/nxdoc"],
-          "options": {
-            "jestConfig": "packages/nxdoc/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/nxdoc",
-            "tsConfig": "packages/nxdoc/tsconfig.lib.json",
-            "packageJson": "packages/nxdoc/package.json",
-            "main": "packages/nxdoc/src/index.ts",
-            "assets": [
-              "packages/nxdoc/*.md",
-              {
-                "input": "./packages/nxdoc/src",
-                "glob": "**/!(*.ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nxdoc/src",
-                "glob": "**/*.d.ts",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nxdoc",
-                "glob": "generators.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/nxdoc",
-                "glob": "executors.json",
-                "output": "."
-              }
-            ]
-          }
-        }
-      }
-    },
-    "nxdoc-e2e": {
-      "projectType": "application",
-      "root": "e2e\\nxdoc-e2e",
-      "sourceRoot": "e2e\\nxdoc-e2e/src",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "nxdoc:build",
-            "npmPackageName": "@nx-dotnet/nxdoc",
-            "pluginOutputPath": "dist/packages/nxdoc",
-            "jestConfig": "e2e/nxdoc-e2e/jest.config.js"
-          }
-        }
-      }
-    },
-    "docs-site": {
-      "projectType": "application",
-      "root": "apps/docs-site",
-      "sourceRoot": "apps/docs-site/src",
-      "targets": {
-        "build": {
-          "executor": "@nx-plus/docusaurus:browser",
-          "options": {
-            "outputPath": "dist/apps/docs-site"
-          }
-        },
-        "serve": {
-          "executor": "@nx-plus/docusaurus:dev-server",
-          "options": {
-            "port": 3000
-          }
-        },
-        "deploy": {
-          "executor": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              "nx workspace-schematic generate-docs",
-              "nx build docs-site",
-              "npx ts-node tools/scripts/publish-docs-site"
-            ],
-            "parallel": false
-          }
-        }
-      }
-    },
-    "nx-ghpages": {
-      "root": "packages/nx-ghpages",
-      "sourceRoot": "packages/nx-ghpages/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/nx-ghpages/**/*.ts"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/nx-ghpages"],
-          "options": {
-            "jestConfig": "packages/nx-ghpages/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/nx-ghpages",
-            "tsConfig": "packages/nx-ghpages/tsconfig.lib.json",
-            "packageJson": "packages/nx-ghpages/package.json",
-            "main": "packages/nx-ghpages/src/index.ts",
-            "assets": [
-              "packages/nx-ghpages/*.md",
-              {
-                "input": "./packages/nx-ghpages/src",
-                "glob": "**/!(*.ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nx-ghpages/src",
-                "glob": "**/*.d.ts",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nx-ghpages",
-                "glob": "generators.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/nx-ghpages",
-                "glob": "executors.json",
-                "output": "."
-              }
-            ]
-          }
-        }
-      }
-    },
-    "nx-ghpages-e2e": {
-      "projectType": "application",
-      "root": "apps\\nx-ghpages-e2e",
-      "sourceRoot": "apps\\nx-ghpages-e2e/src",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "nx-ghpages:build",
-            "npmPackageName": "@nx-dotnet/nx-ghpages",
-            "pluginOutputPath": "dist/packages/nx-ghpages",
-            "jestConfig": "apps/nx-ghpages-e2e/jest.config.js"
           }
         }
       }

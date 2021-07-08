@@ -34,6 +34,26 @@
       "tags": [],
       "implicitDependencies": ["core"]
     },
+    "docs-site": {
+      "tags": []
+    },
+    "dotnet": {
+      "tags": []
+    },
+    "nx-ghpages": {
+      "tags": []
+    },
+    "nx-ghpages-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nx-ghpages"]
+    },
+    "nxdoc": {
+      "tags": []
+    },
+    "nxdoc-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nxdoc"]
+    },
     "typescript": {
       "tags": []
     },
@@ -43,30 +63,18 @@
     },
     "utils": {
       "tags": []
-    },
-    "dotnet": {
-      "tags": []
-    },
-    "nxdoc": {
-      "tags": []
-    },
-    "nxdoc-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nxdoc"]
-    },
-    "docs-site": {
-      "tags": []
-    },
-    "nx-ghpages": {
-      "tags": []
-    },
-    "nx-ghpages-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-ghpages"]
     }
   },
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
