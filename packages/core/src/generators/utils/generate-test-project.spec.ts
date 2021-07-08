@@ -60,6 +60,7 @@ describe('nx-dotnet test project generator', () => {
       testTemplate: 'xunit',
       language: 'C#',
       skipOutputPathManipulation: true,
+      standalone: false,
     };
     testProjectName = options.project + '-test';
   });

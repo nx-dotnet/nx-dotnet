@@ -53,6 +53,11 @@
           { "value": "none", "label": "No Unit Test Project" }
         ]
       }
+    },
+    "standalone": {
+      "type": "boolean",
+      "description": "Should the project use project.json? If false, the project config is inside workspace.json",
+      "default": false
     }
   },
   "required": ["name", "template", "language", "testTemplate"]

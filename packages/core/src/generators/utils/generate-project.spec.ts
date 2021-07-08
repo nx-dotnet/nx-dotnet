@@ -34,6 +34,7 @@ describe('nx-dotnet project generator', () => {
       template: 'classlib',
       testTemplate: 'none',
       skipOutputPathManipulation: true,
+      standalone: false,
     };
   });
 

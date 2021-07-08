@@ -19,6 +19,7 @@ describe('nx-dotnet library generator', () => {
     template: 'webapi',
     testTemplate: 'none',
     skipOutputPathManipulation: true,
+    standalone: false,
   };
 
   beforeEach(() => {
@@ -31,9 +32,9 @@ describe('nx-dotnet library generator', () => {
   });
 
   it('should call project generator with application project type', async () => {
-    const projectGenerator = (mockedProjectGenerator as jest.Mocked<
-      typeof mockedProjectGenerator
-    >).GenerateProject;
+    const projectGenerator = (
+      mockedProjectGenerator as jest.Mocked<typeof mockedProjectGenerator>
+    ).GenerateProject;
 
     await generator(appTree, options, dotnetClient);
     expect(projectGenerator).toHaveBeenCalledWith(

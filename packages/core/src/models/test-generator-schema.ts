@@ -3,4 +3,5 @@ export interface NxDotnetTestGeneratorSchema {
   testTemplate: 'xunit' | 'nunit' | 'mstest';
   language: string;
   skipOutputPathManipulation: boolean;
+  standalone: boolean;
 }

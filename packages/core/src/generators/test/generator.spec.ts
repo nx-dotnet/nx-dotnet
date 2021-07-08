@@ -18,6 +18,7 @@ describe('nx-dotnet test generator', () => {
     testTemplate: 'xunit',
     language: 'C#',
     skipOutputPathManipulation: true,
+    standalone: false,
   };
 
   beforeEach(() => {
@@ -30,9 +31,9 @@ describe('nx-dotnet test generator', () => {
   });
 
   it('should call project generator with application project type', async () => {
-    const projectGenerator = (mockedProjectGenerator as jest.Mocked<
-      typeof mockedProjectGenerator
-    >).GenerateTestProject;
+    const projectGenerator = (
+      mockedProjectGenerator as jest.Mocked<typeof mockedProjectGenerator>
+    ).GenerateTestProject;
 
     await generator(appTree, options, dotnetClient);
     expect(projectGenerator).toHaveBeenCalledWith(

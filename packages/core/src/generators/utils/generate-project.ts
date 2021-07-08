@@ -63,7 +63,9 @@ export function normalizeOptions(
       testTemplate: options.testTemplate,
       directory,
       tags: project.tags?.join(','),
-    } as NxDotnetProjectGeneratorSchema;
+      template: '',
+      standalone: options.standalone,
+    };
     projectType = project.projectType;
   }
 
@@ -174,6 +176,7 @@ export async function GenerateProject(
     host,
     normalizedOptions.projectName,
     projectConfiguration,
+    normalizedOptions.standalone,
   );
 
   const newParams: dotnetNewOptions = [
