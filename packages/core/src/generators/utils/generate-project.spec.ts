@@ -101,8 +101,8 @@ describe('nx-dotnet project generator', () => {
     options.directory = 'sub-dir';
     const spy = jest.spyOn(dotnetClient, 'new');
     await GenerateProject(appTree, options, dotnetClient, 'library');
-    const dotnetOptions: dotnetNewOptions = spy.calls.mostRecent().args[1];
-    const nameFlag = dotnetOptions.find((flag) => flag.flag === 'name');
+    const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
+    const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
     expect(nameFlag?.value).toBe('Proj.SubDir.Test');
   });
 
