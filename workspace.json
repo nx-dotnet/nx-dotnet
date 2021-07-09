@@ -1,17 +1,17 @@
 {
   "version": 2,
   "projects": {
-    "core": "packages\\core",
-    "core-e2e": "e2e\\core-e2e",
-    "docs-site": "apps\\docs-site",
-    "dotnet": "packages\\dotnet",
-    "nx-ghpages": "packages\\nx-ghpages",
-    "nx-ghpages-e2e": "apps\\nx-ghpages-e2e",
-    "nxdoc": "packages\\nxdoc",
-    "nxdoc-e2e": "e2e\\nxdoc-e2e",
-    "typescript": "packages\\typescript",
-    "typescript-e2e": "e2e\\typescript-e2e",
-    "utils": "packages\\utils"
+    "core": "packages/core",
+    "core-e2e": "e2e/core-e2e",
+    "docs-site": "apps/docs-site",
+    "dotnet": "packages/dotnet",
+    "nx-ghpages": "packages/nx-ghpages",
+    "nx-ghpages-e2e": "apps/nx-ghpages-e2e",
+    "nxdoc": "packages/nxdoc",
+    "nxdoc-e2e": "e2e/nxdoc-e2e",
+    "typescript": "packages/typescript",
+    "typescript-e2e": "e2e/typescript-e2e",
+    "utils": "packages/utils"
   },
   "cli": {
     "defaultCollection": "@nrwl/workspace"
