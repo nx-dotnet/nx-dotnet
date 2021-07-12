@@ -9,4 +9,5 @@ export interface NxDotnetProjectGeneratorSchema {
   language: string;
   testTemplate: 'nunit' | 'mstest' | 'xunit' | 'none';
   skipOutputPathManipulation: boolean;
+  standalone: boolean;
 }

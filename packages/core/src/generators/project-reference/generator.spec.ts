@@ -48,7 +48,7 @@ describe('nx-dotnet project reference', () => {
   });
 
   it('should call dotnet cli', async () => {
-    const spy = spyOn(client, 'addProjectReference');
+    const spy = jest.spyOn(client, 'addProjectReference');
     await generator(appTree, options, client);
 
     expect(spy).toHaveBeenCalled();

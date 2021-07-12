@@ -1,0 +1,18 @@
+{
+  "projectType": "application",
+  "root": "e2e/nxdoc-e2e",
+  "sourceRoot": "e2e/nxdoc-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/nx-plugin:e2e",
+      "options": {
+        "target": "nxdoc:build",
+        "npmPackageName": "@nx-dotnet/nxdoc",
+        "pluginOutputPath": "dist/packages/nxdoc",
+        "jestConfig": "e2e/nxdoc-e2e/jest.config.js"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["nxdoc"]
+}

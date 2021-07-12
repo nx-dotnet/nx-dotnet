@@ -26,17 +26,22 @@ export async function GenerateTestProject(
   const testRoot = schema.projectRoot + '-test';
   const testProjectName = schema.projectName + '-test';
 
-  addProjectConfiguration(host, testProjectName, {
-    root: testRoot,
-    projectType: schema.projectType,
-    sourceRoot: `${testRoot}`,
-    targets: {
-      build: GetBuildExecutorConfiguration(testRoot),
-      test: GetTestExecutorConfig(),
-      lint: GetLintExecutorConfiguration(),
+  addProjectConfiguration(
+    host,
+    testProjectName,
+    {
+      root: testRoot,
+      projectType: schema.projectType,
+      sourceRoot: `${testRoot}`,
+      targets: {
+        build: GetBuildExecutorConfiguration(testRoot),
+        test: GetTestExecutorConfig(),
+        lint: GetLintExecutorConfiguration(),
+      },
+      tags: schema.parsedTags,
     },
-    tags: schema.parsedTags,
-  });
+    schema.standalone,
+  );
 
   const newParams: dotnetNewOptions = [
     {

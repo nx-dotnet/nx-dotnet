@@ -1,11 +1,7 @@
-import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
-import { execSync } from 'child_process';
-import { existsSync, readJson } from '../../utils';
-import { PatchPackageVersions } from '../patch-package-versions';
+import { readJson } from '../../utils';
 import { PublishAll } from '../publish-all';
 
 export function main(all = false, specific?: string) {
-  const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
   const rootPkg = readJson('package.json');
 
   const [prev, tagSpec] = rootPkg.version.split('-');

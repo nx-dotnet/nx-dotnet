@@ -60,6 +60,7 @@ describe('nx-dotnet test project generator', () => {
       testTemplate: 'xunit',
       language: 'C#',
       skipOutputPathManipulation: true,
+      standalone: false,
     };
     testProjectName = options.project + '-test';
   });
@@ -122,10 +123,10 @@ describe('nx-dotnet test project generator', () => {
   });
 
   it('should prepend directory name to project name', async () => {
-    const spy = spyOn(dotnetClient, 'new');
+    const spy = jest.spyOn(dotnetClient, 'new');
     await GenerateTestProject(appTree, options, dotnetClient);
-    const dotnetOptions: dotnetNewOptions = spy.calls.mostRecent().args[1];
-    const nameFlag = dotnetOptions.find((flag) => flag.flag === 'name');
+    const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
+    const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
     expect(nameFlag?.value).toBe('Proj.Domain.ExistingApp.Test');
   });
 

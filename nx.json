@@ -26,47 +26,17 @@
       }
     }
   },
-  "projects": {
-    "core": {
-      "tags": []
-    },
-    "core-e2e": {
-      "tags": [],
-      "implicitDependencies": ["core"]
-    },
-    "typescript": {
-      "tags": []
-    },
-    "typescript-e2e": {
-      "tags": [],
-      "implicitDependencies": ["typescript"]
-    },
-    "utils": {
-      "tags": []
-    },
-    "dotnet": {
-      "tags": []
-    },
-    "nxdoc": {
-      "tags": []
-    },
-    "nxdoc-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nxdoc"]
-    },
-    "docs-site": {
-      "tags": []
-    },
-    "nx-ghpages": {
-      "tags": []
-    },
-    "nx-ghpages-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-ghpages"]
-    }
-  },
+  "projects": {},
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }

@@ -1,5 +1,6 @@
 import { BuildExecutorSchema } from './schema';
 import executor from './executor';
+import * as fs from 'fs';
 
 jest.mock('child_process', () => ({
   exec: (
@@ -10,6 +11,7 @@ jest.mock('child_process', () => ({
 }));
 
 jest.mock('fs', () => ({
+  ...(jest.requireActual('fs') as typeof fs),
   stat: (path: string, cb: (err: unknown, stats: unknown) => void) =>
     cb(null, {}),
 }));
