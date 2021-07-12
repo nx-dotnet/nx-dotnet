@@ -1,3 +1,9 @@
+# [0.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.14.0...v0.15.0) (2021-07-12)
+
+### Features
+
+- **core:** Add generator option for standalone projects ([#71](https://github.com/nx-dotnet/nx-dotnet/issues/71)) ([8db11d4](https://github.com/nx-dotnet/nx-dotnet/commit/8db11d4f9fa799a90e6e27de1cc9cc6eec87451c))
+
 # [0.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.13.0...v0.14.0) (2021-07-05)
 
 ### Features
