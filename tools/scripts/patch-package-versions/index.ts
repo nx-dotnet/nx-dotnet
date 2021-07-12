@@ -1,9 +1,16 @@
 import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 import { execSync } from 'child_process';
-import { existsSync, readJson, writeJson } from '../../utils';
+import { join } from 'path';
+import {
+  existsSync,
+  readJson,
+  writeJson,
+  readWorkspaceJson,
+} from '../../utils';
 
 export function PatchPackageVersions(newVersion: string, updateGit = true) {
-  const workspace: WorkspaceJsonConfiguration = readJson('workspace.json');
+  const workspace: WorkspaceJsonConfiguration = readWorkspaceJson();
   const rootPkg = readJson('package.json');
 
   rootPkg.version = newVersion;
