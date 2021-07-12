@@ -6,7 +6,7 @@ import {
 } from '@nrwl/nx-plugin/testing';
 
 describe('nx-dotnet e2e', () => {
-  it('should create apps, libs, and project references', async (done) => {
+  it('should create apps, libs, and project references', async () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
     ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
@@ -24,8 +24,6 @@ describe('nx-dotnet e2e', () => {
     );
 
     expect(output.stdout).toMatch(/Reference .* added to the project/);
-
-    done();
   });
 
   describe('nx g app', () => {

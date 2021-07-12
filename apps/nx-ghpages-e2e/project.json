@@ -1,7 +1,7 @@
 {
   "projectType": "application",
-  "root": "apps\\nx-ghpages-e2e",
-  "sourceRoot": "apps\\nx-ghpages-e2e/src",
+  "root": "apps/nx-ghpages-e2e",
+  "sourceRoot": "apps/nx-ghpages-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",

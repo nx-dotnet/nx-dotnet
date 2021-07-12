@@ -37,12 +37,6 @@
         "target": "build",
         "projects": "dependencies"
       }
-    ],
-    "e2e": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
     ]
   }
 }
