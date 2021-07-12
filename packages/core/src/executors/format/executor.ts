@@ -1,4 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
+
 import {
   DotNetClient,
   dotnetFactory,
@@ -8,6 +9,7 @@ import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
 } from '@nx-dotnet/utils';
+
 import { FormatExecutorSchema } from './schema';
 
 function normalizeOptions(

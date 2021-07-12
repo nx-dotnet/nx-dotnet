@@ -1,7 +1,7 @@
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';

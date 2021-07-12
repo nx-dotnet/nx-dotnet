@@ -1,6 +1,8 @@
 import { addProjectConfiguration, Tree } from '@nrwl/devkit';
+
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
+
 import {
   GetBuildExecutorConfiguration,
   GetLintExecutorConfiguration,
@@ -8,9 +10,9 @@ import {
   NxDotnetTestGeneratorSchema,
 } from '../../models';
 import {
+  addDryRunParameter,
   NormalizedSchema,
   normalizeOptions,
-  addDryRunParameter,
   SetOutputPath,
 } from './generate-project';
 

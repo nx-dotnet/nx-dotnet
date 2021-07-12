@@ -1,6 +1,8 @@
 import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
+
 import { readJson, readWorkspaceJson } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
 
@@ -17,7 +19,7 @@ export function PublishAll(version: string, tag = 'latest') {
   const projects = Object.values(workspace.projects);
   const environment = {
     ...process.env,
-    NPM_CONFIG_REGISTRY: 'http://localhost:4872',
+    NPM_CONFIG_REGISTRY: undefined,
   };
 
   projects.forEach((projectConfiguration, idx) => {

@@ -1,9 +1,11 @@
-import { BuildExecutorSchema } from './schema';
+import { logger } from '@nrwl/devkit';
+
 import { exec as execCallback } from 'child_process';
 import { stat } from 'fs';
 import { dirname, join } from 'path';
 import { promisify } from 'util';
-import { logger } from '@nrwl/devkit';
+
+import { BuildExecutorSchema } from './schema';
 
 const exec = promisify(execCallback);
 

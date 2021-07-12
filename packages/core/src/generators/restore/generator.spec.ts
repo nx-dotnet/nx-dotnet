@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { prompt } from 'inquirer';
 
-import { updateConfig, getNxDotnetProjects } from '@nx-dotnet/utils';
+import { getNxDotnetProjects, updateConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
 

@@ -13,7 +13,6 @@ import { XmlDocument } from 'xmldoc';
 import {
   DotNetClient,
   dotnetFactory,
-  dotnetNewOptions,
   mockDotnetFactory,
 } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';

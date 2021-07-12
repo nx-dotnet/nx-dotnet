@@ -1,6 +1,7 @@
-import { BuildExecutorSchema } from './schema';
-import executor from './executor';
 import * as fs from 'fs';
+
+import executor from './executor';
+import { BuildExecutorSchema } from './schema';
 
 jest.mock('child_process', () => ({
   exec: (

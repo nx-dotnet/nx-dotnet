@@ -1,8 +1,9 @@
-import { execSync, ChildProcess, spawn } from 'child_process';
-import { readdirSync } from 'fs';
+import { ChildProcess, execSync, spawn } from 'child_process';
+import { readdirSync, readFileSync } from 'fs';
 import { copySync, removeSync, writeFileSync } from 'fs-extra';
-import { readFileSync } from 'fs';
+
 import { e2eRoot } from '../../e2e/utils';
+
 const kill = require('tree-kill');
 
 let verdaccioInstance: ChildProcess;

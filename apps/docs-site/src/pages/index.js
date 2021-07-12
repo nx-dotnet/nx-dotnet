@@ -12,9 +12,9 @@ const features = [
     imageUrl: 'img/undraw_coding.svg',
     description: (
       <>
-        nx-dotnet was designed from the ground up to allow developers to
-        develop how they want to. Easily stick with Visual Studio or other IDE's,
-        or switch to a more lightweight environment such as VS Code. 
+        nx-dotnet was designed from the ground up to allow developers to develop
+        how they want to. Easily stick with Visual Studio or other IDE's, or
+        switch to a more lightweight environment such as VS Code.
       </>
     ),
   },
@@ -23,8 +23,8 @@ const features = [
     imageUrl: 'img/undraw_adventure_map.svg',
     description: (
       <>
-        All of the power of nx, brought to the .NET workflow. 
-        Easily build, test, and publish only what was changed in CI.
+        All of the power of nx, brought to the .NET workflow. Easily build,
+        test, and publish only what was changed in CI.
       </>
     ),
   },
@@ -33,9 +33,10 @@ const features = [
     imageUrl: 'img/undraw_code_thinking.svg',
     description: (
       <>
-        Built using the .NET SDK + CLI, nx-dotnet is easy to update and should never break due
-        to a new relase of .NET. Using a preview version? No worry, since nx-dotnet uses your
-        installed CLI you can choose exactly what to run.
+        Built using the .NET SDK + CLI, nx-dotnet is easy to update and should
+        never break due to a new relase of .NET. Using a preview version? No
+        worry, since nx-dotnet uses your installed CLI you can choose exactly
+        what to run.
       </>
     ),
   },

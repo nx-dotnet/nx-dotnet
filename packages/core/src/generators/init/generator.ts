@@ -6,8 +6,8 @@ import {
   WorkspaceConfiguration,
   writeJson,
 } from '@nrwl/devkit';
-import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 export default async function (

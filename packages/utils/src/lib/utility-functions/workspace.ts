@@ -7,7 +7,7 @@ import {
 } from '@nrwl/devkit';
 
 import { readFileSync } from 'fs';
-import { isAbsolute, resolve, dirname } from 'path';
+import { dirname, isAbsolute, resolve } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 import { NXDOTNET_TAG } from '../constants';

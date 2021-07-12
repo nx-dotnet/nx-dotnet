@@ -1,5 +1,7 @@
 import { formatFiles, Tree, updateProjectConfiguration } from '@nrwl/devkit';
+
 import { getNxDotnetProjects } from '@nx-dotnet/utils';
+
 import { GetLintExecutorConfiguration } from '../../models';
 
 export default function update(host: Tree) {
