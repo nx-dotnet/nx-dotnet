@@ -1,5 +1,4 @@
 import {
-  DependencyType,
   ProjectConfiguration,
   ProjectGraph,
   ProjectGraphBuilder,
@@ -26,7 +25,7 @@ export function processProjectGraph(
     }
   });
 
-  return builder.getProjectGraph();
+  return builder.getUpdatedProjectGraph();
 }
 
 function visitProject(
@@ -39,7 +38,7 @@ function visitProject(
     projectName,
     context.workspace,
     (projectConfig, dependencyName) => {
-      builder.addDependency(DependencyType.static, projectName, dependencyName);
+      builder.addImplicitDependency(projectName, dependencyName);
     },
   );
 }
