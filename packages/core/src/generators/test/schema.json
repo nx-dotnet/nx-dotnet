@@ -6,13 +6,14 @@
   "description": "Generate a .NET test project for an existing application or library",
   "type": "object",
   "properties": {
-    "project": {
+    "name": {
       "type": "string",
       "description": "The existing project to generate tests for",
       "$default": {
         "$source": "argv",
         "index": 0
-      }
+      },
+      "alias": ["project"]
     },
     "testTemplate": {
       "type": "string",

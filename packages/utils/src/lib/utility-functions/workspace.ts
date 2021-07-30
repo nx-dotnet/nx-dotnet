@@ -29,7 +29,7 @@ export function getDependantProjectsForNxProject(
   targetProject: string,
   workspaceConfiguration: WorkspaceJsonConfiguration,
   forEachCallback?: (
-    project: ProjectConfiguration,
+    project: ProjectConfiguration & { projectFile: string },
     projectName: string,
   ) => void,
 ): {
@@ -54,18 +54,21 @@ export function getDependantProjectsForNxProject(
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
       const includeFilePath = x.attr['Include'].replace(/\\/g, '/');
-      let absoluteFilePath: string;
+      let workspaceFilePath: string;
       if (isAbsolute(includeFilePath)) {
-        absoluteFilePath = includeFilePath;
+        workspaceFilePath = includeFilePath;
       } else {
-        absoluteFilePath = resolve(hostProjectDirectory, includeFilePath);
+        workspaceFilePath = resolve(hostProjectDirectory, includeFilePath);
       }
 
       Object.entries(projectRoots).forEach(([dependency, path]) => {
-        if (absoluteFilePath.startsWith(path)) {
+        if (workspaceFilePath.startsWith(path)) {
           if (forEachCallback) {
             forEachCallback(
-              workspaceConfiguration.projects[dependency],
+              {
+                ...workspaceConfiguration.projects[dependency],
+                projectFile: workspaceFilePath,
+              },
               dependency,
             );
           }

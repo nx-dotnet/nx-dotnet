@@ -7,8 +7,6 @@
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
         "target": "core:build",
-        "npmPackageName": "@nx-dotnet/core",
-        "pluginOutputPath": "dist/packages/core",
         "jestConfig": "e2e/core-e2e/jest.config.js"
       }
     }

@@ -1,20 +1,16 @@
 import { readProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { XmlDocument } from 'xmldoc';
 
-import {
-  DotNetClient,
-  dotnetFactory,
-  dotnetNewOptions,
-  mockDotnetFactory,
-} from '@nx-dotnet/dotnet';
-import { findProjectFileInPath, NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+jest.spyOn(console, 'log').mockImplementation(() => {});
 
 describe('nx-dotnet project generator', () => {
   let appTree: Tree;
@@ -39,7 +35,7 @@ describe('nx-dotnet project generator', () => {
   });
 
   afterEach(async () => {
-    await Promise.all([rimraf('apps'), rimraf('libs'), rimraf('.config')]);
+    // await Promise.all([rimraf('apps'), rimraf('libs'), rimraf('.config')]);
   });
 
   it('should run successfully for libraries', async () => {
@@ -104,34 +100,5 @@ describe('nx-dotnet project generator', () => {
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
     expect(nameFlag?.value).toBe('Proj.SubDir.Test');
-  });
-
-  /**
-   * This test requires a live dotnet client.
-   */
-  it('should update output paths in project file', async () => {
-    await GenerateProject(
-      appTree,
-      {
-        ...options,
-        skipOutputPathManipulation: false,
-      },
-      new DotNetClient(dotnetFactory()),
-      'library',
-    );
-    const config = readProjectConfiguration(appTree, 'test');
-    const projectFilePath = await findProjectFileInPath(config.root);
-    const projectXml = new XmlDocument(
-      readFileSync(projectFilePath).toString(),
-    );
-    const outputPath = projectXml
-      .childNamed('PropertyGroup')
-      ?.childNamed('OutputPath')?.val as string;
-    expect(outputPath).toBeTruthy();
-
-    const absoluteDistPath = resolve(config.root, outputPath);
-    const expectedDistPath = resolve('./dist/libs/test');
-
-    expect(absoluteDistPath).toEqual(expectedDistPath);
   });
 });

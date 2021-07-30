@@ -7,8 +7,6 @@
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
         "target": "nx-ghpages:build",
-        "npmPackageName": "@nx-dotnet/nx-ghpages",
-        "pluginOutputPath": "dist/packages/nx-ghpages",
         "jestConfig": "apps/nx-ghpages-e2e/jest.config.js"
       }
     }
