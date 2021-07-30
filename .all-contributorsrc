@@ -50,6 +50,15 @@
         "blog",
         "video"
       ]
+    },
+    {
+      "login": "jimsleon",
+      "name": "Leon Chi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6677963?v=4",
+      "profile": "https://www.linkedin.com/in/leon-chi-495a93171/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
