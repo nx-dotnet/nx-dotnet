@@ -1,3 +1,16 @@
+# [1.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.15.0...v1.0.0) (2021-07-30)
+
+### Bug Fixes
+
+- compatibility with nx 12.6+ ([d393b3a](https://github.com/nx-dotnet/nx-dotnet/commit/d393b3a241b73bb65c904b18fb98b1dd9d657241))
+
+### BREAKING CHANGES
+
+- Minimum Nx version is 12.6, if using the dep-graph plugin.
+
+Co-authored-by: Leon Chi <leon.chi@serko.com>
+Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
+
 # [0.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.14.0...v0.15.0) (2021-07-12)
 
 ### Features

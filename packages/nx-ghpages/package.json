@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/nx-ghpages",
-  "version": "99.99.99",
+  "version": "1.0.0",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json"
