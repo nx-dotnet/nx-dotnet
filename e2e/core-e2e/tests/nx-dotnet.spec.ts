@@ -1,9 +1,17 @@
+import { names } from '@nrwl/devkit';
 import {
   checkFilesExist,
   ensureNxProject,
+  readFile,
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
+
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { XmlDocument } from 'xmldoc';
+
+import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 
 describe('nx-dotnet e2e', () => {
   it('should create apps, libs, and project references', async () => {
@@ -57,6 +65,45 @@ describe('nx-dotnet e2e', () => {
       }
 
       expect(exists).toBeTruthy();
+    });
+
+    it('should update output paths', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+      );
+      const configFilePath = findProjectFileInPathSync(
+        join('tmp/nx-e2e/proj/apps', app),
+      );
+      const config = readFileSync(configFilePath).toString();
+      const projectXml = new XmlDocument(config);
+      const outputPath = projectXml
+        .childNamed('PropertyGroup')
+        ?.childNamed('OutputPath')?.val as string;
+      expect(outputPath).toBeTruthy();
+    });
+  });
+
+  describe('nx g test', () => {
+    xit('should add a reference to the target project', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="none"`,
+      );
+      const testProject = `${app}.Test`;
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:test ${app} --language="C#" --template="nunit"`,
+      );
+
+      const config = readFile(
+        join('apps', app, `Proj.${names(testProject).className}.csproj`),
+      );
+      const projectXml = new XmlDocument(config);
+      const projectReference = projectXml
+        .childrenNamed('ItemGroup')[1]
+        ?.childNamed('ProjectReference');
+
+      expect(projectReference).toBeDefined();
     });
   });
 

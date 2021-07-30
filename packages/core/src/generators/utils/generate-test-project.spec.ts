@@ -6,16 +6,11 @@ import {
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { mkdirSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import { XmlDocument } from 'xmldoc';
 
-import {
-  DotNetClient,
-  dotnetFactory,
-  mockDotnetFactory,
-} from '@nx-dotnet/dotnet';
-import { findProjectFileInPath, NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { NxDotnetTestGeneratorSchema } from '../../models';
 import { GenerateTestProject } from './generate-test-project';
@@ -62,10 +57,6 @@ describe('nx-dotnet test project generator', () => {
       standalone: false,
     };
     testProjectName = options.project + '-test';
-  });
-
-  afterEach(async () => {
-    await Promise.all([rimraf('apps'), rimraf('libs'), rimraf('.config')]);
   });
 
   it('should detect library type for libraries', async () => {
@@ -127,56 +118,5 @@ describe('nx-dotnet test project generator', () => {
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
     expect(nameFlag?.value).toBe('Proj.Domain.ExistingApp.Test');
-  });
-
-  /**
-   * This test requires a live dotnet client.
-   */
-  it('should add a reference to the target project', async () => {
-    await GenerateTestProject(
-      appTree,
-      {
-        ...options,
-        skipOutputPathManipulation: false,
-      },
-      new DotNetClient(dotnetFactory()),
-    );
-    const config = readProjectConfiguration(appTree, testProjectName);
-    const projectFilePath = await findProjectFileInPath(config.root);
-    const projectXml = new XmlDocument(
-      readFileSync(projectFilePath).toString(),
-    );
-    const projectReference = projectXml
-      .childrenNamed('ItemGroup')[1]
-      ?.childNamed('ProjectReference');
-    expect(projectReference).toBeDefined();
-  });
-
-  /**
-   * This test requires a live dotnet client.
-   */
-  it('should update output paths in project file', async () => {
-    await GenerateTestProject(
-      appTree,
-      {
-        ...options,
-        skipOutputPathManipulation: false,
-      },
-      new DotNetClient(dotnetFactory()),
-    );
-    const config = readProjectConfiguration(appTree, testProjectName);
-    const projectFilePath = await findProjectFileInPath(config.root);
-    const projectXml = new XmlDocument(
-      readFileSync(projectFilePath).toString(),
-    );
-    const outputPath = projectXml
-      .childNamed('PropertyGroup')
-      ?.childNamed('OutputPath')?.val as string;
-    expect(outputPath).toBeTruthy();
-
-    const absoluteDistPath = resolve(config.root, outputPath);
-    const expectedDistPath = resolve('./dist/apps/domain/existing-app-test');
-
-    expect(absoluteDistPath).toEqual(expectedDistPath);
   });
 });

@@ -31,7 +31,8 @@
     "publish-local": "cp .npmrc.local .npmrc && run-p \"rimraf tmp\" e2e-registry \"ts-node ./tools/scripts/publish-all 99.99.99 local\"",
     "semantic-release": "semantic-release",
     "ts-node": "ts-node",
-    "rimraf": "rimraf"
+    "rimraf": "rimraf",
+    "preinstall": "node ./tools/scripts/hooks/preinstall.js"
   },
   "private": false,
   "dependencies": {
@@ -108,5 +109,5 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "0.15.0"
+  "version": "99.99.99"
 }

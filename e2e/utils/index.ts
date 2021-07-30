@@ -1,4 +1,5 @@
 import { detectPackageManager } from '@nrwl/tao/src/shared/package-manager';
+
 import { ChildProcess, exec, execSync } from 'child_process';
 import {
   copySync,
@@ -12,10 +13,10 @@ import {
   statSync,
   writeFileSync,
 } from 'fs-extra';
-import isCI = require('is-ci');
 import * as path from 'path';
 import { dirSync } from 'tmp';
 
+import isCI = require('is-ci');
 interface RunCmdOpts {
   silenceError?: boolean;
   env?: Record<string, string> | NodeJS.ProcessEnv;
