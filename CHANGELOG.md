@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.1...v1.0.2) (2021-08-04)
+
+### Bug Fixes
+
+- **core:** test project generator should add project reference correctly ([b5bc27d](https://github.com/nx-dotnet/nx-dotnet/commit/b5bc27dffef7ce1f6a671e0149ca6e41281fb91b))
+
 ## [1.0.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.0...v1.0.1) (2021-08-04)
 
 ### Bug Fixes
