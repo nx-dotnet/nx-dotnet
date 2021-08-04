@@ -5,7 +5,10 @@ import {
   ProjectGraphProcessorContext,
 } from '@nrwl/devkit';
 
-import { getDependantProjectsForNxProject } from '@nx-dotnet/utils';
+import {
+  getDependantProjectsForNxProject,
+  getProjectFileForNxProjectSync,
+} from '@nx-dotnet/utils';
 
 export function processProjectGraph(
   graph: ProjectGraph,
@@ -34,10 +37,11 @@ function visitProject(
   project: ProjectConfiguration,
   projectName: string,
 ) {
+  const projectFile = getProjectFileForNxProjectSync(project);
   getDependantProjectsForNxProject(
     projectName,
     context.workspace,
-    ({ projectFile }, dependencyName) => {
+    (config, dependencyName) => {
       builder.addExplicitDependency(projectName, projectFile, dependencyName);
     },
   );
