@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
@@ -14,7 +14,7 @@ describe('nx-dotnet test generator', () => {
   let dotnetClient: DotNetClient;
 
   const options: NxDotnetGeneratorSchema = {
-    project: 'existing',
+    name: 'existing',
     testTemplate: 'xunit',
     language: 'C#',
     skipOutputPathManipulation: true,
@@ -23,6 +23,11 @@ describe('nx-dotnet test generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
+    addProjectConfiguration(appTree, 'existing', {
+      root: 'apps/existing',
+      targets: {},
+      projectType: 'application',
+    });
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
@@ -36,10 +41,10 @@ describe('nx-dotnet test generator', () => {
     ).GenerateTestProject;
 
     await generator(appTree, options, dotnetClient);
-    expect(projectGenerator).toHaveBeenCalledWith(
-      appTree,
-      options,
-      dotnetClient,
+    expect(projectGenerator).toHaveBeenCalled();
+    console.log(projectGenerator.mock.calls[0][1]);
+    expect(projectGenerator.mock.calls[0][1].projectType).toEqual(
+      'application',
     );
   });
 });

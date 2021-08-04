@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { resolve } from 'path';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { NXDOTNET_TAG, rimraf } from '@nx-dotnet/utils';
+import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
@@ -31,6 +31,7 @@ describe('nx-dotnet project generator', () => {
       testTemplate: 'none',
       skipOutputPathManipulation: true,
       standalone: false,
+      projectType: 'application',
     };
   });
 

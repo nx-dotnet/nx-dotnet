@@ -1,3 +1,5 @@
+import { ProjectType } from '@nrwl/devkit';
+
 /**
  * Typing for the shared project generator's options
  */
@@ -10,4 +12,5 @@ export interface NxDotnetProjectGeneratorSchema {
   testTemplate: 'nunit' | 'mstest' | 'xunit' | 'none';
   skipOutputPathManipulation: boolean;
   standalone: boolean;
+  projectType?: ProjectType;
 }

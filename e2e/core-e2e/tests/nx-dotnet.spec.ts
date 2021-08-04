@@ -1,4 +1,4 @@
-import { names } from '@nrwl/devkit';
+import { joinPathFragments, names } from '@nrwl/devkit';
 import {
   checkFilesExist,
   ensureNxProject,
@@ -124,18 +124,21 @@ describe('nx-dotnet e2e', () => {
   });
 
   describe('nx g test', () => {
-    xit('should add a reference to the target project', async () => {
+    it('should add a reference to the target project', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="none"`,
       );
-      const testProject = `${app}.Test`;
       await runNxCommandAsync(
         `generate @nx-dotnet/core:test ${app} --language="C#" --template="nunit"`,
       );
 
       const config = readFile(
-        join('apps', app, `Proj.${names(testProject).className}.csproj`),
+        joinPathFragments(
+          'apps',
+          `${app}-test`,
+          `Proj.${names(app).className}.Test.csproj`,
+        ),
       );
       const projectXml = new XmlDocument(config);
       const projectReference = projectXml

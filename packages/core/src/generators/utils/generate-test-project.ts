@@ -7,8 +7,8 @@ import {
   GetBuildExecutorConfiguration,
   GetLintExecutorConfiguration,
   GetTestExecutorConfig,
-  NxDotnetTestGeneratorSchema,
 } from '../../models';
+
 import {
   addDryRunParameter,
   NormalizedSchema,
@@ -18,7 +18,7 @@ import {
 
 export async function GenerateTestProject(
   host: Tree,
-  schema: NxDotnetTestGeneratorSchema | NormalizedSchema,
+  schema: NormalizedSchema,
   dotnetClient: DotNetClient,
 ) {
   if (!('projectRoot' in schema)) {

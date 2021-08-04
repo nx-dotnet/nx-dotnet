@@ -18,7 +18,8 @@ describe('nx-dotnet library generator', () => {
     language: 'C#',
     template: 'webapi',
     testTemplate: 'none',
-    skipOutputPathManipulation: true,
+    skipOutputPathManipulation: false,
+    projectType: 'application',
     standalone: false,
   };
 

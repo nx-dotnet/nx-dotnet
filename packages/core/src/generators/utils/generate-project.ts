@@ -6,7 +6,6 @@ import {
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
-  readProjectConfiguration,
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
@@ -27,7 +26,6 @@ import {
   GetLintExecutorConfiguration,
   GetServeExecutorConfig,
   NxDotnetProjectGeneratorSchema,
-  NxDotnetTestGeneratorSchema,
 } from '../../models';
 import initSchematic from '../init/generator';
 import { GenerateTestProject } from './generate-test-project';
@@ -41,34 +39,14 @@ export interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   parsedTags: string[];
   className: string;
   namespaceName: string;
-  projectType: ProjectType;
+  projectType?: ProjectType;
 }
 
 export function normalizeOptions(
   host: Tree,
-  options: NxDotnetProjectGeneratorSchema | NxDotnetTestGeneratorSchema,
+  options: NxDotnetProjectGeneratorSchema,
   projectType?: ProjectType,
 ): NormalizedSchema {
-  if (!('name' in options)) {
-    // Reconstruct the original parameters as if the test project were generated at the same time as the target project.
-    const project = readProjectConfiguration(host, options.project);
-    const projectPaths = project.root.split('/');
-    const directory = projectPaths.slice(1, -1).join('/'); // The middle portions contain the original path.
-    const [name] = projectPaths.slice(-1); // The final folder contains the original name.
-
-    options = {
-      name,
-      language: options.language,
-      skipOutputPathManipulation: options.skipOutputPathManipulation,
-      testTemplate: options.testTemplate,
-      directory,
-      tags: project.tags?.join(','),
-      template: '',
-      standalone: options.standalone,
-    };
-    projectType = project.projectType;
-  }
-
   const name = names(options.name).fileName;
   const className = names(options.name).className;
   const projectDirectory = options.directory
@@ -76,7 +54,7 @@ export function normalizeOptions(
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${
-    projectType === 'application'
+    (projectType || options.projectType) === 'application'
       ? getWorkspaceLayout(host).appsDir
       : getWorkspaceLayout(host).libsDir
   }/${projectDirectory}`;
@@ -102,7 +80,7 @@ export function normalizeOptions(
     projectLanguage: options.language,
     projectTemplate: options.template,
     namespaceName,
-    projectType: projectType ?? 'library',
+    projectType: projectType ?? options.projectType ?? 'library',
   };
 }
 

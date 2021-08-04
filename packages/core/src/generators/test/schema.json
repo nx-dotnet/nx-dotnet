@@ -28,7 +28,8 @@
           { "value": "xunit", "label": "xUnit Test Project" },
           { "value": "mstest", "label": "Unit Test Project" }
         ]
-      }
+      },
+      "alias": ["template"]
     },
     "language": {
       "type": "string",

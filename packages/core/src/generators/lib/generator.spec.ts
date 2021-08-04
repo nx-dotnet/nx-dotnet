@@ -20,6 +20,7 @@ describe('nx-dotnet library generator', () => {
     testTemplate: 'none',
     skipOutputPathManipulation: true,
     standalone: false,
+    projectType: 'library',
   };
 
   beforeEach(() => {
