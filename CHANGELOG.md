@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.0...v1.0.1) (2021-08-04)
+
+### Bug Fixes
+
+- **core:** dep-graph affected should work ([#76](https://github.com/nx-dotnet/nx-dotnet/issues/76)) ([2e56afc](https://github.com/nx-dotnet/nx-dotnet/commit/2e56afc9b46e11ad1fb1ef5ea7767e1923fac0a0))
+
 # [1.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.15.0...v1.0.0) (2021-07-30)
 
 ### Bug Fixes
