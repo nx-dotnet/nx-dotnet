@@ -28,7 +28,7 @@
   },
   "projects": {},
   "workspaceLayout": {
-    "appsDir": "apps",
+    "appsDir": "",
     "libsDir": "packages"
   },
   "targetDependencies": {

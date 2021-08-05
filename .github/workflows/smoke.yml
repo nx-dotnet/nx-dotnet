@@ -1,0 +1,19 @@
+name: Run CI checks
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  NX_BRANCH: main
+  NX_RUN_GROUP: smoke
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    name: Nightly Smoke Test
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx run-many --all --target=smoke

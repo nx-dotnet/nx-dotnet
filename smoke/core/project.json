@@ -1,0 +1,15 @@
+{
+  "projectType": "application",
+  "root": "smoke/core",
+  "sourceRoot": "smoke/core/src",
+  "targets": {
+    "smoke": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "smoke/core/jest.config.js"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["core"]
+}

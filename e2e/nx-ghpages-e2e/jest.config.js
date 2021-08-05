@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'nx-ghpages-e2e',
+  displayName: 'e2e-nx-ghpages-e2e',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
