@@ -1,9 +1,11 @@
 name: Nightly Smoke Tests
 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Trigger manually or on schedule
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
+  
 
 env:
   NX_BRANCH: main
