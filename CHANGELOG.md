@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.2...v1.1.0) (2021-08-10)
+
+### Features
+
+- **core:** added support for test project name suffix ([#78](https://github.com/nx-dotnet/nx-dotnet/issues/78)) ([9f8f03c](https://github.com/nx-dotnet/nx-dotnet/commit/9f8f03cfb36c1a9becaafc602531baec9f51e0f0)), closes [#77](https://github.com/nx-dotnet/nx-dotnet/issues/77)
+
 ## [1.0.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.1...v1.0.2) (2021-08-04)
 
 ### Bug Fixes
