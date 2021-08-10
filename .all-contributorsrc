@@ -59,6 +59,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "photomoose",
+      "name": "Tom Davis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1983638?v=4",
+      "profile": "http://www.rumr.co.uk",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
