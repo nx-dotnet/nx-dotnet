@@ -40,6 +40,15 @@
         "items": ["C#", "F#", "VB"]
       }
     },
+    "suffix": {
+      "type": "string",
+      "description": "What suffix should be used for the tests project name?",
+      "default": "test",
+      "x-prompt": {
+        "message": "What suffix should be used for the tests project name?",
+        "type": "string"
+      }
+    },
     "skipOutputPathManipulation": {
       "type": "boolean",
       "description": "Skip XML changes for default build path",
