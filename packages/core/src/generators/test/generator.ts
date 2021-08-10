@@ -22,6 +22,7 @@ export default function (
 
   const projectGeneratorOptions: NxDotnetProjectGeneratorSchema = {
     ...options,
+    testProjectNameSuffix: options.suffix,
     name,
     language: options.language,
     skipOutputPathManipulation: options.skipOutputPathManipulation,

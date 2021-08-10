@@ -147,6 +147,26 @@ describe('nx-dotnet e2e', () => {
 
       expect(projectReference).toBeDefined();
     });
+
+    it('should create test project using suffix', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="none"`,
+      );
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:test ${app} --language="C#" --template="nunit" --suffix="integration-tests"`,
+      );
+
+      const config = readFile(
+        joinPathFragments(
+          'apps',
+          `${app}-integration-tests`,
+          `Proj.${names(app).className}.IntegrationTests.csproj`,
+        ),
+      );
+
+      expect(config).toBeDefined();
+    });
   });
 
   describe('nx g lib', () => {

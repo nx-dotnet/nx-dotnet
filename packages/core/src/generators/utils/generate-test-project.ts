@@ -1,4 +1,4 @@
-import { addProjectConfiguration, Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, names, Tree } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
@@ -25,8 +25,9 @@ export async function GenerateTestProject(
     schema = normalizeOptions(host, schema);
   }
 
-  const testRoot = schema.projectRoot + '-test';
-  const testProjectName = schema.projectName + '-test';
+  const suffix = schema.testProjectNameSuffix || 'test';
+  const testRoot = schema.projectRoot + '-' + suffix;
+  const testProjectName = schema.projectName + '-' + suffix;
 
   addProjectConfiguration(
     host,
@@ -52,11 +53,11 @@ export async function GenerateTestProject(
     },
     {
       flag: 'name',
-      value: schema.namespaceName + '.Test',
+      value: schema.namespaceName + '.' + names(suffix).className,
     },
     {
       flag: 'output',
-      value: schema.projectRoot + '-test',
+      value: schema.projectRoot + '-' + suffix,
     },
   ];
 

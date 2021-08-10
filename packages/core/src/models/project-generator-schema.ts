@@ -10,6 +10,7 @@ export interface NxDotnetProjectGeneratorSchema {
   template: string;
   language: string;
   testTemplate: 'nunit' | 'mstest' | 'xunit' | 'none';
+  testProjectNameSuffix?: string;
   skipOutputPathManipulation: boolean;
   standalone: boolean;
   projectType?: ProjectType;
