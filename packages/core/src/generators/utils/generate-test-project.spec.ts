@@ -1,6 +1,5 @@
 import {
   addProjectConfiguration,
-  readJson,
   readProjectConfiguration,
   Tree,
   writeJson,
@@ -101,11 +100,28 @@ describe('nx-dotnet test project generator', () => {
     expect(config.root).toBe('apps/domain/existing-app-test');
   });
 
+  xit('should determine directory from existing project and suffix', async () => {
+    options.testProjectNameSuffix = 'integration-tests';
+    testProjectName = options.name + '-' + options.testProjectNameSuffix;
+    await GenerateTestProject(appTree, options, dotnetClient);
+    const config = readProjectConfiguration(appTree, testProjectName);
+    expect(config.root).toBe('apps/domain/existing-app-integration-tests');
+  });
+
   xit('should prepend directory name to project name', async () => {
     const spy = jest.spyOn(dotnetClient, 'new');
     await GenerateTestProject(appTree, options, dotnetClient);
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
     expect(nameFlag?.value).toBe('Proj.Domain.ExistingApp.Test');
+  });
+
+  xit('should prepend directory name with suffix to project name', async () => {
+    options.testProjectNameSuffix = 'integration-tests';
+    const spy = jest.spyOn(dotnetClient, 'new');
+    await GenerateTestProject(appTree, options, dotnetClient);
+    const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
+    const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
+    expect(nameFlag?.value).toBe('Proj.Domain.ExistingApp.IntegrationTests');
   });
 });
