@@ -1,3 +1,9 @@
+## [1.1.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.2...v1.1.3) (2021-08-11)
+
+### Bug Fixes
+
+- **docs-site:** prepush hook for docs changes ([cfc92c1](https://github.com/nx-dotnet/nx-dotnet/commit/cfc92c1e065cf5b9555a759c5933e99fc674f574))
+
 ## [1.1.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.1...v1.1.2) (2021-08-11)
 
 ### Bug Fixes
