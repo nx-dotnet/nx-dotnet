@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.1...v1.1.2) (2021-08-11)
+
+### Bug Fixes
+
+- **docs-site:** docs changes should be committed back to repo ([10e2936](https://github.com/nx-dotnet/nx-dotnet/commit/10e2936193092b7d35820bb967e9a220dc8843f9))
+
 ## [1.1.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.0...v1.1.1) (2021-08-11)
 
 ### Bug Fixes
