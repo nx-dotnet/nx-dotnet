@@ -47,7 +47,7 @@ module.exports = {
     [
       '@semantic-release/git',
       {
-        assets: ['CHANGELOG.md', 'package.json', 'packages/*/package.json'],
+        assets: ['CHANGELOG.md', 'package.json', 'packages/*/package.json', 'docs'],
         message:
           "release: <%= nextRelease.version %> [skip ci]\n\n<%= nextRelease.notes %> \n\n<%= new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %>",
       },
