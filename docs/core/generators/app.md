@@ -33,3 +33,7 @@ Generate a dotnet project under the application directory.
 ### skipOutputPathManipulation
 
 - (boolean): Skip XML changes for default build path
+
+### standalone
+
+- (boolean): Should the project use project.json? If false, the project config is inside workspace.json

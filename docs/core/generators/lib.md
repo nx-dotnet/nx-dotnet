@@ -29,3 +29,7 @@ Generate a dotnet project under the library directory.
 ### <span className="required">testTemplate</span>
 
 - (string): Which template should be used for creating the tests project?
+
+### standalone
+
+- (boolean): Should the project use project.json? If false, the project config is inside workspace.json

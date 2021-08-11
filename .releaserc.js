@@ -42,6 +42,7 @@ module.exports = {
           'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
           'nx deploy docs-site',
         ].join(' && '),
+        successCmd: 'nx deploy docs-site',
       },
     ],
     [

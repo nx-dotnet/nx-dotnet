@@ -32,7 +32,8 @@
     "semantic-release": "semantic-release",
     "ts-node": "ts-node",
     "rimraf": "rimraf",
-    "preinstall": "node ./tools/scripts/hooks/preinstall.js"
+    "preinstall": "node ./tools/scripts/hooks/preinstall.js",
+    "documentation:check": "ts-node ./tools/scripts/hooks/documentation.check.ts"
   },
   "private": false,
   "dependencies": {

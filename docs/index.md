@@ -8,14 +8,14 @@ slug: /
 ## [@nx-dotnet/core](./core)
 
 - 5 Executors
-- 7 Generators
+- 8 Generators
 
-## [@nx-dotnet/typescript](./typescript)
+## [@nx-dotnet/nx-ghpages](./nx-ghpages)
+
+- 1 Executor
 
 ## [@nx-dotnet/nxdoc](./nxdoc)
 
 - 1 Generator
 
-## [@nx-dotnet/nx-ghpages](./nx-ghpages)
-
-- 1 Executor
+## [@nx-dotnet/typescript](./typescript)

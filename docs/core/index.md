@@ -81,6 +81,10 @@ nuget-reference generator
 
 Restores NuGet packages and .NET tools used by the workspace
 
+### [test](./generators/test.md)
+
+Generate a .NET test project for an existing application or library
+
 ## Executors
 
 ### [build](./executors/build.md)
