@@ -1,3 +1,9 @@
+## [1.1.4](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.3...v1.1.4) (2021-08-13)
+
+### Bug Fixes
+
+- update missing sections of misc. package.json files ([dbcf9bd](https://github.com/nx-dotnet/nx-dotnet/commit/dbcf9bdac038d9701322635e0e6e06013d66499e))
+
 ## [1.1.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.2...v1.1.3) (2021-08-11)
 
 ### Bug Fixes
