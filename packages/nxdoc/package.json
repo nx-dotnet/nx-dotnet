@@ -8,5 +8,21 @@
   "bugs": {
     "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen+is%3Aissue+label%3Anxdoc",
     "email": "craigorycoppola+nxdoc@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Nx",
+    ".NET",
+    "dotnet",
+    "monorepos",
+    "full-stack"
+  ],
+  "author": {
+    "name": "NxDotnet",
+    "url": "https://github.com/nx-dotnet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nx-dotnet/nx-dotnet"
   }
 }

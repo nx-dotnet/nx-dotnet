@@ -4,5 +4,25 @@
   "private": false,
   "dependencies": {},
   "license": "MIT",
-  "version": "1.1.3"
+  "version": "1.1.3",
+  "bugs": {
+    "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen",
+    "email": "craigorycoppola+nxdotnet@gmail.com"
+  },
+  "keywords": [
+    "Nx",
+    ".NET",
+    "dotnet",
+    "monorepos",
+    "full-stack"
+  ],
+  "author": {
+    "name": "NxDotnet",
+    "url": "https://github.com/nx-dotnet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nx-dotnet/nx-dotnet"
+  },
+  "homepage": "https://nx-dotnet.com/"
 }
