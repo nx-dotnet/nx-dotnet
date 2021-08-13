@@ -11,8 +11,6 @@ export function glob(path: string): Promise<string[]> {
 }
 
 export function findProjectFileInPath(path: string): Promise<string> {
-  console.log(`Looking for project files at '${path}/**/*.*proj'`);
-
   return glob(`${path}/**/*.*proj`).then((results) => {
     if (!results || results.length === 0) {
       throw new Error(
@@ -32,8 +30,6 @@ export function findProjectFileInPath(path: string): Promise<string> {
 }
 
 export function findProjectFileInPathSync(path: string): string {
-  console.log(`Looking for project files at '${path}/**/*.*proj'`);
-
   const results = _glob.sync(`${path}/**/*.*proj`);
   if (!results || results.length === 0) {
     throw new Error(

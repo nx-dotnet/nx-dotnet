@@ -13,6 +13,7 @@ import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPathSync } from '@nx-dotnet/utils';
+import { readDependenciesFromNxCache } from '@nx-dotnet/utils/e2e';
 
 const e2eDir = 'tmp/nx-e2e/proj';
 
@@ -58,16 +59,10 @@ describe('nx-dotnet e2e', () => {
       'print-affected --target build --base HEAD~1',
     );
 
-    const depGraphCachePath = join(
-      __dirname,
-      '../../../',
-      e2eDir,
-      'node_modules/.cache/nx/nxdeps.json',
+    const deps = await readDependenciesFromNxCache(
+      join(__dirname, '../../../', e2eDir),
+      testApp,
     );
-
-    const deps = readJson(depGraphCachePath).nodes[testApp].data.files.find(
-      (x: { ext: string; deps: string[] }) => x.ext === '.csproj',
-    ).deps;
 
     expect(output.stderr).toBeFalsy();
     expect(deps).toContain(testLib);

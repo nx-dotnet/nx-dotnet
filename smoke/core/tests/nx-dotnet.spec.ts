@@ -1,7 +1,11 @@
-import { rimraf } from '@nx-dotnet/utils';
+import { uniq } from '@nrwl/nx-plugin/testing';
+
 import { execSync, ExecSyncOptions } from 'child_process';
-import { ensureDirSync, readJson } from 'fs-extra';
+import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
+
+import { rimraf } from '@nx-dotnet/utils';
+import { readDependenciesFromNxCache } from '@nx-dotnet/utils/e2e';
 
 const smokeDirectory = 'tmp/smoke-core';
 const execSyncOptions: ExecSyncOptions = {
@@ -9,6 +13,9 @@ const execSyncOptions: ExecSyncOptions = {
   env: process.env,
   stdio: 'inherit',
 };
+
+const testApp = uniq('test-app');
+const testLib = uniq('test-lib');
 
 describe('nx-dotnet smoke', () => {
   beforeEach(async () => {
@@ -24,39 +31,31 @@ describe('nx-dotnet smoke', () => {
     });
     execSync('npm i --save-dev @nx-dotnet/core', execSyncOptions);
     execSync(
-      'npx nx g @nx-dotnet/core:lib test-lib --language C# --template classlib --testTemplate nunit',
+      `npx nx g @nx-dotnet/core:lib ${testLib} --language C# --template classlib --testTemplate nunit`,
       execSyncOptions,
     );
     execSync(
-      'npx nx g @nx-dotnet/core:app test-app --language C# --template webapi --testTemplate nunit',
+      `npx nx g @nx-dotnet/core:app ${testApp} --language C# --template webapi --testTemplate nunit`,
       execSyncOptions,
     );
 
     execSync(
-      `npx nx g @nx-dotnet/core:project-reference test-app test-lib`,
+      `npx nx g @nx-dotnet/core:project-reference ${testApp} ${testLib}`,
       execSyncOptions,
     );
 
-    const output = await execSync(
-      'npx nx print-affected --target build --base HEAD~1',
-      execSyncOptions,
+    await execSync('npx nx print-affected --target build --base HEAD~1', {
+      ...execSyncOptions,
+      stdio: 'ignore',
+    });
+
+    const deps = await readDependenciesFromNxCache(
+      join(smokeDirectory, 'test'),
+      testApp,
     );
+    expect(deps).toContain(testLib);
 
-    const depGraphCachePath = join(
-      smokeDirectory,
-      'test',
-      'node_modules/.cache/nx/nxdeps.json',
-    );
-
-    const deps = (await readJson(depGraphCachePath)).nodes[
-      'test-app'
-    ].data.files.find(
-      (x: { ext: string; deps: string[] }) => x.ext === '.csproj',
-    ).deps;
-
-    expect(deps).toContain('test-lib');
-
-    execSync('npx nx build test-app', execSyncOptions);
+    execSync(`npx nx build ${testApp}`, execSyncOptions);
 
     expect(true).toBeTruthy();
   }, 150000);
