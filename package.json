@@ -45,6 +45,7 @@
     "@types/xmldoc": "^1.1.5",
     "chokidar": "^3.5.1",
     "clsx": "^1.1.1",
+    "eslint": "^7.22.0",
     "glob": "^7.1.6",
     "inquirer": "^8.0.0",
     "prism-react-renderer": "^1.2.1",
@@ -52,7 +53,8 @@
     "react-dom": "^16.8.4",
     "rimraf": "^3.0.2",
     "rxjs": "^7.0.1",
-    "xmldoc": "^1.1.2"
+    "xmldoc": "^1.1.2",
+    "yargs-parser": "^20.2.9"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
@@ -83,10 +85,10 @@
     "@types/react": "17",
     "@types/rimraf": "^3.0.0",
     "@types/tmp": "^0.2.0",
+    "@types/yargs-parser": "^20.2.1",
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "dotenv": "8.2.0",
-    "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "fs-extra": "^10.0.0",
     "husky": "^6.0.0",

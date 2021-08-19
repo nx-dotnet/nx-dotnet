@@ -5,6 +5,12 @@
       "description": "Adds lint target to all existing dotnet projects",
       "cli": "nx",
       "implementation": "./src/migrations/add-lint-target/add-lint-target"
+    },
+    "1.2.0-add-module-boundaries-check": {
+      "version": "1.2.0",
+      "description": "1.2.0-add-module-boundaries-check",
+      "cli": "nx",
+      "implementation": "./src/migrations/1.2.0/add-module-boundaries-check/migrate"
     }
   }
 }
