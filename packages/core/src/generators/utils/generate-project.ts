@@ -10,9 +10,11 @@ import {
   Tree,
 } from '@nrwl/devkit';
 
+//  Files generated via `dotnet` are not available in the virtual fs
 import { readFileSync, writeFileSync } from 'fs';
+
 import { dirname, relative } from 'path';
-import { XmlDocument, XmlNode, XmlTextNode } from 'xmldoc';
+import { XmlDocument } from 'xmldoc';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import {
@@ -84,41 +86,18 @@ export function normalizeOptions(
   };
 }
 
-export function SetOutputPath(
+export async function manipulateXmlProjectFile(
   host: Tree,
-  projectRootPath: string,
-  projectFilePath: string,
-): void {
+  options: NormalizedSchema,
+): Promise<void> {
+  const projectFilePath = await findProjectFileInPath(options.projectRoot);
+
   const xml: XmlDocument = new XmlDocument(
     readFileSync(projectFilePath).toString(),
   );
 
-  let outputPath = `${relative(
-    dirname(projectFilePath),
-    process.cwd(),
-  )}/dist/${projectRootPath}`;
-  outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
-
-  const textNode: Partial<XmlTextNode> = {
-    text: outputPath,
-    type: 'text',
-  };
-  textNode.toString = () => textNode.text ?? '';
-  textNode.toStringWithIndent = () => textNode.text ?? '';
-
-  const el: Partial<XmlNode> = {
-    name: 'OutputPath',
-    attr: {},
-    type: 'element',
-    children: [textNode as XmlTextNode],
-    firstChild: null,
-    lastChild: null,
-  };
-
-  el.toStringWithIndent = xml.toStringWithIndent.bind(el);
-  el.toString = xml.toString.bind(el);
-
-  xml.childNamed('PropertyGroup')?.children.push(el as XmlNode);
+  setOutputPath(xml, options.projectRoot, projectFilePath);
+  addPrebuildMsbuildTask(host, options, xml);
 
   writeFileSync(projectFilePath, xml.toString());
 }
@@ -180,12 +159,10 @@ export async function GenerateProject(
 
   if (options['testTemplate'] !== 'none') {
     await GenerateTestProject(host, normalizedOptions, dotnetClient);
-  } else if (!options.skipOutputPathManipulation) {
-    SetOutputPath(
-      host,
-      normalizedOptions.projectRoot,
-      await findProjectFileInPath(normalizedOptions.projectRoot),
-    );
+  }
+
+  if (!options.skipOutputPathManipulation && !isDryRun()) {
+    await manipulateXmlProjectFile(host, normalizedOptions);
   }
 
   await formatFiles(host);
@@ -196,4 +173,38 @@ export function addDryRunParameter(parameters: dotnetNewOptions): void {
     flag: 'dryRun',
     value: true,
   });
+}
+
+export function setOutputPath(
+  xml: XmlDocument,
+  projectRootPath: string,
+  projectFilePath: string,
+) {
+  let outputPath = `${relative(
+    dirname(projectFilePath),
+    process.cwd(),
+  )}/dist/${projectRootPath}`;
+  outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
+
+  const fragment = new XmlDocument(`<OutputPath>${outputPath}</OutputPath>`);
+  xml.childNamed('PropertyGroup')?.children.push(fragment);
+}
+
+export function addPrebuildMsbuildTask(
+  host: Tree,
+  options: { projectRoot: string; name: string },
+  xml: XmlDocument,
+) {
+  const scriptPath = relative(
+    options.projectRoot,
+    require.resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
+  );
+
+  const fragment = new XmlDocument(`
+    <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
+      <Exec Command="node ${scriptPath} -p ${options.name}"/>
+    </Target>
+  `);
+
+  xml.children.push(fragment);
 }

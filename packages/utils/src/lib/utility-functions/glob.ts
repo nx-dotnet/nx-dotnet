@@ -1,4 +1,9 @@
 import * as _glob from 'glob';
+import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+
+const globOptions = {
+  cwd: appRootPath,
+};
 
 /**
  * Wraps the glob package in a promise api.
@@ -6,7 +11,9 @@ import * as _glob from 'glob';
  */
 export function glob(path: string): Promise<string[]> {
   return new Promise((resolve, reject) =>
-    _glob(path, (err, matches) => (err ? reject() : resolve(matches))),
+    _glob(path, globOptions, (err, matches) =>
+      err ? reject() : resolve(matches),
+    ),
   );
 }
 
@@ -30,7 +37,7 @@ export function findProjectFileInPath(path: string): Promise<string> {
 }
 
 export function findProjectFileInPathSync(path: string): string {
-  const results = _glob.sync(`${path}/**/*.*proj`);
+  const results = _glob.sync(`${path}/**/*.*proj`, globOptions);
   if (!results || results.length === 0) {
     throw new Error(
       "Unable to find a build-able project within project's source directory!",

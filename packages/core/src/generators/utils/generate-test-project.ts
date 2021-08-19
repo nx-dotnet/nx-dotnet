@@ -13,7 +13,7 @@ import {
   addDryRunParameter,
   NormalizedSchema,
   normalizeOptions,
-  SetOutputPath,
+  manipulateXmlProjectFile,
 } from './generate-project';
 
 export async function GenerateTestProject(
@@ -68,10 +68,9 @@ export async function GenerateTestProject(
   dotnetClient.new(schema.testTemplate, newParams);
 
   if (!isDryRun() && !schema.skipOutputPathManipulation) {
+    await manipulateXmlProjectFile(host, { ...schema, projectRoot: testRoot });
     const testCsProj = await findProjectFileInPath(testRoot);
-    SetOutputPath(host, testRoot, testCsProj);
     const baseCsProj = await findProjectFileInPath(schema.projectRoot);
-    SetOutputPath(host, schema.projectRoot, baseCsProj);
     dotnetClient.addProjectReference(testCsProj, baseCsProj);
   }
 }

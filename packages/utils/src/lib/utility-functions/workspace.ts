@@ -29,7 +29,8 @@ export function getDependantProjectsForNxProject(
   targetProject: string,
   workspaceConfiguration: WorkspaceJsonConfiguration,
   forEachCallback?: (
-    project: ProjectConfiguration & { projectFile: string },
+    project: ProjectConfiguration &
+      NxJsonProjectConfiguration & { projectFile: string },
     projectName: string,
   ) => void,
 ): {
