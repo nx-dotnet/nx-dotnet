@@ -7,11 +7,16 @@ import {
 
 import { ESLint } from 'eslint';
 
-import { getDependantProjectsForNxProject } from '@nx-dotnet/utils';
+import {
+  getDependantProjectsForNxProject,
+  ModuleBoundaries,
+  readConfig,
+} from '@nx-dotnet/utils';
 import {
   NxJsonConfiguration,
   NxJsonProjectConfiguration,
   readJsonFile,
+  Tree,
 } from '@nrwl/devkit';
 
 type ExtendedWorkspaceJson = WorkspaceJsonConfiguration & {
@@ -28,15 +33,7 @@ export async function checkModuleBoundariesForProject(
     //
     return [];
   }
-
-  const { rules } = await new ESLint().calculateConfigForFile(
-    `${projectRoot}/non-existant.ts`,
-  );
-  const [, moduleBoundaryConfig] = rules['@nrwl/nx/enforce-module-boundaries'];
-  const configuredConstraints: {
-    sourceTag: '*' | string;
-    onlyDependOnLibsWithTags: string[];
-  }[] = moduleBoundaryConfig?.depConstraints ?? [];
+  const configuredConstraints = await loadModuleBoundaries(projectRoot);
   const relevantConstraints = configuredConstraints.filter(
     (x) =>
       tags.includes(x.sourceTag) && !x.onlyDependOnLibsWithTags.includes('*'),
@@ -65,6 +62,28 @@ export async function checkModuleBoundariesForProject(
     },
   );
   return violations;
+}
+
+/**
+ * Loads module boundaries from eslintrc or .nx-dotnet.rc.json
+ * @param root Which file should be used when pulling from eslint
+ * @returns List of module boundaries
+ */
+export async function loadModuleBoundaries(
+  root: string,
+  host?: Tree,
+): Promise<ModuleBoundaries> {
+  const configured = readConfig(host).moduleBoundaries;
+  if (!configured) {
+    const result = await new ESLint().calculateConfigForFile(
+      `${root}/non-existant.ts`,
+    );
+    const [, moduleBoundaryConfig] =
+      result.rules['@nrwl/nx/enforce-module-boundaries'];
+    return moduleBoundaryConfig?.depConstraints ?? [];
+  } else {
+    return configured;
+  }
 }
 
 async function main() {

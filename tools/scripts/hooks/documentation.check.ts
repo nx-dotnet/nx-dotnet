@@ -23,7 +23,7 @@ export function getChangedFiles(base = 'master', directory = '.'): string[] {
 
 console.log(`📖 Checking for documentation changes`);
 execSync('nx workspace-generator generate-docs');
-const changes = getChangedFiles('master', 'docs');
+const changes = getChangedFiles('HEAD', 'docs');
 if (changes.length) {
   console.log(`❌ Found changes in docs files`);
   changes.forEach((file) => {

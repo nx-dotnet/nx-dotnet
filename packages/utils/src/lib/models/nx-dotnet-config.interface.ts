@@ -1,3 +1,5 @@
+import { ModuleBoundaries } from './nx';
+
 export interface NxDotnetConfig {
   /**
    * Map of package -> version, used for Single Version Principle.
@@ -5,4 +7,5 @@ export interface NxDotnetConfig {
   nugetPackages: {
     [key: string]: string | undefined;
   };
+  moduleBoundaries?: ModuleBoundaries;
 }
