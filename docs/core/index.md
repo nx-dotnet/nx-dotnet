@@ -49,6 +49,34 @@ Run my-api locally
 npx nx serve my-api
 ```
 
+## nrwl/nx/enforce-module-boundaries support
+
+Nrwl publishes an eslint rule for enforcing module boundaries based on tags in a library. We recently added similar support to nx-dotnet.
+
+To avoid duplicating the rules configuration, if your workspace already has it, nx-dotnet can read the dependency constraints from your workspace's eslint files. It does this by looking at what is configured for typescript files.
+
+If your workspace does not currently contain eslint, do not worry! You do not have to install eslint just for its configuration. The same dependency constraints can be placed inside of your .nx-dotnet.rc.json file at workspace root. This should look something like below:
+
+```json
+{
+  "moduleBoundaries": [
+    {
+      "onlyDependOnLibsWithTags": ["a", "shared"],
+      "sourceTag": "a"
+    },
+    {
+      "onlyDependOnLibsWithTags": ["b", "shared"],
+      "sourceTag": "b"
+    },
+    {
+      "onlyDependOnLibsWithTags": ["shared"],
+      "sourceTag": "shared"
+    }
+  ],
+  "nugetPackages": {}
+}
+```
+
 # API Reference
 
 ## Generators

@@ -3,6 +3,7 @@ import {
   formatFiles,
   getWorkspaceLayout,
   names,
+  normalizePath,
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
@@ -197,9 +198,11 @@ export function addPrebuildMsbuildTask(
   options: { projectRoot: string; name: string },
   xml: XmlDocument,
 ) {
-  const scriptPath = relative(
-    options.projectRoot,
-    require.resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
+  const scriptPath = normalizePath(
+    relative(
+      options.projectRoot,
+      require.resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
+    ),
   );
 
   const fragment = new XmlDocument(`
