@@ -4,7 +4,7 @@
   "private": false,
   "dependencies": {},
   "license": "MIT",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "bugs": {
     "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen",
     "email": "craigorycoppola+nxdotnet@gmail.com"

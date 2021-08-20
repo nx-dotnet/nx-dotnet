@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.4...v1.2.0) (2021-08-20)
+
+### Features
+
+- **core:** [#81](https://github.com/nx-dotnet/nx-dotnet/issues/81) support for nx-enforce-module-boundaries ([3fc92fd](https://github.com/nx-dotnet/nx-dotnet/commit/3fc92fdfb99e9c2dd01a0b05e4fd1b1bca2b2437))
+- **core:** ability to load module boundaries from nx-dotnet config ([2618b5d](https://github.com/nx-dotnet/nx-dotnet/commit/2618b5d5722035f3b20916ea4baf92d04e417ede))
+
 ## [1.1.4](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.3...v1.1.4) (2021-08-13)
 
 ### Bug Fixes
