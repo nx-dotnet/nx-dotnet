@@ -50,10 +50,12 @@ export async function checkModuleBoundariesForProject(
     project,
     workspace,
     (configuration, name) => {
-      const tags = configuration?.tags ?? [];
+      const dependencyTags = configuration?.tags ?? [];
       for (const constraint of relevantConstraints) {
         if (
-          !tags.some((x) => constraint.onlyDependOnLibsWithTags.includes(x))
+          !dependencyTags.some((x) =>
+            constraint.onlyDependOnLibsWithTags.includes(x),
+          )
         ) {
           violations.push(
             `${project} cannot depend on ${name}. Project tag ${constraint} is not satisfied.`,

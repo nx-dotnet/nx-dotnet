@@ -3,7 +3,6 @@ import {
   checkFilesExist,
   ensureNxProject,
   readFile,
-  readJson,
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
