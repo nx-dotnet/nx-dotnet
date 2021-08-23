@@ -195,7 +195,7 @@ export function setOutputPath(
 
 export function addPrebuildMsbuildTask(
   host: Tree,
-  options: { projectRoot: string; name: string },
+  options: { projectRoot: string; projectName: string },
   xml: XmlDocument,
 ) {
   const scriptPath = normalizePath(
@@ -207,7 +207,7 @@ export function addPrebuildMsbuildTask(
 
   const fragment = new XmlDocument(`
     <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
-      <Exec Command="node ${scriptPath} -p ${options.name}"/>
+      <Exec Command="node ${scriptPath} -p ${options.projectName}"/>
     </Target>
   `);
 
