@@ -100,3 +100,7 @@ Runs test via the dotnet cli
 ### verbosity
 
 - (string): Sets the verbosity level of the command. For more information, see LoggerVerbosity.
+
+### watch
+
+- (boolean): Determines if `dotnet test` or `dotnet watch test` is used to execute tests.

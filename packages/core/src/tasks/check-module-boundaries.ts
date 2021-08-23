@@ -75,9 +75,13 @@ export async function loadModuleBoundaries(
 ): Promise<ModuleBoundaries> {
   const configured = readConfig(host).moduleBoundaries;
   if (!configured) {
-    const result = await new ESLint().calculateConfigForFile(
-      `${root}/non-existant.ts`,
-    );
+    const result = await new ESLint()
+      .calculateConfigForFile(`${root}/non-existant.ts`)
+      .catch(() =>
+        Promise.resolve({
+          rules: { '@nrwl/nx/enforce-module-boundaries': [] },
+        }),
+      );
     const [, moduleBoundaryConfig] =
       result.rules['@nrwl/nx/enforce-module-boundaries'];
     return moduleBoundaryConfig?.depConstraints ?? [];

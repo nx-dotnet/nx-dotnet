@@ -5,9 +5,10 @@ import {
   Tree,
   WorkspaceJsonConfiguration,
 } from '@nrwl/devkit';
+import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 
 import { readFileSync } from 'fs';
-import { dirname, isAbsolute, resolve } from 'path';
+import { dirname, isAbsolute, relative, resolve } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 import { NXDOTNET_TAG } from '../constants';
@@ -43,8 +44,14 @@ export function getDependantProjectsForNxProject(
     projectRoots[name] = resolve(project.root);
   });
 
-  const netProjectFilePath = getProjectFileForNxProjectSync(
-    workspaceConfiguration.projects[targetProject],
+  const netProjectFilePath = relative(
+    process.cwd(),
+    resolve(
+      appRootPath,
+      getProjectFileForNxProjectSync(
+        workspaceConfiguration.projects[targetProject],
+      ),
+    ),
   );
   const hostProjectDirectory = dirname(netProjectFilePath).replace(/\\/g, '/');
 
