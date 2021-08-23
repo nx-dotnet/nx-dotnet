@@ -55,7 +55,9 @@ export async function checkModuleBoundariesForProject(
           )
         ) {
           violations.push(
-            `${project} cannot depend on ${name}. Project tag ${constraint} is not satisfied.`,
+            `${project} cannot depend on ${name}. Project tag ${JSON.stringify(
+              constraint,
+            )} is not satisfied.`,
           );
         }
       }
