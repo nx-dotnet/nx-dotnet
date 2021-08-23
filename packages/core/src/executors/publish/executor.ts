@@ -1,4 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
+import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 
 import {
   DotNetClient,
@@ -9,6 +10,7 @@ import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
 } from '@nx-dotnet/utils';
+import { resolve } from 'path';
 
 import { PublishExecutorSchema } from './schema';
 
@@ -18,14 +20,17 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
+  const cwd = resolve(appRootPath, nxProjectConfiguration.root);
+  dotnetClient.cwd = cwd;
   const projectFilePath = await getProjectFileForNxProject(
     nxProjectConfiguration,
   );
 
   const { publishProfile, extraParameters, ...flags } = options;
+  flags.output = flags.output ? resolve(appRootPath, flags.output) : undefined;
 
   dotnetClient.publish(
-    projectFilePath,
+    resolve(appRootPath, projectFilePath),
     Object.keys(flags).map((x) => ({
       flag: x as dotnetPublishFlags,
       value: (options as Record<string, string | boolean>)[x],

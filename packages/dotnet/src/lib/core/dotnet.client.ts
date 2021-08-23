@@ -19,12 +19,13 @@ import {
   formatKeyMap,
   newKeyMap,
   publishKeyMap,
+  runKeyMap,
   testKeyMap,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {
-  constructor(private cliCommand: LoadedCLI) {}
+  constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
 
   new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
     let cmd = `${this.cliCommand.command} new ${template}`;
@@ -46,26 +47,56 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
-  run(project: string, parameters?: dotnetRunOptions): ChildProcess {
-    let cmd = `run --project ${project} `;
+  run(
+    project: string,
+    watch = false,
+    parameters?: dotnetRunOptions,
+  ): ChildProcess {
+    let cmd = watch
+      ? `watch --project ${project} run`
+      : `run -- project ${project}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
+      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', runKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
-    console.log(`Executing Command: ${cmd}`);
-    return spawn(this.cliCommand.command, cmd.split(' '), { stdio: 'inherit' });
+    console.log(`Executing Command: dotnet ${cmd}`);
+    return spawn(this.cliCommand.command, cmd.split(' '), {
+      stdio: 'inherit',
+      cwd: this.cwd,
+    });
   }
 
-  test(project: string, parameters?: dotnetTestOptions): Buffer {
-    let cmd = `${this.cliCommand.command} test ${project}`;
+  test(
+    project: string,
+    watch?: boolean,
+    parameters?: dotnetTestOptions,
+  ): Buffer | ChildProcess {
+    let cmd = watch ? ` watch --project ${project} test` : `test ${project}`;
+    cmd = `${this.cliCommand.command} ${cmd}`;
+
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', testKeyMap);
-      const paramString = parameters ? getParameterString(parameters) : '';
+      const mappedParameters = swapArrayFieldValueUsingMap(
+        parameters,
+        'flag',
+        testKeyMap,
+      );
+      const paramString = getParameterString(mappedParameters);
       cmd = `${cmd} ${paramString}`;
     }
-    console.log(`Executing Command: ${cmd}`);
-    return this.logAndExecute(cmd);
+    if (!watch) {
+      return this.logAndExecute(cmd);
+    } else {
+      console.log(`Executing Command: ${cmd}`);
+      const params = cmd
+        .split(' ')
+        .slice(1)
+        .filter((x) => x.length);
+      return spawn(this.cliCommand.command, params, {
+        stdio: 'inherit',
+        cwd: this.cwd,
+      });
+    }
   }
 
   addPackageReference(
@@ -146,8 +177,12 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
+  printSdkVersion(): Buffer {
+    return this.logAndExecute('dotnet --version');
+  }
+
   private logAndExecute(cmd: string): Buffer {
     console.log(`Executing Command: ${cmd}`);
-    return execSync(cmd, { stdio: 'inherit' });
+    return execSync(cmd, { stdio: 'inherit', cwd: this.cwd || process.cwd() });
   }
 }

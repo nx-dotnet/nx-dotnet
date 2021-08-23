@@ -18,7 +18,7 @@ jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 
 describe('Publish Executor', () => {
   let context: ExecutorContext;
-  let dotnetClient: DotNetClient;
+  let dotnetClient: jest.Mocked<DotNetClient>;
 
   beforeEach(() => {
     context = {
@@ -42,7 +42,9 @@ describe('Publish Executor', () => {
       },
       isVerbose: false,
     };
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(
+      mockDotnetFactory(),
+    ) as jest.Mocked<DotNetClient>;
   });
 
   afterEach(async () => {
@@ -95,9 +97,21 @@ describe('Publish Executor', () => {
     }
 
     const res = await executor(options, context, dotnetClient);
-    expect(
-      (dotnetClient as jest.Mocked<DotNetClient>).publish,
-    ).toHaveBeenCalled();
+    expect(dotnetClient.publish).toHaveBeenCalled();
+    expect(res.success).toBeTruthy();
+  });
+
+  it('should pass path relative to project root, not workspace root', async () => {
+    const directoryPath = `${root}/apps/my-app`;
+    try {
+      await fs.mkdir(directoryPath, { recursive: true });
+      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
+    } catch (e) {
+      console.warn(e.message);
+    }
+    const res = await executor(options, context, dotnetClient);
+    expect(dotnetClient.publish).toHaveBeenCalled();
+    expect(dotnetClient.cwd).toEqual(directoryPath);
     expect(res.success).toBeTruthy();
   });
 });
