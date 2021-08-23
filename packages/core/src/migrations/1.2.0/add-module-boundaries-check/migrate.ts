@@ -23,7 +23,11 @@ export default async function update(host: Tree) {
         .childrenNamed('Target')
         .some((x) => x.attr['Name'] === 'CheckNxModuleBoundaries')
     ) {
-      addPrebuildMsbuildTask(host, { name, projectRoot: project.root }, xml);
+      addPrebuildMsbuildTask(
+        host,
+        { projectName: name, projectRoot: project.root },
+        xml,
+      );
       host.write(projectFilePath, xml.toString());
     }
   }
