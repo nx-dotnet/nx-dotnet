@@ -1,3 +1,14 @@
+# [1.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.2.0...v1.3.0) (2021-08-23)
+
+### Bug Fixes
+
+- display project tag instead of [object Object] ([2dea7fc](https://github.com/nx-dotnet/nx-dotnet/commit/2dea7fcada490888dae1a3984ca00db1e7dc95d2))
+- **core:** use fully qualified project name in msbuild task ([2c54310](https://github.com/nx-dotnet/nx-dotnet/commit/2c543102d47f42638cbb20597c965cde85527b7f))
+
+### Features
+
+- **core:** pickup `global.json` overrides at the project level ([49ce6bc](https://github.com/nx-dotnet/nx-dotnet/commit/49ce6bc5727a9c9789b701784363f582f0ee09ab)), closes [#87](https://github.com/nx-dotnet/nx-dotnet/issues/87) [#86](https://github.com/nx-dotnet/nx-dotnet/issues/86)
+
 # [1.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.4...v1.2.0) (2021-08-20)
 
 ### Features
