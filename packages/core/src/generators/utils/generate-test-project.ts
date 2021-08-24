@@ -68,7 +68,11 @@ export async function GenerateTestProject(
   dotnetClient.new(schema.testTemplate, newParams);
 
   if (!isDryRun() && !schema.skipOutputPathManipulation) {
-    await manipulateXmlProjectFile(host, { ...schema, projectRoot: testRoot });
+    await manipulateXmlProjectFile(host, {
+      ...schema,
+      projectRoot: testRoot,
+      projectName: testProjectName,
+    });
     const testCsProj = await findProjectFileInPath(testRoot);
     const baseCsProj = await findProjectFileInPath(schema.projectRoot);
     dotnetClient.addProjectReference(testCsProj, baseCsProj);
