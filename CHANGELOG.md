@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.0...v1.3.1) (2021-08-24)
+
+### Bug Fixes
+
+- use test project name in msbuild task ([cc29ea9](https://github.com/nx-dotnet/nx-dotnet/commit/cc29ea9a4b3b4b76a928b051e5badcf17cf2a2a4))
+
 # [1.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.2.0...v1.3.0) (2021-08-23)
 
 ### Bug Fixes
