@@ -43,4 +43,8 @@ export async function handleChildProcessPassthrough(
 
   //catches uncaught exceptions
   process.on('uncaughtException', exitHandler);
+
+  return new Promise<void>((resolve) => {
+    resolver = resolve;
+  });
 }

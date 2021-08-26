@@ -36,7 +36,7 @@ export default function dotnetRunExecutor(
   );
 }
 
-const runDotnetRun = (
+const runDotnetRun = async (
   dotnetClient: DotNetClient,
   project: string,
   options: ServeExecutorSchema,
@@ -47,9 +47,8 @@ const runDotnetRun = (
   }));
 
   childProcess = dotnetClient.run(project, true, opts);
-  return handleChildProcessPassthrough(childProcess).then(async () => {
-    await rimraf(projectDirectory + '/bin');
-    await rimraf(projectDirectory + '/obj');
-    return { success: true };
-  });
+  await handleChildProcessPassthrough(childProcess);
+  await rimraf(projectDirectory + '/bin');
+  await rimraf(projectDirectory + '/obj');
+  return { success: true };
 };
