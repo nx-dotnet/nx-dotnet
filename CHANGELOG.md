@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.1...v1.3.2) (2021-08-26)
+
+### Bug Fixes
+
+- **core:** serve + test --watch executor should not exit immediately ([8484202](https://github.com/nx-dotnet/nx-dotnet/commit/848420231d0a094bd05918124a85e1440577efd3)), closes [#96](https://github.com/nx-dotnet/nx-dotnet/issues/96)
+
 ## [1.3.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.0...v1.3.1) (2021-08-24)
 
 ### Bug Fixes
