@@ -81,11 +81,11 @@ If your workspace does not currently contain eslint, do not worry! You do not ha
 
 ## Generators
 
-### [lib](./generators/lib.md)
+### [library](./generators/library.md)
 
 nx-dotnet generator
 
-### [app](./generators/app.md)
+### [application](./generators/application.md)
 
 Generate a new C# project.
 

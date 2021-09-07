@@ -3,15 +3,19 @@
   "name": "core",
   "version": "0.0.1",
   "generators": {
-    "lib": {
+    "library": {
       "factory": "./src/generators/lib/generator",
       "schema": "./src/generators/lib/schema.json",
-      "description": "nx-dotnet generator"
+      "description": "nx-dotnet generator",
+      "aliases": ["lib"],
+      "x-type": "library"
     },
-    "app": {
+    "application": {
       "factory": "./src/generators/app/generator",
       "schema": "./src/generators/app/schema.json",
-      "description": "Generate a new C# project."
+      "description": "Generate a new C# project.",
+      "aliases": ["app"],
+      "x-type": "application"
     },
     "project-reference": {
       "factory": "./src/generators/project-reference/generator",
@@ -43,7 +47,8 @@
     "test": {
       "factory": "./src/generators/test/generator",
       "schema": "./src/generators/test/schema.json",
-      "description": "Generate a .NET test project for an existing application or library"
+      "description": "Generate a .NET test project for an existing application or library",
+      "x-type": "library"
     }
   }
 }

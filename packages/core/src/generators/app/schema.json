@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "id": "@nx-dotnet/core:lib",
+  "id": "@nx-dotnet/core:app",
   "title": "NxDotnet Application Generator",
   "description": "Generate a dotnet project under the application directory.",
   "type": "object",
