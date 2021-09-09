@@ -6,14 +6,32 @@ import {
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { mkdirSync, writeFileSync } from 'fs';
+import { mkdirSync } from 'fs';
+import * as fs from 'fs';
+
 import { resolve } from 'path';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { GenerateTestProject } from './generate-test-project';
-import { NormalizedSchema, normalizeOptions } from './generate-project';
+import { NormalizedSchema } from './generate-project';
+
+import * as utils from '@nx-dotnet/utils';
+
+const MOCK_CS_PROJ = `<Project>
+<PropertyGroup>
+  <TargetFramework>net5.0</TargetFramework>
+</PropertyGroup>
+</Project>`;
+
+jest.mock('@nx-dotnet/utils', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ...(jest.requireActual('@nx-dotnet/utils') as any),
+  glob: jest.fn(),
+  findProjectFileInPath: jest.fn(),
+  resolve: (m: string) => m,
+}));
 
 describe('nx-dotnet test project generator', () => {
   let appTree: Tree;
@@ -35,21 +53,24 @@ describe('nx-dotnet test project generator', () => {
     });
 
     mkdirSync('apps/domain/existing-app', { recursive: true });
-    writeFileSync(
-      'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
-      `<Project>
-<PropertyGroup>
-  <TargetFramework>net5.0</TargetFramework>
-</PropertyGroup>
-</Project>`,
-    );
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_CS_PROJ);
+    jest
+      .spyOn(utils, 'glob')
+      .mockResolvedValue([
+        'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
+      ]);
+    jest
+      .spyOn(utils, 'findProjectFileInPath')
+      .mockResolvedValue(
+        'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
+      );
 
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
     const packageJson = { scripts: {} };
     writeJson(appTree, 'package.json', packageJson);
 
-    options = normalizeOptions(appTree, {
+    options = {
       name: 'domain-existing-app',
       template: 'xunit',
       testTemplate: 'xunit',
@@ -57,7 +78,15 @@ describe('nx-dotnet test project generator', () => {
       skipOutputPathManipulation: true,
       standalone: false,
       projectType: 'application',
-    });
+      projectRoot: 'apps/domain/existing-app',
+      projectName: 'domain-existing-app',
+      projectDirectory: 'domain',
+      projectLanguage: 'C#',
+      parsedTags: [],
+      projectTemplate: 'xunit',
+      className: 'DomainExistingApp',
+      namespaceName: 'Domain.ExistingApp',
+    };
     testProjectName = options.name + '-test';
   });
 
@@ -73,9 +102,10 @@ describe('nx-dotnet test project generator', () => {
     expect(config.targets.test).toBeDefined();
   });
 
-  xit('should set output paths in build target', async () => {
+  it('should set output paths in build target', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
+    console.log(config.targets.build.options);
     const outputPath = config.targets.build.options.output;
     expect(outputPath).toBeTruthy();
 
@@ -94,34 +124,17 @@ describe('nx-dotnet test project generator', () => {
     expect(config.targets.lint).toBeDefined();
   });
 
-  xit('should determine directory from existing project', async () => {
+  it('should determine directory from existing project', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
     expect(config.root).toBe('apps/domain/existing-app-test');
   });
 
-  xit('should determine directory from existing project and suffix', async () => {
+  it('should determine directory from existing project and suffix', async () => {
     options.testProjectNameSuffix = 'integration-tests';
     testProjectName = options.name + '-' + options.testProjectNameSuffix;
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
     expect(config.root).toBe('apps/domain/existing-app-integration-tests');
-  });
-
-  xit('should prepend directory name to project name', async () => {
-    const spy = jest.spyOn(dotnetClient, 'new');
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
-    const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
-    expect(nameFlag?.value).toBe('Proj.Domain.ExistingApp.Test');
-  });
-
-  xit('should prepend directory name with suffix to project name', async () => {
-    options.testProjectNameSuffix = 'integration-tests';
-    const spy = jest.spyOn(dotnetClient, 'new');
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
-    const nameFlag = dotnetOptions?.find((flag) => flag.flag === 'name');
-    expect(nameFlag?.value).toBe('Proj.Domain.ExistingApp.IntegrationTests');
   });
 });

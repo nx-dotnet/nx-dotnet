@@ -1,5 +1,6 @@
 import {
   getProjects,
+  normalizePath,
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   Tree,
@@ -53,7 +54,7 @@ export function getDependantProjectsForNxProject(
       ),
     ),
   );
-  const hostProjectDirectory = dirname(netProjectFilePath).replace(/\\/g, '/');
+  const hostProjectDirectory = normalizePath(dirname(netProjectFilePath));
 
   const xml: XmlDocument = new XmlDocument(
     readFileSync(netProjectFilePath).toString(),

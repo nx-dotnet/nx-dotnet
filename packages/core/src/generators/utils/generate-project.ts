@@ -2,6 +2,7 @@ import {
   addProjectConfiguration,
   formatFiles,
   getWorkspaceLayout,
+  joinPathFragments,
   names,
   normalizePath,
   NxJsonProjectConfiguration,
@@ -184,11 +185,12 @@ export function setOutputPath(
   projectRootPath: string,
   projectFilePath: string,
 ) {
-  let outputPath = `${relative(
-    dirname(projectFilePath),
-    appRootPath,
-  )}/dist/${projectRootPath}`;
-  outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
+  let outputPath = joinPathFragments(
+    relative(dirname(projectFilePath), appRootPath),
+    'dist',
+    projectRootPath,
+  );
+  outputPath = normalizePath(outputPath); // Forward slash works on windows, backslash does not work on mac/linux
 
   const fragment = new XmlDocument(`<OutputPath>${outputPath}</OutputPath>`);
   xml.childNamed('PropertyGroup')?.children.push(fragment);
