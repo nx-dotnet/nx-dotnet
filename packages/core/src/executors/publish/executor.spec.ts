@@ -1,4 +1,8 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import {
+  ExecutorContext,
+  joinPathFragments,
+  normalizePath,
+} from '@nrwl/devkit';
 
 import { promises as fs } from 'fs';
 
@@ -102,7 +106,7 @@ describe('Publish Executor', () => {
   });
 
   it('should pass path relative to project root, not workspace root', async () => {
-    const directoryPath = `${root}/apps/my-app`;
+    const directoryPath = joinPathFragments(root, './apps/my-app');
     try {
       await fs.mkdir(directoryPath, { recursive: true });
       await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
@@ -111,7 +115,7 @@ describe('Publish Executor', () => {
     }
     const res = await executor(options, context, dotnetClient);
     expect(dotnetClient.publish).toHaveBeenCalled();
-    expect(dotnetClient.cwd).toEqual(directoryPath);
+    expect(normalizePath(dotnetClient.cwd || '')).toEqual(directoryPath);
     expect(res.success).toBeTruthy();
   });
 });

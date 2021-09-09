@@ -1,8 +1,13 @@
-import { joinPathFragments, names } from '@nrwl/devkit';
+import {
+  joinPathFragments,
+  names,
+  WorkspaceJsonConfiguration,
+} from '@nrwl/devkit';
 import {
   checkFilesExist,
   ensureNxProject,
   readFile,
+  readJson,
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
@@ -13,6 +18,8 @@ import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { readDependenciesFromNxCache } from '@nx-dotnet/utils/e2e';
+import { execSync } from 'child_process';
+import { ensureDirSync } from 'fs-extra';
 
 const e2eDir = 'tmp/nx-e2e/proj';
 
@@ -194,6 +201,43 @@ describe('nx-dotnet e2e', () => {
       }
 
       expect(exists).toBeTruthy();
+    });
+  });
+
+  describe('nx g import-projects', () => {
+    it('should import apps, libs, and test', async () => {
+      const testApp = uniq('app');
+      const testLib = uniq('lib');
+      const testAppTest = `${testApp}-test`;
+      ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+      const appDir = `${e2eDir}/apps/${testApp}`;
+      const testAppDir = `${e2eDir}/apps/${testAppTest}`;
+      const libDir = `${e2eDir}/libs/${testLib}`;
+      ensureDirSync(appDir);
+      ensureDirSync(libDir);
+      ensureDirSync(testAppDir);
+      execSync('dotnet new webapi', { cwd: appDir });
+      execSync('dotnet new classlib', { cwd: libDir });
+      execSync('dotnet new nunit', { cwd: testAppDir });
+
+      await runNxCommandAsync(`generate @nx-dotnet/core:import-projects`);
+
+      const workspace = readJson<WorkspaceJsonConfiguration>('workspace.json');
+
+      console.log('workspace', workspace);
+
+      expect(workspace.projects[testApp].targets.serve).toBeDefined();
+      expect(workspace.projects[testApp].targets.build).toBeDefined();
+      expect(workspace.projects[testApp].targets.lint).toBeDefined();
+      expect(workspace.projects[testLib].targets.serve).not.toBeDefined();
+      expect(workspace.projects[testLib].targets.build).toBeDefined();
+      expect(workspace.projects[testLib].targets.lint).toBeDefined();
+      expect(workspace.projects[testAppTest].targets.build).toBeDefined();
+      expect(workspace.projects[testAppTest].targets.lint).toBeDefined();
+      expect(workspace.projects[testAppTest].targets.test).toBeDefined();
+
+      await runNxCommandAsync(`build ${testApp}`);
+      checkFilesExist(`dist/apps/${testApp}`);
     });
   });
 });

@@ -49,6 +49,11 @@
       "schema": "./src/generators/test/schema.json",
       "description": "Generate a .NET test project for an existing application or library",
       "x-type": "library"
+    },
+    "import-projects": {
+      "factory": "./src/generators/import-projects/generator",
+      "schema": "./src/generators/import-projects/schema.json",
+      "description": "Import existing projects into your nx workspace"
     }
   }
 }
