@@ -8,3 +8,4 @@ export * from './config';
 export * from './xml';
 export * from './is-buffer';
 export * from './childprocess';
+export * from './node';

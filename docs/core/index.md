@@ -113,6 +113,10 @@ Restores NuGet packages and .NET tools used by the workspace
 
 Generate a .NET test project for an existing application or library
 
+### [import-projects](./generators/import-projects.md)
+
+Import existing projects into your nx workspace
+
 ## Executors
 
 ### [build](./executors/build.md)

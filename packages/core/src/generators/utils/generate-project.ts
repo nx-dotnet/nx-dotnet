@@ -10,10 +10,10 @@ import {
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
+import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 
 //  Files generated via `dotnet` are not available in the virtual fs
 import { readFileSync, writeFileSync } from 'fs';
-
 import { dirname, relative } from 'path';
 import { XmlDocument } from 'xmldoc';
 
@@ -22,6 +22,7 @@ import {
   findProjectFileInPath,
   isDryRun,
   NXDOTNET_TAG,
+  resolve,
 } from '@nx-dotnet/utils';
 
 import {
@@ -91,7 +92,7 @@ export function normalizeOptions(
 
 export async function manipulateXmlProjectFile(
   host: Tree,
-  options: NormalizedSchema,
+  options: Pick<NormalizedSchema, 'projectRoot' | 'projectName'>,
 ): Promise<void> {
   const projectFilePath = await findProjectFileInPath(options.projectRoot);
 
@@ -185,7 +186,7 @@ export function setOutputPath(
 ) {
   let outputPath = `${relative(
     dirname(projectFilePath),
-    process.cwd(),
+    appRootPath,
   )}/dist/${projectRootPath}`;
   outputPath = outputPath.replace('\\', '/'); // Forward slash works on windows, backslash does not work on mac/linux
 
@@ -201,7 +202,7 @@ export function addPrebuildMsbuildTask(
   const scriptPath = normalizePath(
     relative(
       options.projectRoot,
-      require.resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
+      resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
     ),
   );
 
