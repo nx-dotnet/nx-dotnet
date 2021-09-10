@@ -97,10 +97,10 @@ describe('import-projects generator', () => {
     await expect(promise).resolves.not.toThrow();
     expect(readProjectConfiguration(appTree, 'my-test-api-test')).toBeDefined();
     expect(
-      readProjectConfiguration(appTree, 'my-test-api-test').targets.test,
+      readProjectConfiguration(appTree, 'my-test-api-test').targets?.test,
     ).toBeDefined();
     expect(
-      readProjectConfiguration(appTree, 'my-test-api-test').targets.serve,
+      readProjectConfiguration(appTree, 'my-test-api-test').targets?.serve,
     ).not.toBeDefined();
   });
 });

@@ -54,7 +54,7 @@ describe('nx-dotnet project generator', () => {
   it('should not include serve target for libraries', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'library');
     const config = readProjectConfiguration(appTree, 'test');
-    expect(config.targets.serve).not.toBeDefined();
+    expect(config.targets?.serve).not.toBeDefined();
   });
 
   it('should run successfully for applications', async () => {
@@ -66,7 +66,7 @@ describe('nx-dotnet project generator', () => {
   it('should set output paths in build target', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
-    const outputPath = config.targets.build.options.output;
+    const outputPath = config.targets?.build.options.output;
     expect(outputPath).toBeTruthy();
 
     const absoluteDistPath = resolve(appTree.root, outputPath);
@@ -78,20 +78,20 @@ describe('nx-dotnet project generator', () => {
   it('should include serve target for applications', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
-    expect(config.targets.serve).toBeDefined();
+    expect(config.targets?.serve).toBeDefined();
   });
 
   it('should generate test project', async () => {
     options.testTemplate = 'nunit';
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
-    expect(config.targets.serve).toBeDefined();
+    expect(config.targets?.serve).toBeDefined();
   });
 
   it('should include lint target', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
-    expect(config.targets.lint).toBeDefined();
+    expect(config.targets?.lint).toBeDefined();
   });
 
   it('should prepend directory name to project name', async () => {

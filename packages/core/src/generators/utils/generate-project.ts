@@ -68,7 +68,9 @@ export function normalizeOptions(
     : [];
   parsedTags.push(NXDOTNET_TAG);
 
-  const npmScope = names(readWorkspaceConfiguration(host).npmScope).className;
+  const npmScope = names(
+    readWorkspaceConfiguration(host).npmScope || '',
+  ).className;
   const featureScope = projectDirectory
     // not sure why eslint complains here, testing in devtools shows different results without the escape character.
     // eslint-disable-next-line no-useless-escape

@@ -6,6 +6,7 @@ import {
   names,
   NxJsonProjectConfiguration,
   ProjectConfiguration,
+  TargetConfiguration,
   Tree,
 } from '@nrwl/devkit';
 
@@ -52,7 +53,10 @@ async function addNewDotnetProject(
   const projectName = rootNamespace
     ? names(rootNamespace).fileName.replace(/\./g, '-')
     : names(basename(projectRoot)).fileName;
-  const configuration: ProjectConfiguration & NxJsonProjectConfiguration = {
+  const configuration: ProjectConfiguration &
+    NxJsonProjectConfiguration & {
+      targets: Record<string, TargetConfiguration>;
+    } = {
     root: projectRoot,
     targets: {
       build: GetBuildExecutorConfiguration(projectRoot),

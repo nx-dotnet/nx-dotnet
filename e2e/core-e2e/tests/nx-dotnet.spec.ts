@@ -226,15 +226,15 @@ describe('nx-dotnet e2e', () => {
 
       console.log('workspace', workspace);
 
-      expect(workspace.projects[testApp].targets.serve).toBeDefined();
-      expect(workspace.projects[testApp].targets.build).toBeDefined();
-      expect(workspace.projects[testApp].targets.lint).toBeDefined();
-      expect(workspace.projects[testLib].targets.serve).not.toBeDefined();
-      expect(workspace.projects[testLib].targets.build).toBeDefined();
-      expect(workspace.projects[testLib].targets.lint).toBeDefined();
-      expect(workspace.projects[testAppTest].targets.build).toBeDefined();
-      expect(workspace.projects[testAppTest].targets.lint).toBeDefined();
-      expect(workspace.projects[testAppTest].targets.test).toBeDefined();
+      expect(workspace.projects[testApp].targets?.serve).toBeDefined();
+      expect(workspace.projects[testApp].targets?.build).toBeDefined();
+      expect(workspace.projects[testApp].targets?.lint).toBeDefined();
+      expect(workspace.projects[testLib].targets?.serve).not.toBeDefined();
+      expect(workspace.projects[testLib].targets?.build).toBeDefined();
+      expect(workspace.projects[testLib].targets?.lint).toBeDefined();
+      expect(workspace.projects[testAppTest].targets?.build).toBeDefined();
+      expect(workspace.projects[testAppTest].targets?.lint).toBeDefined();
+      expect(workspace.projects[testAppTest].targets?.test).toBeDefined();
 
       await runNxCommandAsync(`build ${testApp}`);
       checkFilesExist(`dist/apps/${testApp}`);

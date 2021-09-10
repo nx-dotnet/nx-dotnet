@@ -99,14 +99,14 @@ describe('nx-dotnet test project generator', () => {
   it('should include test target', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
-    expect(config.targets.test).toBeDefined();
+    expect(config.targets?.test).toBeDefined();
   });
 
   it('should set output paths in build target', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
-    console.log(config.targets.build.options);
-    const outputPath = config.targets.build.options.output;
+    console.log(config.targets?.build.options);
+    const outputPath = config.targets?.build.options.output;
     expect(outputPath).toBeTruthy();
 
     const absoluteDistPath = resolve(appTree.root, outputPath);
@@ -121,7 +121,7 @@ describe('nx-dotnet test project generator', () => {
   it('should include lint target', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
-    expect(config.targets.lint).toBeDefined();
+    expect(config.targets?.lint).toBeDefined();
   });
 
   it('should determine directory from existing project', async () => {

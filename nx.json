@@ -13,7 +13,7 @@
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*",
-    "docs": ["docs-site"]
+    "docs/*": ["docs-site"]
   },
   "tasksRunnerOptions": {
     "default": {
