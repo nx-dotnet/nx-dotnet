@@ -1,3 +1,9 @@
+# [1.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.2...v1.4.0) (2021-09-10)
+
+### Features
+
+- **core:** ability to import projects into the nx configuration ([8be8446](https://github.com/nx-dotnet/nx-dotnet/commit/8be8446f27791c95c040a43003fa45d96e6d080f))
+
 ## [1.3.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.1...v1.3.2) (2021-08-26)
 
 ### Bug Fixes
