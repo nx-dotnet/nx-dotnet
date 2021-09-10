@@ -82,7 +82,7 @@ describe('nx-dotnet test project generator', () => {
       projectName: 'domain-existing-app',
       projectDirectory: 'domain',
       projectLanguage: 'C#',
-      parsedTags: [],
+      parsedTags: [NXDOTNET_TAG],
       projectTemplate: 'xunit',
       className: 'DomainExistingApp',
       namespaceName: 'Domain.ExistingApp',
