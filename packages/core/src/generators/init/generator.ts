@@ -28,12 +28,13 @@ export default async function (
   host.write(CONFIG_FILE_PATH, JSON.stringify(configObject, null, 2));
 
   updateNxJson(host);
+
   if (!initialized) {
     updateGitIgnore(host, readWorkspaceConfiguration(host));
+    addPrepareScript(host);
   }
 
   initToolManifest(host, dotnetClient);
-  addPrepareScript(host);
 }
 
 function updateGitIgnore(
