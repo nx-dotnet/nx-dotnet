@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.0...v1.4.1) (2021-09-15)
+
+### Bug Fixes
+
+- **core:** npm prepare script may be removed ([b8e88fa](https://github.com/nx-dotnet/nx-dotnet/commit/b8e88fa317c7b23f0cebaf301410dce708991fb7)), closes [#101](https://github.com/nx-dotnet/nx-dotnet/issues/101)
+- **core:** publish output config should be relative to workspace root ([30a7a26](https://github.com/nx-dotnet/nx-dotnet/commit/30a7a265d508df1dd50818dbd02d94b4ed871c6d)), closes [#100](https://github.com/nx-dotnet/nx-dotnet/issues/100)
+
 # [1.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.2...v1.4.0) (2021-09-10)
 
 ### Features
