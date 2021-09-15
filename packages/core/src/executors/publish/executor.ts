@@ -26,14 +26,16 @@ export default async function runExecutor(
     nxProjectConfiguration,
   );
 
+  options.output = options.output
+    ? resolve(appRootPath, options.output)
+    : undefined;
   const { publishProfile, extraParameters, ...flags } = options;
-  flags.output = flags.output ? resolve(appRootPath, flags.output) : undefined;
 
   dotnetClient.publish(
     resolve(appRootPath, projectFilePath),
     Object.keys(flags).map((x) => ({
       flag: x as dotnetPublishFlags,
-      value: (options as Record<string, string | boolean>)[x],
+      value: options[x as keyof PublishExecutorSchema],
     })),
     publishProfile,
     extraParameters,

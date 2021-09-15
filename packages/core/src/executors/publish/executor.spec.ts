@@ -11,9 +11,11 @@ import { rimraf } from '@nx-dotnet/utils';
 
 import executor from './executor';
 import { PublishExecutorSchema } from './schema';
+import { isAbsolute } from 'path';
 
 const options: PublishExecutorSchema = {
   configuration: 'Debug',
+  output: 'dist/hello-world',
 };
 
 const root = process.cwd() + '/tmp';
@@ -116,6 +118,23 @@ describe('Publish Executor', () => {
     const res = await executor(options, context, dotnetClient);
     expect(dotnetClient.publish).toHaveBeenCalled();
     expect(normalizePath(dotnetClient.cwd || '')).toEqual(directoryPath);
+    expect(res.success).toBeTruthy();
+  });
+
+  it('passes an absolute output path', async () => {
+    const spy = jest.spyOn(dotnetClient, 'publish');
+    const directoryPath = joinPathFragments(root, './apps/my-app');
+    try {
+      await fs.mkdir(directoryPath, { recursive: true });
+      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
+    } catch (e) {
+      console.warn(e.message);
+    }
+    const res = await executor(options, context, dotnetClient);
+    expect(spy).toHaveBeenCalled();
+    const outputFlag = spy.mock.calls[0][1]?.find((x) => x.flag === 'output');
+    expect(outputFlag).toBeTruthy();
+    expect(outputFlag && isAbsolute(outputFlag.value as string)).toBeTruthy();
     expect(res.success).toBeTruthy();
   });
 });
