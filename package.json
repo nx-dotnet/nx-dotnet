@@ -57,7 +57,7 @@
     "yargs-parser": "^20.2.9"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
+    "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@commitlint/types": "^12.1.1",
     "@nrwl/cli": "12.9.0",
