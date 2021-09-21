@@ -71,7 +71,7 @@
     "@nrwl/tao": "12.9.0",
     "@nrwl/workspace": "12.9.0",
     "@nx-dotnet/nxdoc": "latest",
-    "@nx-plus/docusaurus": "^12.0.0",
+    "@nx-plus/docusaurus": "^12.2.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/exec": "^5.0.0",
