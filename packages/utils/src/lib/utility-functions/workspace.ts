@@ -42,7 +42,7 @@ export function getDependantProjectsForNxProject(
   const dependantProjects: { [key: string]: ProjectConfiguration } = {};
 
   Object.entries(workspaceConfiguration.projects).forEach(([name, project]) => {
-    projectRoots[name] = resolve(project.root);
+    projectRoots[name] = normalizePath(resolve(project.root));
   });
 
   const netProjectFilePath = relative(
