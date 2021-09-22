@@ -62,16 +62,15 @@ export function getDependantProjectsForNxProject(
 
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
-      const includeFilePath = x.attr['Include'].replace(/\\/g, '/');
-      let workspaceFilePath: string;
-      if (isAbsolute(includeFilePath)) {
-        workspaceFilePath = includeFilePath;
-      } else {
-        workspaceFilePath = resolve(hostProjectDirectory, includeFilePath);
-      }
+      const includeFilePath = x.attr['Include'];
+      const workspaceFilePath = normalizePath(
+        isAbsolute(includeFilePath)
+          ? includeFilePath
+          : resolve(hostProjectDirectory, includeFilePath),
+      );
 
       Object.entries(projectRoots).forEach(([dependency, path]) => {
-        if (workspaceFilePath.startsWith(path)) {
+        if (workspaceFilePath.startsWith(`${path}/`)) {
           if (forEachCallback) {
             forEachCallback(
               {
