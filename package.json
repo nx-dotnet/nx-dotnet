@@ -78,7 +78,7 @@
     "@semantic-release/git": "^9.0.1",
     "@semantic-release/release-notes-generator": "^9.0.3",
     "@types/fs-extra": "^9.0.12",
-    "@types/inquirer": "^7.3.1",
+    "@types/inquirer": "^8.1.2",
     "@types/is-ci": "^3.0.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.9.6",
