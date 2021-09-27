@@ -42,7 +42,7 @@
     "@docusaurus/preset-classic": "^2.0.0-beta.6",
     "@docusaurus/theme-search-algolia": "^2.0.0-beta.6",
     "@mdx-js/react": "^1.6.21",
-    "@types/xmldoc": "^1.1.5",
+    "@types/xmldoc": "^1.1.6",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "eslint": "^7.22.0",

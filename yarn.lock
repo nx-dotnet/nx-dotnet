@@ -3503,10 +3503,10 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
-"@types/xmldoc@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.npmjs.org/@types/xmldoc/-/xmldoc-1.1.5.tgz"
-  integrity sha512-31y8EoleGz/8+cA1ofgy1h8/yAXUjr6pfR2DSohWGa477UC7T2SQ2A+aafljRI2Pe64oE7mrJX8E3euWztC3sQ==
+"@types/xmldoc@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@types/xmldoc/-/xmldoc-1.1.6.tgz#8fe6e25dd92ffde0b4d0dce6323b7bf564c8c520"
+  integrity sha512-3qhte5iT9zpj3YtvxRhE74C+1qnRTjR+JZ26TdXuEXkagdFCBSlDm49+e7gMhvJwEqL53ReCiW/yg5JKaCzDlQ==
 
 "@types/yargs-parser@*":
   version "20.2.0"
