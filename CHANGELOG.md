@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.1...v1.4.2) (2021-09-27)
+
+### Bug Fixes
+
+- use exact project paths ([#143](https://github.com/nx-dotnet/nx-dotnet/issues/143)) ([7a3c5e9](https://github.com/nx-dotnet/nx-dotnet/commit/7a3c5e9bb00a893508cf47a3f1e0979108b75d78)), closes [#125](https://github.com/nx-dotnet/nx-dotnet/issues/125)
+
 ## [1.4.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.0...v1.4.1) (2021-09-15)
 
 ### Bug Fixes
