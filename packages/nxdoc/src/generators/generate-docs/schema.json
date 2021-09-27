@@ -1,0 +1,28 @@
+{
+  "cli": "nx",
+  "id": "generate-docs",
+  "type": "object",
+  "properties": {
+    "outputDirectory": {
+      "type": "string",
+      "description": "Where should the generated docs be placed?",
+      "default": "docs"
+    },
+    "gettingStartedFile": {
+      "type": "string",
+      "description": "File contents to place before the API reference section for each package. <src> is replaced by the package's root.",
+      "default": "<src>/readme.md"
+    },
+    "skipFrontMatter": {
+      "type": "boolean",
+      "description": "Nxdoc generates frontmatter suitable for docusaurus by default.",
+      "default": false
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skips running the output through prettier",
+      "default": false
+    }
+  },
+  "required": ["outputDirectory"]
+}

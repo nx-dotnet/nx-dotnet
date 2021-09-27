@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "executors": {
+    "build": {
+      "implementation": "./src/executors/build/executor",
+      "schema": "./src/executors/build/schema.json",
+      "description": "build executor"
+    },
+    "serve": {
+      "implementation": "./src/executors/serve/executor",
+      "schema": "./src/executors/serve/schema.json",
+      "description": "serve executor"
+    },
+    "test": {
+      "implementation": "./src/executors/test/executor",
+      "schema": "./src/executors/test/schema.json",
+      "description": "test executor"
+    },
+    "publish": {
+      "implementation": "./src/executors/publish/executor",
+      "schema": "./src/executors/publish/schema.json",
+      "description": "publish executor"
+    },
+    "format": {
+      "implementation": "./src/executors/format/executor",
+      "schema": "./src/executors/format/schema.json",
+      "description": "Formats and lints a project using the dotnet-format tool"
+    }
+  },
+  "builders": {
+    "build": {
+      "implementation": "./src/executors/build/builder",
+      "schema": "./src/executors/build/schema.json",
+      "description": "build executor"
+    }
+  }
+}

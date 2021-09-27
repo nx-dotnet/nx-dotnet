@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "@nx-dotnet/core:lib",
+  "title": "NxDotnet Library Generator",
+  "description": "Generate a dotnet project under the library directory.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name assigned to the library",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the project (used for linting)",
+      "alias": "t"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed",
+      "alias": "d"
+    },
+    "template": {
+      "type": "string",
+      "description": "The template to instantiate when the command is invoked. Each template might have specific options you can pass.",
+      "x-prompt": "What template should the project be initialized with? (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new#template-options)"
+    },
+    "language": {
+      "type": "string",
+      "description": "Which language should the project use?",
+      "x-prompt": {
+        "message": "Which language should the project use?",
+        "type": "list",
+        "items": ["C#", "F#", "VB"]
+      }
+    },
+    "testTemplate": {
+      "type": "string",
+      "description": "Which template should be used for creating the tests project?",
+      "default": "nunit",
+      "x-prompt": {
+        "message": "Which template should be used for creating the tests project",
+        "type": "list",
+        "items": [
+          { "value": "nunit", "label": "NUnit 3 Test Project" },
+          { "value": "xunit", "label": "xUnit Test Project" },
+          { "value": "mstest", "label": "Unit Test Project" },
+          { "value": "none", "label": "No Unit Test Project" }
+        ]
+      }
+    },
+    "standalone": {
+      "type": "boolean",
+      "description": "Should the project use project.json? If false, the project config is inside workspace.json",
+      "default": false
+    }
+  },
+  "required": ["name", "template", "language", "testTemplate"]
+}

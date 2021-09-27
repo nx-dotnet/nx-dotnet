@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "NugetReference",
+  "title": "Nuget Reference",
+  "description": "Add a nuget reference to a .NET project",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The project to which the reference is added.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What project should the package be added to?"
+    },
+    "packageName": {
+      "type": "string",
+      "description": "Which package should be added?",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      }
+    },
+    "version": {
+      "type": "string",
+      "description": "The package version to add.",
+      "$default": {
+        "$source": "argv",
+        "index": 2
+      }
+    },
+    "framework": {
+      "type": "string",
+      "description": "Adds a package reference only when targeting a specific framework."
+    },
+    "packageDirectory": {
+      "type": "string",
+      "description": "The directory where to restore the packages. The default package restore location is %userprofile%\\.nuget\\packages on Windows and ~/.nuget/packages on macOS and Linux. For more information, see  [Managing the global packages, cache, and temp folders in NuGet](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)."
+    },
+    "prerelease": {
+      "type": "boolean",
+      "description": "Allows prerelease packages to be installed. Available since .NET Core 5 SDK"
+    },
+    "source": {
+      "type": "string",
+      "description": "The URI of the NuGet package source to use during the restore operation."
+    },
+    "noRestore": {
+      "type": "boolean",
+      "description": "Adds a package reference without performing a restore preview and compatibility check."
+    },
+    "allowVersionMismatch": {
+      "type": "boolean",
+      "description": "Ignores single version principle for this package across all apps in the workspace",
+      "default": false
+    }
+  },
+  "required": ["packageName", "project"]
+}

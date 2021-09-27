@@ -1,0 +1,56 @@
+{
+  "root": "packages/nxdoc",
+  "sourceRoot": "packages/nxdoc/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/nxdoc/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/nxdoc"],
+      "options": {
+        "jestConfig": "packages/nxdoc/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nxdoc",
+        "tsConfig": "packages/nxdoc/tsconfig.lib.json",
+        "packageJson": "packages/nxdoc/package.json",
+        "main": "packages/nxdoc/src/index.ts",
+        "assets": [
+          "packages/nxdoc/*.md",
+          {
+            "input": "./packages/nxdoc/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nxdoc/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nxdoc",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nxdoc",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

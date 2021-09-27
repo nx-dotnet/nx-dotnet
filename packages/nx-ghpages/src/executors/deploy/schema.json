@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Deploy",
+  "description": "Deploy a page to a specified repository's gh-pages branch.",
+  "type": "object",
+  "properties": {
+    "remote": {
+      "type": "string",
+      "description": "URL for the git remote to deploy to."
+    },
+    "directory": {
+      "type": "string",
+      "description": "Directory to push to gh-pages"
+    },
+    "remoteName": {
+      "type": "string",
+      "description": "Name of the remote to push to",
+      "default": "origin"
+    }
+  },
+  "required": ["remote", "directory"]
+}

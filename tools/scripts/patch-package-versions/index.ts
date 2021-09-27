@@ -1,0 +1,62 @@
+import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
+
+import { execSync } from 'child_process';
+import { join } from 'path';
+
+import {
+  existsSync,
+  readJson,
+  readWorkspaceJson,
+  writeJson,
+} from '../../utils';
+
+export function PatchPackageVersions(newVersion: string, updateGit = true) {
+  const workspace: WorkspaceJsonConfiguration = readWorkspaceJson();
+  const rootPkg = readJson('package.json');
+
+  rootPkg.version = newVersion;
+  writeJson('package.json', rootPkg);
+
+  if (updateGit) {
+    execSync(`git add package.json`, {
+      stdio: ['ignore', 'inherit', 'inherit'],
+    });
+  }
+
+  const projects = Object.values(workspace.projects);
+
+  projects.forEach((projectConfiguration, idx) => {
+    const pkgPath = `${projectConfiguration.root}/package.json`;
+    if (!existsSync(pkgPath)) {
+      console.log('pkgPath not found', pkgPath);
+      return;
+    }
+    const pkg = readJson(pkgPath);
+    pkg.version = newVersion;
+
+    writeJson(pkgPath, pkg);
+
+    if (updateGit) {
+      execSync(`git add ${pkgPath}`, {
+        stdio: ['ignore', 'inherit', 'inherit'],
+      });
+      execSync(
+        `git commit ${
+          idx > 0 ? '--amend --no-edit' : '-m "chore(release): bump version"'
+        }`,
+        { stdio: ['ignore', 'inherit', 'inherit'] },
+      );
+    }
+  });
+
+  if (updateGit) {
+    execSync(`git tag v${newVersion}`, {
+      stdio: 'inherit',
+    });
+  }
+}
+
+if (require.main === module) {
+  PatchPackageVersions(process.argv[2], false);
+}

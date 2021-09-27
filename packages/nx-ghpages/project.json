@@ -1,0 +1,56 @@
+{
+  "root": "packages/nx-ghpages",
+  "sourceRoot": "packages/nx-ghpages/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/nx-ghpages/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/nx-ghpages"],
+      "options": {
+        "jestConfig": "packages/nx-ghpages/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nx-ghpages",
+        "tsConfig": "packages/nx-ghpages/tsconfig.lib.json",
+        "packageJson": "packages/nx-ghpages/package.json",
+        "main": "packages/nx-ghpages/src/index.ts",
+        "assets": [
+          "packages/nx-ghpages/*.md",
+          {
+            "input": "./packages/nx-ghpages/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-ghpages/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-ghpages",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nx-ghpages",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

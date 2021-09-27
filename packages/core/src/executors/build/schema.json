@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "NxDotnet Build",
+  "description": "Builds an app via the `dotnet` cli command.",
+  "type": "object",
+  "properties": {
+    "framework": {
+      "type": "string",
+      "description": "Compiles for a specific framework. The framework must be defined in the project file"
+    },
+    "version-suffix": {
+      "type": "number",
+      "description": "Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn't set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash."
+    },
+    "configuration": {
+      "type": "string",
+      "enum": ["Debug", "Release"],
+      "default": "Debug",
+      "description": "Defines the build configuration. The default for most projects is Debug, but you can override the build configuration settings in your project"
+    },
+    "force": {
+      "type": "boolean",
+      "description": "Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file."
+    },
+    "no-dependencies": {
+      "type": "boolean",
+      "description": "Ignores project-to-project (P2P) references and only builds the specified root project."
+    },
+    "no-incremental": {
+      "type": "boolean",
+      "description": "Marks the build as unsafe for incremental build. This flag turns off incremental compilation and forces a clean rebuild of the project's dependency graph."
+    },
+    "no-restore": {
+      "type": "boolean",
+      "description": "Doesn't execute an implicit restore during build."
+    },
+    "nologo": {
+      "type": "boolean",
+      "description": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+    },
+    "output": {
+      "type": "string",
+      "description": "Directory in which to place the built binaries. If not specified, the default path is ./bin/<configuration>/<framework>/. For projects with multiple target frameworks (via the TargetFrameworks property), you also need to define --framework when you specify this option."
+    },
+    "verbosity": {
+      "type": "string",
+      "enum": ["quiet", "minimal", "normal", "detailed", "diagnostic"],
+      "default": "minimal"
+    }
+  },
+  "required": ["configuration"]
+}

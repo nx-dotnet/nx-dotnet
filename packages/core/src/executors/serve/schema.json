@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "NxDotnet Serve Executor",
+  "description": "Uses `dotnet run` and chokidar to run a .NET app.",
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "description": "Defines the build configuration. The default for most projects is Debug, but you can override the build configuration settings in your project.",
+      "default": "Debug"
+    },
+    "framework": {
+      "type": "string",
+      "description": "Builds and runs the app using the specified framework. The framework must be specified in the project file."
+    },
+    "force": {
+      "type": "boolean",
+      "description": "Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file."
+    },
+    "launch-profile": {
+      "type": "string",
+      "description": "The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the launchSettings.json file and are typically called Development, Staging, and Production. For more information, see Working with multiple environments."
+    },
+    "no-launch-profile": {
+      "type": "boolean",
+      "description": "Doesn't try to use launchSettings.json to configure the application."
+    },
+    "runtime": {
+      "type": "string",
+      "description": "Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the RID catalog. -r short option available since .NET Core 3.0 SDK."
+    },
+    "verbosity": {
+      "type": "string",
+      "description": "Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]. The default value is m. Available since .NET Core 2.1 SDK.",
+      "enum": [
+        "quiet",
+        "minimal",
+        "normal",
+        "detailed",
+        "diagnostic",
+        "q",
+        "m",
+        "n",
+        "d",
+        "diag"
+      ]
+    }
+  },
+  "required": []
+}

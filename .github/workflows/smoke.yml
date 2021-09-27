@@ -1,0 +1,21 @@
+name: Nightly Smoke Tests
+
+on:
+  # Trigger manually or on schedule
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  
+
+env:
+  NX_BRANCH: main
+  NX_RUN_GROUP: smoke
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    name: Nightly Smoke Test
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx run-many --all --target=smoke

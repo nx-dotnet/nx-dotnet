@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "@nx-dotnet/core:project-reference",
+  "title": "Project Reference Generator",
+  "description": "Adds a project reference to the host project that points to the source project.",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The project to which the reference is added.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Which project should the reference be attached to?"
+    },
+    "reference": {
+      "type": "string",
+      "description": "The project to which the reference points.",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "x-prompt": "Which project should the reference point to?"
+    }
+  },
+  "required": ["project", "reference"]
+}

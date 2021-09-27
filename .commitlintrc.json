@@ -1,0 +1,27 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "scope-enum": [
+      1,
+      "always",
+      [
+        "dotnet",
+        "core",
+        "utils",
+        "typescript",
+        "nxdoc",
+        "nx-ghpages",
+        "docs-site",
+        "ci",
+        "repo"
+      ]
+    ],
+    "type-enum": [
+      1,
+      "always",
+      ["test", "docs", "chore", "feat", "fix", "release"]
+    ],
+    "body-max-line-length": [1, "always", 400],
+    "footer-max-line-length": [1, "always", 400]
+  }
+}

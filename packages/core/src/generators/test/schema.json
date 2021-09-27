@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "@nx-dotnet/core:lib",
+  "title": "NxDotnet Test Generator",
+  "description": "Generate a .NET test project for an existing application or library",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The existing project to generate tests for",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "alias": ["project"]
+    },
+    "testTemplate": {
+      "type": "string",
+      "description": "Which template should be used for creating the tests project?",
+      "default": "nunit",
+      "enum": ["nunit", "xunit", "mstest"],
+      "x-prompt": {
+        "message": "Which template should be used for creating the tests project",
+        "type": "list",
+        "items": [
+          { "value": "nunit", "label": "NUnit 3 Test Project" },
+          { "value": "xunit", "label": "xUnit Test Project" },
+          { "value": "mstest", "label": "Unit Test Project" }
+        ]
+      },
+      "alias": ["template"]
+    },
+    "language": {
+      "type": "string",
+      "description": "Which language should the project use?",
+      "x-prompt": {
+        "message": "Which language should the project use?",
+        "type": "list",
+        "items": ["C#", "F#", "VB"]
+      }
+    },
+    "suffix": {
+      "type": "string",
+      "description": "What suffix should be used for the tests project name?",
+      "default": "test",
+      "x-prompt": {
+        "message": "What suffix should be used for the tests project name?",
+        "type": "string"
+      }
+    },
+    "skipOutputPathManipulation": {
+      "type": "boolean",
+      "description": "Skip XML changes for default build path",
+      "default": false
+    },
+    "standalone": {
+      "type": "boolean",
+      "description": "Should the project use project.json? If false, the project config is inside workspace.json",
+      "default": false
+    }
+  },
+  "required": ["name", "testTemplate"]
+}

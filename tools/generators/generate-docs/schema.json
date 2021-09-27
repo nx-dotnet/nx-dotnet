@@ -1,0 +1,7 @@
+{
+  "cli": "nx",
+  "id": "generate-docs",
+  "type": "object",
+  "properties": {},
+  "required": []
+}

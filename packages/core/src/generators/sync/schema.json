@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "Sync",
+  "title": "Sync Generator",
+  "type": "object",
+  "description": "Syncs package versions across the workspace with nx-dotnet config.",
+  "properties": {}
+}

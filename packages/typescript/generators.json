@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "typescript",
+  "version": "0.0.1",
+  "generators": {
+    // "typescript": {
+    //   "factory": "./src/generators/typescript/generator",
+    //   "schema": "./src/generators/typescript/schema.json",
+    //   "description": "typescript generator"
+    // }
+  }
+}

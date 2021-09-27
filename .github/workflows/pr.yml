@@ -1,0 +1,60 @@
+name: Run PR checks
+
+on: pull_request
+    
+
+env:
+  NX_BRANCH: ${{ github.event.number }}
+  NX_RUN_GROUP: ${{ github.run_id }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Building affected apps
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx affected -- --target=build --base=origin/master --parallel --with-deps
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+  test:
+    runs-on: ubuntu-latest
+    name: Testing affected apps
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx affected -- --target=test --base=origin/master --parallel
+
+  lint:
+    runs-on: ubuntu-latest
+    name: Linting affected apps
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn nx affected -- --target=lint --base=origin/master --parallel
+
+  commitlint:
+    runs-on: ubuntu-latest
+    name: Check commit message for consistency
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
+
+  e2e:
+    runs-on: ubuntu-latest
+    name: E2E testing affected apps
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - name: Download a single artifact
+        continue-on-error: true
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - run: yarn e2e
