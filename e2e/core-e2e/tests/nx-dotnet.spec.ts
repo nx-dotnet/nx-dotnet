@@ -17,7 +17,7 @@ import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPathSync } from '@nx-dotnet/utils';
-import { readDependenciesFromNxCache } from '@nx-dotnet/utils/e2e';
+import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 import { execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
 
@@ -65,7 +65,7 @@ describe('nx-dotnet e2e', () => {
       'print-affected --target build --base HEAD~1',
     );
 
-    const deps = await readDependenciesFromNxCache(
+    const deps = await readDependenciesFromNxDepGraph(
       join(__dirname, '../../../', e2eDir),
       testApp,
     );
@@ -223,8 +223,6 @@ describe('nx-dotnet e2e', () => {
       await runNxCommandAsync(`generate @nx-dotnet/core:import-projects`);
 
       const workspace = readJson<WorkspaceJsonConfiguration>('workspace.json');
-
-      console.log('workspace', workspace);
 
       expect(workspace.projects[testApp].targets?.serve).toBeDefined();
       expect(workspace.projects[testApp].targets?.build).toBeDefined();

@@ -1,6 +1,6 @@
 import {
   getProjects,
-  normalizePath,
+  normalizePath as nxNormalizePath,
   NxJsonProjectConfiguration,
   ProjectConfiguration,
   Tree,
@@ -42,11 +42,11 @@ export function getDependantProjectsForNxProject(
   const dependantProjects: { [key: string]: ProjectConfiguration } = {};
 
   Object.entries(workspaceConfiguration.projects).forEach(([name, project]) => {
-    projectRoots[name] = resolve(project.root);
+    projectRoots[name] = normalizePath(resolve(project.root));
   });
 
   const netProjectFilePath = relative(
-    process.cwd(),
+    appRootPath,
     resolve(
       appRootPath,
       getProjectFileForNxProjectSync(
@@ -62,16 +62,15 @@ export function getDependantProjectsForNxProject(
 
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
-      const includeFilePath = x.attr['Include'].replace(/\\/g, '/');
-      let workspaceFilePath: string;
-      if (isAbsolute(includeFilePath)) {
-        workspaceFilePath = includeFilePath;
-      } else {
-        workspaceFilePath = resolve(hostProjectDirectory, includeFilePath);
-      }
+      const includeFilePath = normalizePath(x.attr['Include']);
+      const workspaceFilePath = normalizePath(
+        isAbsolute(includeFilePath)
+          ? includeFilePath
+          : resolve(hostProjectDirectory, includeFilePath),
+      );
 
       Object.entries(projectRoots).forEach(([dependency, path]) => {
-        if (workspaceFilePath.startsWith(path)) {
+        if (workspaceFilePath.startsWith(`${path}/`)) {
           if (forEachCallback) {
             forEachCallback(
               {
@@ -117,4 +116,11 @@ export function getProjectFilesForProject(
     .children(project.sourceRoot)
     .filter((x) => x.endsWith('proj'))
     .map((x) => `${project.sourceRoot}/${x}`);
+}
+
+/**
+ * Currently @nrwl/devkit[normalizePath] functionality differs a bit based on OS. See
+ */
+function normalizePath(p: string): string {
+  return nxNormalizePath(p).split('\\').join('/');
 }

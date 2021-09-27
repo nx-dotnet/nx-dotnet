@@ -1,17 +1,22 @@
-import { readJson } from 'fs-extra';
+import { readJson, remove } from 'fs-extra';
 import { join } from 'path';
+import { execSync } from 'child_process';
 
-export async function readDependenciesFromNxCache(
+export async function readDependenciesFromNxDepGraph(
   workspaceRoot: string,
   project: string,
 ) {
-  const depGraphCachePath = join(
-    workspaceRoot,
-    'node_modules/.cache/nx/nxdeps.json',
-  );
+  const depGraphFile = join('tmp', 'dep-graph.json');
+  execSync(`npx nx dep-graph --file ${depGraphFile}`, {
+    cwd: workspaceRoot,
+    stdio: 'inherit',
+  });
+  const absolutePath = join(workspaceRoot, depGraphFile);
+  const { graph } = await readJson(absolutePath);
+  await remove(absolutePath);
 
-  const files: Array<{ file: string; deps: string[] }> = (
-    await readJson(depGraphCachePath)
-  ).nodes[project].data.files;
-  return new Set(files.flatMap((x) => x.deps));
+  const deps: Array<{ source: string; target: string }> =
+    graph.dependencies[project];
+  console.log('[E2E]: Found dependencies', deps);
+  return new Set(deps.map((x) => x.target));
 }
