@@ -5,7 +5,7 @@ import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
 
 import { rimraf } from '@nx-dotnet/utils';
-import { readDependenciesFromNxCache } from '@nx-dotnet/utils/e2e';
+import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 
 const smokeDirectory = 'tmp/smoke-core';
 const execSyncOptions: ExecSyncOptions = {
@@ -49,7 +49,7 @@ describe('nx-dotnet smoke', () => {
       stdio: 'ignore',
     });
 
-    const deps = await readDependenciesFromNxCache(
+    const deps = await readDependenciesFromNxDepGraph(
       join(smokeDirectory, 'test'),
       testApp,
     );
