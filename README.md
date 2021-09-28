@@ -1,3 +1,8 @@
+
+<p align="center">
+  <image src="https://user-images.githubusercontent.com/6933928/135131740-66939491-dc3e-4982-82ac-e6584530bb1b.png" alt="nx-dotnet logo"/>
+</p>
+
 # NxDotnet
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
@@ -7,12 +12,6 @@
 [![Join the chat at https://gitter.im/nx-dotnet-plugin/community](https://badges.gitter.im/nx-dotnet-plugin/community.svg)](https://gitter.im/nx-dotnet-plugin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Run CI checks](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml)
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=security_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=bugs)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=code_smells)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=ncloc)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet)
-
-This project was generated using [Nx](https://nx.dev).
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/.NET_Logo.svg" width="450">
-</p>
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
