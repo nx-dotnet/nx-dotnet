@@ -159,7 +159,7 @@ export function newProject({ name = uniq('proj') } = {}): string {
       copySync(`${tmpBackupProjPath()}`, `${tmpProjPath()}`);
     }
     return projScope;
-  } catch (e) {
+  } catch (e: any) {
     console.log(`Failed to set up project for e2e tests.`);
     console.log(e.message);
     throw e;
@@ -277,7 +277,7 @@ export function runNgAdd(
         /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
         '',
       );
-  } catch (e) {
+  } catch (e: any) {
     if (opts.silenceError) {
       return e.stdout.toString();
     } else {
@@ -314,7 +314,7 @@ export function runCLI(
     }
 
     return r;
-  } catch (e) {
+  } catch (e: any) {
     if (opts.silenceError) {
       return e.stdout.toString();
     } else {
@@ -341,7 +341,7 @@ export function runCommand(command: string): string {
       console.log(r);
     }
     return r;
-  } catch (e) {
+  } catch (e: any) {
     return e.stdout.toString() + e.stderr.toString();
   }
 }

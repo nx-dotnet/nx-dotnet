@@ -12,6 +12,7 @@ import { rimraf } from '@nx-dotnet/utils';
 import executor from './executor';
 import { PublishExecutorSchema } from './schema';
 import { isAbsolute } from 'path';
+import { assertErrorMessage } from '@nx-dotnet/utils/testing';
 
 const options: PublishExecutorSchema = {
   configuration: 'Debug',
@@ -58,20 +59,13 @@ describe('Publish Executor', () => {
   });
 
   it('detects no dotnet project', async () => {
-    expect.assertions(1);
-    try {
-      await executor(options, context, dotnetClient);
-    } catch (e) {
-      console.log(e.message);
-      expect(e.message).toMatch(
-        "Unable to find a build-able project within project's source directory!",
-      );
-    }
+    const promise = executor(options, context, dotnetClient);
+    await expect(promise).rejects.toThrow(
+      "Unable to find a build-able project within project's source directory!",
+    );
   });
 
   it('detects multiple dotnet projects', async () => {
-    expect.assertions(1);
-
     try {
       const directoryPath = `${root}/apps/my-app`;
       await fs.mkdir(directoryPath, { recursive: true });
@@ -80,17 +74,15 @@ describe('Publish Executor', () => {
         fs.writeFile(`${directoryPath}/2.csproj`, ''),
       ]);
     } catch (e) {
-      console.warn(e.message);
+      if (assertErrorMessage(e)) {
+        console.warn(e.message);
+      }
     }
 
-    try {
-      await executor(options, context, dotnetClient);
-    } catch (e) {
-      console.log(e.message);
-      expect(e.message).toMatch(
-        "More than one build-able projects are contained within the project's source directory!",
-      );
-    }
+    const promise = executor(options, context, dotnetClient);
+    await expect(promise).rejects.toThrow(
+      "More than one build-able projects are contained within the project's source directory!",
+    );
   });
 
   it('calls publish when 1 project file is found', async () => {
@@ -99,7 +91,7 @@ describe('Publish Executor', () => {
       await fs.mkdir(directoryPath, { recursive: true });
       await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
     } catch (e) {
-      console.warn(e.message);
+      if (assertErrorMessage(e)) console.warn(e.message);
     }
 
     const res = await executor(options, context, dotnetClient);
@@ -113,7 +105,7 @@ describe('Publish Executor', () => {
       await fs.mkdir(directoryPath, { recursive: true });
       await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
     } catch (e) {
-      console.warn(e.message);
+      if (assertErrorMessage(e)) console.warn(e.message);
     }
     const res = await executor(options, context, dotnetClient);
     expect(dotnetClient.publish).toHaveBeenCalled();
@@ -128,7 +120,7 @@ describe('Publish Executor', () => {
       await fs.mkdir(directoryPath, { recursive: true });
       await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
     } catch (e) {
-      console.warn(e.message);
+      if (assertErrorMessage(e)) console.warn(e.message);
     }
     const res = await executor(options, context, dotnetClient);
     expect(spy).toHaveBeenCalled();
