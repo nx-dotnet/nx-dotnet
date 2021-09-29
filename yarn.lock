@@ -3684,10 +3684,10 @@
     "@typescript-eslint/types" "4.31.2"
     eslint-visitor-keys "^2.0.0"
 
-"@verdaccio/commons-api@10.0.0":
-  version "10.0.0"
-  resolved "https://registry.npmjs.org/@verdaccio/commons-api/-/commons-api-10.0.0.tgz"
-  integrity sha512-UC8wrRI9FvqjfDeB1RijF7aVI0JJhCOI8RkEDibCT/JD8zVngphrNmgSWcjo8Es3lRiu7NugWXDSuggCCeCfUg==
+"@verdaccio/commons-api@10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@verdaccio/commons-api/-/commons-api-10.0.1.tgz#7217a167e428a7603ff46685c4cc40bb1526e463"
+  integrity sha512-dO/3ocK2Cpx5GZ/HST7YWRMVXAZu5zkDglfcoxEnUh2V9D4detGn0sIDV9nCJJJiO70ZmhuOoA5oeUmrA1lELA==
   dependencies:
     http-errors "1.8.0"
     http-status-codes "1.4.0"
@@ -3699,12 +3699,12 @@
   dependencies:
     lockfile "1.0.4"
 
-"@verdaccio/local-storage@10.0.6":
-  version "10.0.6"
-  resolved "https://registry.yarnpkg.com/@verdaccio/local-storage/-/local-storage-10.0.6.tgz#be485a8107ad84206cf80702d325ca47b7f22f68"
-  integrity sha512-YEImOMUL56lziS/N3o1YzoOcVGZXpyZclGSonw7XQ1lKQEvEhU06V2+tIdjPgtqIOuH9ZKdPeBsBuN7ILa2qzQ==
+"@verdaccio/local-storage@10.0.7":
+  version "10.0.7"
+  resolved "https://registry.yarnpkg.com/@verdaccio/local-storage/-/local-storage-10.0.7.tgz#c90114cc474c564b6aecc5513a95fe474ca8b797"
+  integrity sha512-DpR4RFDQXVFI9ILEU0xXIqGP7m59u4n5RJ9AYEbc6i/6Iv0Ba2K2Q4l/J22ZLURjqCKZY4ZPUJkhUwXSmzRFMQ==
   dependencies:
-    "@verdaccio/commons-api" "10.0.0"
+    "@verdaccio/commons-api" "10.0.1"
     "@verdaccio/file-locking" "10.0.0"
     "@verdaccio/streams" "10.0.0"
     async "3.2.0"
@@ -11858,11 +11858,6 @@ node-emoji@^1.10.0:
   dependencies:
     lodash.toarray "^4.4.0"
 
-node-fetch@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
-
 node-fetch@2.6.1, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
@@ -16357,15 +16352,15 @@ vendors@^1.0.3:
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.4.tgz#e2b800a53e7a29b93506c3cf41100d16c4c4ad8e"
   integrity sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==
 
-verdaccio-audit@10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/verdaccio-audit/-/verdaccio-audit-10.0.1.tgz#dc5b28c6a5315d874552b982d047c7e5bb3644e5"
-  integrity sha512-OxY5REold4AjecbhydgB4DN/9mr0+mR+okxYl5BPugXKNuyfFO/CeXluEKnYBqIcbsEghu/zPrOJbJgrShJdGQ==
+verdaccio-audit@10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/verdaccio-audit/-/verdaccio-audit-10.0.2.tgz#736e1d0dd96039a9de32830ea5a295bb9773f7a2"
+  integrity sha512-pcud2xwztYETO15r+a11cFkpvweLmnsuJJ0FLCifL3+z4IzYFgD5KgPwUD9sdMPHFz5efOrHeO71cu8hb8oEWg==
   dependencies:
     body-parser "1.19.0"
     express "4.17.1"
     https-proxy-agent "5.0.0"
-    node-fetch "2.6.0"
+    node-fetch "2.6.1"
 
 verdaccio-htpasswd@10.0.0:
   version "10.0.0"
@@ -16378,13 +16373,13 @@ verdaccio-htpasswd@10.0.0:
     http-errors "1.8.0"
     unix-crypt-td-js "1.1.4"
 
-verdaccio@^5.1.5:
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/verdaccio/-/verdaccio-5.1.5.tgz#129501a37041556d0a2d4e375e9a60e51b4cc49d"
-  integrity sha512-hbcIYb7DqWhoOenE5hZMGRu0DnC6rX7cDikLcT67JGorZ/8uhGINxT0F03BkiY6Ahv8chKWNKb5fpTVumF+YjQ==
+verdaccio@^5.1.6:
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/verdaccio/-/verdaccio-5.1.6.tgz#309f4a5c2b3cd4679109d8339cdcfa87a9c9e2da"
+  integrity sha512-/DlhWtgtlfqKKxV6puZigRS6eicqVSXBZoZuG1HL8h+pft7F2bwu0KI1u4XT2fzGw9hp69FFET8OlPLNfYEvwQ==
   dependencies:
-    "@verdaccio/commons-api" "10.0.0"
-    "@verdaccio/local-storage" "10.0.6"
+    "@verdaccio/commons-api" "10.0.1"
+    "@verdaccio/local-storage" "10.0.7"
     "@verdaccio/readme" "10.0.0"
     "@verdaccio/streams" "10.0.0"
     "@verdaccio/ui-theme" "3.2.1"
@@ -16422,7 +16417,7 @@ verdaccio@^5.1.5:
     request "2.88.0"
     semver "7.3.5"
     validator "13.6.0"
-    verdaccio-audit "10.0.1"
+    verdaccio-audit "10.0.2"
     verdaccio-htpasswd "10.0.0"
 
 verror@1.10.0:
