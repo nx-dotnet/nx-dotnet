@@ -2804,9 +2804,9 @@
     yargs-parser "20.0.0"
 
 "@nx-dotnet/nxdoc@latest":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@nx-dotnet/nxdoc/-/nxdoc-1.4.1.tgz#2c0ab3817632cbc571deecb658077685ed075f3d"
-  integrity sha512-p5JomM9lZy+LLqhhPatAOMJe3L/XpomzPFIFsmNy1cvYbmIECTuuX1+eBq+GEZEzhKaVTnSMHRiP5BrX6kJTCg==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@nx-dotnet/nxdoc/-/nxdoc-1.4.2.tgz#8eb16cb89c250228fc9903b1bdeb562ade7d37ea"
+  integrity sha512-rZunIaezvY3YmbpMoYI09K6LHDcssqqQ/0W636x78V6KjYVpN/brdL64KuRKwhvFsMdvr9TQum+aNnOR2RRihg==
 
 "@nx-plus/docusaurus@^12.2.0":
   version "12.2.0"
