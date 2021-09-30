@@ -16,7 +16,7 @@ export function dotnetFactory(): LoadedCLI {
   // return the command line for local or global dotnet
   // check if dotnet is installed
   try {
-    const version = execSync('dotnet --version').toString('utf-8').trim();
+    const version = execSync('dotnet --version', { encoding: 'utf8' }).trim();
     return {
       command: 'dotnet',
       info: {
@@ -36,4 +36,4 @@ export type LoadedCLI = {
   info: { global: boolean; version: string | number };
 };
 
-export type DotnetFactory = () => LoadedCLI;
+export type DotnetFactory = typeof dotnetFactory;
