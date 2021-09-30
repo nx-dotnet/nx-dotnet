@@ -1,7 +1,7 @@
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
@@ -12,7 +12,7 @@ describe('init generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
 
     const packageJson = { scripts: {} };
     writeJson(appTree, 'package.json', packageJson);

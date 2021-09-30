@@ -2,7 +2,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 
 import { promises as fs } from 'fs';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { rimraf } from '@nx-dotnet/utils';
 import { assertErrorMessage } from '@nx-dotnet/utils/testing';
 
@@ -14,8 +14,6 @@ const options: BuildExecutorSchema = {
 };
 
 const root = process.cwd() + '/tmp';
-
-jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 
 describe('Build Executor', () => {
   let context: ExecutorContext;
@@ -43,7 +41,7 @@ describe('Build Executor', () => {
       },
       isVerbose: false,
     };
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   afterEach(async () => {

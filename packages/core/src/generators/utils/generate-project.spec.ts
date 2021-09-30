@@ -3,14 +3,13 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { resolve } from 'path';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.spyOn(console, 'log').mockImplementation(() => {});
+jest.spyOn(console, 'log').mockImplementation();
 
 describe('nx-dotnet project generator', () => {
   let appTree: Tree;
@@ -19,7 +18,7 @@ describe('nx-dotnet project generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
 
     const packageJson = { scripts: {} };
     writeJson(appTree, 'package.json', packageJson);

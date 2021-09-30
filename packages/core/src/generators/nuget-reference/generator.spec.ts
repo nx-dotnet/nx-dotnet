@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { prompt } from 'inquirer';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { updateConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
@@ -11,7 +11,6 @@ import { NugetReferenceGeneratorSchema } from './schema';
 
 import PromptUI = require('inquirer/lib/ui/prompt');
 
-jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 jest.mock('../../../../utils/src/lib/utility-functions/workspace');
 jest.mock('inquirer');
 
@@ -54,7 +53,7 @@ describe('nuget-reference generator', () => {
         return {};
       }) as () => Promise<unknown> & { ui: PromptUI });
 
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   it('runs calls dotnet add package reference', async () => {

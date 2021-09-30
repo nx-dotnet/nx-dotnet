@@ -1,7 +1,7 @@
 import { addProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 import * as mockedProjectGenerator from '../utils/generate-test-project';
 import generator from './generator';
@@ -28,7 +28,7 @@ describe('nx-dotnet test generator', () => {
       targets: {},
       projectType: 'application',
     });
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   it('should run successfully', async () => {

@@ -9,7 +9,6 @@ import generator from './generator';
 
 import PromptUI = require('inquirer/lib/ui/prompt');
 
-jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 jest.mock('../../../../utils/src/lib/utility-functions/workspace');
 jest.mock('inquirer');
 

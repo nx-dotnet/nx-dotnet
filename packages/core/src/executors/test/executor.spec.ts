@@ -2,7 +2,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 
 import { mkdirSync, writeFileSync } from 'fs';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { rimraf } from '@nx-dotnet/utils';
 
 import executor from './executor';
@@ -10,8 +10,6 @@ import { TestExecutorSchema } from './schema';
 
 const options: TestExecutorSchema = {};
 const root = process.cwd() + '/tmp';
-
-jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 
 describe('Test Executor', () => {
   let context: ExecutorContext;
@@ -39,7 +37,7 @@ describe('Test Executor', () => {
       },
       isVerbose: false,
     };
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   afterEach(async () => {

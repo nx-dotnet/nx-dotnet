@@ -2,7 +2,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 
 import { promises as fs } from 'fs';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { rimraf } from '@nx-dotnet/utils';
 
 import executor from './executor';
@@ -15,8 +15,6 @@ const options: FormatExecutorSchema = {
 };
 
 const root = process.cwd() + '/tmp';
-
-jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 
 describe('Format Executor', () => {
   let context: ExecutorContext;
@@ -44,7 +42,7 @@ describe('Format Executor', () => {
       },
       isVerbose: false,
     };
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   afterEach(async () => {

@@ -11,7 +11,7 @@ import * as fs from 'fs';
 
 import { resolve } from 'path';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { GenerateTestProject } from './generate-test-project';
@@ -65,7 +65,7 @@ describe('nx-dotnet test project generator', () => {
         'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
       );
 
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
 
     const packageJson = { scripts: {} };
     writeJson(appTree, 'package.json', packageJson);

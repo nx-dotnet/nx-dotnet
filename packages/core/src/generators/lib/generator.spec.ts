@@ -1,7 +1,7 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 import * as mockedProjectGenerator from '../utils/generate-project';
 import generator from './generator';
@@ -25,7 +25,7 @@ describe('nx-dotnet library generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   it('should run successfully', async () => {
