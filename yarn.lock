@@ -2686,6 +2686,18 @@
     yargs "15.4.1"
     yargs-parser "20.0.0"
 
+"@nrwl/devkit@12.10.0":
+  version "12.10.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-12.10.0.tgz#cf4a1dfb1036212185548d68296ac26e498a41c4"
+  integrity sha512-we0K5Hn48BXh77SV5GVSPfRJeIHNCVFSn+feLbnKz3G60Tk3wFEEFhDABA8cCfTKDxMESSjZoWBy4ZcVg0EX0g==
+  dependencies:
+    "@nrwl/tao" "12.10.0"
+    ejs "^3.1.5"
+    ignore "^5.0.4"
+    rxjs "^6.5.4"
+    semver "7.3.4"
+    tslib "^2.0.0"
+
 "@nrwl/devkit@12.9.0":
   version "12.9.0"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-12.9.0.tgz#fbf6eb715d1deb22fa919bceb3dff7a5c990d415"
@@ -2790,6 +2802,23 @@
     rxjs "^6.5.4"
     tslib "^2.0.0"
     yargs "15.4.1"
+
+"@nrwl/tao@12.10.0":
+  version "12.10.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-12.10.0.tgz#28cfbbda66f5f10a4917df0e70b94d04334e1628"
+  integrity sha512-YkdgTJJsDQlItVj25vW8zEen7BAra6i41Udd0v3CuxTSEXjJJnBD2KzEOGUxXS0gMg7+ILuw2rl9aOKu43TmVA==
+  dependencies:
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    fs-extra "^9.1.0"
+    jsonc-parser "3.0.0"
+    nx "12.10.0"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    tmp "~0.2.1"
+    tslib "^2.0.0"
+    yargs-parser "20.0.0"
 
 "@nrwl/tao@12.9.0":
   version "12.9.0"
@@ -12244,6 +12273,13 @@ nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.0.tgz"
   integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
+
+nx@12.10.0:
+  version "12.10.0"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-12.10.0.tgz#a4e8fba7254529de69fe54e5b4b007e8a432a3fb"
+  integrity sha512-LpCfZCWsVEtmD2SI1j2KRaw1uIyn4DJ3eRzsjnDYitbq38aORpkvYO+L0zVMZRNDSYSRGTsuj0nHCS3OOxK/Cg==
+  dependencies:
+    "@nrwl/cli" "*"
 
 nx@12.9.0:
   version "12.9.0"
