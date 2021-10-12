@@ -60,7 +60,7 @@
     "@commitlint/cli": "^13.2.0",
     "@commitlint/config-conventional": "^13.2.0",
     "@commitlint/types": "^13.2.0",
-    "@nrwl/cli": "12.9.0",
+    "@nrwl/cli": "12.10.0",
     "@nrwl/devkit": "12.9.0",
     "@nrwl/eslint-plugin-nx": "12.9.0",
     "@nrwl/jest": "12.9.0",
