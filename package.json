@@ -69,7 +69,7 @@
     "@nrwl/nx-cloud": "12.3.13",
     "@nrwl/nx-plugin": "12.9.0",
     "@nrwl/tao": "12.9.0",
-    "@nrwl/workspace": "12.9.0",
+    "@nrwl/workspace": "12.10.0",
     "@nx-dotnet/nxdoc": "latest",
     "@nx-plus/docusaurus": "^12.2.0",
     "@semantic-release/changelog": "^6.0.0",
