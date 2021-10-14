@@ -49,6 +49,9 @@ describe('Format Executor', () => {
       isVerbose: false,
     };
     dotnetClient = new DotNetClient(mockDotnetFactory());
+    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
+      Buffer.from('5.0.402'),
+    );
   });
 
   afterEach(async () => {
@@ -97,10 +100,6 @@ describe('Format Executor', () => {
   });
 
   it('installs dotnet-format if not already installed', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
-      Buffer.from('5.0.402'),
-    );
-
     try {
       const directoryPath = `${root}/apps/my-app`;
       await fs.mkdir(directoryPath, { recursive: true });
@@ -121,10 +120,6 @@ describe('Format Executor', () => {
   });
 
   it('does not install dotnet-format if already installed', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
-      Buffer.from('5.0.402'),
-    );
-
     try {
       const directoryPath = `${root}/apps/my-app`;
       await fs.mkdir(directoryPath, { recursive: true });
@@ -169,5 +164,45 @@ describe('Format Executor', () => {
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
     ).not.toHaveBeenCalled();
     expect(res.success).toBeTruthy();
+  });
+
+  it('passes the --check option on .NET 5 and earlier', async () => {
+    try {
+      const directoryPath = `${root}/apps/my-app`;
+      await fs.mkdir(directoryPath, { recursive: true });
+      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
+    } catch (e) {
+      if (assertErrorMessage(e)) console.warn(e.message);
+    }
+
+    const res = await executor(options, context, dotnetClient);
+    expect(res.success).toBeTruthy();
+
+    const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
+      .mock.calls[0][1];
+    const checkFlag = formatOptions?.find((o) => o.flag == 'check');
+    expect(checkFlag?.value).toBeTruthy();
+  });
+
+  it('passes the --verify-no-changes option on .NET 6 and later', async () => {
+    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
+      Buffer.from('6.0.101'),
+    );
+
+    try {
+      const directoryPath = `${root}/apps/my-app`;
+      await fs.mkdir(directoryPath, { recursive: true });
+      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
+    } catch (e) {
+      if (assertErrorMessage(e)) console.warn(e.message);
+    }
+
+    const res = await executor(options, context, dotnetClient);
+    expect(res.success).toBeTruthy();
+
+    const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
+      .mock.calls[0][1];
+    const checkFlag = formatOptions?.find((o) => o.flag == 'verifyNoChanges');
+    expect(checkFlag?.value).toBeTruthy();
   });
 });
