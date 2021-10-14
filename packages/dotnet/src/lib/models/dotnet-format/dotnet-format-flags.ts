@@ -10,7 +10,8 @@ export type dotnetFormatFlags =
   | 'check'
   | 'report'
   | 'binarylog'
-  | 'verbosity';
+  | 'verbosity'
+  | 'verifyNoChanges';
 // Deliberately excluding the version option, as it doesn't perform any actual formatting.
 
 export const formatKeyMap: Partial<{ [key in dotnetFormatFlags]: string }> = {
@@ -18,4 +19,5 @@ export const formatKeyMap: Partial<{ [key in dotnetFormatFlags]: string }> = {
   fixWhitespace: 'fix-whitespace',
   fixStyle: 'fix-style',
   fixAnalyzers: 'fix-analyzers',
+  verifyNoChanges: 'verify-no-changes',
 };
