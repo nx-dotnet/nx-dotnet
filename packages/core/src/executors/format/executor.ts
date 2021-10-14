@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext, readJsonFile } from '@nrwl/devkit';
 
 import {
   DotNetClient,
@@ -39,7 +39,7 @@ export default async function runExecutor(
 
   const normalized = normalizeOptions(options);
 
-  dotnetClient.installTool('dotnet-format');
+  ensureToolInstalled(context, dotnetClient);
   dotnetClient.format(
     projectFilePath,
     Object.keys(options).map((x) => ({
@@ -51,4 +51,24 @@ export default async function runExecutor(
   return {
     success: true,
   };
+}
+
+function ensureToolInstalled(
+  context: ExecutorContext,
+  dotnetClient: DotNetClient,
+) {
+  const sdkVersion = dotnetClient.printSdkVersion().toString();
+  const majorVersion = parseInt(sdkVersion.split('.')[0]);
+  if (majorVersion >= 6) {
+    // dotnet-format is already included as part of .NET SDK 6+
+    return;
+  }
+
+  const manifest = readJsonFile(`${context.cwd}/.config/dotnet-tools.json`);
+  if (manifest?.tools['dotnet-format']) {
+    // dotnet-format is already installed.
+    return;
+  }
+
+  dotnetClient.installTool('dotnet-format');
 }
