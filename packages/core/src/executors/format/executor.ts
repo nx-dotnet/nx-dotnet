@@ -46,7 +46,7 @@ export default async function runExecutor(
 
   const normalized = normalizeOptions(options, isNet6OrHigher);
 
-  ensureToolInstalled(context, dotnetClient, isNet6OrHigher);
+  ensureFormatToolInstalled(context, dotnetClient, isNet6OrHigher);
   dotnetClient.format(
     projectFilePath,
     Object.keys(normalized).map((x) => ({
@@ -60,7 +60,7 @@ export default async function runExecutor(
   };
 }
 
-function ensureToolInstalled(
+function ensureFormatToolInstalled(
   context: ExecutorContext,
   dotnetClient: DotNetClient,
   isNet6OrHigher: boolean,
