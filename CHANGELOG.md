@@ -1,3 +1,9 @@
+## [1.4.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.2...v1.4.3) (2021-10-14)
+
+### Bug Fixes
+
+- **core:** Check SDK and tool installation before running format command ([#204](https://github.com/nx-dotnet/nx-dotnet/issues/204)) ([3ad6291](https://github.com/nx-dotnet/nx-dotnet/commit/3ad62910ad5d4146bcc8e8b85196fd18d9e37da2)), closes [#179](https://github.com/nx-dotnet/nx-dotnet/issues/179) [#202](https://github.com/nx-dotnet/nx-dotnet/issues/202)
+
 ## [1.4.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.1...v1.4.2) (2021-09-27)
 
 ### Bug Fixes
