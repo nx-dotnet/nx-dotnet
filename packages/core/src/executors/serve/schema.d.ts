@@ -16,4 +16,5 @@ export interface ServeExecutorSchema {
     | 'n'
     | 'd'
     | 'diag';
+  watch: boolean;
 }
