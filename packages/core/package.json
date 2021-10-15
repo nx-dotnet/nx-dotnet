@@ -4,6 +4,9 @@
   "generators": "./generators.json",
   "builders": "./executors.json",
   "private": false,
+  "scripts": {
+    "postinstall": "node ./src/tasks/post-install"
+  },
   "dependencies": {},
   "homepage": "https://nx-dotnet.com/docs/core",
   "bugs": {
