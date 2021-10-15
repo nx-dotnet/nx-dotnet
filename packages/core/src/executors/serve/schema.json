@@ -45,6 +45,11 @@
         "d",
         "diag"
       ]
+    },
+    "watch": {
+      "type": "boolean",
+      "description": "Determines if the serve should watch files or just run the built packages",
+      "default": true
     }
   },
   "required": []
