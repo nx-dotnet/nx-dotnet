@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.3...v1.5.0) (2021-10-15)
+
+### Features
+
+- **core:** @nx-dotnet/core:serve can be ran with --watch false ([#210](https://github.com/nx-dotnet/nx-dotnet/issues/210)) ([9fd60e4](https://github.com/nx-dotnet/nx-dotnet/commit/9fd60e4f2b6d94ebcea9eef6253897cb367ba0e7)), closes [#151](https://github.com/nx-dotnet/nx-dotnet/issues/151)
+- **core:** check for .net sdk install on package add ([#212](https://github.com/nx-dotnet/nx-dotnet/issues/212)) ([2ec5de9](https://github.com/nx-dotnet/nx-dotnet/commit/2ec5de9c32dafee4970b016bb5e8eeb1896e8906))
+- **core:** project references with reference output assembly=false are implicit deps ([#211](https://github.com/nx-dotnet/nx-dotnet/issues/211)) ([34f87ee](https://github.com/nx-dotnet/nx-dotnet/commit/34f87ee6fb9ba5b9407ee9da3aa2c16e663fa617))
+
 ## [1.4.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.2...v1.4.3) (2021-10-14)
 
 ### Bug Fixes
