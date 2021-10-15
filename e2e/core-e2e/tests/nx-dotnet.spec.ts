@@ -24,10 +24,13 @@ import { ensureDirSync } from 'fs-extra';
 const e2eDir = 'tmp/nx-e2e/proj';
 
 describe('nx-dotnet e2e', () => {
+  beforeAll(() => {
+    ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+  }, 1500000);
+
   it('should create apps, libs, and project references', async () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
-    ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
 
     await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
@@ -47,7 +50,6 @@ describe('nx-dotnet e2e', () => {
   it('should work with affected', async () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
-    ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
 
     await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
@@ -209,7 +211,6 @@ describe('nx-dotnet e2e', () => {
       const testApp = uniq('app');
       const testLib = uniq('lib');
       const testAppTest = `${testApp}-test`;
-      ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
       const appDir = `${e2eDir}/apps/${testApp}`;
       const testAppDir = `${e2eDir}/apps/${testAppTest}`;
       const libDir = `${e2eDir}/libs/${testLib}`;
