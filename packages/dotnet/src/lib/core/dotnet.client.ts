@@ -27,7 +27,7 @@ import { LoadedCLI } from './dotnet.factory';
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
 
-  new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
+  new(template: dotnetTemplate, parameters?: dotnetNewOptions): void {
     let cmd = `${this.cliCommand.command} new ${template}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(parameters, 'flag', newKeyMap);
@@ -37,7 +37,7 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
-  build(project: string, parameters?: dotnetBuildOptions): Buffer {
+  build(project: string, parameters?: dotnetBuildOptions): void {
     let cmd = `${this.cliCommand.command} build ${project}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(parameters, 'flag', buildKeyMap);
@@ -71,7 +71,7 @@ export class DotNetClient {
     project: string,
     watch?: boolean,
     parameters?: dotnetTestOptions,
-  ): Buffer | ChildProcess {
+  ): void | ChildProcess {
     let cmd = watch ? ` watch --project ${project} test` : `test ${project}`;
     cmd = `${this.cliCommand.command} ${cmd}`;
 
@@ -103,7 +103,7 @@ export class DotNetClient {
     project: string,
     pkg: string,
     parameters?: dotnetAddPackageOptions,
-  ): Buffer {
+  ): void {
     let cmd = `${this.cliCommand.command} add ${project} package ${pkg}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(
@@ -117,7 +117,7 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
-  addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
+  addProjectReference(hostCsProj: string, targetCsProj: string): void {
     return this.logAndExecute(
       `${this.cliCommand.command} add ${hostCsProj} reference ${targetCsProj}`,
     );
@@ -128,7 +128,7 @@ export class DotNetClient {
     parameters?: dotnetPublishOptions,
     publishProfile?: string,
     extraParameters?: string,
-  ): Buffer {
+  ): void {
     let cmd = `${this.cliCommand.command} publish ${project}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(
@@ -148,22 +148,22 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
-  installTool(tool: string): Buffer {
+  installTool(tool: string): void {
     const cmd = `${this.cliCommand.command} tool install ${tool}`;
     return this.logAndExecute(cmd);
   }
 
-  restorePackages(project: string): Buffer {
+  restorePackages(project: string): void {
     const cmd = `${this.cliCommand.command} restore ${project}`;
     return this.logAndExecute(cmd);
   }
 
-  restoreTools(): Buffer {
+  restoreTools(): void {
     const cmd = `${this.cliCommand.command} tool restore`;
     return this.logAndExecute(cmd);
   }
 
-  format(project: string, parameters?: dotnetFormatOptions): Buffer {
+  format(project: string, parameters?: dotnetFormatOptions): void {
     let cmd = `${this.cliCommand.command} format ${project}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(
@@ -177,12 +177,21 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
-  printSdkVersion(): Buffer {
-    return this.logAndExecute('dotnet --version');
+  getSdkVersion(): Buffer {
+    const cmd = 'dotnet --version';
+    return this.execute(cmd);
   }
 
-  private logAndExecute(cmd: string): Buffer {
+  printSdkVersion(): void {
+    this.logAndExecute('dotnet --version');
+  }
+
+  private logAndExecute(cmd: string): void {
     console.log(`Executing Command: ${cmd}`);
-    return execSync(cmd, { stdio: 'inherit', cwd: this.cwd || process.cwd() });
+    execSync(cmd, { stdio: 'inherit', cwd: this.cwd || process.cwd() });
+  }
+
+  private execute(cmd: string): Buffer {
+    return execSync(cmd, { cwd: this.cwd || process.cwd() });
   }
 }

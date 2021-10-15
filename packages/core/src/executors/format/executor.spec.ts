@@ -15,6 +15,9 @@ const options: FormatExecutorSchema = {
 };
 
 const root = process.cwd() + '/tmp';
+jest.mock('@nrwl/tao/src/utils/app-root', () => ({
+  appRootPath: process.cwd() + '/tmp',
+}));
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 
@@ -46,7 +49,7 @@ describe('Format Executor', () => {
       isVerbose: false,
     };
     dotnetClient = new DotNetClient(mockDotnetFactory());
-    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
+    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
       Buffer.from('5.0.402'),
     );
   });
@@ -140,7 +143,7 @@ describe('Format Executor', () => {
   });
 
   it('does not install dotnet-format if SDK is 6+', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
+    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
       Buffer.from('6.0.101'),
     );
 
@@ -182,7 +185,7 @@ describe('Format Executor', () => {
   });
 
   it('passes the --verify-no-changes option on .NET 6 and later', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).printSdkVersion.mockReturnValue(
+    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
       Buffer.from('6.0.101'),
     );
 

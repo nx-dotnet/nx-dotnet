@@ -6,8 +6,6 @@ import { ChildProcess } from 'child_process';
  * TypeScript typings think ChildProcess is an interface, its a class.
  */
 export function isChildProcess(obj: any): obj is cp.ChildProcess {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   return obj instanceof cp.ChildProcess;
 }
 

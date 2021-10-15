@@ -1,5 +1,8 @@
 import { ExecutorContext, readJsonFile } from '@nrwl/devkit';
+import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+
 import { existsSync } from 'fs';
+import { join } from 'path';
 
 import {
   DotNetClient,
@@ -35,7 +38,7 @@ export default async function runExecutor(
   context: ExecutorContext,
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
-  const sdkVersion = dotnetClient.printSdkVersion().toString();
+  const sdkVersion = dotnetClient.getSdkVersion().toString();
   const majorVersion = parseInt(sdkVersion.split('.')[0]);
   const isNet6OrHigher = majorVersion >= 6;
 
@@ -70,7 +73,8 @@ function ensureFormatToolInstalled(
     return;
   }
 
-  const manifestPath = `${context.cwd}/.config/dotnet-tools.json`;
+  const manifestPath = join(appRootPath, './.config/dotnet-tools.json');
+  console.log(manifestPath);
   const manifest = existsSync(manifestPath)
     ? readJsonFile(manifestPath)
     : undefined;
