@@ -178,11 +178,18 @@ export class DotNetClient {
   }
 
   printSdkVersion(): Buffer {
-    return this.logAndExecute('dotnet --version');
+    const cmd = 'dotnet --version';
+    return process.env.VERBOSE_LOGGING === 'true'
+      ? this.logAndExecute(cmd)
+      : this.execute(cmd);
   }
 
   private logAndExecute(cmd: string): Buffer {
     console.log(`Executing Command: ${cmd}`);
+    return this.execute(cmd);
+  }
+
+  private execute(cmd: string): Buffer {
     return execSync(cmd, { stdio: 'inherit', cwd: this.cwd || process.cwd() });
   }
 }
