@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=build --base=origin/master --parallel --with-deps
+      - run: yarn nx affected -- --target=build --base=origin/master --parallel
       - uses: actions/upload-artifact@v2
         with:
           name: dist

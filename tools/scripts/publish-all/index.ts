@@ -12,7 +12,7 @@ export function PublishAll(version: string, tag = 'latest') {
 
   PatchPackageVersions(version, false);
 
-  execSync('npx nx run-many --all --target="build" --with-deps', {
+  execSync('npx nx run-many --all --target="build"', {
     stdio: 'inherit',
   });
 
