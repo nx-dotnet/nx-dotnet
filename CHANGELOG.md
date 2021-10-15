@@ -1,3 +1,9 @@
+## [1.5.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.0...v1.5.1) (2021-10-15)
+
+### Bug Fixes
+
+- **core:** nx lint {project} should work when cwd !== appRootPath ([#216](https://github.com/nx-dotnet/nx-dotnet/issues/216)) ([9fac321](https://github.com/nx-dotnet/nx-dotnet/commit/9fac32125852d4e5c6d05056351e3a8065759968)), closes [#215](https://github.com/nx-dotnet/nx-dotnet/issues/215)
+
 # [1.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.3...v1.5.0) (2021-10-15)
 
 ### Features
