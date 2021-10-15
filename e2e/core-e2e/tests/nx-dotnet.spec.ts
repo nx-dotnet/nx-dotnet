@@ -124,6 +124,17 @@ describe('nx-dotnet e2e', () => {
         ?.childNamed('OutputPath')?.val as string;
       expect(outputPath).toBeTruthy();
     });
+
+    it('should lint', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+      );
+      const promise = runNxCommandAsync(`lint ${app}`, {
+        silenceError: true,
+      }).then((x) => x.stderr);
+      await expect(promise).resolves.toContain('WHITESPACE');
+    });
   });
 
   describe('nx g test', () => {
