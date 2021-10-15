@@ -46,7 +46,8 @@ export async function checkModuleBoundariesForProject(
   getDependantProjectsForNxProject(
     project,
     workspace,
-    (configuration, name) => {
+    (configuration, name, implicit) => {
+      if (implicit) return;
       const dependencyTags = configuration?.tags ?? [];
       for (const constraint of relevantConstraints) {
         if (

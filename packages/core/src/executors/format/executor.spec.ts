@@ -22,7 +22,8 @@ describe('Format Executor', () => {
   let context: ExecutorContext;
   let dotnetClient: DotNetClient;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await rimraf(root);
     context = {
       root: root,
       cwd: root,
@@ -50,7 +51,7 @@ describe('Format Executor', () => {
     );
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await rimraf(root);
   });
 
