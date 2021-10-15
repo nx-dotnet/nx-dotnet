@@ -33,3 +33,7 @@ Uses `dotnet run` and chokidar to run a .NET app.
 ### verbosity
 
 - (string): Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]. The default value is m. Available since .NET Core 2.1 SDK.
+
+### watch
+
+- (boolean): Determines if the serve should watch files or just run the built packages

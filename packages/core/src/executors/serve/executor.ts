@@ -41,12 +41,13 @@ const runDotnetRun = async (
   project: string,
   options: ServeExecutorSchema,
 ) => {
-  const opts: dotnetRunOptions = Object.keys(options).map((x) => ({
+  const { watch, ...commandLineOptions } = options;
+  const opts: dotnetRunOptions = Object.keys(commandLineOptions).map((x) => ({
     flag: x as dotnetRunFlags,
-    value: (options as Record<string, string | boolean>)[x],
+    value: (commandLineOptions as Record<string, string | boolean>)[x],
   }));
 
-  childProcess = dotnetClient.run(project, true, opts);
+  childProcess = dotnetClient.run(project, watch, opts);
   await handleChildProcessPassthrough(childProcess);
   await rimraf(projectDirectory + '/bin');
   await rimraf(projectDirectory + '/obj');
