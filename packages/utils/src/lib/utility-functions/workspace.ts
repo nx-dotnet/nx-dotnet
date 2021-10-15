@@ -34,6 +34,7 @@ export function getDependantProjectsForNxProject(
     project: ProjectConfiguration &
       NxJsonProjectConfiguration & { projectFile: string },
     projectName: string,
+    implicit: boolean,
   ) => void,
 ): {
   [projectName: string]: ProjectConfiguration;
@@ -63,6 +64,7 @@ export function getDependantProjectsForNxProject(
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
       const includeFilePath = normalizePath(x.attr['Include']);
+      const implicit = x.attr['ReferenceOutputAssembly'] === 'false';
       const workspaceFilePath = normalizePath(
         isAbsolute(includeFilePath)
           ? includeFilePath
@@ -78,6 +80,7 @@ export function getDependantProjectsForNxProject(
                 projectFile: workspaceFilePath,
               },
               dependency,
+              implicit,
             );
           }
           dependantProjects[dependency] =
