@@ -41,8 +41,12 @@ function visitProject(
   getDependantProjectsForNxProject(
     projectName,
     context.workspace,
-    (config, dependencyName) => {
-      builder.addExplicitDependency(projectName, projectFile, dependencyName);
+    (config, dependencyName, implicit) => {
+      if (implicit) {
+        builder.addImplicitDependency(projectName, dependencyName);
+      } else {
+        builder.addExplicitDependency(projectName, projectFile, dependencyName);
+      }
     },
   );
 }
