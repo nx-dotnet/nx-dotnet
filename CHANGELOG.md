@@ -1,3 +1,9 @@
+## [1.5.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.1...v1.5.2) (2021-10-19)
+
+### Bug Fixes
+
+- **core:** remove extra space in `dotnet run --project` ([bf67bf3](https://github.com/nx-dotnet/nx-dotnet/commit/bf67bf36630a38028197655033e0f22aa5ff7b08)), closes [#223](https://github.com/nx-dotnet/nx-dotnet/issues/223)
+
 ## [1.5.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.0...v1.5.1) (2021-10-15)
 
 ### Bug Fixes
