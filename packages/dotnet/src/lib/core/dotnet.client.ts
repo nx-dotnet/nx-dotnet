@@ -54,7 +54,7 @@ export class DotNetClient {
   ): ChildProcess {
     let cmd = watch
       ? `watch --project ${project} run`
-      : `run -- project ${project}`;
+      : `run --project ${project}`;
     if (parameters) {
       parameters = swapArrayFieldValueUsingMap(parameters, 'flag', runKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
