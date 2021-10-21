@@ -26,7 +26,6 @@
       }
     }
   },
-  "projects": {},
   "workspaceLayout": {
     "appsDir": "",
     "libsDir": "packages"
@@ -38,5 +37,8 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
   }
 }
