@@ -45,6 +45,7 @@ describe('Format Executor', () => {
             },
           },
         },
+        npmScope: 'unit-tests',
       },
       isVerbose: false,
     };

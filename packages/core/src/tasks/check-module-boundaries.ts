@@ -1,9 +1,5 @@
 import { appRootPath } from '@nrwl/tao/src/utils/app-root';
-import {
-  ProjectConfiguration,
-  WorkspaceJsonConfiguration,
-  Workspaces,
-} from '@nrwl/tao/src/shared/workspace';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { ESLint } from 'eslint';
 
@@ -13,24 +9,21 @@ import {
   readConfig,
 } from '@nx-dotnet/utils';
 import {
-  NxJsonConfiguration,
-  NxJsonProjectConfiguration,
+  WorkspaceJsonConfiguration,
   readJsonFile,
   Tree,
+  NxJsonConfiguration,
+  ProjectConfiguration,
 } from '@nrwl/devkit';
-
-type ExtendedWorkspaceJson = WorkspaceJsonConfiguration & {
-  projects: Record<string, ProjectConfiguration & NxJsonProjectConfiguration>;
-};
+import { join } from 'path';
 
 export async function checkModuleBoundariesForProject(
   project: string,
-  workspace: ExtendedWorkspaceJson,
+  workspace: WorkspaceJsonConfiguration,
 ): Promise<string[]> {
   const projectRoot = workspace.projects[project].root;
   const tags = workspace.projects[project].tags ?? [];
   if (!tags.length) {
-    //
     return [];
   }
   const configuredConstraints = await loadModuleBoundaries(projectRoot);
@@ -101,13 +94,14 @@ async function main() {
     },
   });
   const workspace = new Workspaces(appRootPath);
-  const workspaceJson: ExtendedWorkspaceJson =
+  const workspaceJson: WorkspaceJsonConfiguration =
     workspace.readWorkspaceConfiguration();
-  const nxJsonProjects = readJsonFile<NxJsonConfiguration>(
-    `${appRootPath}/nx.json`,
-  ).projects;
-  if (nxJsonProjects) {
-    Object.entries(nxJsonProjects).forEach(([name, config]) => {
+
+  // Nx v12 support
+  const nxJson: NxJsonConfiguration & Record<string, ProjectConfiguration> =
+    readJsonFile(join(appRootPath, 'nx.json'));
+  if (nxJson.projects) {
+    Object.entries(nxJson.projects).forEach(([name, config]) => {
       const existingTags = workspaceJson.projects[name]?.tags ?? [];
       workspaceJson.projects[name].tags = [
         ...existingTags,
@@ -115,6 +109,8 @@ async function main() {
       ];
     });
   }
+  // End Nx v12 support
+
   console.log(`Checking module boundaries for ${project}`);
   const violations = await checkModuleBoundariesForProject(
     project,
