@@ -13,8 +13,5 @@
     "typescript": "packages/typescript",
     "typescript-e2e": "e2e/typescript-e2e",
     "utils": "packages/utils"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
   }
 }
