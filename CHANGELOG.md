@@ -1,3 +1,9 @@
+# [1.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.2...v1.6.0) (2021-10-22)
+
+### Features
+
+- **core:** support nx v13 ([#226](https://github.com/nx-dotnet/nx-dotnet/issues/226)) ([3524ef9](https://github.com/nx-dotnet/nx-dotnet/commit/3524ef9ad1abcb4b7762d4c0294d015a5925245e))
+
 ## [1.5.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.1...v1.5.2) (2021-10-19)
 
 ### Bug Fixes
