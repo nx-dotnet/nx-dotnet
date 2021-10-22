@@ -40,7 +40,7 @@
     "@algolia/client-search": "^4.10.5",
     "@docusaurus/core": "^2.0.0-beta.1",
     "@docusaurus/preset-classic": "^2.0.0-beta.6",
-    "@docusaurus/theme-search-algolia": "^2.0.0-beta.6",
+    "@docusaurus/theme-search-algolia": "^2.0.0-beta.8",
     "@mdx-js/react": "^1.6.21",
     "@types/xmldoc": "^1.1.6",
     "chokidar": "^3.5.2",
