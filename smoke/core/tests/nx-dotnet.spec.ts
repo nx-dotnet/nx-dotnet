@@ -24,11 +24,14 @@ describe('nx-dotnet smoke', () => {
   });
 
   it('should work', async () => {
-    execSync('npx create-nx-workspace test --preset empty --nxCloud false', {
-      cwd: smokeDirectory,
-      env: process.env,
-      stdio: 'inherit',
-    });
+    execSync(
+      'npx create-nx-workspace@latest test --preset empty --nxCloud false',
+      {
+        cwd: smokeDirectory,
+        env: process.env,
+        stdio: 'inherit',
+      },
+    );
     execSync('npm i --save-dev @nx-dotnet/core', execSyncOptions);
     execSync(
       `npx nx g @nx-dotnet/core:lib ${testLib} --language C# --template classlib --testTemplate nunit`,
