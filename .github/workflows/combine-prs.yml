@@ -132,7 +132,7 @@ jobs:
             await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'Combined PR',
+              title: 'chore(deps): Combined PR for dependabot updates',
               head: '${{ github.event.inputs.combineBranchName }}',
               base: '${{ steps.fetch-branch-names.outputs.base-branch }}',
               body: body
