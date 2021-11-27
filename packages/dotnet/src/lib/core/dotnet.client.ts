@@ -177,6 +177,11 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
+  addProjectToSolution(solutionFile: string, project: string) {
+    const cmd = `${this.cliCommand.command} sln "${solutionFile}" add "${project}"`;
+    this.logAndExecute(cmd);
+  }
+
   getSdkVersion(): Buffer {
     const cmd = 'dotnet --version';
     return this.execute(cmd);

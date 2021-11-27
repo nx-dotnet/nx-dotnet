@@ -23,6 +23,7 @@ import {
   findProjectFileInPath,
   isDryRun,
   NXDOTNET_TAG,
+  readConfigSection,
   resolve,
 } from '@nx-dotnet/utils';
 
@@ -120,9 +121,18 @@ export async function GenerateProject(
   options.testTemplate = options.testTemplate ?? 'none';
 
   const normalizedOptions = normalizeOptions(host, options, projectType);
+  const workspaceConfiguration = readWorkspaceConfiguration(host);
+  const solutionFile =
+    typeof options.solutionFile === 'boolean'
+      ? options.solutionFile
+        ? readConfigSection(host, 'solutionFile')?.replace(
+            '{npmScope}',
+            workspaceConfiguration.npmScope || '',
+          )
+        : null
+      : options.solutionFile;
 
-  const projectConfiguration: ProjectConfiguration &
-    NxJsonProjectConfiguration = {
+  const projectConfiguration: ProjectConfiguration = {
     root: normalizedOptions.projectRoot,
     projectType: projectType,
     sourceRoot: `${normalizedOptions.projectRoot}`,
@@ -163,6 +173,14 @@ export async function GenerateProject(
   }
 
   dotnetClient.new(normalizedOptions.template, newParams);
+
+  if (solutionFile) {
+    const relativePath = relative(dotnetClient.cwd || host.root, host.root);
+    dotnetClient.addProjectToSolution(
+      joinPathFragments(relativePath, solutionFile),
+      '.',
+    );
+  }
 
   if (options['testTemplate'] !== 'none') {
     await GenerateTestProject(host, normalizedOptions, dotnetClient);

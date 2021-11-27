@@ -8,4 +8,5 @@ export interface NxDotnetConfig {
     [key: string]: string | undefined;
   };
   moduleBoundaries?: ModuleBoundaries;
+  solutionFile?: string;
 }
