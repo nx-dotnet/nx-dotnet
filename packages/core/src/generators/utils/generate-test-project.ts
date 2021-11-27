@@ -10,7 +10,6 @@ import {
 } from '../../models';
 
 import {
-  addDryRunParameter,
   NormalizedSchema,
   normalizeOptions,
   manipulateXmlProjectFile,
@@ -46,23 +45,14 @@ export async function GenerateTestProject(
     schema.standalone,
   );
 
-  const newParams: dotnetNewOptions = [
-    {
-      flag: 'language',
-      value: schema.language,
-    },
-    {
-      flag: 'name',
-      value: schema.namespaceName + '.' + names(suffix).className,
-    },
-    {
-      flag: 'output',
-      value: schema.projectRoot + '-' + suffix,
-    },
-  ];
+  const newParams: dotnetNewOptions = {
+    language: schema.language,
+    name: schema.namespaceName + '.' + names(suffix).className,
+    output: schema.projectRoot + '-' + suffix,
+  };
 
   if (isDryRun()) {
-    addDryRunParameter(newParams);
+    newParams['dryRun'] = true;
   }
 
   dotnetClient.new(schema.testTemplate, newParams);

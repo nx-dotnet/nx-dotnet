@@ -181,8 +181,8 @@ describe('Format Executor', () => {
 
     const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
       .mock.calls[0][1];
-    const checkFlag = formatOptions?.find((o) => o.flag == 'check');
-    expect(checkFlag?.value).toBeTruthy();
+    const checkFlag = formatOptions?.check;
+    expect(checkFlag).toBeTruthy();
   });
 
   it('passes the --verify-no-changes option on .NET 6 and later', async () => {
@@ -203,7 +203,7 @@ describe('Format Executor', () => {
 
     const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
       .mock.calls[0][1];
-    const checkFlag = formatOptions?.find((o) => o.flag == 'verifyNoChanges');
-    expect(checkFlag?.value).toBeTruthy();
+    const verifyNoChangesFlag = formatOptions?.verifyNoChanges;
+    expect(verifyNoChangesFlag).toBeTruthy();
   });
 });

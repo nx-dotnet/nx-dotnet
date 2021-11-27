@@ -5,7 +5,6 @@ import {
   joinPathFragments,
   names,
   normalizePath,
-  NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
   readWorkspaceConfiguration,
@@ -23,7 +22,6 @@ import {
   findProjectFileInPath,
   isDryRun,
   NXDOTNET_TAG,
-  readConfigSection,
   resolve,
 } from '@nx-dotnet/utils';
 
@@ -35,6 +33,7 @@ import {
 } from '../../models';
 import initSchematic from '../init/generator';
 import { GenerateTestProject } from './generate-test-project';
+import { addToSolutionFile } from './add-to-sln';
 
 export interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   projectName: string;
@@ -121,16 +120,6 @@ export async function GenerateProject(
   options.testTemplate = options.testTemplate ?? 'none';
 
   const normalizedOptions = normalizeOptions(host, options, projectType);
-  const workspaceConfiguration = readWorkspaceConfiguration(host);
-  const solutionFile =
-    typeof options.solutionFile === 'boolean'
-      ? options.solutionFile
-        ? readConfigSection(host, 'solutionFile')?.replace(
-            '{npmScope}',
-            workspaceConfiguration.npmScope || '',
-          )
-        : null
-      : options.solutionFile;
 
   const projectConfiguration: ProjectConfiguration = {
     root: normalizedOptions.projectRoot,
@@ -153,32 +142,23 @@ export async function GenerateProject(
     normalizedOptions.standalone,
   );
 
-  const newParams: dotnetNewOptions = [
-    {
-      flag: 'language',
-      value: normalizedOptions.language,
-    },
-    {
-      flag: 'name',
-      value: normalizedOptions.namespaceName,
-    },
-    {
-      flag: 'output',
-      value: normalizedOptions.projectRoot,
-    },
-  ];
+  const newParams: dotnetNewOptions = {
+    language: normalizedOptions.language,
+    name: normalizedOptions.namespaceName,
+    output: normalizedOptions.projectRoot,
+  };
 
   if (isDryRun()) {
-    addDryRunParameter(newParams);
+    newParams['dryRun'] = true;
   }
 
   dotnetClient.new(normalizedOptions.template, newParams);
-
-  if (solutionFile) {
-    const relativePath = relative(dotnetClient.cwd || host.root, host.root);
-    dotnetClient.addProjectToSolution(
-      joinPathFragments(relativePath, solutionFile),
-      '.',
+  if (!isDryRun()) {
+    addToSolutionFile(
+      host,
+      projectConfiguration.root,
+      dotnetClient,
+      normalizedOptions.solutionFile,
     );
   }
 
@@ -191,13 +171,6 @@ export async function GenerateProject(
   }
 
   await formatFiles(host);
-}
-
-export function addDryRunParameter(parameters: dotnetNewOptions): void {
-  parameters.push({
-    flag: 'dryRun',
-    value: true,
-  });
 }
 
 export function setOutputPath(

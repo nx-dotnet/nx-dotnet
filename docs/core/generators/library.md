@@ -33,3 +33,9 @@ Generate a dotnet project under the library directory.
 ### standalone
 
 - (boolean): Should the project use project.json? If false, the project config is inside workspace.json
+
+### solutionFile
+
+- (string): The name of the solution file to add the project to
+
+- (boolean): Should the project be added to the default solution file?

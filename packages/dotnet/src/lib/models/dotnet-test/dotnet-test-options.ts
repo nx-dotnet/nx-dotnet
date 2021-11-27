@@ -1,6 +1,3 @@
 import { dotnetTestFlags } from './dotnet-test-flags';
 
-export type dotnetTestOptions = {
-  flag: dotnetTestFlags;
-  value?: string | boolean;
-}[];
+export type dotnetTestOptions = { [key in dotnetTestFlags]?: string | boolean };

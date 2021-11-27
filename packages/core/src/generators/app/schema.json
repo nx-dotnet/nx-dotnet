@@ -75,7 +75,8 @@
           "type": "boolean",
           "description": "Should the project be added to the default solution file?"
         }
-      ]
+      ],
+      "alias": ["solution", "s"]
     }
   },
   "required": ["name", "template", "language"]

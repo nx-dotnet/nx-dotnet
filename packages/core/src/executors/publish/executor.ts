@@ -1,11 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 
-import {
-  DotNetClient,
-  dotnetFactory,
-  dotnetPublishFlags,
-} from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
@@ -33,10 +29,7 @@ export default async function runExecutor(
 
   dotnetClient.publish(
     resolve(appRootPath, projectFilePath),
-    Object.keys(flags).map((x) => ({
-      flag: x as dotnetPublishFlags,
-      value: options[x as keyof PublishExecutorSchema],
-    })),
+    flags,
     publishProfile,
     extraParameters,
   );

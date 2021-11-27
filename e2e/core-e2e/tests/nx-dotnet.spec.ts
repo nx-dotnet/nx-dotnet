@@ -1,13 +1,9 @@
-import {
-  joinPathFragments,
-  names,
-  WorkspaceJsonConfiguration,
-} from '@nrwl/devkit';
+import { joinPathFragments, names } from '@nrwl/devkit';
 import {
   checkFilesExist,
   ensureNxProject,
+  listFiles,
   readFile,
-  readJson,
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
@@ -20,6 +16,7 @@ import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 import { execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 const e2eDir = 'tmp/nx-e2e/proj';
 
@@ -234,7 +231,7 @@ describe('nx-dotnet e2e', () => {
 
       await runNxCommandAsync(`generate @nx-dotnet/core:import-projects`);
 
-      const workspace = readJson<WorkspaceJsonConfiguration>('workspace.json');
+      const workspace = new Workspaces(e2eDir).readWorkspaceConfiguration();
 
       expect(workspace.projects[testApp].targets?.serve).toBeDefined();
       expect(workspace.projects[testApp].targets?.build).toBeDefined();
@@ -248,6 +245,64 @@ describe('nx-dotnet e2e', () => {
 
       await runNxCommandAsync(`build ${testApp}`);
       checkFilesExist(`dist/apps/${testApp}`);
+    });
+  });
+
+  describe('solution handling', () => {
+    // For solution handling, defaults fall back to if a file exists.
+    // This ensures that the tests are ran in a clean state, without previous
+    // test projects interfering with the test.
+    beforeEach(() => {
+      ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+    }, 1500000);
+
+    it("shouldn't create a solution by default if not specified", async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+      );
+
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(listFiles('.').filter((x) => x.endsWith('.sln'))).toHaveLength(0);
+    });
+
+    it('should create a default solution file if specified as true', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --solutionFile`,
+      );
+
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(listFiles('.').filter((x) => x.endsWith('.sln'))).toHaveLength(1);
+    });
+
+    it('should create specified solution file if specified as string', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --solutionFile="MyCompany.sln"`,
+      );
+
+      expect(() =>
+        checkFilesExist(`apps/${app}`, `MyCompany.sln`),
+      ).not.toThrow();
+    });
+
+    it('should add successive projects to default solution file', async () => {
+      const app1 = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app1} --language="C#" --template="webapi" --solutionFile`,
+      );
+
+      const app2 = uniq('app2');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app2} --language="C#" --template="webapi" --solutionFile`,
+      );
+
+      const slnFile = readFile('proj.nx-dotnet.sln');
+
+      expect(() => checkFilesExist(`apps/${app1}`)).not.toThrow();
+      expect(slnFile).toContain(app1);
+      expect(slnFile).toContain(app2);
     });
   });
 });

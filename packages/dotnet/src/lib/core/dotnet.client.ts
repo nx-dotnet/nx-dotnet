@@ -1,9 +1,6 @@
 import { ChildProcess, execSync, spawn } from 'child_process';
 
-import {
-  getParameterString,
-  swapArrayFieldValueUsingMap,
-} from '@nx-dotnet/utils';
+import { getParameterString, swapKeysUsingMap } from '@nx-dotnet/utils';
 
 import {
   addPackageKeyMap,
@@ -30,7 +27,7 @@ export class DotNetClient {
   new(template: dotnetTemplate, parameters?: dotnetNewOptions): void {
     let cmd = `${this.cliCommand.command} new ${template}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', newKeyMap);
+      parameters = swapKeysUsingMap(parameters, newKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
@@ -40,7 +37,7 @@ export class DotNetClient {
   build(project: string, parameters?: dotnetBuildOptions): void {
     let cmd = `${this.cliCommand.command} build ${project}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', buildKeyMap);
+      parameters = swapKeysUsingMap(parameters, buildKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
@@ -56,7 +53,7 @@ export class DotNetClient {
       ? `watch --project ${project} run`
       : `run --project ${project}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(parameters, 'flag', runKeyMap);
+      parameters = swapKeysUsingMap(parameters, runKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
@@ -76,11 +73,7 @@ export class DotNetClient {
     cmd = `${this.cliCommand.command} ${cmd}`;
 
     if (parameters) {
-      const mappedParameters = swapArrayFieldValueUsingMap(
-        parameters,
-        'flag',
-        testKeyMap,
-      );
+      const mappedParameters = swapKeysUsingMap(parameters, testKeyMap);
       const paramString = getParameterString(mappedParameters);
       cmd = `${cmd} ${paramString}`;
     }
@@ -106,11 +99,7 @@ export class DotNetClient {
   ): void {
     let cmd = `${this.cliCommand.command} add ${project} package ${pkg}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(
-        parameters,
-        'flag',
-        addPackageKeyMap,
-      );
+      parameters = swapKeysUsingMap(parameters, addPackageKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
@@ -131,11 +120,7 @@ export class DotNetClient {
   ): void {
     let cmd = `${this.cliCommand.command} publish ${project}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(
-        parameters,
-        'flag',
-        publishKeyMap,
-      );
+      parameters = swapKeysUsingMap(parameters, publishKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
@@ -166,11 +151,7 @@ export class DotNetClient {
   format(project: string, parameters?: dotnetFormatOptions): void {
     let cmd = `${this.cliCommand.command} format ${project}`;
     if (parameters) {
-      parameters = swapArrayFieldValueUsingMap(
-        parameters,
-        'flag',
-        formatKeyMap,
-      );
+      parameters = swapKeysUsingMap(parameters, formatKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
       cmd = `${cmd} ${paramString}`;
     }
