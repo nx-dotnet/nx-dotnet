@@ -52,7 +52,7 @@
     "@nx-dotnet/nxdoc": "latest",
     "@nx-plus/docusaurus": "^12.2.0",
     "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/commit-analyzer": "^9.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/exec": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/release-notes-generator": "^10.0.2",
@@ -92,5 +92,5 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "1.6.0"
+  "version": "1.7.0"
 }
