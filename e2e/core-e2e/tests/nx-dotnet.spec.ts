@@ -304,5 +304,17 @@ describe('nx-dotnet e2e', () => {
       expect(slnFile).toContain(app1);
       expect(slnFile).toContain(app2);
     });
+
+    it('should add test project to same solution as app project', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="xunit" --solutionFile`,
+      );
+
+      const slnFile = readFile('proj.nx-dotnet.sln');
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(slnFile).toContain(app);
+      expect(slnFile).toContain(app + '-test');
+    });
   });
 });
