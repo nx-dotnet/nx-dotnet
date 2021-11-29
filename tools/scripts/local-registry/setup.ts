@@ -13,8 +13,9 @@ export function cleanupVerdaccioData() {
 
 export function startCleanVerdaccioInstance() {
   cleanupVerdaccioData();
+  const command = /^win/.test(process.platform) ? 'npx.cmd' : 'npx';
   verdaccioInstance = spawn(
-    'npx',
+    command,
     [
       'verdaccio',
       '--config',
