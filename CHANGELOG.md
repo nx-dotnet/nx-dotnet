@@ -1,3 +1,9 @@
+# [1.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.6.0...v1.7.0) (2021-11-29)
+
+### Features
+
+- **core:** support for workspace solution files ([#254](https://github.com/nx-dotnet/nx-dotnet/issues/254)) ([ec342ae](https://github.com/nx-dotnet/nx-dotnet/commit/ec342ae2699b7ca5fad0aee717d67ded3c0a9524))
+
 # [1.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.2...v1.6.0) (2021-10-22)
 
 ### Features
