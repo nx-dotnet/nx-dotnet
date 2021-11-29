@@ -18,6 +18,12 @@
         "passWithNoTests": true
       }
     },
+    "prebuild": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx ts-node tools/scripts/patch-package-versions"]
+      }
+    },
     "build": {
       "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
@@ -49,6 +55,12 @@
             "output": "."
           }
         ]
+      }
+    },
+    "noop": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "echo"
       }
     }
   },

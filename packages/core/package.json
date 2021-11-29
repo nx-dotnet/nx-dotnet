@@ -14,7 +14,6 @@
     "email": "craigorycoppola+nxdotnet@gmail.com"
   },
   "license": "MIT",
-  "version": "1.6.0",
   "keywords": [
     "Nx",
     ".NET",
@@ -32,5 +31,6 @@
   },
   "nx-migrations": {
     "migrations": "./migrations.json"
-  }
+  },
+  "version": "1.6.0"
 }

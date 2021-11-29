@@ -1,6 +1,5 @@
 {
   "name": "@nx-dotnet/nxdoc",
-  "version": "1.6.0",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
@@ -24,5 +23,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet"
-  }
+  },
+  "version": "1.6.0"
 }

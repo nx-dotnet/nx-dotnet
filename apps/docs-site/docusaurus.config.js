@@ -85,6 +85,9 @@ module.exports = {
       contextualSearch: false,
       appId: 'BH4D9OD16A',
     },
+    prism: {
+      additionalLanguages: ['json5', 'typescript', 'bash'],
+    },
   },
   presets: [
     [
