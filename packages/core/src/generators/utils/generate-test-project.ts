@@ -8,6 +8,7 @@ import {
   GetLintExecutorConfiguration,
   GetTestExecutorConfig,
 } from '../../models';
+import { addToSolutionFile } from './add-to-sln';
 
 import {
   NormalizedSchema,
@@ -56,6 +57,9 @@ export async function GenerateTestProject(
   }
 
   dotnetClient.new(schema.testTemplate, newParams);
+  if (!isDryRun()) {
+    addToSolutionFile(host, testRoot, dotnetClient, schema.solutionFile);
+  }
 
   if (!isDryRun() && !schema.skipOutputPathManipulation) {
     await manipulateXmlProjectFile(host, {
