@@ -1,24 +1,16 @@
-import { ChildProcess, execSync, spawn } from 'child_process';
-import { readdirSync, readFileSync } from 'fs';
-import { copySync, removeSync, writeFileSync } from 'fs-extra';
+import { execSync } from 'child_process';
+import { copySync, removeSync } from 'fs-extra';
 
 import { e2eRoot } from '../../e2e/utils';
+import { startCleanVerdaccioInstance } from './local-registry/setup';
+import { publishAll } from './publish-all';
 
 const kill = require('tree-kill');
 
-let verdaccioInstance: ChildProcess;
-
-export const getDirectories = (source: string) =>
-  readdirSync(source, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-
 export function setup() {
-  // Remove previous packages with the same version
-  // before publishing the new ones
-  removeSync('../../tmp/local-registry');
+  startCleanVerdaccioInstance();
   copySync('.npmrc.local', '.npmrc');
-  execSync('ts-node ./tools/scripts/publish-all 99.99.99 local');
+  publishAll('99.99.99', 'local');
 }
 
 async function runTest() {

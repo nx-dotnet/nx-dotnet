@@ -6,7 +6,7 @@
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
-        "target": "core:build",
+        "target": "core:noop",
         "jestConfig": "e2e/core-e2e/jest.config.js"
       }
     }

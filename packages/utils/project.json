@@ -18,6 +18,12 @@
         "passWithNoTests": true
       }
     },
+    "prebuild": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx ts-node tools/scripts/patch-package-versions"]
+      }
+    },
     "build": {
       "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
@@ -28,6 +34,12 @@
         "updateBuildableProjectDepsInPackageJson": true,
         "main": "packages/utils/src/index.ts",
         "assets": ["packages/utils/*.md"]
+      }
+    },
+    "noop": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "echo"
       }
     }
   },

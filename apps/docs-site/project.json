@@ -9,6 +9,12 @@
         "outputPath": "dist/apps/docs-site"
       }
     },
+    "prebuild": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["echo"]
+      }
+    },
     "serve": {
       "executor": "@nx-plus/docusaurus:dev-server",
       "options": {

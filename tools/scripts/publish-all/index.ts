@@ -6,15 +6,15 @@ import { existsSync } from 'fs';
 import { readJson, readWorkspaceJson } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
 
-export function PublishAll(version: string, tag = 'latest') {
+export function publishAll(version: string, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readWorkspaceJson();
   const rootPkg = readJson('package.json');
-
-  PatchPackageVersions(version, false);
 
   execSync('npx nx run-many --all --target="build"', {
     stdio: 'inherit',
   });
+
+  PatchPackageVersions(version, false);
 
   const projects = Object.values(workspace.projects);
   const environment = {
@@ -34,5 +34,5 @@ export function PublishAll(version: string, tag = 'latest') {
 }
 
 if (require.main === module) {
-  PublishAll(process.argv[2], process.argv[3] || 'latest');
+  publishAll(process.argv[2], process.argv[3] || 'latest');
 }

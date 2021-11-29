@@ -14,4 +14,5 @@ export interface NxDotnetProjectGeneratorSchema {
   skipOutputPathManipulation: boolean;
   standalone: boolean;
   projectType?: ProjectType;
+  solutionFile?: string | boolean;
 }

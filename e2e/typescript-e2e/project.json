@@ -6,7 +6,7 @@
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
-        "target": "typescript:build",
+        "target": "typescript:noop",
         "jestConfig": "e2e/typescript-e2e/jest.config.js"
       }
     }

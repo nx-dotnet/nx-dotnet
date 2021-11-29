@@ -1,11 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 
-import {
-  dotnetBuildFlags,
-  DotNetClient,
-  dotnetFactory,
-} from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
@@ -30,13 +26,7 @@ export default async function runExecutor(
     ? resolve(appRootPath, options.output)
     : undefined;
 
-  dotnetClient.build(
-    projectFilePath,
-    Object.keys(options).map((x) => ({
-      flag: x as dotnetBuildFlags,
-      value: (options as Record<string, string | boolean>)[x],
-    })),
-  );
+  dotnetClient.build(projectFilePath, options);
 
   return {
     success: true,

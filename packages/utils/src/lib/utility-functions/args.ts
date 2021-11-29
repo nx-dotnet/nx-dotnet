@@ -3,25 +3,13 @@ export function isDryRun(): boolean {
 }
 
 export function swapKeysUsingMap(
-  object: Record<string, unknown>,
+  object: Record<string, string | boolean>,
   map: Record<string, string>,
-): Record<string, unknown> {
+): Record<string, string | boolean> {
   return Object.fromEntries(
     Object.entries(object).map(([key, value]) => [
       key in map ? map[key] : key,
       value,
     ]),
   );
-}
-
-export function swapArrayFieldValueUsingMap<T>(
-  array: T[],
-  field: keyof T,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  map: any,
-) {
-  return array.map((x) => ({
-    ...x,
-    [field]: map[x[field]] ?? x[field],
-  }));
 }

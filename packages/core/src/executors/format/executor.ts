@@ -4,11 +4,7 @@ import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-import {
-  DotNetClient,
-  dotnetFactory,
-  dotnetFormatFlags,
-} from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
@@ -50,13 +46,7 @@ export default async function runExecutor(
   const normalized = normalizeOptions(options, isNet6OrHigher);
 
   ensureFormatToolInstalled(context, dotnetClient, isNet6OrHigher);
-  dotnetClient.format(
-    projectFilePath,
-    Object.keys(normalized).map((x) => ({
-      flag: x as dotnetFormatFlags,
-      value: normalized[x],
-    })),
-  );
+  dotnetClient.format(projectFilePath, normalized);
 
   return {
     success: true,

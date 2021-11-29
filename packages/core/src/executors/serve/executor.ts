@@ -4,12 +4,7 @@ import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 import { ChildProcess } from 'child_process';
 import { resolve as pathResolve } from 'path';
 
-import {
-  DotNetClient,
-  dotnetFactory,
-  dotnetRunFlags,
-  dotnetRunOptions,
-} from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
@@ -42,12 +37,8 @@ const runDotnetRun = async (
   options: ServeExecutorSchema,
 ) => {
   const { watch, ...commandLineOptions } = options;
-  const opts: dotnetRunOptions = Object.keys(commandLineOptions).map((x) => ({
-    flag: x as dotnetRunFlags,
-    value: (commandLineOptions as Record<string, string | boolean>)[x],
-  }));
 
-  childProcess = dotnetClient.run(project, watch, opts);
+  childProcess = dotnetClient.run(project, watch, commandLineOptions);
   await handleChildProcessPassthrough(childProcess);
   await rimraf(projectDirectory + '/bin');
   await rimraf(projectDirectory + '/obj');

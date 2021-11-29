@@ -5,7 +5,6 @@ import {
   joinPathFragments,
   names,
   normalizePath,
-  NxJsonProjectConfiguration,
   ProjectConfiguration,
   ProjectType,
   readWorkspaceConfiguration,
@@ -34,6 +33,7 @@ import {
 } from '../../models';
 import initSchematic from '../init/generator';
 import { GenerateTestProject } from './generate-test-project';
+import { addToSolutionFile } from './add-to-sln';
 
 export interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
   projectName: string;
@@ -121,8 +121,7 @@ export async function GenerateProject(
 
   const normalizedOptions = normalizeOptions(host, options, projectType);
 
-  const projectConfiguration: ProjectConfiguration &
-    NxJsonProjectConfiguration = {
+  const projectConfiguration: ProjectConfiguration = {
     root: normalizedOptions.projectRoot,
     projectType: projectType,
     sourceRoot: `${normalizedOptions.projectRoot}`,
@@ -143,26 +142,25 @@ export async function GenerateProject(
     normalizedOptions.standalone,
   );
 
-  const newParams: dotnetNewOptions = [
-    {
-      flag: 'language',
-      value: normalizedOptions.language,
-    },
-    {
-      flag: 'name',
-      value: normalizedOptions.namespaceName,
-    },
-    {
-      flag: 'output',
-      value: normalizedOptions.projectRoot,
-    },
-  ];
+  const newParams: dotnetNewOptions = {
+    language: normalizedOptions.language,
+    name: normalizedOptions.namespaceName,
+    output: normalizedOptions.projectRoot,
+  };
 
   if (isDryRun()) {
-    addDryRunParameter(newParams);
+    newParams['dryRun'] = true;
   }
 
   dotnetClient.new(normalizedOptions.template, newParams);
+  if (!isDryRun()) {
+    addToSolutionFile(
+      host,
+      projectConfiguration.root,
+      dotnetClient,
+      normalizedOptions.solutionFile,
+    );
+  }
 
   if (options['testTemplate'] !== 'none') {
     await GenerateTestProject(host, normalizedOptions, dotnetClient);
@@ -173,13 +171,6 @@ export async function GenerateProject(
   }
 
   await formatFiles(host);
-}
-
-export function addDryRunParameter(parameters: dotnetNewOptions): void {
-  parameters.push({
-    flag: 'dryRun',
-    value: true,
-  });
 }
 
 export function setOutputPath(

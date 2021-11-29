@@ -62,8 +62,21 @@
     },
     "standalone": {
       "type": "boolean",
-      "description": "Should the project use project.json? If false, the project config is inside workspace.json",
-      "default": false
+      "description": "Should the project use project.json? If false, the project config is inside workspace.json"
+    },
+    "solutionFile": {
+      "description": "Determines if the project should be added to a solution file.",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "The name of the solution file to add the project to"
+        },
+        {
+          "type": "boolean",
+          "description": "Should the project be added to the default solution file?"
+        }
+      ],
+      "alias": ["solution", "s"]
     }
   },
   "required": ["name", "template", "language"]

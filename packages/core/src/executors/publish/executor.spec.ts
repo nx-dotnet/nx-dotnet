@@ -125,9 +125,9 @@ describe('Publish Executor', () => {
     }
     const res = await executor(options, context, dotnetClient);
     expect(spy).toHaveBeenCalled();
-    const outputFlag = spy.mock.calls[0][1]?.find((x) => x.flag === 'output');
+    const outputFlag = spy.mock.calls[0][1]?.output;
     expect(outputFlag).toBeTruthy();
-    expect(outputFlag && isAbsolute(outputFlag.value as string)).toBeTruthy();
+    expect(outputFlag && isAbsolute(outputFlag as string)).toBeTruthy();
     expect(res.success).toBeTruthy();
   });
 });

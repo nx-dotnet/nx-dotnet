@@ -6,7 +6,7 @@
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
-        "target": "nx-ghpages:build",
+        "target": "nx-ghpages:noop",
         "jestConfig": "e2e/nx-ghpages-e2e/jest.config.js"
       }
     }
