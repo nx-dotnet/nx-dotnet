@@ -79,7 +79,7 @@ export async function loadModuleBoundaries(
         }),
       );
     const [, moduleBoundaryConfig] =
-      result.rules['@nrwl/nx/enforce-module-boundaries'];
+      result.rules['@nrwl/nx/enforce-module-boundaries'] || [];
     return moduleBoundaryConfig?.depConstraints ?? [];
   } else {
     return configured;
