@@ -1,3 +1,9 @@
+## [1.7.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.0...v1.7.1) (2021-12-11)
+
+### Bug Fixes
+
+- **core:** prebuild script fails if no module boundaries rule is present ([bff34d0](https://github.com/nx-dotnet/nx-dotnet/commit/bff34d05ec577129ffd52017c6f6abd625a81ae2))
+
 # [1.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.6.0...v1.7.0) (2021-11-29)
 
 ### Features
