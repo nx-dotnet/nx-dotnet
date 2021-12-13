@@ -70,7 +70,7 @@
           "description": "Should the project be added to the default solution file?"
         }
       ],
-      "alias": ["solution", "s"]
+      "aliases": ["solution", "s"]
     }
   },
   "required": ["name", "template", "language", "testTemplate"]
