@@ -15,12 +15,18 @@ To add projects to a solution file by default, you can set the generator default
   // ... more nx.json configuration
   generators: {
     // ... other default configurations
-    '@nx-dotnet/core:app': {
+    '@nx-dotnet/core:application': {
       solutionFile: true,
+    },
+    // ... other default configurations
+    '@nx-dotnet/core:library': {
+      solution: 'my-sln.sln',
     },
   },
 }
 ```
+
+> Note that the generator names in `nx.json` must be the full name. Alias's like `app`, `lib` and so on will not be recognized.
 
 ## Subgraph Solutions
 
