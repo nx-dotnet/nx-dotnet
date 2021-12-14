@@ -9,7 +9,7 @@ import { NxDotnetGeneratorSchema } from './schema';
 
 jest.mock('../utils/generate-project');
 
-describe('nx-dotnet library generator', () => {
+describe('nx-dotnet app generator', () => {
   let appTree: Tree;
   let dotnetClient: DotNetClient;
 
