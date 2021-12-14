@@ -1,9 +1,13 @@
 import { ExecutorContext } from '@nrwl/devkit';
 
-import { mkdirSync, writeFileSync } from 'fs';
-
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { rimraf } from '@nx-dotnet/utils';
+
+import * as utils from '@nx-dotnet/utils';
+
+jest.mock('@nx-dotnet/utils', () => ({
+  ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
+  getProjectFileForNxProject: () => Promise.resolve('1.csproj'),
+}));
 
 import executor from './executor';
 import { TestExecutorSchema } from './schema';
@@ -43,14 +47,7 @@ describe('Test Executor', () => {
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
-  afterEach(async () => {
-    await rimraf(root);
-  });
-
   it('runs dotnet test', async () => {
-    const srcRoot = context.workspace.projects['my-app'].sourceRoot as string;
-    mkdirSync(srcRoot, { recursive: true });
-    writeFileSync(srcRoot + '/test.csproj', '');
     const output = await executor(options, context, dotnetClient);
     expect(output.success).toBe(true);
     const mock = dotnetClient as jest.Mocked<DotNetClient>;

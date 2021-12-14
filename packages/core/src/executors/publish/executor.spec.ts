@@ -4,15 +4,18 @@ import {
   normalizePath,
 } from '@nrwl/devkit';
 
-import { promises as fs } from 'fs';
-
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { rimraf } from '@nx-dotnet/utils';
 
 import executor from './executor';
 import { PublishExecutorSchema } from './schema';
 import { isAbsolute } from 'path';
-import { assertErrorMessage } from '@nx-dotnet/utils/testing';
+
+import * as utils from '@nx-dotnet/utils';
+
+jest.mock('@nx-dotnet/utils', () => ({
+  ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
+  getProjectFileForNxProject: () => Promise.resolve('1.csproj'),
+}));
 
 const options: PublishExecutorSchema = {
   configuration: 'Debug',
@@ -55,46 +58,7 @@ describe('Publish Executor', () => {
     ) as jest.Mocked<DotNetClient>;
   });
 
-  afterEach(async () => {
-    await rimraf(root);
-  });
-
-  it('detects no dotnet project', async () => {
-    const promise = executor(options, context, dotnetClient);
-    await expect(promise).rejects.toThrow(
-      "Unable to find a build-able project within project's source directory!",
-    );
-  });
-
-  it('detects multiple dotnet projects', async () => {
-    try {
-      const directoryPath = `${root}/apps/my-app`;
-      await fs.mkdir(directoryPath, { recursive: true });
-      await Promise.all([
-        fs.writeFile(`${directoryPath}/1.csproj`, ''),
-        fs.writeFile(`${directoryPath}/2.csproj`, ''),
-      ]);
-    } catch (e) {
-      if (assertErrorMessage(e)) {
-        console.warn(e.message);
-      }
-    }
-
-    const promise = executor(options, context, dotnetClient);
-    await expect(promise).rejects.toThrow(
-      "More than one build-able projects are contained within the project's source directory!",
-    );
-  });
-
   it('calls publish when 1 project file is found', async () => {
-    try {
-      const directoryPath = `${root}/apps/my-app`;
-      await fs.mkdir(directoryPath, { recursive: true });
-      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
-    } catch (e) {
-      if (assertErrorMessage(e)) console.warn(e.message);
-    }
-
     const res = await executor(options, context, dotnetClient);
     expect(dotnetClient.publish).toHaveBeenCalled();
     expect(res.success).toBeTruthy();
@@ -102,12 +66,6 @@ describe('Publish Executor', () => {
 
   it('should pass path relative to project root, not workspace root', async () => {
     const directoryPath = joinPathFragments(root, './apps/my-app');
-    try {
-      await fs.mkdir(directoryPath, { recursive: true });
-      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
-    } catch (e) {
-      if (assertErrorMessage(e)) console.warn(e.message);
-    }
     const res = await executor(options, context, dotnetClient);
     expect(dotnetClient.publish).toHaveBeenCalled();
     expect(normalizePath(dotnetClient.cwd || '')).toEqual(directoryPath);
@@ -116,13 +74,6 @@ describe('Publish Executor', () => {
 
   it('passes an absolute output path', async () => {
     const spy = jest.spyOn(dotnetClient, 'publish');
-    const directoryPath = joinPathFragments(root, './apps/my-app');
-    try {
-      await fs.mkdir(directoryPath, { recursive: true });
-      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
-    } catch (e) {
-      if (assertErrorMessage(e)) console.warn(e.message);
-    }
     const res = await executor(options, context, dotnetClient);
     expect(spy).toHaveBeenCalled();
     const outputFlag = spy.mock.calls[0][1]?.output;
