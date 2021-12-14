@@ -80,14 +80,7 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --dry-run`,
       );
 
-      let exists = true;
-      try {
-        checkFilesExist(`apps/${app}`);
-      } catch (ex) {
-        exists = false;
-      }
-
-      expect(exists).toBeFalsy();
+      expect(() => checkFilesExist(`apps/${app}`)).toThrow();
     });
 
     it('should generate an app', async () => {
@@ -96,14 +89,41 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
       );
 
-      let exists = true;
-      try {
-        checkFilesExist(`apps/${app}`);
-      } catch (ex) {
-        exists = false;
-      }
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+    });
 
-      expect(exists).toBeTruthy();
+    it('should build and test an app', async () => {
+      const app = uniq('app');
+      const testProj = `${app}-test`;
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+      );
+
+      await runNxCommandAsync(`build ${app}`);
+      await runNxCommandAsync(`test ${testProj}`);
+
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(() => checkFilesExist(`dist/apps/${app}`)).not.toThrow();
+    });
+
+    it('should build an app which depends on a lib', async () => {
+      const app = uniq('app');
+      const lib = uniq('lib');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+      );
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="classlib"`,
+      );
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:project-reference --project ${app} --reference ${lib}`,
+      );
+
+      await runNxCommandAsync(`build ${app}`);
+
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(() => checkFilesExist(`dist/apps/${app}`)).not.toThrow();
+      expect(() => checkFilesExist(`dist/libs/${lib}`)).not.toThrow();
     });
 
     it('should update output paths', async () => {
@@ -187,14 +207,7 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi" --dry-run`,
       );
 
-      let exists = true;
-      try {
-        checkFilesExist(`libs/${lib}`);
-      } catch (ex) {
-        exists = false;
-      }
-
-      expect(exists).toBeFalsy();
+      expect(() => checkFilesExist(`libs/${lib}`)).toThrow();
     });
 
     it('should generate an lib', async () => {
@@ -203,14 +216,7 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi"`,
       );
 
-      let exists = true;
-      try {
-        checkFilesExist(`libs/${lib}`);
-      } catch (ex) {
-        exists = false;
-      }
-
-      expect(exists).toBeTruthy();
+      expect(() => checkFilesExist(`libs/${lib}`)).not.toThrow();
     });
   });
 
