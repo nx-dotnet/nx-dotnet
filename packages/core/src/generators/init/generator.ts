@@ -10,7 +10,7 @@ import {
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
-export default async function (
+export async function initGenerator(
   host: Tree,
   _: null, // Nx will populate this with options, which are currently unused.
   dotnetClient = new DotNetClient(dotnetFactory()),
@@ -36,6 +36,8 @@ export default async function (
 
   initToolManifest(host, dotnetClient);
 }
+
+export default initGenerator;
 
 function updateGitIgnore(
   host: Tree,
@@ -80,7 +82,8 @@ function initToolManifest(host: Tree, dotnetClient: DotNetClient) {
 function addPrepareScript(host: Tree) {
   const packageJson = readJson(host, 'package.json');
   const prepareSteps: string[] =
-    packageJson.scripts.prepare?.split('&&').map((x: string) => x.trim()) ?? [];
+    packageJson.scripts?.prepare?.split('&&').map((x: string) => x.trim()) ??
+    [];
 
   const restoreScript = 'nx g @nx-dotnet/core:restore';
   if (!prepareSteps.includes(restoreScript)) {

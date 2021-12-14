@@ -1,10 +1,15 @@
 import { ExecutorContext } from '@nrwl/devkit';
 
-import { promises as fs } from 'fs';
+import * as fs from 'fs';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { rimraf } from '@nx-dotnet/utils';
 import { assertErrorMessage } from '@nx-dotnet/utils/testing';
+import * as utils from '@nx-dotnet/utils';
+
+jest.mock('@nx-dotnet/utils', () => ({
+  ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
+  getProjectFileForNxProject: () => Promise.resolve('1.csproj'),
+}));
 
 import executor from './executor';
 import { BuildExecutorSchema } from './schema';
@@ -21,7 +26,7 @@ describe('Build Executor', () => {
   let context: ExecutorContext;
   let dotnetClient: DotNetClient;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     context = {
       root: root,
       cwd: root,
@@ -48,47 +53,10 @@ describe('Build Executor', () => {
   });
 
   afterEach(async () => {
-    await rimraf(root);
-  });
-
-  it('detects no dotnet project', async () => {
-    const promise = executor(options, context, dotnetClient);
-    await expect(promise).rejects.toThrow(
-      "Unable to find a build-able project within project's source directory!",
-    );
-  });
-
-  it('detects multiple dotnet projects', async () => {
-    try {
-      const directoryPath = `${root}/apps/my-app`;
-      await fs.mkdir(directoryPath, { recursive: true });
-      await Promise.all([
-        fs.writeFile(`${directoryPath}/1.csproj`, ''),
-        fs.writeFile(`${directoryPath}/2.csproj`, ''),
-      ]);
-    } catch (e) {
-      if (assertErrorMessage(e)) {
-        console.warn(e.message);
-      }
-    }
-
-    const promise = executor(options, context, dotnetClient);
-    await expect(promise).rejects.toThrow(
-      "More than one build-able projects are contained within the project's source directory!",
-    );
+    jest.resetAllMocks();
   });
 
   it('calls build when 1 project file is found', async () => {
-    try {
-      const directoryPath = `${root}/apps/my-app`;
-      await fs.mkdir(directoryPath, { recursive: true });
-      await Promise.all([fs.writeFile(`${directoryPath}/1.csproj`, '')]);
-    } catch (e) {
-      if (assertErrorMessage(e)) {
-        console.warn(e.message);
-      }
-    }
-
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).build,

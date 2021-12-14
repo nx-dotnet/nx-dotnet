@@ -16,6 +16,7 @@ import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { GenerateTestProject } from './generate-test-project';
 import { NormalizedSchema } from './generate-project';
+import { initGenerator } from '../init/generator';
 
 import * as utils from '@nx-dotnet/utils';
 
@@ -39,8 +40,10 @@ describe('nx-dotnet test project generator', () => {
   let options: NormalizedSchema;
   let testProjectName: string;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     appTree = createTreeWithEmptyWorkspace();
+    appTree.write('package.json', '{}');
+    await initGenerator(appTree, null, new DotNetClient(mockDotnetFactory()));
     addProjectConfiguration(appTree, 'domain-existing-app', {
       root: 'apps/domain/existing-app',
       projectType: 'application',
