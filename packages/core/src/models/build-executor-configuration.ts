@@ -14,7 +14,7 @@ export function GetBuildExecutorConfiguration(
     outputs: [outputDirectory],
     options: {
       configuration: 'Debug',
-      noDependencies: 'true',
+      noDependencies: true,
     },
     configurations: {
       production: {
