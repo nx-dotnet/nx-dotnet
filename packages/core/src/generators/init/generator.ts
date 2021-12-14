@@ -89,7 +89,7 @@ function addPrepareScript(host: Tree) {
   if (!prepareSteps.includes(restoreScript)) {
     prepareSteps.push(restoreScript);
   }
-
+  packageJson.scripts ??= {};
   packageJson.scripts.prepare = prepareSteps.join(' && ');
   writeJson(host, 'package.json', packageJson);
 }

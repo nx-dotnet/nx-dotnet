@@ -63,13 +63,13 @@ describe('nx-dotnet project generator', () => {
     expect(config).toBeDefined();
   });
 
-  it('should set output paths in build target', async () => {
+  it('should set outputs for build target', async () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
-    const outputPath = config.targets?.build.options.output;
-    expect(outputPath).toBeTruthy();
+    const outputPath = config.targets?.build.outputs || [];
+    expect(outputPath.length).toBe(1);
 
-    const absoluteDistPath = resolve(appTree.root, outputPath);
+    const absoluteDistPath = resolve(appTree.root, outputPath[0]);
     const expectedDistPath = resolve(appTree.root, './dist/apps/test');
 
     expect(absoluteDistPath).toEqual(expectedDistPath);

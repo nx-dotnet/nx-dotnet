@@ -105,14 +105,14 @@ describe('nx-dotnet test project generator', () => {
     expect(config.targets?.test).toBeDefined();
   });
 
-  it('should set output paths in build target', async () => {
+  it('should set outputs for build target', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
     console.log(config.targets?.build.options);
-    const outputPath = config.targets?.build.options.output;
+    const outputPath = config.targets?.build.outputs?.[0];
     expect(outputPath).toBeTruthy();
 
-    const absoluteDistPath = resolve(appTree.root, outputPath);
+    const absoluteDistPath = resolve(appTree.root, outputPath || '');
     const expectedDistPath = resolve(
       appTree.root,
       './dist/apps/domain/existing-app-test',
