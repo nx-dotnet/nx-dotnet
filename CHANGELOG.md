@@ -1,3 +1,14 @@
+# [1.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.1...v1.8.0) (2021-12-14)
+
+### Bug Fixes
+
+- **core:** add test projects to solution ([9090b99](https://github.com/nx-dotnet/nx-dotnet/commit/9090b997c4cd3a2409b1a4d119a4445a4a5eb3e1))
+- **core:** aliases were not being picked up when generating projects w/ solution files ([56c770a](https://github.com/nx-dotnet/nx-dotnet/commit/56c770a673413f3c832060f6f90d6fc6f67f2644))
+
+### Features
+
+- **core:** support for nx incremental builds ([6739a6b](https://github.com/nx-dotnet/nx-dotnet/commit/6739a6ba5d2aa7181f46704c705b1f72811c648e))
+
 ## [1.7.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.0...v1.7.1) (2021-12-11)
 
 ### Bug Fixes
