@@ -1,9 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit';
 
-import * as fs from 'fs';
-
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { assertErrorMessage } from '@nx-dotnet/utils/testing';
+
 import * as utils from '@nx-dotnet/utils';
 
 jest.mock('@nx-dotnet/utils', () => ({

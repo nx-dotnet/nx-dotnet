@@ -1,4 +1,5 @@
 import { TargetConfiguration } from '@nrwl/devkit';
+import { BuildExecutorSchema } from '../executors/build/schema';
 
 /**
  * Returns a TargetConfiguration for the nx-dotnet/core:build executor
@@ -10,10 +11,10 @@ export function GetBuildExecutorConfiguration(
 
   return {
     executor: '@nx-dotnet/core:build',
-    outputs: ['{options.output}'],
+    outputs: [outputDirectory],
     options: {
-      output: outputDirectory,
       configuration: 'Debug',
+      noDependencies: 'true',
     },
     configurations: {
       production: {
@@ -26,9 +27,7 @@ export function GetBuildExecutorConfiguration(
 /**
  * Configuration options relevant for the build executor
  */
-export interface BuildExecutorConfiguration extends TargetConfiguration {
-  options: {
-    output: string;
-    configuration: 'Debug' | 'Release';
-  };
-}
+export type BuildExecutorConfiguration = TargetConfiguration & {
+  executor: '@nx-dotnet/core:build';
+  options: BuildExecutorSchema;
+};

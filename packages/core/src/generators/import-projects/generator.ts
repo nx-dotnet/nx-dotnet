@@ -4,7 +4,6 @@ import {
   getProjects,
   getWorkspaceLayout,
   names,
-  NxJsonProjectConfiguration,
   ProjectConfiguration,
   TargetConfiguration,
   Tree,
@@ -53,10 +52,9 @@ async function addNewDotnetProject(
   const projectName = rootNamespace
     ? names(rootNamespace).fileName.replace(/\./g, '-')
     : names(basename(projectRoot)).fileName;
-  const configuration: ProjectConfiguration &
-    NxJsonProjectConfiguration & {
-      targets: Record<string, TargetConfiguration>;
-    } = {
+  const configuration: ProjectConfiguration & {
+    targets: Record<string, TargetConfiguration>;
+  } = {
     root: projectRoot,
     targets: {
       build: GetBuildExecutorConfiguration(projectRoot),
