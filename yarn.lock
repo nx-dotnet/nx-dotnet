@@ -15782,10 +15782,10 @@ verdaccio-htpasswd@10.1.0:
     http-errors "1.8.1"
     unix-crypt-td-js "1.1.4"
 
-verdaccio@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/verdaccio/-/verdaccio-5.3.1.tgz#b35aa906867fa5201fccb730db7a0230fdf27756"
-  integrity sha512-IA+UxL6/73G5SgQ01ZZPPOFCpRge0DdXLrgaRpzi5SdGQDQkKsWnk90SI8q1qH1VuvgzVn0UEeq3SQTvx6ZXDg==
+verdaccio@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/verdaccio/-/verdaccio-5.3.2.tgz#1de0e5ae68bde74436f15d27847b761845a5a4d4"
+  integrity sha512-DUzmVDNBpLfB5H13SWkziifpWX4RvAMRr8zASjk9/4hz70ZIHPJeywyg1yqBRnAoAcOYpplO6hM+cqgJcD8edw==
   dependencies:
     "@verdaccio/commons-api" "10.0.2"
     "@verdaccio/local-storage" "10.1.0"
