@@ -1,5 +1,6 @@
 import * as _glob from 'glob';
 import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { join } from 'path';
 
 const globOptions = {
   cwd: appRootPath,
@@ -9,10 +10,12 @@ const globOptions = {
  * Wraps the glob package in a promise api.
  * @returns array of file paths
  */
-export function glob(path: string): Promise<string[]> {
+export function glob(path: string, cwd?: string): Promise<string[]> {
   return new Promise((resolve, reject) =>
-    _glob(path, globOptions, (err, matches) =>
-      err ? reject() : resolve(matches),
+    _glob(
+      path,
+      !cwd ? globOptions : { cwd: join(appRootPath, cwd) },
+      (err, matches) => (err ? reject() : resolve(matches)),
     ),
   );
 }

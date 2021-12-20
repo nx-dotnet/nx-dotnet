@@ -11,7 +11,7 @@ export default async function (
   _: null, // Nx will populate this with options, which are currently unused.
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
-  const projects = getNxDotnetProjects(host);
+  const projects = await getNxDotnetProjects(host);
   for (const project of projects.values()) {
     const projectFiles = getProjectFilesForProject(host, project);
     for (const file of projectFiles) {

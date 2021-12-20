@@ -1,7 +1,6 @@
 import {
   getProjects,
   normalizePath as nxNormalizePath,
-  NxJsonProjectConfiguration,
   ProjectConfiguration,
   Tree,
   WorkspaceJsonConfiguration,
@@ -12,8 +11,7 @@ import { readFileSync } from 'fs';
 import { dirname, isAbsolute, relative, resolve } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
-import { NXDOTNET_TAG } from '../constants';
-import { findProjectFileInPath, findProjectFileInPathSync } from './glob';
+import { findProjectFileInPath, findProjectFileInPathSync, glob } from './glob';
 
 export async function getProjectFileForNxProject(
   project: ProjectConfiguration,
@@ -31,8 +29,7 @@ export function getDependantProjectsForNxProject(
   targetProject: string,
   workspaceConfiguration: WorkspaceJsonConfiguration,
   forEachCallback?: (
-    project: ProjectConfiguration &
-      NxJsonProjectConfiguration & { projectFile: string },
+    project: ProjectConfiguration & { projectFile: string },
     projectName: string,
     implicit: boolean,
   ) => void,
@@ -93,14 +90,23 @@ export function getDependantProjectsForNxProject(
   return dependantProjects;
 }
 
-export function getNxDotnetProjects(
+export async function getNxDotnetProjects(
   host: Tree,
-): Map<string, ProjectConfiguration & NxJsonProjectConfiguration> {
+): Promise<Map<string, ProjectConfiguration>> {
   const allProjects = getProjects(host);
 
   for (const key in allProjects) {
     const p = allProjects.get(key);
-    if (!p?.tags?.includes(NXDOTNET_TAG)) {
+
+    let isNetProject = false;
+    for (const pattern of ['*.csproj', '*.fsproj', '*.vbproj'] as const) {
+      if (await glob(pattern, p?.root)) {
+        isNetProject = true;
+        break;
+      }
+    }
+
+    if (!isNetProject) {
       allProjects.delete(key);
     }
   }

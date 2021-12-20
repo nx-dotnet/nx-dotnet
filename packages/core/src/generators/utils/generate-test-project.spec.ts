@@ -12,7 +12,6 @@ import * as fs from 'fs';
 import { resolve } from 'path';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { NXDOTNET_TAG } from '@nx-dotnet/utils';
 
 import { GenerateTestProject } from './generate-test-project';
 import { NormalizedSchema } from './generate-project';
@@ -85,18 +84,12 @@ describe('nx-dotnet test project generator', () => {
       projectName: 'domain-existing-app',
       projectDirectory: 'domain',
       projectLanguage: 'C#',
-      parsedTags: [NXDOTNET_TAG],
+      parsedTags: [],
       projectTemplate: 'xunit',
       className: 'DomainExistingApp',
       namespaceName: 'Domain.ExistingApp',
     };
     testProjectName = options.name + '-test';
-  });
-
-  it('should tag nx-dotnet projects', async () => {
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, testProjectName);
-    expect(config.tags).toContain(NXDOTNET_TAG);
   });
 
   it('should include test target', async () => {

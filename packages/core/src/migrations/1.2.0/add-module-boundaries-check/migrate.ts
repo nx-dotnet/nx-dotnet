@@ -10,7 +10,7 @@ import { addPrebuildMsbuildTask } from '../../../generators/utils/generate-proje
 import { XmlDocument } from 'xmldoc';
 
 export default async function update(host: Tree) {
-  const projects = getNxDotnetProjects(host);
+  const projects = await getNxDotnetProjects(host);
   for (const [name, project] of projects.entries()) {
     const projectFilePath = await getProjectFileForNxProject(project);
     const buffer = host.read(projectFilePath);
