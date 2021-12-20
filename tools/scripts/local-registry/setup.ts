@@ -11,10 +11,11 @@ export function cleanupVerdaccioData() {
   removeSync(join(__dirname, '../../../tmp/local-registry'));
 }
 
-export function startCleanVerdaccioInstance() {
+export function startCleanVerdaccioInstance(): Promise<void> {
   cleanupVerdaccioData();
+  let ready: () => void;
   verdaccioInstance = spawn(
-    'npx',
+    process.platform === 'win32' ? 'npx.cmd' : 'npx',
     [
       'verdaccio',
       '--config',
@@ -24,9 +25,19 @@ export function startCleanVerdaccioInstance() {
     ],
     {
       cwd: join(__dirname, '../../..'),
-      stdio: 'inherit',
+      stdio: 'pipe',
     },
   );
+  verdaccioInstance.stderr?.pipe(verdaccioInstance.stdout as any);
+  verdaccioInstance.stdout?.on('data', (m) => {
+    console.log(m.toString());
+    if (m.toString().includes('http://localhost:4872/')) {
+      ready();
+    }
+  });
+  return new Promise((resolve) => {
+    ready = resolve;
+  });
 }
 
 export function killVerdaccioInstance() {

@@ -4,11 +4,15 @@ import {
   ensureNxProject,
   listFiles,
   readFile,
+  readJson,
+  runCommand,
+  runNxCommand,
   runNxCommandAsync,
   uniq,
+  updateFile,
 } from '@nrwl/nx-plugin/testing';
 
-import { readFileSync } from 'fs';
+import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
 
@@ -321,6 +325,42 @@ describe('nx-dotnet e2e', () => {
       expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
       expect(slnFile).toContain(app);
       expect(slnFile).toContain(app + '-test');
+    });
+  });
+
+  describe('inferred targets', () => {
+    const api = uniq('api');
+    const projectFolder = join(e2eDir, 'apps', api);
+
+    beforeAll(() => {
+      ensureDirSync(projectFolder);
+      execSync(`dotnet new webapi --language C#`, {
+        cwd: projectFolder,
+      });
+      writeFileSync(
+        join(projectFolder, 'project.json'),
+        JSON.stringify({
+          root: projectFolder,
+        }),
+      );
+    });
+
+    it('should work with workspace.json + project.json', () => {
+      expect(() => runNxCommand(`build ${api}`)).not.toThrow();
+    });
+
+    it('should work without workspace.json or project.json', () => {
+      const workspaceJsonContents = readJson('workspace.json');
+      unlinkSync(join(e2eDir, 'workspace.json'));
+
+      const projectJsonContents = readJson('project.json');
+      unlinkSync(join(projectFolder, 'project.json'));
+
+      expect(() => runNxCommand(`build ${api}`)).not.toThrow();
+
+      updateFile('workspace.json', workspaceJsonContents);
+
+      updateFile(join(projectFolder, 'project.json'), projectJsonContents);
     });
   });
 });

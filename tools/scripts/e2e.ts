@@ -7,8 +7,8 @@ import { publishAll } from './publish-all';
 
 const kill = require('tree-kill');
 
-export function setup() {
-  startCleanVerdaccioInstance();
+export async function setup() {
+  await startCleanVerdaccioInstance();
   copySync('.npmrc.local', '.npmrc');
   publishAll('99.99.99', 'local');
 }
@@ -44,7 +44,7 @@ async function runTest() {
   }
 
   try {
-    setup();
+    await setup();
     if (selectedProjects === '') {
       console.log('No tests to run');
     } else if (selectedProjects) {

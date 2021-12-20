@@ -1,5 +1,4 @@
 {
-  "name": "docs-site",
   "projectType": "application",
   "root": "apps/docs-site",
   "sourceRoot": "apps/docs-site/src",
@@ -27,7 +26,7 @@
       "options": {
         "commands": [
           "nx workspace-schematic generate-docs",
-          "nx build docs-site",
+          "nx build apps-docs-site",
           "npx ts-node tools/scripts/publish-docs-site"
         ],
         "parallel": false
