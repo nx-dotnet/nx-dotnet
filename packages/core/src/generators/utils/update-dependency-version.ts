@@ -12,7 +12,7 @@ export async function updateDependencyVersions(
   packageName: string,
   version: string,
 ) {
-  const projects = getNxDotnetProjects(host);
+  const projects = await getNxDotnetProjects(host);
   for (const [projectName, configuration] of projects.entries()) {
     const projectFiles = getProjectFilesForProject(host, configuration);
     for (const f of projectFiles) {

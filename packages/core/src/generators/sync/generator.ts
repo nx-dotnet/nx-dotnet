@@ -15,7 +15,7 @@ import { updateDependencyVersions } from '../utils/update-dependency-version';
 
 export default async function (host: Tree) {
   const config = readConfig(host);
-  const projects = getNxDotnetProjects(host);
+  const projects = await getNxDotnetProjects(host);
 
   for (const [projectName, configuration] of projects.entries()) {
     const projectFiles = getProjectFilesForProject(host, configuration);

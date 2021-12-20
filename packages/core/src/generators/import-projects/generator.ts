@@ -12,7 +12,7 @@ import {
 import { basename, dirname } from 'path';
 import { XmlDocument } from 'xmldoc';
 
-import { glob, iterateChildrenByPath, NXDOTNET_TAG } from '@nx-dotnet/utils';
+import { glob, iterateChildrenByPath } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -60,7 +60,6 @@ async function addNewDotnetProject(
       build: GetBuildExecutorConfiguration(projectRoot),
       lint: GetLintExecutorConfiguration(),
     },
-    tags: [NXDOTNET_TAG],
     projectType: app ? 'application' : 'library',
   };
   const testProject = await checkIfTestProject(host, projectFile);

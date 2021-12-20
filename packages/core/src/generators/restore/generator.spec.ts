@@ -28,7 +28,7 @@ describe('restore generator', () => {
 
     (getNxDotnetProjects as jest.MockedFunction<typeof getNxDotnetProjects>)
       .mockReset()
-      .mockImplementation(() => new Map());
+      .mockImplementation(() => Promise.resolve(new Map()));
   });
 
   it('should run successfully', async () => {

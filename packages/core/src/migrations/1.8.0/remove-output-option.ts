@@ -15,7 +15,7 @@ import { XmlDocument } from 'xmldoc';
 import { BuildExecutorConfiguration } from '../../models';
 
 export default async function removeOutputOption(host: Tree) {
-  const projects = getNxDotnetProjects(host);
+  const projects = await getNxDotnetProjects(host);
   for (const [name, projectConfiguration] of projects.entries()) {
     const projectFile = await getProjectFileForNxProject(projectConfiguration);
     if (projectFile) {
