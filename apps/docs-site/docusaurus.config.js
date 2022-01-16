@@ -80,10 +80,10 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} nx-dotnet. Built with Docusaurus.`,
     },
     algolia: {
-      apiKey: 'b2a91171189a7ed72178713e095603fd',
+      apiKey: 'a58a8b950cf6da8341ee83b2845db46c',
       indexName: 'nx-dotnet',
       contextualSearch: false,
-      appId: 'BH4D9OD16A',
+      appId: 'QLZWVNS55W',
     },
     prism: {
       additionalLanguages: ['json5', 'typescript', 'bash'],
