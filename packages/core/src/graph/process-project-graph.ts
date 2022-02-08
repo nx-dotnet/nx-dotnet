@@ -17,11 +17,7 @@ export function processProjectGraph(
   const builder = new ProjectGraphBuilder(graph);
 
   Object.entries(context.workspace.projects).forEach(([name, project]) => {
-    try {
-      visitProject(builder, context, project, name);
-    } catch {
-      // ignore
-    }
+    visitProject(builder, context, project, name);
   });
 
   return builder.getUpdatedProjectGraph();

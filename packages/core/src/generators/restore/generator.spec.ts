@@ -1,7 +1,7 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { prompt } from 'inquirer';
+import { Answers, prompt } from 'inquirer';
 
 import { getNxDotnetProjects, updateConfig } from '@nx-dotnet/utils';
 
@@ -24,7 +24,7 @@ describe('restore generator', () => {
       .mockReset()
       .mockImplementation((async () => {
         return {};
-      }) as () => Promise<unknown> & { ui: PromptUI });
+      }) as () => Promise<Answers> & { ui: PromptUI });
 
     (getNxDotnetProjects as jest.MockedFunction<typeof getNxDotnetProjects>)
       .mockReset()

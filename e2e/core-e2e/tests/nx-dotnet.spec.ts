@@ -7,6 +7,7 @@ import {
   readJson,
   runNxCommand,
   runNxCommandAsync,
+  tmpProjPath,
   uniq,
   updateFile,
 } from '@nrwl/nx-plugin/testing';
@@ -17,15 +18,16 @@ import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
-import { execSync } from 'child_process';
+import { exec, execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
-const e2eDir = 'tmp/nx-e2e/proj';
+const e2eDir = tmpProjPath();
 
 describe('nx-dotnet e2e', () => {
   beforeAll(() => {
     ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+    initializeGitRepo(e2eDir);
   }, 1500000);
 
   xit('should create apps, libs, and project references', async () => {
@@ -63,9 +65,7 @@ describe('nx-dotnet e2e', () => {
       `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`,
     );
 
-    const output = await runNxCommandAsync(
-      'print-affected --target build --base HEAD~1',
-    );
+    const output = await runNxCommandAsync('print-affected --target build');
 
     const deps = await readDependenciesFromNxDepGraph(
       join(__dirname, '../../../', e2eDir),
@@ -377,3 +377,11 @@ describe('nx-dotnet e2e', () => {
     });
   });
 });
+
+function initializeGitRepo(cwd: string) {
+  execSync('git init', { cwd });
+  execSync('git config user.email no-one@some-website.com', { cwd });
+  execSync('git config user.name CI-Bot', { cwd });
+  execSync('git add .', { cwd });
+  execSync('git commit -m "initial commit"', { cwd });
+}

@@ -1,7 +1,7 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { prompt } from 'inquirer';
+import { Answers, prompt } from 'inquirer';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import { updateConfig } from '@nx-dotnet/utils';
@@ -52,7 +52,7 @@ describe('nuget-reference generator', () => {
       .mockReset()
       .mockImplementation((async () => {
         return {};
-      }) as () => Promise<unknown> & { ui: PromptUI });
+      }) as () => Promise<Answers> & { ui: PromptUI });
 
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
