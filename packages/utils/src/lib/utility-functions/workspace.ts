@@ -43,19 +43,17 @@ export function getDependantProjectsForNxProject(
     projectRoots[name] = normalizePath(resolve(project.root));
   });
 
-  const netProjectFilePath = relative(
+  const absoluteNetProjectFilePath = resolve(
     appRootPath,
-    resolve(
-      appRootPath,
-      getProjectFileForNxProjectSync(
-        workspaceConfiguration.projects[targetProject],
-      ),
+    getProjectFileForNxProjectSync(
+      workspaceConfiguration.projects[targetProject],
     ),
   );
+  const netProjectFilePath = relative(appRootPath, absoluteNetProjectFilePath);
   const hostProjectDirectory = normalizePath(dirname(netProjectFilePath));
 
   const xml: XmlDocument = new XmlDocument(
-    readFileSync(netProjectFilePath).toString(),
+    readFileSync(absoluteNetProjectFilePath).toString(),
   );
 
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
