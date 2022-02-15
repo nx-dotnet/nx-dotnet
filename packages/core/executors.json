@@ -26,12 +26,5 @@
       "schema": "./src/executors/format/schema.json",
       "description": "Formats and lints a project using the dotnet-format tool"
     }
-  },
-  "builders": {
-    "build": {
-      "implementation": "./src/executors/build/builder",
-      "schema": "./src/executors/build/schema.json",
-      "description": "build executor"
-    }
   }
 }
