@@ -4,6 +4,16 @@
 
 - **docs-site:** fix deployment script ([b3052a1](https://github.com/nx-dotnet/nx-dotnet/commit/b3052a1b4f6ee2feccb8154747fbd261955dd48c))
 
+## [1.9.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.8.0...v1.9.0) (2022-02-15)
+
+### Bug Fixes
+
+- **core:** dependencies should be added to graph when running under nx daemon
+
+### Features
+
+- **core:** support for Nx project inference
+
 # [1.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.1...v1.8.0) (2021-12-14)
 
 ### Bug Fixes
