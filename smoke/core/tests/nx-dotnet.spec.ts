@@ -10,7 +10,13 @@ import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 const smokeDirectory = 'tmp/smoke-core';
 const execSyncOptions: ExecSyncOptions = {
   cwd: join(smokeDirectory, 'test'),
-  env: process.env,
+  env: {
+    ...process.env,
+    GIT_COMMITTER_NAME: 'Smoke Test CI',
+    GIT_COMMITTER_EMAIL: 'no-reply@fake.com',
+    GIT_AUTHOR_NAME: 'Smoke Test CI',
+    GIT_AUTHOR_EMAIL: 'no-reply@fake.com',
+  },
   stdio: 'inherit',
 };
 
@@ -32,6 +38,10 @@ describe('nx-dotnet smoke', () => {
         stdio: 'inherit',
       },
     );
+    execSync(
+      'git init --initial-branch=main && git add . && git commit -m "initial commit"',
+      execSyncOptions,
+    );
     execSync('npm i --save-dev @nx-dotnet/core', execSyncOptions);
     execSync(
       `npx nx g @nx-dotnet/core:lib ${testLib} --language C# --template classlib --testTemplate nunit`,
@@ -47,7 +57,7 @@ describe('nx-dotnet smoke', () => {
       execSyncOptions,
     );
 
-    await execSync('npx nx print-affected --target build --base HEAD~1', {
+    await execSync('npx nx print-affected --target build', {
       ...execSyncOptions,
       stdio: 'ignore',
     });
