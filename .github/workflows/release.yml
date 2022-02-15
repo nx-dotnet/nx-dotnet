@@ -38,8 +38,8 @@ jobs:
   semantic-release:
     runs-on: ubuntu-latest
     name: Publish packages via semantic release
-    needs: [test, e2e]
-    if: ${{github.event_name == 'push'}}
+    needs: [e2e]
+    if: ${{github.event_name == 'workflow_dispatch'}}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
