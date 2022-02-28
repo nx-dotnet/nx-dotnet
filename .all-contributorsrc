@@ -84,7 +84,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/32019405?v=4",
       "profile": "https://github.com/asinino",
       "contributions": [
-        "doc"
+        "doc",
+        "code",
+        "bug"
       ]
     }
   ],
