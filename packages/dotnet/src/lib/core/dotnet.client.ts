@@ -35,7 +35,7 @@ export class DotNetClient {
   }
 
   build(project: string, parameters?: dotnetBuildOptions): void {
-    let cmd = `${this.cliCommand.command} build ${project}`;
+    let cmd = `${this.cliCommand.command} build "${project}"`;
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, buildKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
@@ -50,8 +50,8 @@ export class DotNetClient {
     parameters?: dotnetRunOptions,
   ): ChildProcess {
     let cmd = watch
-      ? `watch --project ${project} run`
-      : `run --project ${project}`;
+      ? `watch --project "${project}" run`
+      : `run --project "${project}"`;
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, runKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
@@ -69,7 +69,7 @@ export class DotNetClient {
     watch?: boolean,
     parameters?: dotnetTestOptions,
   ): void | ChildProcess {
-    let cmd = watch ? ` watch --project ${project} test` : `test ${project}`;
+    let cmd = watch ? `watch --project "${project}" test` : `test "${project}"`;
     cmd = `${this.cliCommand.command} ${cmd}`;
 
     if (parameters) {
@@ -97,7 +97,7 @@ export class DotNetClient {
     pkg: string,
     parameters?: dotnetAddPackageOptions,
   ): void {
-    let cmd = `${this.cliCommand.command} add ${project} package ${pkg}`;
+    let cmd = `${this.cliCommand.command} add "${project}" package ${pkg}`;
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, addPackageKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
@@ -118,7 +118,7 @@ export class DotNetClient {
     publishProfile?: string,
     extraParameters?: string,
   ): void {
-    let cmd = `${this.cliCommand.command} publish ${project}`;
+    let cmd = `${this.cliCommand.command} publish "${project}"`;
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, publishKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
@@ -139,7 +139,7 @@ export class DotNetClient {
   }
 
   restorePackages(project: string): void {
-    const cmd = `${this.cliCommand.command} restore ${project}`;
+    const cmd = `${this.cliCommand.command} restore "${project}"`;
     return this.logAndExecute(cmd);
   }
 
@@ -149,7 +149,7 @@ export class DotNetClient {
   }
 
   format(project: string, parameters?: dotnetFormatOptions): void {
-    let cmd = `${this.cliCommand.command} format ${project}`;
+    let cmd = `${this.cliCommand.command} format "${project}"`;
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, formatKeyMap);
       const paramString = parameters ? getParameterString(parameters) : '';
