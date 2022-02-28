@@ -13,14 +13,14 @@ To add projects to a solution file by default, you can set the generator default
 ```json5
 {
   // ... more nx.json configuration
-  generators: {
+  "generators": {
     // ... other default configurations
-    '@nx-dotnet/core:application': {
-      solutionFile: true,
+    "@nx-dotnet/core:application": {
+      "solutionFile": true,
     },
     // ... other default configurations
-    '@nx-dotnet/core:library': {
-      solutionFile: 'my-sln.sln',
+    "@nx-dotnet/core:library" : {
+      "solutionFile": "my-sln.sln",
     },
   },
 }
