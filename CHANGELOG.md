@@ -1,3 +1,9 @@
+## [1.9.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.1...v1.9.2) (2022-02-28)
+
+### Bug Fixes
+
+- **dotnet:** project with spaces do not bug out the command ([#379](https://github.com/nx-dotnet/nx-dotnet/issues/379)) ([dd4e16b](https://github.com/nx-dotnet/nx-dotnet/commit/dd4e16b109b51aba296c5faf9ce9d0c6fa4929c3))
+
 ## [1.9.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.0...v1.9.1) (2022-02-15)
 
 ### Bug Fixes
