@@ -104,7 +104,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/pemsbr"><img src="https://avatars.githubusercontent.com/u/4513618?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pedro Rodrigues</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=pemsbr" title="Code">💻</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/asinino"><img src="https://avatars.githubusercontent.com/u/32019405?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paulo Oliveira</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/asinino"><img src="https://avatars.githubusercontent.com/u/32019405?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paulo Oliveira</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Documentation">📖</a> <a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Code">💻</a> <a href="https://github.com/nx-dotnet/nx-dotnet/issues?q=author%3Aasinino" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
