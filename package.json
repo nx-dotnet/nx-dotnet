@@ -18,7 +18,7 @@
   "dependencies": {
     "@algolia/client-search": "^4.10.5",
     "@docusaurus/core": "^2.0.0-beta.8",
-    "@docusaurus/preset-classic": "^2.0.0-beta.759298296",
+    "@docusaurus/preset-classic": "^2.0.0-beta.16",
     "@docusaurus/theme-search-algolia": "^2.0.0-beta.8",
     "@mdx-js/react": "^1.6.21",
     "@types/xmldoc": "^1.1.6",
@@ -65,7 +65,7 @@
     "@types/rimraf": "^3.0.2",
     "@types/tmp": "^0.2.3",
     "@types/yargs-parser": "^20.2.1",
-    "@typescript-eslint/eslint-plugin": "5.12.0",
+    "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.10.2",
     "dotenv": "10.0.0",
     "eslint-config-prettier": "8.3.0",
