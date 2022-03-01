@@ -1,3 +1,9 @@
+## [1.9.4](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.3...v1.9.4) (2022-03-01)
+
+### Bug Fixes
+
+- **core:** process project graph shouldn't throw if not a .NET project ([#390](https://github.com/nx-dotnet/nx-dotnet/issues/390)) ([4d51ea0](https://github.com/nx-dotnet/nx-dotnet/commit/4d51ea06d70307b8907a10adb26ca12ea7b0c886))
+
 ## [1.9.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.2...v1.9.3) (2022-03-01)
 
 ### Bug Fixes
