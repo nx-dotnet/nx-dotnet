@@ -1,3 +1,9 @@
+## [1.9.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.2...v1.9.3) (2022-03-01)
+
+### Bug Fixes
+
+- **core:** infer-projects should work with nx daemon ([#383](https://github.com/nx-dotnet/nx-dotnet/issues/383)) ([acf47cf](https://github.com/nx-dotnet/nx-dotnet/commit/acf47cfaab6c6a125be6fb8205733c639977a203))
+
 ## [1.9.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.1...v1.9.2) (2022-02-28)
 
 ### Bug Fixes
