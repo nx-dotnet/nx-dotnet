@@ -49,7 +49,9 @@ async function runTest() {
       console.log('No tests to run');
     } else if (selectedProjects) {
       execSync(
-        `yarn nx run-many --target=e2e --projects=${selectedProjects} ${testNamePattern}`,
+        selectedProjects.split(',').length > 1
+          ? `yarn nx run-many --target=e2e --projects=${selectedProjects} ${testNamePattern}`
+          : `yarn nx run ${selectedProjects}:e2e ${testNamePattern}`,
         {
           stdio: [0, 1, 2],
           env: {

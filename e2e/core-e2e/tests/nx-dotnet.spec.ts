@@ -4,10 +4,10 @@ import {
   ensureNxProject,
   listFiles,
   readFile,
-  readJson,
   runCommand,
   runNxCommand,
   runNxCommandAsync,
+  runPackageManagerInstall,
   tmpProjPath,
   uniq,
   updateFile,
@@ -53,7 +53,19 @@ describe('nx-dotnet e2e', () => {
   it('should work with affected', async () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
+
     runCommand('git checkout -b "affected-tests"');
+    updateFile('package.json', (f) => {
+      const json = JSON.parse(f);
+      json.dependencies['@nrwl/angular'] = 'latest';
+      return JSON.stringify(json);
+    });
+    runPackageManagerInstall();
+
+    await runNxCommandAsync(
+      `generate @nrwl/angular:app ng-app --style css --routing false --no-interactive`,
+      // { cwd: e2eDir, stdio: 'inherit' },
+    );
 
     await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
@@ -70,7 +82,7 @@ describe('nx-dotnet e2e', () => {
     const deps = await readDependenciesFromNxDepGraph(join(e2eDir), testApp);
     expect(deps).toContain(testLib);
     runCommand('git checkout main');
-  }, 150000);
+  }, 300000);
 
   describe('nx g app', () => {
     it('should obey dry-run', async () => {
