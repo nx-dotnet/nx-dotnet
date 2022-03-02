@@ -1,4 +1,3 @@
-
 <p align="center">
   <image src="https://user-images.githubusercontent.com/6933928/135131740-66939491-dc3e-4982-82ac-e6584530bb1b.png" alt="nx-dotnet logo"/>
 </p>
@@ -6,7 +5,9 @@
 # NxDotnet
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Join the chat at https://gitter.im/nx-dotnet-plugin/community](https://badges.gitter.im/nx-dotnet-plugin/community.svg)](https://gitter.im/nx-dotnet-plugin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Run CI checks](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml)
@@ -102,6 +103,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.linkedin.com/in/leon-chi-495a93171/"><img src="https://avatars.githubusercontent.com/u/6677963?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Leon Chi</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=jimsleon" title="Code">💻</a></td>
     <td align="center"><a href="http://www.rumr.co.uk"><img src="https://avatars.githubusercontent.com/u/1983638?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tom Davis</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=photomoose" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/pemsbr"><img src="https://avatars.githubusercontent.com/u/4513618?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pedro Rodrigues</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=pemsbr" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/asinino"><img src="https://avatars.githubusercontent.com/u/32019405?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paulo Oliveira</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Documentation">📖</a> <a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Code">💻</a> <a href="https://github.com/nx-dotnet/nx-dotnet/issues?q=author%3Aasinino" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

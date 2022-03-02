@@ -4,9 +4,10 @@ import {
   ensureNxProject,
   listFiles,
   readFile,
-  readJson,
+  runCommand,
   runNxCommand,
   runNxCommandAsync,
+  runPackageManagerInstall,
   tmpProjPath,
   uniq,
   updateFile,
@@ -18,7 +19,7 @@ import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
-import { exec, execSync } from 'child_process';
+import { execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
@@ -30,7 +31,7 @@ describe('nx-dotnet e2e', () => {
     initializeGitRepo(e2eDir);
   }, 1500000);
 
-  xit('should create apps, libs, and project references', async () => {
+  it('should create apps, libs, and project references', async () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
 
@@ -49,9 +50,22 @@ describe('nx-dotnet e2e', () => {
     expect(output.stdout).toMatch(/Reference .* added to the project/);
   });
 
-  xit('should work with affected', async () => {
+  it('should work with affected', async () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
+
+    runCommand('git checkout -b "affected-tests"');
+    updateFile('package.json', (f) => {
+      const json = JSON.parse(f);
+      json.dependencies['@nrwl/angular'] = 'latest';
+      return JSON.stringify(json);
+    });
+    runPackageManagerInstall();
+
+    await runNxCommandAsync(
+      `generate @nrwl/angular:app ng-app --style css --routing false --no-interactive`,
+      // { cwd: e2eDir, stdio: 'inherit' },
+    );
 
     await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
@@ -65,18 +79,12 @@ describe('nx-dotnet e2e', () => {
       `generate @nx-dotnet/core:project-reference ${testApp} ${testLib}`,
     );
 
-    const output = await runNxCommandAsync('print-affected --target build');
-
-    const deps = await readDependenciesFromNxDepGraph(
-      join(__dirname, '../../../', e2eDir),
-      testApp,
-    );
-
-    expect(output.stderr).toBeFalsy();
+    const deps = await readDependenciesFromNxDepGraph(join(e2eDir), testApp);
     expect(deps).toContain(testLib);
-  }, 150000);
+    runCommand('git checkout main');
+  }, 300000);
 
-  xdescribe('nx g app', () => {
+  describe('nx g app', () => {
     it('should obey dry-run', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
@@ -157,7 +165,7 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  xdescribe('nx g test', () => {
+  describe('nx g test', () => {
     it('should add a reference to the target project', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
@@ -203,7 +211,7 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  xdescribe('nx g lib', () => {
+  describe('nx g lib', () => {
     it('should obey dry-run', async () => {
       const lib = uniq('lib');
       await runNxCommandAsync(
@@ -223,7 +231,7 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  xdescribe('nx g import-projects', () => {
+  describe('nx g import-projects', () => {
     it('should import apps, libs, and test', async () => {
       const testApp = uniq('app');
       const testLib = uniq('lib');
@@ -257,7 +265,7 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  xdescribe('solution handling', () => {
+  describe('solution handling', () => {
     // For solution handling, defaults fall back to if a file exists.
     // This ensures that the tests are ran in a clean state, without previous
     // test projects interfering with the test.
@@ -360,11 +368,11 @@ describe('nx-dotnet e2e', () => {
       expect(() => runNxCommand(`build ${api}`)).not.toThrow();
     });
 
-    xit('should work without workspace.json or project.json', () => {
-      const workspaceJsonContents = readJson('workspace.json');
+    it('should work without workspace.json or project.json', () => {
+      const workspaceJsonContents = readFile('workspace.json');
       unlinkSync(join(e2eDir, 'workspace.json'));
 
-      const projectJsonContents = readJson(
+      const projectJsonContents = readFile(
         joinPathFragments('apps', api, 'project.json'),
       );
       unlinkSync(join(projectFolder, 'project.json'));
@@ -373,15 +381,16 @@ describe('nx-dotnet e2e', () => {
 
       writeFileSync(join(e2eDir, 'workspace.json'), workspaceJsonContents);
 
-      updateFile(join(projectFolder, 'project.json'), projectJsonContents);
+      writeFileSync(join(projectFolder, 'project.json'), projectJsonContents);
     });
   });
 });
 
 function initializeGitRepo(cwd: string) {
-  execSync('git init', { cwd });
-  execSync('git config user.email no-one@some-website.com', { cwd });
-  execSync('git config user.name CI-Bot', { cwd });
-  execSync('git add .', { cwd });
-  execSync('git commit -m "initial commit"', { cwd });
+  runCommand('git init');
+  runCommand('git branch -m main');
+  runCommand('git config user.email no-one@some-website.com');
+  runCommand('git config user.name CI-Bot');
+  runCommand('git add .');
+  runCommand('git commit -m "initial commit"');
 }

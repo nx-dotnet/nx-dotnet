@@ -29,16 +29,30 @@ function visitProject(
   project: ProjectConfiguration,
   projectName: string,
 ) {
-  const projectFile = getProjectFileForNxProjectSync(project);
-  getDependantProjectsForNxProject(
-    projectName,
-    context.workspace,
-    (config, dependencyName, implicit) => {
-      if (implicit) {
-        builder.addImplicitDependency(projectName, dependencyName);
-      } else {
-        builder.addExplicitDependency(projectName, projectFile, dependencyName);
-      }
-    },
-  );
+  let projectFile: string | null = null;
+
+  try {
+    projectFile = getProjectFileForNxProjectSync(project);
+  } catch (e) {
+    if (process.env['NX_VERBOSE_LOGGING'] === 'true') {
+      console.log(e);
+    }
+  }
+  if (projectFile !== null) {
+    getDependantProjectsForNxProject(
+      projectName,
+      context.workspace,
+      (config, dependencyName, implicit) => {
+        if (implicit) {
+          builder.addImplicitDependency(projectName, dependencyName);
+        } else {
+          builder.addExplicitDependency(
+            projectName,
+            projectFile as string,
+            dependencyName,
+          );
+        }
+      },
+    );
+  }
 }
