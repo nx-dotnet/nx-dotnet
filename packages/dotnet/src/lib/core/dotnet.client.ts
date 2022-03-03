@@ -1,5 +1,5 @@
 import { getParameterArrayStrings, swapKeysUsingMap } from '@nx-dotnet/utils';
-import { ChildProcess, execSync, spawn } from 'child_process';
+import { ChildProcess, spawn, spawnSync } from 'child_process';
 
 import {
   addPackageKeyMap,
@@ -160,10 +160,15 @@ export class DotNetClient {
   }
 
   private execute(params: string[]): Buffer {
-    return execSync([this.cliCommand.command, ...params].join(' '), {
+    return spawnSync(this.cliCommand.command, params, {
       stdio: 'inherit',
       cwd: this.cwd || process.cwd(),
-    });
+    })
+      .output.filter((buf) => buf !== null)
+      .reduce(
+        (acc, buf) => Buffer.concat([acc as Buffer, buf as Buffer]),
+        Buffer.from(''),
+      ) as Buffer;
   }
 
   private logAndSpawn(params: string[]): ChildProcess {
