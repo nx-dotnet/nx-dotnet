@@ -24,7 +24,6 @@ To add projects to a solution file by default, you can set the generator default
     },
   },
 }
-```
 
 > Note that the generator names in `nx.json` must be the full name. Alias's like `app`, `lib` and so on will not be recognized. Aliases that work on the command line for options, like --solution, are also not supported currently.
 
@@ -41,3 +40,4 @@ One option would be totally separated solution files for project graphs that are
 ### Solution filters
 
 Some IDEs such as Visual Studio support solution filters. These filters would allow for all projects to be visible to the IDE, but can have some performance benefits. The caveats to using separate files can still exist though, but these could be easier to maintain in the long run. Here is a link to the [msdn docs for solution filters](https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2022).
+```
