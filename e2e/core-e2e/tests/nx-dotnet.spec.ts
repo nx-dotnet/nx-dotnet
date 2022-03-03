@@ -1,4 +1,8 @@
-import { joinPathFragments, names } from '@nrwl/devkit';
+import {
+  getPackageManagerCommand,
+  joinPathFragments,
+  names,
+} from '@nrwl/devkit';
 import {
   checkFilesExist,
   ensureNxProject,
@@ -6,7 +10,6 @@ import {
   readFile,
   runCommand,
   runNxCommand,
-  runNxCommandAsync,
   runPackageManagerInstall,
   tmpProjPath,
   uniq,
@@ -19,7 +22,7 @@ import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
-import { execSync } from 'child_process';
+import { exec, execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
@@ -158,9 +161,7 @@ describe('nx-dotnet e2e', () => {
       await runNxCommandAsync(
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
       );
-      const promise = runNxCommandAsync(`lint ${app}`, {
-        silenceError: true,
-      }).then((x) => x.stderr);
+      const promise = runNxCommandAsync(`lint ${app}`).then((x) => x.stderr);
       await expect(promise).resolves.toContain('WHITESPACE');
     });
   });
@@ -393,4 +394,45 @@ function initializeGitRepo(cwd: string) {
   runCommand('git config user.name CI-Bot');
   runCommand('git add .');
   runCommand('git commit -m "initial commit"');
+}
+
+function runCommandAsync(
+  command: string,
+  opts = {
+    silenceError: false,
+    nxVerboseLogging: true,
+  },
+) {
+  return new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {
+    exec(
+      command,
+      {
+        cwd: e2eDir,
+        env: opts.nxVerboseLogging
+          ? { ...process.env, NX_VERBOSE_LOGGING: 'true' }
+          : process.env,
+      },
+      (err, stdout, stderr) => {
+        if (!opts.silenceError && err) {
+          reject(err);
+        }
+        resolve({ stdout, stderr });
+      },
+    );
+  });
+}
+/**
+ * Run a nx command asynchronously inside the e2e directory
+ * @param command
+ * @param opts
+ */
+function runNxCommandAsync(
+  command: string,
+  opts = {
+    silenceError: false,
+    nxVerboseLogging: true,
+  },
+) {
+  const pmc = getPackageManagerCommand();
+  return runCommandAsync(`${pmc.exec} nx ${command}`, opts);
 }
