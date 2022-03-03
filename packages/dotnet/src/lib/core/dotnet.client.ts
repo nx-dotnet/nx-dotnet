@@ -1,4 +1,4 @@
-import { getParameterArrayStrings, swapKeysUsingMap } from '@nx-dotnet/utils';
+import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 
 import {
@@ -27,7 +27,7 @@ export class DotNetClient {
     const params = [`new`, template];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, newKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
     return this.logAndExecute(params);
   }
@@ -36,7 +36,7 @@ export class DotNetClient {
     const params = [`build`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, buildKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
     return this.logAndExecute(params);
   }
@@ -51,7 +51,7 @@ export class DotNetClient {
       : [`run`, `--project`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, runKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
 
     return this.logAndSpawn(params);
@@ -68,7 +68,7 @@ export class DotNetClient {
 
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, testKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
     if (!watch) {
       return this.logAndExecute(params);
@@ -86,7 +86,7 @@ export class DotNetClient {
     const params = [`add`, project, `package`, pkg];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, addPackageKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
     return this.logAndExecute(params);
   }
@@ -104,7 +104,7 @@ export class DotNetClient {
     const params = [`publish`, `"${project}"`];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, publishKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
     if (publishProfile) {
       params.push(`-p:PublishProfile=${publishProfile}`);
@@ -134,7 +134,7 @@ export class DotNetClient {
     const params = [`format`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, formatKeyMap);
-      params.push(...getParameterArrayStrings(parameters));
+      params.push(...getSpawnParameterArray(parameters));
     }
     return this.logAndExecute(params);
   }
@@ -158,6 +158,7 @@ export class DotNetClient {
     );
     spawnSync(this.cliCommand.command, params, {
       cwd: this.cwd || process.cwd(),
+      stdio: 'inherit',
     });
   }
 
