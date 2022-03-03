@@ -1,3 +1,9 @@
+## [1.9.5](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.4...v1.9.5) (2022-03-03)
+
+### Bug Fixes
+
+- **dotnet:** should work with paths that contain spaces ([#392](https://github.com/nx-dotnet/nx-dotnet/issues/392)) ([fa86355](https://github.com/nx-dotnet/nx-dotnet/commit/fa8635518a5cd6cb0c262dc8926b8d32bfa894ca))
+
 ## [1.9.4](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.3...v1.9.4) (2022-03-01)
 
 ### Bug Fixes
