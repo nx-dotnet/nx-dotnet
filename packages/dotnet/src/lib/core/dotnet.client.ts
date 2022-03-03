@@ -160,7 +160,7 @@ export class DotNetClient {
   }
 
   private execute(params: string[]): Buffer {
-    return execSync([this.cliCommand.command, ...params].join(), {
+    return execSync([this.cliCommand.command, ...params].join(' '), {
       stdio: 'inherit',
       cwd: this.cwd || process.cwd(),
     });
