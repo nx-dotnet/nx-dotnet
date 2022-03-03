@@ -23,7 +23,7 @@ import { LoadedCLI } from './dotnet.factory';
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
 
-  new(template: dotnetTemplate, parameters?: dotnetNewOptions): Buffer {
+  new(template: dotnetTemplate, parameters?: dotnetNewOptions): void {
     const params = [`new`, template];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, newKeyMap);
@@ -32,7 +32,7 @@ export class DotNetClient {
     return this.logAndExecute(params);
   }
 
-  build(project: string, parameters?: dotnetBuildOptions): Buffer {
+  build(project: string, parameters?: dotnetBuildOptions): void {
     const params = [`build`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, buildKeyMap);
@@ -61,7 +61,7 @@ export class DotNetClient {
     project: string,
     watch?: boolean,
     parameters?: dotnetTestOptions,
-  ): Buffer | ChildProcess {
+  ): void | ChildProcess {
     const params = watch
       ? [`watch`, `--project`, project, `test`]
       : [`test`, project];
@@ -82,7 +82,7 @@ export class DotNetClient {
     project: string,
     pkg: string,
     parameters?: dotnetAddPackageOptions,
-  ): Buffer {
+  ): void {
     const params = [`add`, project, `package`, pkg];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, addPackageKeyMap);
@@ -91,7 +91,7 @@ export class DotNetClient {
     return this.logAndExecute(params);
   }
 
-  addProjectReference(hostCsProj: string, targetCsProj: string): Buffer {
+  addProjectReference(hostCsProj: string, targetCsProj: string): void {
     return this.logAndExecute([`add`, hostCsProj, `reference`, targetCsProj]);
   }
 
@@ -100,7 +100,7 @@ export class DotNetClient {
     parameters?: dotnetPublishOptions,
     publishProfile?: string,
     extraParameters?: string,
-  ): Buffer {
+  ): void {
     const params = [`publish`, `"${project}"`];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, publishKeyMap);
@@ -115,22 +115,22 @@ export class DotNetClient {
     return this.logAndExecute(params);
   }
 
-  installTool(tool: string): Buffer {
+  installTool(tool: string): void {
     const cmd = [`tool`, `install`, tool];
     return this.logAndExecute(cmd);
   }
 
-  restorePackages(project: string): Buffer {
+  restorePackages(project: string): void {
     const cmd = [`restore`, project];
     return this.logAndExecute(cmd);
   }
 
-  restoreTools(): Buffer {
+  restoreTools(): void {
     const cmd = [`tool`, `restore`];
     return this.logAndExecute(cmd);
   }
 
-  format(project: string, parameters?: dotnetFormatOptions): Buffer {
+  format(project: string, parameters?: dotnetFormatOptions): void {
     const params = [`format`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, formatKeyMap);
@@ -152,16 +152,17 @@ export class DotNetClient {
     this.logAndExecute(['--version']);
   }
 
-  private logAndExecute(params: string[]): Buffer {
+  private logAndExecute(params: string[]): void {
     console.log(
-      `Executing Command: ${this.cliCommand.command} ${params.join(', ')}`,
+      `Executing Command: ${this.cliCommand.command} "${params.join('" "')}"`,
     );
-    return this.execute(params);
+    spawnSync(this.cliCommand.command, params, {
+      cwd: this.cwd || process.cwd(),
+    });
   }
 
   private execute(params: string[]): Buffer {
     return spawnSync(this.cliCommand.command, params, {
-      stdio: 'inherit',
       cwd: this.cwd || process.cwd(),
     })
       .output.filter((buf) => buf !== null)
@@ -173,7 +174,7 @@ export class DotNetClient {
 
   private logAndSpawn(params: string[]): ChildProcess {
     console.log(
-      `Executing Command: ${this.cliCommand.command} ${params.join(', ')}`,
+      `Executing Command: ${this.cliCommand.command} "${params.join('" "')}"`,
     );
     return spawn(this.cliCommand.command, params, {
       stdio: 'inherit',

@@ -24,7 +24,7 @@ export function getParameterString(
  * @param parameters Parameters to transform into CLI arguments
  * @returns Parameter string to be appended to CLI command
  */
-export function getParameterArrayStrings(
+export function getSpawnParameterArray(
   parameters: Record<string, boolean | string>,
 ): string[] {
   return Object.entries(parameters).reduce((acc, [flag, value]) => {

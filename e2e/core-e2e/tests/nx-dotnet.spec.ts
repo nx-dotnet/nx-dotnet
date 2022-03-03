@@ -270,8 +270,9 @@ describe('nx-dotnet e2e', () => {
     // For solution handling, defaults fall back to if a file exists.
     // This ensures that the tests are ran in a clean state, without previous
     // test projects interfering with the test.
-    beforeEach(() => {
+    beforeAll(() => {
       ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+      initializeGitRepo(e2eDir);
     }, 1500000);
 
     it("shouldn't create a solution by default if not specified", async () => {
