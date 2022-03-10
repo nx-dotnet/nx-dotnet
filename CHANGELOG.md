@@ -1,3 +1,9 @@
+## [1.9.6](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.5...v1.9.6) (2022-03-10)
+
+### Bug Fixes
+
+- **core:** add workaround for broken .NET format command in v6+ ([#397](https://github.com/nx-dotnet/nx-dotnet/issues/397)) ([2d09657](https://github.com/nx-dotnet/nx-dotnet/commit/2d0965744b1abd574a511168a5b0ae92a7eeed21))
+
 ## [1.9.5](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.4...v1.9.5) (2022-03-03)
 
 ### Bug Fixes
