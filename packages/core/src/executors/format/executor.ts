@@ -46,7 +46,7 @@ export default async function runExecutor(
   const normalized = normalizeOptions(options, isNet6OrHigher);
 
   ensureFormatToolInstalled(context, dotnetClient, majorVersion);
-  dotnetClient.format(projectFilePath, normalized);
+  dotnetClient.format(projectFilePath, normalized, isNet6OrHigher);
 
   return {
     success: true,
@@ -76,13 +76,13 @@ function ensureFormatToolInstalled(
     return;
   }
 
-  if (majorVersion == 6) {
+  if (majorVersion === 6) {
     dotnetClient.installTool(
       'dotnet-format',
       '6.*',
       'https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json',
     );
-  } else if (majorVersion == 7) {
+  } else if (majorVersion === 7) {
     dotnetClient.installTool(
       'dotnet-format',
       '7.*',

@@ -17,7 +17,7 @@ async function runTest() {
   let selectedProjects = process.argv[2];
 
   let testNamePattern = '';
-  if (process.argv[3] === '-t' || process.argv[3] == '--testNamePattern') {
+  if (process.argv[3] === '-t' || process.argv[3] === '--testNamePattern') {
     testNamePattern = `--testNamePattern "${process.argv[4]}"`;
   }
 
