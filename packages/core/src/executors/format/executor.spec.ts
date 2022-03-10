@@ -55,7 +55,7 @@ describe('Format Executor', () => {
     };
     dotnetClient = new DotNetClient(mockDotnetFactory());
     (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      Buffer.from('5.0.402'),
+      '5.0.402',
     );
   });
 
@@ -91,7 +91,7 @@ describe('Format Executor', () => {
 
   it('does not install dotnet-format if SDK is 6+', async () => {
     (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      Buffer.from('6.0.101'),
+      '6.0.101',
     );
 
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
@@ -108,7 +108,7 @@ describe('Format Executor', () => {
 
   it('passes the --check option on .NET 5 and earlier', async () => {
     (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      Buffer.from('5.0.101'),
+      '5.0.101',
     );
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest
@@ -126,7 +126,7 @@ describe('Format Executor', () => {
 
   it('passes the --verify-no-changes option on .NET 6 and later', async () => {
     (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      Buffer.from('6.0.101'),
+      '6.0.101',
     );
 
     const res = await executor(options, context, dotnetClient);
