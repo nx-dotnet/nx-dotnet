@@ -34,7 +34,7 @@ export default async function runExecutor(
   context: ExecutorContext,
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
-  const sdkVersion = dotnetClient.getSdkVersion().toString();
+  const sdkVersion = dotnetClient.getSdkVersion();
   const majorVersion = parseInt(sdkVersion.split('.')[0]);
   const isNet6OrHigher = majorVersion >= 6;
 
@@ -45,8 +45,8 @@ export default async function runExecutor(
 
   const normalized = normalizeOptions(options, isNet6OrHigher);
 
-  ensureFormatToolInstalled(context, dotnetClient, isNet6OrHigher);
-  dotnetClient.format(projectFilePath, normalized);
+  ensureFormatToolInstalled(context, dotnetClient, majorVersion);
+  dotnetClient.format(projectFilePath, normalized, isNet6OrHigher);
 
   return {
     success: true,
@@ -56,9 +56,12 @@ export default async function runExecutor(
 function ensureFormatToolInstalled(
   context: ExecutorContext,
   dotnetClient: DotNetClient,
-  isNet6OrHigher: boolean,
+  majorVersion: number,
 ) {
-  if (isNet6OrHigher) {
+  // Currently the built-in .NET Format executor is broken on .NET 6
+  // Fall back to installing and using the tool directly
+  // eslint-disable-next-line no-constant-condition
+  if (false && majorVersion >= 6) {
     // dotnet-format is already included as part of .NET SDK 6+
     return;
   }
@@ -73,5 +76,19 @@ function ensureFormatToolInstalled(
     return;
   }
 
-  dotnetClient.installTool('dotnet-format');
+  if (majorVersion === 6) {
+    dotnetClient.installTool(
+      'dotnet-format',
+      '6.*',
+      'https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json',
+    );
+  } else if (majorVersion === 7) {
+    dotnetClient.installTool(
+      'dotnet-format',
+      '7.*',
+      'https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet7/nuget/v3/index.json',
+    );
+  } else {
+    dotnetClient.installTool('dotnet-format');
+  }
 }

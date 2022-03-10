@@ -115,8 +115,14 @@ export class DotNetClient {
     return this.logAndExecute(params);
   }
 
-  installTool(tool: string): void {
+  installTool(tool: string, version?: string, source?: string): void {
     const cmd = [`tool`, `install`, tool];
+    if (version) {
+      cmd.push('--version', version);
+    }
+    if (source) {
+      cmd.push('--add-source', source);
+    }
     return this.logAndExecute(cmd);
   }
 
@@ -130,8 +136,14 @@ export class DotNetClient {
     return this.logAndExecute(cmd);
   }
 
-  format(project: string, parameters?: dotnetFormatOptions): void {
-    const params = [`format`, project];
+  format(
+    project: string,
+    parameters?: dotnetFormatOptions,
+    forceToolUsage?: boolean,
+  ): void {
+    const params = forceToolUsage
+      ? ['tool', 'run', 'dotnet-format', project]
+      : [`format`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, formatKeyMap);
       params.push(...getSpawnParameterArray(parameters));
@@ -144,8 +156,8 @@ export class DotNetClient {
     this.logAndExecute(params);
   }
 
-  getSdkVersion(): Buffer {
-    return this.execute(['--version']);
+  getSdkVersion(): string {
+    return this.cliCommand.info.version.toString();
   }
 
   printSdkVersion(): void {
