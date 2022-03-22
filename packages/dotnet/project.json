@@ -25,7 +25,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/dotnet",
@@ -33,7 +33,19 @@
         "packageJson": "packages/dotnet/package.json",
         "main": "packages/dotnet/src/index.ts",
         "updateBuildableProjectDepsInPackageJson": true,
-        "assets": ["packages/dotnet/*.md"]
+        "assets": [
+          "packages/dotnet/*.md",
+          {
+            "input": "",
+            "glob": "CHANGELOG.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
       }
     },
     "noop": {
