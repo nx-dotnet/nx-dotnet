@@ -25,6 +25,7 @@ import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 import { exec, execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
+import { PackageJson } from 'nx/src/utils/package-json';
 
 const e2eDir = tmpProjPath();
 

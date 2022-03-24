@@ -137,7 +137,7 @@ export default async function (host: Tree, options: Schema) {
   );
 
   if (!options.skipFormat) {
-    formatFiles(host);
+    await formatFiles(host);
   }
 }
 
