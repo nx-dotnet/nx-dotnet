@@ -9,10 +9,14 @@ export const DefaultConfigValues: Partial<NxDotnetConfig> = {
   solutionFile: '{npmScope}.nx-dotnet.sln',
 };
 
+let cachedConfig: NxDotnetConfig;
 export function readConfig(host?: Tree): NxDotnetConfig {
-  return host
-    ? readJson(host, CONFIG_FILE_PATH)
-    : readJsonSync(`${appRootPath}/${CONFIG_FILE_PATH}`);
+  if (host) {
+    return readJson(host, CONFIG_FILE_PATH);
+  } else {
+    cachedConfig ??= readJsonSync(`${appRootPath}/${CONFIG_FILE_PATH}`);
+    return cachedConfig;
+  }
 }
 
 export function updateConfig(host: Tree, value: NxDotnetConfig) {

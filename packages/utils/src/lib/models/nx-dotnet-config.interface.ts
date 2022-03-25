@@ -7,6 +7,20 @@ export interface NxDotnetConfig {
   nugetPackages: {
     [key: string]: string | undefined;
   };
+
+  /**
+   * Setup module boundary definitions here if not using eslint
+   */
   moduleBoundaries?: ModuleBoundaries;
+
+  /**
+   * Default solution file
+   */
   solutionFile?: string;
+
+  /**
+   * Set to false to skip target inference
+   * @default true
+   */
+  inferProjectTargets?: boolean;
 }
