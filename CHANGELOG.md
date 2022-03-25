@@ -1,3 +1,10 @@
+## [1.9.7](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.6...v1.9.7) (2022-03-25)
+
+### Bug Fixes
+
+- **core:** allow opt-out of project inference ([#402](https://github.com/nx-dotnet/nx-dotnet/issues/402)) ([84bde4c](https://github.com/nx-dotnet/nx-dotnet/commit/84bde4ce485225345f0e1d3faf8e06169bdcf32d))
+- **dotnet:** update handling of extraParameters to be compatible with spawn ([#403](https://github.com/nx-dotnet/nx-dotnet/issues/403)) ([65f0c48](https://github.com/nx-dotnet/nx-dotnet/commit/65f0c48c46f4f5b3da2022ce51e26d6aaae6b306))
+
 ## [1.9.6](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.5...v1.9.6) (2022-03-10)
 
 ### Bug Fixes
