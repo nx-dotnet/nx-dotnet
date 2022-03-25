@@ -110,7 +110,8 @@ export class DotNetClient {
       params.push(`-p:PublishProfile=${publishProfile}`);
     }
     if (extraParameters) {
-      params.push(`${extraParameters}`);
+      const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
+      params.push(...(matches as RegExpMatchArray));
     }
     return this.logAndExecute(params);
   }
@@ -195,3 +196,10 @@ export class DotNetClient {
     });
   }
 }
+
+/**
+ * Regular Expression for Parsing Extra Params before sending to spawn / exec
+ * First part of expression matches parameters such as --flag="my answer"
+ * Second part of expression matches parameters such as --flag=my_answer
+ */
+const EXTRA_PARAMS_REGEX = /\S*".+?"|\S+/g;
