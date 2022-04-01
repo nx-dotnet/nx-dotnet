@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { ChildProcess } from 'child_process';
 import { resolve as pathResolve } from 'path';
@@ -23,11 +23,11 @@ export default function dotnetRunExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ): Promise<{ success: boolean }> {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
-  const cwd = pathResolve(appRootPath, nxProjectConfiguration.root);
+  const cwd = pathResolve(workspaceRoot, nxProjectConfiguration.root);
   dotnetClient.cwd = cwd;
 
   return getProjectFileForNxProject(nxProjectConfiguration).then((project) =>
-    runDotnetRun(dotnetClient, pathResolve(appRootPath, project), options),
+    runDotnetRun(dotnetClient, pathResolve(workspaceRoot, project), options),
   );
 }
 

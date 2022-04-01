@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
@@ -16,14 +16,14 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
-  dotnetClient.cwd = resolve(appRootPath, nxProjectConfiguration.root);
+  dotnetClient.cwd = resolve(workspaceRoot, nxProjectConfiguration.root);
   dotnetClient.printSdkVersion();
   const projectFilePath = resolve(
-    appRootPath,
+    workspaceRoot,
     await getProjectFileForNxProject(nxProjectConfiguration),
   );
   options.output = options.output
-    ? resolve(appRootPath, options.output)
+    ? resolve(workspaceRoot, options.output)
     : undefined;
 
   dotnetClient.build(projectFilePath, options);

@@ -5,7 +5,7 @@ import {
   Tree,
   WorkspaceJsonConfiguration,
 } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { readFileSync } from 'fs';
 import { dirname, isAbsolute, relative, resolve } from 'path';
@@ -44,12 +44,15 @@ export function getDependantProjectsForNxProject(
   });
 
   const absoluteNetProjectFilePath = resolve(
-    appRootPath,
+    workspaceRoot,
     getProjectFileForNxProjectSync(
       workspaceConfiguration.projects[targetProject],
     ),
   );
-  const netProjectFilePath = relative(appRootPath, absoluteNetProjectFilePath);
+  const netProjectFilePath = relative(
+    workspaceRoot,
+    absoluteNetProjectFilePath,
+  );
   const hostProjectDirectory = normalizePath(dirname(netProjectFilePath));
 
   const xml: XmlDocument = new XmlDocument(

@@ -1,6 +1,6 @@
 import { TargetConfiguration } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
-import { NxDotnetConfig, readConfig } from '@nx-dotnet/utils';
+import { workspaceRoot } from 'nx/src/utils/app-root';
+import { readConfig } from '@nx-dotnet/utils';
 
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
@@ -19,7 +19,7 @@ export const registerProjectTargets = (projectFile: string) => {
   const targets: Record<string, TargetConfiguration> = {};
   if (inferProjectTargets ?? true) {
     const projectFileContents = readFileSync(
-      resolve(appRootPath, projectFile),
+      resolve(workspaceRoot, projectFile),
       'utf8',
     );
     if (projectFileContents.includes('Microsoft.NET.Test.Sdk')) {

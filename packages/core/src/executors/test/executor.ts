@@ -1,5 +1,4 @@
-import { ExecutorContext, logger } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { ExecutorContext, logger, workspaceRoot } from '@nrwl/devkit';
 
 import { resolve } from 'path';
 
@@ -22,7 +21,7 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ): Promise<{ success: boolean }> {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
-  projectDirectory = resolve(appRootPath, nxProjectConfiguration.root);
+  projectDirectory = resolve(workspaceRoot, nxProjectConfiguration.root);
   const projectFilePath = await getProjectFileForNxProject(
     nxProjectConfiguration,
   );
@@ -31,7 +30,7 @@ export default async function runExecutor(
 
   try {
     const result = dotnetClient.test(
-      resolve(appRootPath, projectFilePath),
+      resolve(workspaceRoot, projectFilePath),
       watch,
       parsedOptions,
     );

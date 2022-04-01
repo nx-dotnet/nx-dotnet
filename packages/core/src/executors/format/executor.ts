@@ -1,5 +1,5 @@
 import { ExecutorContext, readJsonFile } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -66,7 +66,7 @@ function ensureFormatToolInstalled(
     return;
   }
 
-  const manifestPath = join(appRootPath, './.config/dotnet-tools.json');
+  const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
   console.log(manifestPath);
   const manifest = existsSync(manifestPath)
     ? readJsonFile(manifestPath)

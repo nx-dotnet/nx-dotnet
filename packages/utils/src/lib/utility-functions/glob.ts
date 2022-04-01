@@ -1,9 +1,9 @@
 import * as _glob from 'glob';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 import { join } from 'path';
 
 const globOptions = {
-  cwd: appRootPath,
+  cwd: workspaceRoot,
 };
 
 /**
@@ -14,7 +14,7 @@ export function glob(path: string, cwd?: string): Promise<string[]> {
   return new Promise((resolve, reject) =>
     _glob(
       path,
-      !cwd ? globOptions : { cwd: join(appRootPath, cwd) },
+      !cwd ? globOptions : { cwd: join(workspaceRoot, cwd) },
       (err, matches) => (err ? reject() : resolve(matches)),
     ),
   );
