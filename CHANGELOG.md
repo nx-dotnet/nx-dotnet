@@ -1,3 +1,9 @@
+## [1.9.8](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.7...v1.9.8) (2022-04-01)
+
+### Bug Fixes
+
+- **core:** update nx to not publish \*.ts files ([3fa88c4](https://github.com/nx-dotnet/nx-dotnet/commit/3fa88c4cb104db37f9c918a98226480915da33b6))
+
 ## [1.9.7](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.6...v1.9.7) (2022-03-25)
 
 ### Bug Fixes
