@@ -1,10 +1,9 @@
-import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
+import { execSync } from 'child_process';
 
 try {
-  const client = new DotNetClient(dotnetFactory());
-  const sdkVersion = client.printSdkVersion();
+  const version = execSync('dotnet --version').toString('utf-8').trim();
   console.info(
-    `[nx-dotnet] .NET SDK ${sdkVersion} will be used for .NET CLI commands`,
+    `[nx-dotnet] .NET SDK ${version} will be used for .NET CLI commands`,
   );
 } catch {
   console.warn(`[nx-dotnet] [WARN] .NET SDK NOT FOUND`);
