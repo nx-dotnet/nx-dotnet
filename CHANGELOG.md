@@ -1,3 +1,9 @@
+## [1.9.9](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.8...v1.9.9) (2022-04-01)
+
+### Bug Fixes
+
+- **core:** post-install shouldn't depend on nx packages ([07811c7](https://github.com/nx-dotnet/nx-dotnet/commit/07811c76dbf6ba7be048ad4e12c41e577ac4864b))
+
 ## [1.9.8](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.7...v1.9.8) (2022-04-01)
 
 ### Bug Fixes
