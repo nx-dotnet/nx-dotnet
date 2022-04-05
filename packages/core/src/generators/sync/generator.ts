@@ -18,7 +18,11 @@ export default async function (host: Tree) {
   const projects = await getNxDotnetProjects(host);
 
   for (const [projectName, configuration] of projects.entries()) {
-    const projectFiles = getProjectFilesForProject(host, configuration);
+    const projectFiles = getProjectFilesForProject(
+      host,
+      configuration,
+      projectName,
+    );
     for (const f of projectFiles) {
       const xmldoc = readXml(host, f);
       console.log(`Scanning packages for ${projectName} (${f})`);
