@@ -34,7 +34,7 @@ export default async function (
     resolvedVersion !== options.version &&
     resolvedVersion !== ALLOW_MISMATCH
   ) {
-    options.version = resolvedVersion;
+    params.version = resolvedVersion;
   }
 
   try {
