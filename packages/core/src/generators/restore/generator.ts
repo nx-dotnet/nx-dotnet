@@ -12,8 +12,8 @@ export default async function (
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
   const projects = await getNxDotnetProjects(host);
-  for (const project of projects.values()) {
-    const projectFiles = getProjectFilesForProject(host, project);
+  for (const [projectName, project] of projects.entries()) {
+    const projectFiles = getProjectFilesForProject(host, project, projectName);
     for (const file of projectFiles) {
       dotnetClient.restorePackages(file);
     }

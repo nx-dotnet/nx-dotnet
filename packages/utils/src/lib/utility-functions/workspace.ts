@@ -115,12 +115,13 @@ export async function getNxDotnetProjects(
 export function getProjectFilesForProject(
   host: Tree,
   project: ProjectConfiguration | undefined,
+  projectName: string,
 ) {
-  if (!project?.sourceRoot) {
-    throw new Error('Unable to read source root for project!');
+  if (!project?.sourceRoot && !project?.root) {
+    throw new Error(`Unable to read source root for project ${projectName}`);
   }
   return host
-    .children(project.sourceRoot)
+    .children(project.sourceRoot ?? project.root)
     .filter((x) => x.endsWith('proj'))
     .map((x) => `${project.sourceRoot}/${x}`);
 }
