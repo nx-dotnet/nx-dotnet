@@ -67,4 +67,25 @@ describe('nuget-reference generator', () => {
     await generator(appTree, options, dotnetClient);
     expect(prompt).toHaveBeenCalledTimes(1);
   });
+
+  it('provides resolved version to dotnet add package reference', async () => {
+    const { getProjectFileForNxProject } = await import('@nx-dotnet/utils');
+
+    const projectFilePath = 'libs/test/Test.csproj';
+
+    (getProjectFileForNxProject as jest.MockedFunction<() => Promise<string>>)
+      .mockReset()
+      .mockResolvedValue(projectFilePath);
+
+    updateConfig(appTree, {
+      nugetPackages: { [options.packageName]: '1.2.3' },
+    });
+    await generator(appTree, options, dotnetClient);
+    const mock = dotnetClient as jest.Mocked<DotNetClient>;
+    expect(mock.addPackageReference).toHaveBeenCalledWith(
+      projectFilePath,
+      options.packageName,
+      { allowVersionMismatch: false, version: '1.2.3' },
+    );
+  });
 });
