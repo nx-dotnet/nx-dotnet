@@ -1,3 +1,11 @@
+## [1.9.10](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.9...v1.9.10) (2022-04-13)
+
+### Bug Fixes
+
+- **core:** fall back to root if source root null ([#408](https://github.com/nx-dotnet/nx-dotnet/issues/408)) ([53bdc17](https://github.com/nx-dotnet/nx-dotnet/commit/53bdc173874817488897bd6adba186c18da57c81))
+- **core:** resolved package version not provided ([#407](https://github.com/nx-dotnet/nx-dotnet/issues/407)) ([9bbc7c1](https://github.com/nx-dotnet/nx-dotnet/commit/9bbc7c1144f4fb2dfa4722b9b4d3c6466ca5189d))
+- **core:** test executor should fail properly ([#411](https://github.com/nx-dotnet/nx-dotnet/issues/411)) ([e2db293](https://github.com/nx-dotnet/nx-dotnet/commit/e2db293473655494b0a775da0def84d6b1fd841c))
+
 ## [1.9.9](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.8...v1.9.9) (2022-04-01)
 
 ### Bug Fixes
