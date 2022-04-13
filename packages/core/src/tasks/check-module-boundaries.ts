@@ -1,4 +1,4 @@
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { ESLint } from 'eslint';
@@ -93,13 +93,13 @@ async function main() {
       project: 'p',
     },
   });
-  const workspace = new Workspaces(appRootPath);
+  const workspace = new Workspaces(workspaceRoot);
   const workspaceJson: WorkspaceJsonConfiguration =
     workspace.readWorkspaceConfiguration();
 
   // Nx v12 support
   const nxJson: NxJsonConfiguration & Record<string, ProjectConfiguration> =
-    readJsonFile(join(appRootPath, 'nx.json'));
+    readJsonFile(join(workspaceRoot, 'nx.json'));
   if (nxJson.projects) {
     Object.entries(nxJson.projects).forEach(([name, config]) => {
       const existingTags = workspaceJson.projects[name]?.tags ?? [];
@@ -126,6 +126,6 @@ async function main() {
 }
 
 if (require.main === module) {
-  process.chdir(appRootPath);
+  process.chdir(workspaceRoot);
   main();
 }

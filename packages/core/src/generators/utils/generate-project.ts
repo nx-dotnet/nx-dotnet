@@ -10,7 +10,7 @@ import {
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 
 //  Files generated via `dotnet` are not available in the virtual fs
 import { readFileSync, writeFileSync } from 'fs';
@@ -173,7 +173,7 @@ export function setOutputPath(
   projectFilePath: string,
 ) {
   let outputPath = joinPathFragments(
-    relative(dirname(projectFilePath), appRootPath),
+    relative(dirname(projectFilePath), workspaceRoot),
     'dist',
     projectRootPath,
   );

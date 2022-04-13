@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { appRootPath } from '@nrwl/tao/src/utils/app-root';
+import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
@@ -16,19 +16,19 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
-  const cwd = resolve(appRootPath, nxProjectConfiguration.root);
+  const cwd = resolve(workspaceRoot, nxProjectConfiguration.root);
   dotnetClient.cwd = cwd;
   const projectFilePath = await getProjectFileForNxProject(
     nxProjectConfiguration,
   );
 
   options.output = options.output
-    ? resolve(appRootPath, options.output)
+    ? resolve(workspaceRoot, options.output)
     : undefined;
   const { publishProfile, extraParameters, ...flags } = options;
 
   dotnetClient.publish(
-    resolve(appRootPath, projectFilePath),
+    resolve(workspaceRoot, projectFilePath),
     flags,
     publishProfile,
     extraParameters,

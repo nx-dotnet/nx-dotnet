@@ -25,7 +25,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "nx workspace-schematic generate-docs",
+          "nx g @nx-dotnet/nxdoc:generate-docs",
           "nx build docs-site",
           "npx ts-node tools/scripts/publish-docs-site"
         ],

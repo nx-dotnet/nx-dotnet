@@ -1,0 +1,12 @@
+{
+  "migrations": [
+    {
+      "cli": "nx",
+      "version": "13.10.1-beta.1",
+      "description": "Update .lib.swcrc to exclude missing test files",
+      "factory": "./src/migrations/update-13-10-1/update-lib-swcrc-exclude",
+      "package": "@nrwl/js",
+      "name": "update-swcrc-exclude"
+    }
+  ]
+}
