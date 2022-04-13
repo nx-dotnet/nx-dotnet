@@ -20,6 +20,7 @@
       "description": "Which template should be used for creating the tests project?",
       "default": "nunit",
       "enum": ["nunit", "xunit", "mstest"],
+      "aliases": ["testRunner"],
       "x-prompt": {
         "message": "Which template should be used for creating the tests project",
         "type": "list",

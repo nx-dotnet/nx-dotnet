@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext, logger } from '@nrwl/devkit';
 import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 
 import { resolve } from 'path';
@@ -29,18 +29,23 @@ export default async function runExecutor(
   dotnetClient.cwd = projectDirectory;
   const { watch, ...parsedOptions } = options;
 
-  const result = dotnetClient.test(
-    resolve(appRootPath, projectFilePath),
-    watch,
-    parsedOptions,
-  );
+  try {
+    const result = dotnetClient.test(
+      resolve(appRootPath, projectFilePath),
+      watch,
+      parsedOptions,
+    );
 
-  if (watch && isChildProcess(result)) {
-    await handleChildProcessPassthrough(result);
-    await rimraf(projectDirectory + '/bin');
-    await rimraf(projectDirectory + '/obj');
+    if (watch && isChildProcess(result)) {
+      await handleChildProcessPassthrough(result);
+      await rimraf(projectDirectory + '/bin');
+      await rimraf(projectDirectory + '/obj');
+    }
+    return {
+      success: true,
+    };
+  } catch (e) {
+    logger.error(e);
+    return { success: false };
   }
-  return {
-    success: true,
-  };
 }

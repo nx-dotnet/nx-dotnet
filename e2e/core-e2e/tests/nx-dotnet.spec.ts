@@ -336,6 +336,7 @@ describe('nx-dotnet e2e', () => {
       expect(slnFile).toContain(app + '-test');
     });
   });
+
   describe('inferred targets', () => {
     let api: string;
     let projectFolder: string;
@@ -384,6 +385,37 @@ describe('nx-dotnet e2e', () => {
       writeFileSync(join(e2eDir, 'workspace.json'), workspaceJsonContents);
 
       writeFileSync(join(projectFolder, 'project.json'), projectJsonContents);
+    });
+  });
+
+  describe('@nx-dotnet/core:test', () => {
+    it('should test with xunit', () => {
+      const appProject = uniq('app');
+      const testProject = `${appProject}-test`;
+      runNxCommand(
+        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --test-runner xunit`,
+      );
+
+      expect(() => runNxCommand(`test ${testProject}`)).not.toThrow();
+
+      updateFile(
+        `apps/${testProject}/UnitTest1.cs`,
+        `using Xunit;
+
+namespace Proj.${names(appProject).className}.Test;
+
+public class UnitTest1
+{
+    // This test should fail, as the e2e test is checking for test failures.
+    [Fact]
+    public void Test1()
+    {
+      Assert.Equal(1, 2)
+    }
+}`,
+      );
+
+      expect(() => runNxCommand(`test ${testProject}`)).toThrow();
     });
   });
 });
