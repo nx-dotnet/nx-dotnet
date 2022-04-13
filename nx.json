@@ -40,6 +40,10 @@
       {
         "target": "prebuild",
         "projects": "self"
+      },
+      {
+        "target": "prebuild",
+        "projects": "dependencies"
       }
     ]
   },

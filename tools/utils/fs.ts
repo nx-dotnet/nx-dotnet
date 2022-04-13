@@ -2,6 +2,7 @@ import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { readFileSync, statSync, writeFileSync } from 'fs';
 import { join } from 'path';
+import { format } from 'prettier';
 
 export function existsSync(path: string) {
   let results;
@@ -16,7 +17,10 @@ export function readJson(path: string) {
 }
 
 export function writeJson(path: string, object: any) {
-  return writeFileSync(path, JSON.stringify(object, null, 2));
+  const contents = format(JSON.stringify(object, null, 2), {
+    parser: 'json',
+  });
+  return writeFileSync(path, contents);
 }
 
 export function readWorkspaceJson() {

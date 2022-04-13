@@ -37,7 +37,7 @@ module.exports = {
       '@semantic-release/exec',
       {
         prepareCmd:
-          'npx ts-node tools/scripts/patch-package-versions ${nextRelease.version}',
+          'npx ts-node tools/scripts/patch-package-versions --version ${nextRelease.version} --project all',
         publishCmd: [
           'npx ts-node tools/scripts/publish-all ${nextRelease.version} ${nextRelease.channel}',
           'nx deploy docs-site',
