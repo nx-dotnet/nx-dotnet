@@ -14,7 +14,7 @@ export function publishAll(version: string, tag = 'latest') {
     stdio: 'inherit',
   });
 
-  PatchPackageVersions(version, false);
+  PatchPackageVersions(version, 'all', false);
 
   const projects = Object.values(workspace.projects);
   const environment = {

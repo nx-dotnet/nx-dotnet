@@ -166,13 +166,15 @@ export class DotNetClient {
   }
 
   private logAndExecute(params: string[]): void {
-    console.log(
-      `Executing Command: ${this.cliCommand.command} "${params.join('" "')}"`,
-    );
-    spawnSync(this.cliCommand.command, params, {
+    const cmd = `${this.cliCommand.command} "${params.join('" "')}"`;
+    console.log(`Executing Command: ${cmd}`);
+    const res = spawnSync(this.cliCommand.command, params, {
       cwd: this.cwd || process.cwd(),
       stdio: 'inherit',
     });
+    if (res.status !== 0) {
+      throw new Error(`dotnet execution returned status code ${res.status}`);
+    }
   }
 
   private execute(params: string[]): Buffer {

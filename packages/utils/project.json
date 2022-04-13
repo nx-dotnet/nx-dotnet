@@ -21,7 +21,9 @@
     "prebuild": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npx ts-node tools/scripts/patch-package-versions"]
+        "commands": [
+          "npx ts-node tools/scripts/patch-package-versions --project utils"
+        ]
       }
     },
     "build": {

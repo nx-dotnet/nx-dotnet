@@ -60,7 +60,7 @@ describe('nx-dotnet e2e', () => {
     runCommand('git checkout -b "affected-tests"');
     updateFile('package.json', (f) => {
       const json = JSON.parse(f);
-      json.dependencies['@nrwl/angular'] = 'latest';
+      json.dependencies['@nrwl/angular'] = json.devDependencies['nx'];
       return JSON.stringify(json);
     });
     runPackageManagerInstall();
@@ -162,7 +162,11 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
       );
       const promise = runNxCommandAsync(`lint ${app}`).then((x) => x.stderr);
-      await expect(promise).resolves.toContain('WHITESPACE');
+      await expect(promise).rejects.toThrow(
+        expect.objectContaining({
+          message: expect.stringContaining('WHITESPACE'),
+        }),
+      );
     });
   });
 
@@ -336,6 +340,7 @@ describe('nx-dotnet e2e', () => {
       expect(slnFile).toContain(app + '-test');
     });
   });
+
   describe('inferred targets', () => {
     let api: string;
     let projectFolder: string;
@@ -384,6 +389,37 @@ describe('nx-dotnet e2e', () => {
       writeFileSync(join(e2eDir, 'workspace.json'), workspaceJsonContents);
 
       writeFileSync(join(projectFolder, 'project.json'), projectJsonContents);
+    });
+  });
+
+  describe('@nx-dotnet/core:test', () => {
+    it('should test with xunit', () => {
+      const appProject = uniq('app');
+      const testProject = `${appProject}-test`;
+      runNxCommand(
+        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --test-runner xunit`,
+      );
+
+      expect(() => runNxCommand(`test ${testProject}`)).not.toThrow();
+
+      updateFile(
+        `apps/${testProject}/UnitTest1.cs`,
+        `using Xunit;
+
+namespace Proj.${names(appProject).className}.Test;
+
+public class UnitTest1
+{
+    // This test should fail, as the e2e test is checking for test failures.
+    [Fact]
+    public void Test1()
+    {
+      Assert.Equal(1, 2)
+    }
+}`,
+      );
+
+      expect(() => runNxCommand(`test ${testProject}`)).toThrow();
     });
   });
 });

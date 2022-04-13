@@ -5,11 +5,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
-  
-
-env:
-  NX_BRANCH: main
-  NX_RUN_GROUP: smoke
 
 jobs:
   smoke:

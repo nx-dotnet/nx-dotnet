@@ -12,7 +12,9 @@ describe('dotnet client', () => {
       beforeEach(() => {
         spawnSyncSpy = jest
           .spyOn(cp, 'spawnSync')
-          .mockImplementation(jest.fn());
+          .mockReturnValue({ status: 0 } as Partial<
+            cp.SpawnSyncReturns<Buffer>
+          > as cp.SpawnSyncReturns<Buffer>);
       });
 
       afterEach(() => {

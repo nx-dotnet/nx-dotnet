@@ -4,6 +4,8 @@ import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 import { execSync } from 'child_process';
 import { join } from 'path';
 
+import * as yargsParser from 'yargs-parser';
+
 import {
   existsSync,
   getWorkspacePackages,
@@ -14,6 +16,7 @@ import {
 
 export function PatchPackageVersions(
   newVersion: string,
+  pkg: string,
   updateGit = true,
   prebuild = false,
 ) {
@@ -32,7 +35,10 @@ export function PatchPackageVersions(
     });
   }
 
-  const projects = Object.values(workspace.projects);
+  const projects =
+    pkg === 'all'
+      ? Object.values(workspace.projects)
+      : [workspace.projects[pkg]];
 
   projects.forEach((projectConfiguration, idx) => {
     if (!projectConfiguration.targets?.build) {
@@ -89,5 +95,6 @@ function patchDependenciesSection(
 }
 
 if (require.main === module) {
-  PatchPackageVersions(process.argv[2], false, true);
+  const args = yargsParser(process.argv);
+  PatchPackageVersions(args.version, args.project, false, true);
 }
