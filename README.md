@@ -5,9 +5,7 @@
 # NxDotnet
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Join the chat at https://gitter.im/nx-dotnet-plugin/community](https://badges.gitter.im/nx-dotnet-plugin/community.svg)](https://gitter.im/nx-dotnet-plugin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Run CI checks](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml)
@@ -106,6 +104,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/asinino"><img src="https://avatars.githubusercontent.com/u/32019405?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paulo Oliveira</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Documentation">📖</a> <a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=asinino" title="Code">💻</a> <a href="https://github.com/nx-dotnet/nx-dotnet/issues?q=author%3Aasinino" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/dasco144"><img src="https://avatars.githubusercontent.com/u/10575019?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dasco144</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=dasco144" title="Code">💻</a></td>
   </tr>
 </table>
 
