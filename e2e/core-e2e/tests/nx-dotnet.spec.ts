@@ -60,7 +60,7 @@ describe('nx-dotnet e2e', () => {
     runCommand('git checkout -b "affected-tests"');
     updateFile('package.json', (f) => {
       const json = JSON.parse(f);
-      json.dependencies['@nrwl/angular'] = 'latest';
+      json.dependencies['@nrwl/angular'] = json.devDependencies['nx'];
       return JSON.stringify(json);
     });
     runPackageManagerInstall();
@@ -162,7 +162,11 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
       );
       const promise = runNxCommandAsync(`lint ${app}`).then((x) => x.stderr);
-      await expect(promise).resolves.toContain('WHITESPACE');
+      await expect(promise).rejects.toThrow(
+        expect.objectContaining({
+          message: expect.stringContaining('WHITESPACE'),
+        }),
+      );
     });
   });
 
