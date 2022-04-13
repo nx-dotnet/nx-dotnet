@@ -3,7 +3,8 @@ const { join } = require('path');
 const parser = require('yargs-parser');
 
 const cwd = join(__dirname, '../../../');
-const { verbose } = parser(process.argv, { boolean: ['verbose'] });
+let { verbose } = parser(process.argv, { boolean: ['verbose'] });
+verbose ||= process.env.VERBOSE_LOGGING;
 
 export function getChangedFiles(
   base = 'master',
@@ -11,6 +12,9 @@ export function getChangedFiles(
 ): { changedFiles: string[]; newFiles: string[] } {
   const ancestor = execSync(`git merge-base HEAD ${base} `).toString().trim();
   let cmd = `git diff --name-only ${ancestor} -- ${directory}`;
+  if (verbose) {
+    cmd += ' --verbose';
+  }
   console.log(`📁 Finding changed files with "${cmd}"`);
   const changedFiles: string[] = execSync(cmd, {
     cwd,
@@ -27,7 +31,13 @@ export function getChangedFiles(
 }
 
 console.log(`📖 Checking for documentation changes`);
-execSync('nx g @nx-dotnet/nxdoc:generate-docs');
+let generateCmd = 'nx g @nx-dotnet/nxdoc:generate-docs';
+if (verbose) {
+  generateCmd += ' --verbose-logging';
+}
+execSync(generateCmd, {
+  stdio: verbose ? 'inherit' : 'ignore',
+});
 const { changedFiles, newFiles } = getChangedFiles('HEAD', 'docs');
 if (changedFiles.length) {
   console.log(`❌ Found changes in docs files`);

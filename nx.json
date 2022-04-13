@@ -50,7 +50,7 @@
   "generators": {
     "@nx-dotnet/nxdoc:generate-docs": {
       "outputDirectory": "docs",
-      "gettingStartedFile": "<src>/readme.md"
+      "gettingStartedFile": "<src>/README.md"
     }
   },
   "cli": {

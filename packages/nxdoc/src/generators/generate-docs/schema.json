@@ -11,7 +11,7 @@
     "gettingStartedFile": {
       "type": "string",
       "description": "File contents to place before the API reference section for each package. <src> is replaced by the package's root.",
-      "default": "<src>/readme.md"
+      "default": "<src>/README.md"
     },
     "skipFrontMatter": {
       "type": "boolean",
@@ -21,6 +21,11 @@
     "skipFormat": {
       "type": "boolean",
       "description": "Skips running the output through prettier",
+      "default": false
+    },
+    "verboseLogging": {
+      "type": "boolean",
+      "description": "Print some additional logs during doc generation",
       "default": false
     }
   },

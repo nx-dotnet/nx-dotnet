@@ -17,3 +17,7 @@
 ### skipFormat
 
 - (boolean): Skips running the output through prettier
+
+### verboseLogging
+
+- (boolean): Print some additional logs during doc generation

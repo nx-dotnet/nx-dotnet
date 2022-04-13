@@ -31,6 +31,14 @@ jobs:
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx affected -- --target=lint --base=origin/master --parallel
 
+  documentation-check:
+    runs-on: ubuntu-latest
+    name: Check for documentation changes
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - run: yarn documentation:check --verbose
+
   commitlint:
     runs-on: ubuntu-latest
     name: Check commit message for consistency
