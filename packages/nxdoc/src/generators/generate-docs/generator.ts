@@ -34,10 +34,15 @@ export default async function (host: Tree, options: Schema) {
       '<src>',
       project.root,
     );
-
+    if (options.verboseLogging) {
+      console.log('Loading getting started file:', gettingStartedFile);
+    }
     gettingStartedFile = host.exists(gettingStartedFile)
       ? gettingStartedFile
       : null;
+    if (!gettingStartedFile && options.verboseLogging) {
+      console.log('Getting started file not found');
+    }
 
     const generatorsCollection: GeneratorsCollection = project.generators
       ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)

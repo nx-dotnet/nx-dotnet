@@ -3,4 +3,5 @@ export interface Schema {
   skipFrontMatter: boolean;
   skipFormat: boolean;
   gettingStartedFile: string;
+  verboseLogging: boolean;
 }
