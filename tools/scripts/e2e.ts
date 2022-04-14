@@ -56,6 +56,7 @@ async function runTest() {
           stdio: [0, 1, 2],
           env: {
             ...process.env,
+            NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
             NX_TERMINAL_CAPTURE_STDERR: 'true',
             NPM_CONFIG_REGISTRY: 'http://localhost:4872',
             YARN_REGISTRY: 'http://localhost:4872',
@@ -67,6 +68,7 @@ async function runTest() {
         stdio: [0, 1, 2],
         env: {
           ...process.env,
+          NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
           NX_TERMINAL_CAPTURE_STDERR: 'true',
           NPM_CONFIG_REGISTRY: 'http://localhost:4872',
           YARN_REGISTRY: 'http://localhost:4872',
