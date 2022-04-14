@@ -1,22 +1,20 @@
-import * as _glob from 'glob';
+import * as fg from 'fast-glob';
 import { workspaceRoot } from 'nx/src/utils/app-root';
 import { join } from 'path';
 
 const globOptions = {
   cwd: workspaceRoot,
+  ignore: ['**/bin/**', '**/obj/**'],
 };
 
 /**
- * Wraps the glob package in a promise api.
+ * Wraps the fast-glob package.
  * @returns array of file paths
  */
 export function glob(path: string, cwd?: string): Promise<string[]> {
-  return new Promise((resolve, reject) =>
-    _glob(
-      path,
-      !cwd ? globOptions : { cwd: join(workspaceRoot, cwd) },
-      (err, matches) => (err ? reject() : resolve(matches)),
-    ),
+  return fg(
+    path,
+    !cwd ? globOptions : { ...globOptions, cwd: join(workspaceRoot, cwd) },
   );
 }
 
@@ -40,7 +38,7 @@ export function findProjectFileInPath(path: string): Promise<string> {
 }
 
 export function findProjectFileInPathSync(path: string): string {
-  const results = _glob.sync(`${path}/**/*.*proj`, globOptions);
+  const results = fg.sync(`${path}/**/*.*proj`, globOptions);
   if (!results || results.length === 0) {
     throw new Error(
       "Unable to find a build-able project within project's source directory!",
