@@ -2,62 +2,30 @@ name: Run PR checks
 
 on: pull_request
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Building affected apps
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=build --base=origin/master --parallel
-      - uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist
+  main:
+    name: Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.2
+    with:
+      main-branch-name: 'master'
+      parallel-commands: |
+        npx nx-cloud record yarn nx workspace-lint
+        npx nx-cloud record yarn nx format:check
+        npx nx-cloud record yarn documentation:check --verbose
+        npx nx-cloud record yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
+      parallel-commands-on-agents: |
+        yarn nx affected -- --target=lint --base=origin/master --parallel 3
+        yarn nx affected -- --target=build --base=origin/master --parallel 3
+        yarn nx affected -- --target=test --base=origin/master --parallel 3
+      final-commands: |
+        yarn e2e
 
-  test:
-    runs-on: ubuntu-latest
-    name: Testing affected apps
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=test --base=origin/master --parallel
-
-  lint:
-    runs-on: ubuntu-latest
-    name: Linting affected apps
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn nx affected -- --target=lint --base=origin/master --parallel
-
-  documentation-check:
-    runs-on: ubuntu-latest
-    name: Check for documentation changes
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn documentation:check --verbose
-
-  commitlint:
-    runs-on: ubuntu-latest
-    name: Check commit message for consistency
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - run: yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
-
-  e2e:
-    runs-on: ubuntu-latest
-    name: E2E testing affected apps
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.4.5
-      - name: Download a single artifact
-        continue-on-error: true
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
-      - run: yarn e2e
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.2
+    with:
+      number-of-agents: 3
