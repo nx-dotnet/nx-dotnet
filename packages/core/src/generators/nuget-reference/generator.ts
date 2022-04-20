@@ -17,7 +17,12 @@ export default async function (
   options: NugetReferenceGeneratorSchema,
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
-  const { packageName, project: projectName, ...params } = options;
+  const {
+    packageName,
+    project: projectName,
+    allowVersionMismatch,
+    ...params
+  } = options;
   const project = readProjectConfiguration(host, projectName);
   const projectFilePath = await getProjectFileForNxProject(project);
 
@@ -26,7 +31,7 @@ export default async function (
   const resolvedVersion = await resolveVersionMismatch(
     options.version,
     configuredPkgVersion,
-    options.allowVersionMismatch,
+    allowVersionMismatch,
     packageName,
   );
   config.nugetPackages[packageName] = resolvedVersion;

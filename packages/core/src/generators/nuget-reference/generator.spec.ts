@@ -85,7 +85,7 @@ describe('nuget-reference generator', () => {
     expect(mock.addPackageReference).toHaveBeenCalledWith(
       projectFilePath,
       options.packageName,
-      { allowVersionMismatch: false, version: '1.2.3' },
+      { version: '1.2.3' },
     );
   });
 });
