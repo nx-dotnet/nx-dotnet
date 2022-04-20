@@ -65,6 +65,17 @@ describe('dotnet client', () => {
         `);
         expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
       });
+
+      it('should expand environment variables', () => {
+        process.env.FOO = 'bar';
+        dotnetClient.publish(
+          'my-project',
+          undefined,
+          undefined,
+          '-p:Name=$FOO',
+        );
+        expect(spawnSyncSpy.mock.calls[0][1]).toContain('-p:Name=bar');
+      });
     });
   });
 });
