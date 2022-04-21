@@ -1,3 +1,10 @@
+## [1.9.11](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.10...v1.9.11) (2022-04-21)
+
+### Bug Fixes
+
+- **core:** replace glob with fast-glob to speed up dep-graph calculation ([#414](https://github.com/nx-dotnet/nx-dotnet/issues/414)) ([5db4ca9](https://github.com/nx-dotnet/nx-dotnet/commit/5db4ca97b15be49080ff1e18e2fa016d7c86deec)), closes [#410](https://github.com/nx-dotnet/nx-dotnet/issues/410)
+- **dotnet:** expand env vars in cli parameters ([#422](https://github.com/nx-dotnet/nx-dotnet/issues/422)) ([c2db0cd](https://github.com/nx-dotnet/nx-dotnet/commit/c2db0cd3700d29aef682b3be482dcb82d262b0b6))
+
 ## [1.9.10](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.9...v1.9.10) (2022-04-13)
 
 ### Bug Fixes
