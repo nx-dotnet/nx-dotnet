@@ -166,8 +166,13 @@ export class DotNetClient {
   }
 
   private logAndExecute(params: string[]): void {
+    params = params.map((param) =>
+      param.replace(/\$(\w+)/, (match, varName) => process.env[varName] ?? ''),
+    );
+
     const cmd = `${this.cliCommand.command} "${params.join('" "')}"`;
     console.log(`Executing Command: ${cmd}`);
+
     const res = spawnSync(this.cliCommand.command, params, {
       cwd: this.cwd || process.cwd(),
       stdio: 'inherit',
