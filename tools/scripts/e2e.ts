@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { copySync, removeSync } from 'fs-extra';
 
-import { e2eRoot } from '../../e2e/utils';
+import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { startCleanVerdaccioInstance } from './local-registry/setup';
 import { publishAll } from './publish-all';
 
@@ -40,7 +40,7 @@ async function runTest() {
 
   if (process.argv[5] != '--rerun') {
     removeSync('./dist');
-    removeSync(e2eRoot);
+    removeSync(tmpProjPath());
   }
 
   try {
