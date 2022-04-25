@@ -15,6 +15,7 @@ import {
   uniq,
   updateFile,
 } from '@nrwl/nx-plugin/testing';
+import { runCommandUntil } from '../../utils';
 
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { join } from 'path';
@@ -421,6 +422,23 @@ public class UnitTest1
       );
 
       expect(() => runNxCommand(`test ${testProject}`)).toThrow();
+    });
+
+    it('should work with watch', async () => {
+      const appProject = uniq('app');
+      const testProject = `${appProject}-test`;
+      runNxCommand(
+        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --test-runner xunit`,
+      );
+      const p = runCommandUntil(
+        `test ${testProject} --watch`,
+        (output) =>
+          output.includes(
+            'Waiting for a file to change before restarting dotnet...',
+          ),
+        { kill: true },
+      );
+      await expect(p).resolves.not.toThrow();
     });
   });
 });

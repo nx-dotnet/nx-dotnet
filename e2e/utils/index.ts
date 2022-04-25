@@ -1,5 +1,4 @@
-import { detectPackageManager } from '@nrwl/tao/src/shared/package-manager';
-
+import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { ChildProcess, exec, execSync } from 'child_process';
 import {
   copySync,
@@ -17,6 +16,8 @@ import * as path from 'path';
 import { dirSync } from 'tmp';
 
 import isCI = require('is-ci');
+import { workspaceConfigName } from 'nx/src/config/workspaces';
+import { detectPackageManager } from '@nrwl/devkit';
 interface RunCmdOpts {
   silenceError?: boolean;
   env?: Record<string, string> | NodeJS.ProcessEnv;
@@ -24,146 +25,12 @@ interface RunCmdOpts {
   silent?: boolean;
 }
 
-export function currentCli() {
-  return process.env.SELECTED_CLI ?? 'nx';
-}
-
-export const e2eRoot = isCI ? dirSync({ prefix: 'nx-e2e-' }).name : `./tmp`;
-export const e2eCwd = `${e2eRoot}/${currentCli()}`;
-ensureDirSync(e2eCwd);
-
-let projName: string;
-
 export function uniq(prefix: string) {
   return `${prefix}${Math.floor(Math.random() * 10000000)}`;
 }
 
-export function workspaceConfigName() {
-  return currentCli() === 'angular' ? 'angular.json' : 'workspace.json';
-}
-
-export function updateWorkspaceConfig(
-  callback: (json: { [key: string]: any }) => Object,
-) {
-  const file = workspaceConfigName();
-  updateFile(file, JSON.stringify(callback(readJson(file)), null, 2));
-}
-
-export function runCreateWorkspace(
-  name: string,
-  {
-    preset,
-    appName,
-    style,
-    base,
-    packageManager,
-    cli,
-    extraArgs,
-  }: {
-    preset: string;
-    appName?: string;
-    style?: string;
-    base?: string;
-    packageManager?: 'npm' | 'yarn' | 'pnpm';
-    cli?: string;
-    extraArgs?: string;
-  },
-) {
-  projName = name;
-
-  const pm = getPackageManagerCommand({ packageManager });
-
-  const linterArg =
-    preset === 'angular' || preset === 'angular-nest' ? ' --linter=tslint' : '';
-  let command = `${pm.createWorkspace} ${name} --cli=${
-    cli || currentCli()
-  } --preset=${preset} ${linterArg} --no-nxCloud --no-interactive`;
-  if (appName) {
-    command += ` --appName=${appName}`;
-  }
-  if (style) {
-    command += ` --style=${style}`;
-  }
-
-  if (base) {
-    command += ` --defaultBase="${base}"`;
-  }
-
-  if (packageManager) {
-    command += ` --package-manager=${packageManager}`;
-  }
-
-  if (extraArgs) {
-    command += ` ${extraArgs}`;
-  }
-
-  const create = execSync(command, {
-    cwd: e2eCwd,
-    stdio: [0, 1, 2],
-    env: process.env,
-  });
-  return create ? create.toString() : '';
-}
-
-export function packageInstall(pkg: string, projName?: string) {
-  const cwd = projName ? `${e2eCwd}/${projName}` : tmpProjPath();
-  const pm = getPackageManagerCommand({ path: cwd });
-  const install = execSync(`${pm.addDev} ${pkg}`, {
-    cwd,
-    // ...{ stdio: ['pipe', 'pipe', 'pipe'] },
-    ...{ stdio: [0, 1, 2] },
-    env: process.env,
-  });
-  return install ? install.toString() : '';
-}
-
-export function runNgNew(): string {
-  return execSync(`../../node_modules/.bin/ng new proj --no-interactive`, {
-    cwd: e2eCwd,
-    env: process.env,
-  }).toString();
-}
-
 export function getSelectedPackageManager(): 'npm' | 'yarn' | 'pnpm' {
   return process.env.SELECTED_PM as 'npm' | 'yarn' | 'pnpm';
-}
-
-/**
- * Sets up a new project in the temporary project path
- * for the currently selected CLI.
- */
-export function newProject({ name = uniq('proj') } = {}): string {
-  const packageManager = getSelectedPackageManager();
-
-  try {
-    const useBackupProject = packageManager !== 'pnpm';
-    const projScope = useBackupProject ? 'proj' : name;
-
-    if (!useBackupProject || !directoryExists(tmpBackupProjPath())) {
-      runCreateWorkspace(projScope, { preset: 'empty', packageManager });
-
-      // Temporary hack to prevent installing with `--frozen-lockfile`
-      if (isCI && packageManager === 'pnpm') {
-        updateFile('.npmrc', 'prefer-frozen-lockfile=false');
-      }
-
-      const packages = [`@nx-dotnet/core`, `@nx-dotnet/typescript`];
-      packageInstall(packages.join(` `), projScope);
-
-      if (useBackupProject) {
-        moveSync(`${e2eCwd}/proj`, `${tmpBackupProjPath()}`);
-      }
-    }
-    projName = name;
-    if (useBackupProject) {
-      copySync(`${tmpBackupProjPath()}`, `${tmpProjPath()}`);
-    }
-    return projScope;
-  } catch (e: any) {
-    console.log(`Failed to set up project for e2e tests.`);
-    console.log(e.message);
-    throw e;
-  }
 }
 
 // Useful in order to cleanup space during CI to prevent `No space left on device` exceptions
@@ -255,38 +122,6 @@ export function runCLIAsync(
   );
 }
 
-export function runNgAdd(
-  command?: string,
-  opts: RunCmdOpts = {
-    silenceError: false,
-    env: process.env as Record<string, string>,
-    cwd: tmpProjPath(),
-  },
-): string {
-  try {
-    packageInstall('@nrwl/workspace');
-    return execSync(
-      `./node_modules/.bin/ng g @nrwl/workspace:ng-add ${command}`,
-      {
-        cwd: tmpProjPath(),
-        env: opts.env as any,
-      },
-    )
-      .toString()
-      .replace(
-        /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-        '',
-      );
-  } catch (e: any) {
-    if (opts.silenceError) {
-      return e.stdout.toString();
-    } else {
-      console.log(e.stdout.toString(), e.stderr.toString());
-      throw e;
-    }
-  }
-}
-
 export function runCLI(
   command?: string,
   opts: RunCmdOpts = {
@@ -354,7 +189,7 @@ export function runCommand(command: string): string {
  */
 function setMaxWorkers() {
   if (isCI) {
-    const workspaceFile = workspaceConfigName();
+    const workspaceFile = workspaceConfigName(tmpProjPath());
     const workspace = readJson(workspaceFile);
 
     Object.keys(workspace.projects).forEach((appName) => {
@@ -466,17 +301,9 @@ export function getSize(filePath: string): number {
   return statSync(filePath).size;
 }
 
-export function tmpProjPath(path?: string) {
-  return path ? `${e2eCwd}/${projName}/${path}` : `${e2eCwd}/${projName}`;
-}
-
-function tmpBackupProjPath(path?: string) {
-  return path ? `${e2eCwd}/proj-backup/${path}` : `${e2eCwd}/proj-backup`;
-}
-
 export function getPackageManagerCommand({
-  path = tmpProjPath(),
-  packageManager = detectPackageManager(path),
+  p = tmpProjPath() as string,
+  packageManager = detectPackageManager(p),
   scriptsPrependNodePath = true,
 } = {}): {
   createWorkspace: string;

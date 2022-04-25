@@ -73,8 +73,7 @@ export class DotNetClient {
     if (!watch) {
       return this.logAndExecute(params);
     } else {
-      const slicedParams = params.slice(1).filter((x) => x.length);
-      return this.logAndSpawn(slicedParams);
+      return this.logAndSpawn(params);
     }
   }
 
@@ -180,17 +179,6 @@ export class DotNetClient {
     if (res.status !== 0) {
       throw new Error(`dotnet execution returned status code ${res.status}`);
     }
-  }
-
-  private execute(params: string[]): Buffer {
-    return spawnSync(this.cliCommand.command, params, {
-      cwd: this.cwd || process.cwd(),
-    })
-      .output.filter((buf) => buf !== null)
-      .reduce(
-        (acc, buf) => Buffer.concat([acc as Buffer, buf as Buffer]),
-        Buffer.from(''),
-      ) as Buffer;
   }
 
   private logAndSpawn(params: string[]): ChildProcess {
