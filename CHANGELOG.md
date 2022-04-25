@@ -1,3 +1,9 @@
+## [1.9.12](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.11...v1.9.12) (2022-04-25)
+
+### Bug Fixes
+
+- **dotnet:** dotnet watch --project ... test should work ([#426](https://github.com/nx-dotnet/nx-dotnet/issues/426)) ([1575dda](https://github.com/nx-dotnet/nx-dotnet/commit/1575dda3ffa96ad956bfd75e4cd283188bb6fb5b)), closes [#425](https://github.com/nx-dotnet/nx-dotnet/issues/425)
+
 ## [1.9.11](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.10...v1.9.11) (2022-04-21)
 
 ### Bug Fixes
