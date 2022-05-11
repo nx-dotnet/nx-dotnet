@@ -27,8 +27,7 @@
     },
     "template": {
       "type": "string",
-      "description": "The template to instantiate when the command is invoked. Each template might have specific options you can pass.",
-      "x-prompt": "What template should the project be initialized with? (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new#template-options)"
+      "description": "The template to instantiate when the command is invoked. Each template might have specific options you can pass."
     },
     "language": {
       "type": "string",
@@ -74,5 +73,5 @@
       "aliases": ["solution", "s"]
     }
   },
-  "required": ["name", "template", "language", "testTemplate"]
+  "required": ["name", "language", "testTemplate"]
 }

@@ -18,7 +18,7 @@ Generate a dotnet project under the library directory.
 
 - (string): A directory where the project is placed
 
-### <span className="required">template</span>
+### template
 
 - (string): The template to instantiate when the command is invoked. Each template might have specific options you can pass.
 

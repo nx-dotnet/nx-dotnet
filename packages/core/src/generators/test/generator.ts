@@ -7,7 +7,7 @@ import { normalizeOptions } from '../utils/generate-project';
 import { GenerateTestProject } from '../utils/generate-test-project';
 import { NxDotnetGeneratorSchema } from './schema';
 
-export default function (
+export default async function (
   host: Tree,
   options: NxDotnetGeneratorSchema,
   dotnetClient = new DotNetClient(dotnetFactory()),
@@ -34,7 +34,10 @@ export default function (
     projectType: project.projectType ?? 'library',
   };
 
-  const normalizedOptions = normalizeOptions(host, projectGeneratorOptions);
+  const normalizedOptions = await normalizeOptions(
+    host,
+    projectGeneratorOptions,
+  );
 
   return GenerateTestProject(host, normalizedOptions, dotnetClient);
 }

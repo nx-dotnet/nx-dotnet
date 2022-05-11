@@ -22,7 +22,7 @@ export async function GenerateTestProject(
   dotnetClient: DotNetClient,
 ) {
   if (!('projectRoot' in schema)) {
-    schema = normalizeOptions(host, schema);
+    schema = await normalizeOptions(host, schema);
   }
 
   const suffix = schema.testProjectNameSuffix || 'test';

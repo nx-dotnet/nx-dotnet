@@ -1,5 +1,5 @@
 import { DotNetClient } from './dotnet.client';
-import { mockDotnetFactory } from './dotnet.factory';
+import { dotnetFactory, mockDotnetFactory } from './dotnet.factory';
 import * as cp from 'child_process';
 
 describe('dotnet client', () => {
@@ -76,6 +76,34 @@ describe('dotnet client', () => {
         );
         expect(spawnSyncSpy.mock.calls[0][1]).toContain('-p:Name=bar');
       });
+    });
+  });
+
+  describe('listInstalledTemplates', () => {
+    it('should list default templates', () => {
+      const client = new DotNetClient(dotnetFactory());
+      const results = client
+        .listInstalledTemplates()
+        .flatMap((x) => x.shortNames);
+      expect(results).toContain('webapi');
+      expect(results).toContain('console');
+      expect(results).toContain('webapp');
+    });
+
+    it('should filter by search', () => {
+      const client = new DotNetClient(dotnetFactory());
+      const results = client.listInstalledTemplates({ search: 'asp' });
+      for (const result of results) {
+        expect(result.templateName).toMatch(/^asp.*/i);
+      }
+    });
+
+    it('should filter by language', () => {
+      const client = new DotNetClient(dotnetFactory());
+      const results = client.listInstalledTemplates({ language: 'C#' });
+      for (const result of results) {
+        expect(result.languages).toContain('C#');
+      }
     });
   });
 });

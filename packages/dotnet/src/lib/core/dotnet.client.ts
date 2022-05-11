@@ -1,5 +1,6 @@
 import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
+import * as semver from 'semver';
 
 import {
   addPackageKeyMap,
@@ -10,26 +11,92 @@ import {
   dotnetNewOptions,
   dotnetPublishOptions,
   dotnetRunOptions,
-  dotnetTemplate,
+  KnownDotnetTemplates,
   dotnetTestOptions,
   formatKeyMap,
   newKeyMap,
   publishKeyMap,
   runKeyMap,
   testKeyMap,
+  DotnetTemplate,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
 
-  new(template: dotnetTemplate, parameters?: dotnetNewOptions): void {
+  new(template: KnownDotnetTemplates, parameters?: dotnetNewOptions): void {
     const params = [`new`, template];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, newKeyMap);
       params.push(...getSpawnParameterArray(parameters));
     }
     return this.logAndExecute(params);
+  }
+
+  listInstalledTemplates(opts?: { search?: string; language?: string }) {
+    const version = this.getSdkVersion();
+    const params: string[] = ['new'];
+    if (semver.lt(version, '6.0.100') && opts?.search) {
+      params.push(opts.search);
+    }
+    if (semver.gte(version, '7.0.100')) {
+      params.push('list');
+    } else {
+      params.push('--list');
+    }
+    if (semver.gte(version, '6.0.100') && opts?.search) {
+      params.push(opts.search);
+    }
+    if (opts?.language) {
+      params.push('--language', opts.language);
+    }
+    const output = this.spawnAndGetOutput(params);
+    return this.parseDotnetNewListOutput(output);
+  }
+
+  private parseDotnetNewListOutput(output: string) {
+    const lines = output.split('\n').filter((x) => !!x);
+    const sepLineIdx = lines.findIndex((line) => line.startsWith('----'));
+    if (!sepLineIdx) {
+      throw new Error('Unable to parse `dotnet new --list` output');
+    }
+    const sepLine = lines[sepLineIdx];
+    const columnIndicies: number[] = [];
+    let check = true;
+    for (let i = 0; i < sepLine.length; i++) {
+      if (sepLine[i] === '-' && check) {
+        columnIndicies.push(i);
+        check = false;
+      } else if (sepLine[i] !== '-') {
+        check = true;
+      }
+    }
+    const fieldLine = lines[sepLineIdx - 1];
+    const fields = columnIndicies.map((start, idx) => {
+      const end = columnIndicies[idx + 1] || fieldLine.length;
+      return {
+        start,
+        end,
+        name: fieldLine.substring(start, end).trim(),
+      };
+    });
+    const entries = lines.slice(sepLineIdx + 1).map((l) =>
+      fields.reduce((obj, field) => {
+        const value = l.slice(field.start, field.end).trim();
+        if (field.name === 'Short Name') {
+          obj.shortNames = value.split(',');
+        } else if (field.name === 'Template Name') {
+          obj.templateName = value;
+        } else if (field.name === 'Language') {
+          obj.languages = value.replace(/\[|\]/g, '').split(',');
+        } else if (field.name === 'Tags') {
+          obj.tags = value.split('/');
+        }
+        return obj;
+      }, {} as DotnetTemplate),
+    );
+    return entries;
   }
 
   build(project: string, parameters?: dotnetBuildOptions): void {
@@ -179,6 +246,23 @@ export class DotNetClient {
     if (res.status !== 0) {
       throw new Error(`dotnet execution returned status code ${res.status}`);
     }
+  }
+
+  private spawnAndGetOutput(params: string[]): string {
+    params = params.map((param) =>
+      param.replace(/\$(\w+)/, (match, varName) => process.env[varName] ?? ''),
+    );
+
+    const res = spawnSync(this.cliCommand.command, params, {
+      cwd: this.cwd || process.cwd(),
+      stdio: 'pipe',
+    });
+    if (res.status !== 0) {
+      throw new Error(
+        `dotnet execution returned status code ${res.status} \n ${res.stderr}`,
+      );
+    }
+    return res.stdout.toString();
   }
 
   private logAndSpawn(params: string[]): ChildProcess {

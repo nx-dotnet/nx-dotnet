@@ -1,4 +1,4 @@
-export type dotnetTemplate =
+export type KnownDotnetTemplates =
   | 'console'
   | 'classlib'
   | 'wpf'
@@ -27,3 +27,10 @@ export type dotnetTemplate =
   | 'webapi'
   | 'globaljson'
   | string;
+
+export interface DotnetTemplate {
+  templateName: string;
+  shortNames: string[];
+  languages?: string[];
+  tags?: string[];
+}
