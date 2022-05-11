@@ -10,8 +10,6 @@
     "nxdoc": "packages/nxdoc",
     "nxdoc-e2e": "e2e/nxdoc-e2e",
     "smoke-core": "smoke/core",
-    "typescript": "packages/typescript",
-    "typescript-e2e": "e2e/typescript-e2e",
     "utils": "packages/utils"
   }
 }
