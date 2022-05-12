@@ -18,9 +18,9 @@ import {
   publishKeyMap,
   runKeyMap,
   testKeyMap,
-  DotnetTemplate,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
+import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
 
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
@@ -52,53 +52,7 @@ export class DotNetClient {
       params.push('--language', opts.language);
     }
     const output = this.spawnAndGetOutput(params);
-    return this.parseDotnetNewListOutput(output);
-  }
-
-  private parseDotnetNewListOutput(output: string) {
-    const lines = output.split('\n').filter((x) => !!x);
-    const sepLineIdx = lines.findIndex((line) => line.startsWith('----'));
-    if (!sepLineIdx) {
-      throw new Error('Unable to parse `dotnet new --list` output');
-    }
-    const sepLine = lines[sepLineIdx];
-    const columnIndicies: number[] = [];
-    let check = true;
-    for (let i = 0; i < sepLine.length; i++) {
-      if (sepLine[i] === '-' && check) {
-        columnIndicies.push(i);
-        check = false;
-      } else if (sepLine[i] !== '-') {
-        check = true;
-      }
-    }
-    const fieldLine = lines[sepLineIdx - 1];
-    const fields = columnIndicies.map((start, idx) => {
-      const end = columnIndicies[idx + 1] || fieldLine.length;
-      return {
-        start,
-        end,
-        name: fieldLine.substring(start, end).trim(),
-      };
-    });
-    return lines.slice(sepLineIdx + 1).map((l) =>
-      fields.reduce((obj, field) => {
-        const value = l.slice(field.start, field.end).trim();
-        if (field.name === 'Short Name') {
-          obj.shortNames = value.split(',');
-        } else if (
-          field.name === 'Template Name' ||
-          field.name === 'Templates'
-        ) {
-          obj.templateName = value;
-        } else if (field.name === 'Language') {
-          obj.languages = value.replace(/[\[\]]/g, '').split(',');
-        } else if (field.name === 'Tags') {
-          obj.tags = value.split('/');
-        }
-        return obj;
-      }, {} as DotnetTemplate),
-    );
+    return parseDotnetNewListOutput(output);
   }
 
   build(project: string, parameters?: dotnetBuildOptions): void {
