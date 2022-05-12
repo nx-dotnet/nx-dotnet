@@ -9,10 +9,6 @@ export function promptForTemplate(
 ): string | Promise<string> {
   const available = client.listInstalledTemplates({ search, language });
 
-  if (available.length === 1) {
-    return available[0].shortNames[0];
-  }
-
   if (search) {
     const exactMatch = available.find((x) => x.shortNames.includes(search));
     if (exactMatch) {
@@ -27,7 +23,7 @@ export function promptForTemplate(
       message:
         'What template should the project be initialized with? (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new#template-options) ',
       choices: available.map((a) => ({
-        value: a.shortNames,
+        value: a.shortNames[0],
         message: a.templateName,
       })),
     },

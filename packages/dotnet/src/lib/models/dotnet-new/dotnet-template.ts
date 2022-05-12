@@ -30,7 +30,7 @@ export type KnownDotnetTemplates =
 
 export interface DotnetTemplate {
   templateName: string;
-  shortNames: string[];
+  shortNames: [string, ...string[]];
   languages?: string[];
   tags?: string[];
 }

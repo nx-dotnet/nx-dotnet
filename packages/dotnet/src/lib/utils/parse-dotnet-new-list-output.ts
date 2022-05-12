@@ -67,7 +67,7 @@ export function parseDotnetNewListOutput(rawOutput: string): DotnetTemplate[] {
       const value = l.slice(field.start, field.end).trim();
       // Map field name + value into expected form
       if (field.name === 'Short Name') {
-        obj.shortNames = value.split(',');
+        obj.shortNames = value.split(',') as [string, ...string[]];
       } else if (field.name === 'Template Name' || field.name === 'Templates') {
         obj.templateName = value;
       } else if (field.name === 'Language') {

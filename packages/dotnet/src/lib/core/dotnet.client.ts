@@ -18,6 +18,7 @@ import {
   publishKeyMap,
   runKeyMap,
   testKeyMap,
+  DotnetTemplate,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
 import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
@@ -34,7 +35,10 @@ export class DotNetClient {
     return this.logAndExecute(params);
   }
 
-  listInstalledTemplates(opts?: { search?: string; language?: string }) {
+  listInstalledTemplates(opts?: {
+    search?: string;
+    language?: string;
+  }): DotnetTemplate[] {
     const version = this.getSdkVersion();
     const params: string[] = ['new'];
     if (semver.lt(version, '6.0.100') && opts?.search) {
