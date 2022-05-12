@@ -81,22 +81,24 @@ export class DotNetClient {
         name: fieldLine.substring(start, end).trim(),
       };
     });
-    const entries = lines.slice(sepLineIdx + 1).map((l) =>
+    return lines.slice(sepLineIdx + 1).map((l) =>
       fields.reduce((obj, field) => {
         const value = l.slice(field.start, field.end).trim();
         if (field.name === 'Short Name') {
           obj.shortNames = value.split(',');
-        } else if (field.name === 'Template Name') {
+        } else if (
+          field.name === 'Template Name' ||
+          field.name === 'Templates'
+        ) {
           obj.templateName = value;
         } else if (field.name === 'Language') {
-          obj.languages = value.replace(/\[|\]/g, '').split(',');
+          obj.languages = value.replace(/[\[\]]/g, '').split(',');
         } else if (field.name === 'Tags') {
           obj.tags = value.split('/');
         }
         return obj;
       }, {} as DotnetTemplate),
     );
-    return entries;
   }
 
   build(project: string, parameters?: dotnetBuildOptions): void {
@@ -233,7 +235,7 @@ export class DotNetClient {
 
   private logAndExecute(params: string[]): void {
     params = params.map((param) =>
-      param.replace(/\$(\w+)/, (match, varName) => process.env[varName] ?? ''),
+      param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
 
     const cmd = `${this.cliCommand.command} "${params.join('" "')}"`;
@@ -250,7 +252,7 @@ export class DotNetClient {
 
   private spawnAndGetOutput(params: string[]): string {
     params = params.map((param) =>
-      param.replace(/\$(\w+)/, (match, varName) => process.env[varName] ?? ''),
+      param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
 
     const res = spawnSync(this.cliCommand.command, params, {

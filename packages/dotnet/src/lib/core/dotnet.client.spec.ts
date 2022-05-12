@@ -80,25 +80,77 @@ describe('dotnet client', () => {
   });
 
   describe('listInstalledTemplates', () => {
-    it('should list default templates', () => {
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    it('should list templates', () => {
+      jest.spyOn(cp, 'spawnSync').mockReturnValue({
+        status: 0,
+        stdout:
+          Buffer.from(`Templates                                         Short Name      Language      Tags               
+--------------------------------------------      ----------      --------      -------------------
+ASP.NET Core Empty                                web             [C#], F#      Web/Empty          
+ASP.NET Core Web App (Model-View-Controller)      mvc             [C#], F#      Web/MVC            
+ASP.NET Core Web App                              webapp          [C#]          Web/MVC/Razor Pages
+ASP.NET Core with Angular                         angular         [C#]          Web/MVC/SPA        
+ASP.NET Core with React.js                        react           [C#]          Web/MVC/SPA        
+ASP.NET Core with React.js and Redux              reactredux      [C#]          Web/MVC/SPA        
+ASP.NET Core Web API                              webapi          [C#], F#      Web/WebAPI         
+ASP.NET Core gRPC Service                         grpc            [C#]          Web/gRPC   `),
+      } as Partial<cp.SpawnSyncReturns<Buffer>> as cp.SpawnSyncReturns<Buffer>);
+
       const client = new DotNetClient(dotnetFactory());
       const results = client
         .listInstalledTemplates()
         .flatMap((x) => x.shortNames);
       expect(results).toContain('webapi');
-      expect(results).toContain('console');
+      expect(results).toContain('mvc');
       expect(results).toContain('webapp');
     });
 
     it('should filter by search', () => {
+      jest.spyOn(cp, 'spawnSync').mockReturnValue({
+        status: 0,
+        stdout: Buffer.from(`These templates matched your input: 'asp'.
+          
+Templates                                         Short Name      Language      Tags               
+--------------------------------------------      ----------      --------      -------------------
+ASP.NET Core Empty                                web             [C#], F#      Web/Empty          
+ASP.NET Core Web App (Model-View-Controller)      mvc             [C#], F#      Web/MVC            
+ASP.NET Core Web App                              webapp          [C#]          Web/MVC/Razor Pages
+ASP.NET Core with Angular                         angular         [C#]          Web/MVC/SPA        
+ASP.NET Core with React.js                        react           [C#]          Web/MVC/SPA        
+ASP.NET Core with React.js and Redux              reactredux      [C#]          Web/MVC/SPA        
+ASP.NET Core Web API                              webapi          [C#], F#      Web/WebAPI         
+ASP.NET Core gRPC Service                         grpc            [C#]          Web/gRPC   `),
+      } as Partial<cp.SpawnSyncReturns<Buffer>> as cp.SpawnSyncReturns<Buffer>);
+
       const client = new DotNetClient(dotnetFactory());
       const results = client.listInstalledTemplates({ search: 'asp' });
+      console.log(results);
       for (const result of results) {
         expect(result.templateName).toMatch(/^asp.*/i);
       }
     });
 
     it('should filter by language', () => {
+      jest.spyOn(cp, 'spawnSync').mockReturnValue({
+        status: 0,
+        stdout: Buffer.from(`These templates matched your input: language='C#'
+          
+Templates                                         Short Name      Language      Tags               
+--------------------------------------------      ----------      --------      -------------------
+ASP.NET Core Empty                                web             [C#], F#      Web/Empty          
+ASP.NET Core Web App (Model-View-Controller)      mvc             [C#], F#      Web/MVC            
+ASP.NET Core Web App                              webapp          [C#]          Web/MVC/Razor Pages
+ASP.NET Core with Angular                         angular         [C#]          Web/MVC/SPA        
+ASP.NET Core with React.js                        react           [C#]          Web/MVC/SPA        
+ASP.NET Core with React.js and Redux              reactredux      [C#]          Web/MVC/SPA        
+ASP.NET Core Web API                              webapi          [C#], F#      Web/WebAPI         
+ASP.NET Core gRPC Service                         grpc            [C#]          Web/gRPC   `),
+      } as Partial<cp.SpawnSyncReturns<Buffer>> as cp.SpawnSyncReturns<Buffer>);
+
       const client = new DotNetClient(dotnetFactory());
       const results = client.listInstalledTemplates({ language: 'C#' });
       for (const result of results) {
