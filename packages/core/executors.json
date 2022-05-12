@@ -25,6 +25,11 @@
       "implementation": "./src/executors/format/executor",
       "schema": "./src/executors/format/schema.json",
       "description": "Formats and lints a project using the dotnet-format tool"
+    },
+    "update-swagger": {
+      "implementation": "./src/executors/update-swagger/executor",
+      "schema": "./src/executors/update-swagger/schema.json",
+      "description": "Generates a swagger document for an API project"
     }
   }
 }

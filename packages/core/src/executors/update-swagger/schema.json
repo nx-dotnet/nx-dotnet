@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Swagger executor",
+  "description": "Formats and lints a project using the dotnet-format tool",
+  "type": "object",
+  "properties": {
+    "output": {
+      "type": "string",
+      "description": "Where should the swagger output be stored"
+    },
+    "swaggerDoc": {
+      "type": "string",
+      "description": "Which swagger doc should be used?",
+      "default": "v1"
+    },
+    "startupAssembly": {
+      "type": "string",
+      "description": "Path from workspace root to the built api's startup dll file"
+    }
+  },
+  "required": []
+}

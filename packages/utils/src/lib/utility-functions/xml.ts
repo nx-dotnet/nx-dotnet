@@ -1,9 +1,18 @@
 import { Tree } from '@nrwl/devkit';
+import { readFileSync } from 'fs';
 
 import { XmlDocument, XmlElement } from 'xmldoc';
 
-export function readXml(host: Tree, path: string): XmlDocument {
+export function readXmlInTree(host: Tree, path: string): XmlDocument {
   const fileText = host.read(path)?.toString();
+  if (!fileText) {
+    throw new Error(`Unable to read ${path}`);
+  }
+  return new XmlDocument(fileText);
+}
+
+export function readXml(path: string): XmlDocument {
+  const fileText = readFileSync(path)?.toString();
   if (!fileText) {
     throw new Error(`Unable to read ${path}`);
   }

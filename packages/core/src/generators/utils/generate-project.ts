@@ -34,6 +34,7 @@ import initSchematic from '../init/generator';
 import { GenerateTestProject } from './generate-test-project';
 import { addToSolutionFile } from './add-to-sln';
 import { promptForTemplate } from './prompt-for-template';
+import generateSwaggerSetup from '../add-swagger-target/add-swagger-target';
 
 export interface NormalizedSchema
   extends Omit<NxDotnetProjectGeneratorSchema, 'template'> {
@@ -80,7 +81,7 @@ export async function normalizeOptions(
     // not sure why eslint complains here, testing in devtools shows different results without the escape character.
     // eslint-disable-next-line no-useless-escape
     .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
-    .map((part) => names(part).className);
+    .map((part: string) => names(part).className);
   const namespaceName = [npmScope, ...featureScope].join('.');
 
   return {
@@ -178,6 +179,13 @@ export async function GenerateProject(
 
   if (!options.skipOutputPathManipulation && !isDryRun()) {
     await manipulateXmlProjectFile(host, normalizedOptions);
+  }
+
+  if (normalizedOptions.template === 'webapi') {
+    generateSwaggerSetup(host, {
+      project: normalizedOptions.projectName,
+      swaggerProject: `${normalizedOptions.projectName}-swagger`,
+    });
   }
 
   await formatFiles(host);
