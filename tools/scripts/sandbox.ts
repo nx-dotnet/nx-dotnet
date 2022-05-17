@@ -15,7 +15,11 @@ const sandboxDirectory = join(__dirname, '../../tmp/sandbox');
 
 export function setup() {
   copySync('.npmrc.local', '.npmrc');
-  startCleanVerdaccioInstance();
+  try {
+    startCleanVerdaccioInstance();
+  } catch {
+    // Its ok.
+  }
   execSync('ts-node ./tools/scripts/publish-all 99.99.99 local', {
     env: {
       ...process.env,

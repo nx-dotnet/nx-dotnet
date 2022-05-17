@@ -8,7 +8,7 @@ import {
 } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
-import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
+import { CONFIG_FILE_PATH, isDryRun, NxDotnetConfig } from '@nx-dotnet/utils';
 
 export async function initGenerator(
   host: Tree,
@@ -73,7 +73,7 @@ function updateNxJson(host: Tree) {
 
 function initToolManifest(host: Tree, dotnetClient: DotNetClient) {
   const initialized = host.exists('.config/dotnet-tools.json');
-  if (!initialized) {
+  if (!initialized && !isDryRun()) {
     console.log('Tool Manifest created for managing local .NET tools');
     dotnetClient.new('tool-manifest');
   }

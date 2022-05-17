@@ -74,7 +74,6 @@ describe('nx-dotnet test project generator', () => {
 
     options = {
       name: 'domain-existing-app',
-      template: 'xunit',
       testTemplate: 'xunit',
       language: 'C#',
       skipOutputPathManipulation: true,

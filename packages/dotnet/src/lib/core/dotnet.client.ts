@@ -1,5 +1,6 @@
 import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
+import * as semver from 'semver';
 
 import {
   addPackageKeyMap,
@@ -10,26 +11,52 @@ import {
   dotnetNewOptions,
   dotnetPublishOptions,
   dotnetRunOptions,
-  dotnetTemplate,
+  KnownDotnetTemplates,
   dotnetTestOptions,
   formatKeyMap,
   newKeyMap,
   publishKeyMap,
   runKeyMap,
   testKeyMap,
+  DotnetTemplate,
 } from '../models';
 import { LoadedCLI } from './dotnet.factory';
+import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
 
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
 
-  new(template: dotnetTemplate, parameters?: dotnetNewOptions): void {
+  new(template: KnownDotnetTemplates, parameters?: dotnetNewOptions): void {
     const params = [`new`, template];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, newKeyMap);
       params.push(...getSpawnParameterArray(parameters));
     }
     return this.logAndExecute(params);
+  }
+
+  listInstalledTemplates(opts?: {
+    search?: string;
+    language?: string;
+  }): DotnetTemplate[] {
+    const version = this.getSdkVersion();
+    const params: string[] = ['new'];
+    if (semver.lt(version, '6.0.100') && opts?.search) {
+      params.push(opts.search);
+    }
+    if (semver.gte(version, '7.0.100')) {
+      params.push('list');
+    } else {
+      params.push('--list');
+    }
+    if (semver.gte(version, '6.0.100') && opts?.search) {
+      params.push(opts.search);
+    }
+    if (opts?.language) {
+      params.push('--language', opts.language);
+    }
+    const output = this.spawnAndGetOutput(params);
+    return parseDotnetNewListOutput(output);
   }
 
   build(project: string, parameters?: dotnetBuildOptions): void {
@@ -166,7 +193,7 @@ export class DotNetClient {
 
   private logAndExecute(params: string[]): void {
     params = params.map((param) =>
-      param.replace(/\$(\w+)/, (match, varName) => process.env[varName] ?? ''),
+      param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
 
     const cmd = `${this.cliCommand.command} "${params.join('" "')}"`;
@@ -179,6 +206,23 @@ export class DotNetClient {
     if (res.status !== 0) {
       throw new Error(`dotnet execution returned status code ${res.status}`);
     }
+  }
+
+  private spawnAndGetOutput(params: string[]): string {
+    params = params.map((param) =>
+      param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
+    );
+
+    const res = spawnSync(this.cliCommand.command, params, {
+      cwd: this.cwd || process.cwd(),
+      stdio: 'pipe',
+    });
+    if (res.status !== 0) {
+      throw new Error(
+        `dotnet execution returned status code ${res.status} \n ${res.stderr}`,
+      );
+    }
+    return res.stdout.toString();
   }
 
   private logAndSpawn(params: string[]): ChildProcess {

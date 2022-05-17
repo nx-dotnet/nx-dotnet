@@ -32,6 +32,15 @@ describe('nx-dotnet project generator', () => {
       standalone: false,
       projectType: 'application',
     };
+
+    jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([
+      {
+        shortNames: ['classlib'],
+        templateName: 'Class Library',
+        languages: ['C#'],
+        tags: [],
+      },
+    ]);
   });
 
   afterEach(async () => {

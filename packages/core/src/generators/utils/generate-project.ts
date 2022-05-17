@@ -17,7 +17,11 @@ import { readFileSync, writeFileSync } from 'fs';
 import { dirname, relative } from 'path';
 import { XmlDocument } from 'xmldoc';
 
-import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
+import {
+  DotNetClient,
+  dotnetNewOptions,
+  KnownDotnetTemplates,
+} from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun, resolve } from '@nx-dotnet/utils';
 
 import {
@@ -29,24 +33,27 @@ import {
 import initSchematic from '../init/generator';
 import { GenerateTestProject } from './generate-test-project';
 import { addToSolutionFile } from './add-to-sln';
+import { promptForTemplate } from './prompt-for-template';
 
-export interface NormalizedSchema extends NxDotnetProjectGeneratorSchema {
+export interface NormalizedSchema
+  extends Omit<NxDotnetProjectGeneratorSchema, 'template'> {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
   projectLanguage: string;
-  projectTemplate: string;
+  projectTemplate: KnownDotnetTemplates;
   parsedTags: string[];
   className: string;
   namespaceName: string;
   projectType?: ProjectType;
 }
 
-export function normalizeOptions(
+export async function normalizeOptions(
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
+  client?: DotNetClient,
   projectType?: ProjectType,
-): NormalizedSchema {
+): Promise<NormalizedSchema> {
   const name = names(options.name).fileName;
   const className = names(options.name).className;
   const projectDirectory = options.directory
@@ -61,6 +68,10 @@ export function normalizeOptions(
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
+
+  const template = client
+    ? await promptForTemplate(client, options.template, options.language)
+    : options.template;
 
   const npmScope = names(
     readWorkspaceConfiguration(host).npmScope || '',
@@ -81,7 +92,7 @@ export function normalizeOptions(
     projectDirectory,
     parsedTags,
     projectLanguage: options.language,
-    projectTemplate: options.template,
+    projectTemplate: template as KnownDotnetTemplates,
     namespaceName,
     projectType: projectType ?? options.projectType ?? 'library',
   };
@@ -113,7 +124,12 @@ export async function GenerateProject(
 
   options.testTemplate = options.testTemplate ?? 'none';
 
-  const normalizedOptions = normalizeOptions(host, options, projectType);
+  const normalizedOptions = await normalizeOptions(
+    host,
+    options,
+    dotnetClient,
+    projectType,
+  );
 
   const projectConfiguration: ProjectConfiguration = {
     root: normalizedOptions.projectRoot,
@@ -146,7 +162,7 @@ export async function GenerateProject(
     newParams['dryRun'] = true;
   }
 
-  dotnetClient.new(normalizedOptions.template, newParams);
+  dotnetClient.new(normalizedOptions.projectTemplate, newParams);
   if (!isDryRun()) {
     addToSolutionFile(
       host,
