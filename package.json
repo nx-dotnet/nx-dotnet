@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
     "@commitlint/types": "^16.2.1",
     "@nrwl/devkit": "13.10.2",
     "@nrwl/eslint-plugin-nx": "13.10.2",
