@@ -1,3 +1,9 @@
+# [1.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.12...v1.10.0) (2022-05-18)
+
+### Features
+
+- **core:** update prompt for installed template to present available options ([#436](https://github.com/nx-dotnet/nx-dotnet/issues/436)) ([5a941ae](https://github.com/nx-dotnet/nx-dotnet/commit/5a941ae0ac4c4a30290604a23ce3b0e1bed89619))
+
 ## [1.9.12](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.11...v1.9.12) (2022-04-25)
 
 ### Bug Fixes
