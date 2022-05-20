@@ -10,7 +10,16 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     name: Nightly Smoke Test
+    strategy:
+      matrix:
+        dotnet_version: ['6.0.200', '6.0.300', '7.0.x']
+    env:
+      NX_RUN_GROUP: ${{ github.run_id }}-v${{matrix.dotnet_version}}
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{matrix.dotnet_version}}
+          include-prerelease: true
       - uses: bahmutov/npm-install@v1.4.5
       - run: yarn nx run-many --all --target=smoke
