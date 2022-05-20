@@ -169,7 +169,7 @@ export class DotNetClient {
     forceToolUsage?: boolean,
   ): void {
     const params = forceToolUsage
-      ? ['tool', 'run', 'dotnet-format', project]
+      ? ['tool', 'run', 'dotnet-format', '--', project]
       : [`format`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, formatKeyMap);

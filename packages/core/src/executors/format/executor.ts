@@ -3,6 +3,7 @@ import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { existsSync } from 'fs';
 import { join } from 'path';
+import * as semver from 'semver';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
@@ -35,18 +36,20 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const sdkVersion = dotnetClient.getSdkVersion();
-  const majorVersion = parseInt(sdkVersion.split('.')[0]);
-  const isNet6OrHigher = majorVersion >= 6;
+  const forceToolUsage = semver.satisfies(sdkVersion, '6.0.0 - 6.0.203');
+  const majorVersion = semver.major(sdkVersion);
 
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
   const projectFilePath = await getProjectFileForNxProject(
     nxProjectConfiguration,
   );
 
-  const normalized = normalizeOptions(options, isNet6OrHigher);
+  const normalized = normalizeOptions(options, majorVersion >= 6);
 
-  ensureFormatToolInstalled(context, dotnetClient, majorVersion);
-  dotnetClient.format(projectFilePath, normalized, isNet6OrHigher);
+  if (forceToolUsage || majorVersion < 6) {
+    ensureFormatToolInstalled(context, dotnetClient, majorVersion);
+  }
+  dotnetClient.format(projectFilePath, normalized, forceToolUsage);
 
   return {
     success: true,
@@ -58,14 +61,6 @@ function ensureFormatToolInstalled(
   dotnetClient: DotNetClient,
   majorVersion: number,
 ) {
-  // Currently the built-in .NET Format executor is broken on .NET 6
-  // Fall back to installing and using the tool directly
-  // eslint-disable-next-line no-constant-condition
-  if (false && majorVersion >= 6) {
-    // dotnet-format is already included as part of .NET SDK 6+
-    return;
-  }
-
   const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
   console.log(manifestPath);
   const manifest = existsSync(manifestPath)
