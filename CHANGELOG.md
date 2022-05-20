@@ -1,3 +1,9 @@
+## [1.10.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.0...v1.10.1) (2022-05-20)
+
+### Bug Fixes
+
+- **core:** remove workaround for broken dotnet format builtin ([#443](https://github.com/nx-dotnet/nx-dotnet/issues/443)) ([e0f04eb](https://github.com/nx-dotnet/nx-dotnet/commit/e0f04ebfdd7addc4b5aac3a4662959f356a9562e))
+
 # [1.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.12...v1.10.0) (2022-05-18)
 
 ### Features
