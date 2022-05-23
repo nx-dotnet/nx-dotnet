@@ -10,8 +10,9 @@ jobs:
   smoke:
     name: Nightly Smoke Test
     strategy:
+      fail-fast: false
       matrix:
-        dotnet_version: ['6.0.200', '6.0.300', '7.0.x']
+        dotnet_version: ['6.0.300', '7.0.x']
         os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{matrix.os}}
     env:
