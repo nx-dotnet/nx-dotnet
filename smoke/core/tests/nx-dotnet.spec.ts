@@ -57,9 +57,9 @@ describe('nx-dotnet smoke', () => {
       execSyncOptions,
     );
 
-    await execSync('npx nx print-affected --target build', {
+    execSync('npx nx print-affected --target build', {
       ...execSyncOptions,
-      stdio: 'ignore',
+      stdio: ['ignore', 'ignore', 'inherit'],
     });
 
     const deps = await readDependenciesFromNxDepGraph(
@@ -71,5 +71,5 @@ describe('nx-dotnet smoke', () => {
     execSync(`npx nx build ${testApp}`, execSyncOptions);
 
     expect(true).toBeTruthy();
-  }, 150000);
+  }, 1500000);
 });
