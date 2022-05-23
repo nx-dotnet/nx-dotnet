@@ -45,6 +45,8 @@ describe('nx-dotnet smoke', () => {
       },
     );
 
+    execSync('git init', execSyncOptions());
+
     execSync('npm i --save-dev @nx-dotnet/core', execSyncOptions());
     execSync(
       `npx nx g @nx-dotnet/core:lib ${testLib} --language C# --template classlib --testTemplate nunit`,
@@ -59,6 +61,8 @@ describe('nx-dotnet smoke', () => {
       `npx nx g @nx-dotnet/core:project-reference ${testApp} ${testLib}`,
       execSyncOptions(),
     );
+
+    execSync(`git commit -am "chore: scaffold projects"`, execSyncOptions());
 
     execSync('npx nx print-affected --target build', {
       ...execSyncOptions(),
