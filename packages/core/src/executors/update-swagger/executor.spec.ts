@@ -5,7 +5,7 @@ import * as devkit from '@nrwl/devkit';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
-import executor from './executor';
+import executor, { SWAGGER_CLI_TOOL } from './executor';
 import { UpdateSwaggerJsonExecutorSchema } from './schema';
 import * as utils from '@nx-dotnet/utils';
 
@@ -14,20 +14,27 @@ jest.mock('@nx-dotnet/utils', () => ({
   getProjectFileForNxProject: () => Promise.resolve('1.csproj'),
 }));
 
+const mockCSProj = `<Project>
+<ItemGroup>
+  <PackageReference Include="Swashbuckle.AspNetCore" Version="99.99.99"></PackageReference>
+</ItemGroup>
+</Project>`;
+
 const options: UpdateSwaggerJsonExecutorSchema = {
   output: '',
   startupAssembly: '',
   swaggerDoc: '',
 };
 
-const root = process.cwd() + '/tmp';
-jest.mock('@nrwl/tao/src/utils/app-root', () => ({
-  appRootPath: process.cwd() + '/tmp',
+const root = '/virtual';
+jest.mock('nx/src/utils/app-root', () => ({
+  appRootPath: '/virtual',
+  workspaceRoot: '/virtual',
 }));
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 
-describe('Format Executor', () => {
+describe('Update-Swagger Executor', () => {
   let context: ExecutorContext;
   let dotnetClient: DotNetClient;
 
@@ -60,82 +67,71 @@ describe('Format Executor', () => {
     );
   });
 
-  it('calls format when 1 project file is found', async () => {
+  it('calls run-tool when 1 project file is found', async () => {
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockImplementation((p): string => {
+      if (p === '1.csproj') {
+        return mockCSProj;
+      }
+      throw new Error('Attempted to read unexpected file');
+    });
+    jest
+      .spyOn(devkit, 'readJsonFile')
+      .mockImplementation((p: string): object => {
+        if (p === `${root}/.nx-dotnet.rc.json`) {
+          return {};
+        } else if (p === `${root}/.config/dotnet-tools.json`) {
+          return { tools: { [SWAGGER_CLI_TOOL]: '99.99.99' } };
+        }
+        throw new Error(`Attempted to read unexpected file: ${p}`);
+      });
+
     const res = await executor(options, context, dotnetClient);
     expect(
-      (dotnetClient as jest.Mocked<DotNetClient>).format,
+      (dotnetClient as jest.Mocked<DotNetClient>).runTool,
     ).toHaveBeenCalled();
     expect(res.success).toBeTruthy();
   });
 
-  it('installs dotnet-format if not already installed', async () => {
+  it(`installs ${SWAGGER_CLI_TOOL} if not already installed`, async () => {
     jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+    jest.spyOn(fs, 'readFileSync').mockImplementation((p): string => {
+      if (p === '1.csproj') {
+        return mockCSProj;
+      }
+      throw new Error('Attempted to read unexpected file');
+    });
+    jest.spyOn(devkit, 'readJsonFile').mockReturnValue({});
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
-    ).toHaveBeenCalled();
+    ).toHaveBeenCalledWith(SWAGGER_CLI_TOOL, '99.99.99');
     expect(res.success).toBeTruthy();
   });
 
-  it('does not install dotnet-format if already installed', async () => {
+  it(`doesnt install ${SWAGGER_CLI_TOOL} if already installed`, async () => {
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockImplementation((p): string => {
+      if (p === '1.csproj') {
+        return mockCSProj;
+      }
+      throw new Error('Attempted to read unexpected file');
+    });
     jest
       .spyOn(devkit, 'readJsonFile')
-      .mockReturnValue({ tools: { 'dotnet-format': '1.0.0' } });
+      .mockImplementation((p: string): object => {
+        if (p === `${root}/.nx-dotnet.rc.json`) {
+          return {};
+        } else if (p === `${root}/.config/dotnet-tools.json`) {
+          return { tools: { [SWAGGER_CLI_TOOL]: '99.99.99' } };
+        }
+        throw new Error(`Attempted to read unexpected file: ${p}`);
+      });
 
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
     ).not.toHaveBeenCalled();
     expect(res.success).toBeTruthy();
-  });
-
-  it('does not install dotnet-format if SDK is 6+', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      '6.0.101',
-    );
-
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-    jest
-      .spyOn(devkit, 'readJsonFile')
-      .mockReturnValue({ tools: { 'dotnet-format': '1.0.0' } });
-
-    const res = await executor(options, context, dotnetClient);
-    expect(
-      (dotnetClient as jest.Mocked<DotNetClient>).installTool,
-    ).not.toHaveBeenCalled();
-    expect(res.success).toBeTruthy();
-  });
-
-  it('passes the --check option on .NET 5 and earlier', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      '5.0.101',
-    );
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-    jest
-      .spyOn(devkit, 'readJsonFile')
-      .mockReturnValue({ tools: { 'dotnet-format': '1.0.0' } });
-
-    const res = await executor(options, context, dotnetClient);
-    expect(res.success).toBeTruthy();
-
-    const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
-      .mock.calls[0][1];
-    const checkFlag = formatOptions?.check;
-    expect(checkFlag).toBeTruthy();
-  });
-
-  it('passes the --verify-no-changes option on .NET 6 and later', async () => {
-    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
-      '6.0.101',
-    );
-
-    const res = await executor(options, context, dotnetClient);
-    expect(res.success).toBeTruthy();
-
-    const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
-      .mock.calls[0][1];
-    const verifyNoChangesFlag = formatOptions?.verifyNoChanges;
-    expect(verifyNoChangesFlag).toBeTruthy();
   });
 });

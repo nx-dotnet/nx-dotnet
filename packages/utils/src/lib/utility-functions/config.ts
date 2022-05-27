@@ -1,6 +1,5 @@
-import { readJson, Tree, writeJson } from '@nrwl/devkit';
+import { readJson, readJsonFile, Tree, writeJson } from '@nrwl/devkit';
 import { workspaceRoot } from 'nx/src/utils/app-root';
-import { readJsonSync } from 'fs-extra';
 
 import { CONFIG_FILE_PATH } from '../constants';
 import { NxDotnetConfig } from '../models';
@@ -14,7 +13,7 @@ export function readConfig(host?: Tree): NxDotnetConfig {
   if (host) {
     return readJson(host, CONFIG_FILE_PATH);
   } else {
-    cachedConfig ??= readJsonSync(`${workspaceRoot}/${CONFIG_FILE_PATH}`);
+    cachedConfig ??= readJsonFile(`${workspaceRoot}/${CONFIG_FILE_PATH}`);
     return cachedConfig;
   }
 }

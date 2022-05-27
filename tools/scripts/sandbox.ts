@@ -34,8 +34,9 @@ if (require.main === module) {
   if (existsSync(sandboxDirectory)) {
     removeSync(sandboxDirectory);
   }
+  ensureDirSync(dirname(sandboxDirectory));
   execSync(
-    `npx create-nx-workspace@latest ${basename(
+    `yarn create nx-workspace@latest ${basename(
       sandboxDirectory,
     )} --preset empty --no-nxCloud --packageManager yarn`,
     {

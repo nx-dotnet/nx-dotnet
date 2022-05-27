@@ -21,7 +21,10 @@ export default async function generateSwaggerSetup(
         swaggerProjectRoot(host, options.swaggerProject),
         'swagger.json',
       );
-      generateShellProject(host, options as any);
+      generateShellProject(host, {
+        swaggerProject: options.swaggerProject,
+        project: options.project,
+      });
     } else {
       throw new Error('Either specify --output or --swagger-project');
     }
@@ -42,7 +45,7 @@ function swaggerProjectRoot(host: Tree, swaggerProject: string) {
 
 function generateShellProject(
   host: Tree,
-  options: AddSwaggerJsonExecutorSchema & { swaggerProject: string },
+  options: { project: string; swaggerProject: string },
 ) {
   addProjectConfiguration(host, options.swaggerProject, {
     root: swaggerProjectRoot(host, options.swaggerProject),

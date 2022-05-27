@@ -10,7 +10,7 @@ export function publishAll(version: string, tag = 'latest') {
   const workspace: WorkspaceJsonConfiguration = readWorkspaceJson();
   const rootPkg = readJson('package.json');
 
-  execSync('npx nx run-many --all --target="build"', {
+  execSync('npx nx run-many --all --target="build" --exclude="docs-site"', {
     stdio: 'inherit',
   });
 

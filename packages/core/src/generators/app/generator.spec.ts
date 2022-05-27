@@ -21,6 +21,7 @@ describe('nx-dotnet app generator', () => {
     skipOutputPathManipulation: false,
     projectType: 'application',
     standalone: false,
+    skipSwaggerLib: true,
   };
 
   beforeEach(() => {

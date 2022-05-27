@@ -181,7 +181,7 @@ export async function GenerateProject(
     await manipulateXmlProjectFile(host, normalizedOptions);
   }
 
-  if (normalizedOptions.template === 'webapi') {
+  if (normalizedOptions.projectTemplate === 'webapi') {
     generateSwaggerSetup(host, {
       project: normalizedOptions.projectName,
       swaggerProject: `${normalizedOptions.projectName}-swagger`,

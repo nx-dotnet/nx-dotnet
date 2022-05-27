@@ -1,5 +1,6 @@
 import {
   ExecutorContext,
+  logger,
   ProjectConfiguration,
   readJsonFile,
 } from '@nrwl/devkit';
@@ -21,7 +22,7 @@ import { UpdateSwaggerJsonExecutorSchema } from './schema';
 import { buildStartupAssemblyPath } from '../../generators/utils/get-path-to-startup-assembly';
 import { ensureDirSync } from 'fs-extra';
 
-const SWAGGER_CLI_TOOL = 'Swashbuckle.AspNetCore.Cli';
+export const SWAGGER_CLI_TOOL = 'Swashbuckle.AspNetCore.Cli';
 
 function normalizeOptions(
   opts: Partial<UpdateSwaggerJsonExecutorSchema>,
@@ -108,12 +109,16 @@ function ensureSwaggerToolInstalled(
   version: string,
 ) {
   const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
-  console.log(manifestPath);
   const manifest = existsSync(manifestPath)
     ? readJsonFile(manifestPath)
     : undefined;
-  if (manifest?.tools[SWAGGER_CLI_TOOL] === 'version') {
+
+  if (manifest?.tools[SWAGGER_CLI_TOOL] === version) {
     return;
+  } else if (manifest?.tools[SWAGGER_CLI_TOOL]) {
+    logger.warn(
+      `Swagger CLI was found, but the version does not match the version of Swashbuckle.AspNetCore in ${context.projectName}. We reinstalled it such that the version matches, but you may want to review the changes made.`,
+    );
   }
 
   dotnetClient.installTool(SWAGGER_CLI_TOOL, version);

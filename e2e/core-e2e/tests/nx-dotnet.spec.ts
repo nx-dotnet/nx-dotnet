@@ -41,7 +41,7 @@ describe('nx-dotnet e2e', () => {
     const testLib = uniq('lib');
 
     await runNxCommandAsync(
-      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
+      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi" --skipSwaggerLib`,
     );
 
     await runNxCommandAsync(
@@ -73,7 +73,7 @@ describe('nx-dotnet e2e', () => {
     );
 
     await runNxCommandAsync(
-      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi"`,
+      `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi" --skipSwaggerLib`,
     );
 
     await runNxCommandAsync(
@@ -93,26 +93,29 @@ describe('nx-dotnet e2e', () => {
     it('should obey dry-run', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --dry-run`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skipSwaggerLib --dry-run`,
       );
 
       expect(() => checkFilesExist(`apps/${app}`)).toThrow();
     });
 
-    it('should generate an app', async () => {
+    it('should generate an app without swagger library', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib`,
       );
 
       expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(() =>
+        checkFilesExist(`libs/generated/${app}-swaggger/project.json`),
+      ).toThrow();
     });
 
     it('should build and test an app', async () => {
       const app = uniq('app');
       const testProj = `${app}-test`;
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib`,
       );
 
       await runNxCommandAsync(`build ${app}`);
@@ -126,7 +129,7 @@ describe('nx-dotnet e2e', () => {
       const app = uniq('app');
       const lib = uniq('lib');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib`,
       );
       await runNxCommandAsync(
         `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="classlib"`,
@@ -145,7 +148,7 @@ describe('nx-dotnet e2e', () => {
     it('should update output paths', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib`,
       );
       const configFilePath = findProjectFileInPathSync(
         join(e2eDir, 'apps', app),
@@ -161,9 +164,10 @@ describe('nx-dotnet e2e', () => {
     it('should lint', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${app} --template webapi --language="C#"  --skip-swagger-lib`,
       );
-      const promise = runNxCommandAsync(`lint ${app}`).then((x) => x.stderr);
+      console.log('LINT TEST PROJECT GENERATED', app);
+      const promise = runNxCommandAsync(`lint ${app}`);
       await expect(promise).rejects.toThrow(
         expect.objectContaining({
           message: expect.stringContaining('WHITESPACE'),
@@ -176,7 +180,7 @@ describe('nx-dotnet e2e', () => {
     it('should add a reference to the target project', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="none"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib --test-template="none"`,
       );
       await runNxCommandAsync(
         `generate @nx-dotnet/core:test ${app} --language="C#" --template="nunit"`,
@@ -200,7 +204,7 @@ describe('nx-dotnet e2e', () => {
     it('should create test project using suffix', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="none"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib --test-template="none"`,
       );
       await runNxCommandAsync(
         `generate @nx-dotnet/core:test ${app} --language="C#" --template="nunit" --suffix="integration-tests"`,
@@ -222,7 +226,7 @@ describe('nx-dotnet e2e', () => {
     it('should obey dry-run', async () => {
       const lib = uniq('lib');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi" --dry-run`,
+        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi" --skip-swagger-lib --dry-run`,
       );
 
       expect(() => checkFilesExist(`libs/${lib}`)).toThrow();
@@ -231,7 +235,7 @@ describe('nx-dotnet e2e', () => {
     it('should generate an lib', async () => {
       const lib = uniq('lib');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:lib ${lib} --language="C#" --template="classlib"`,
       );
 
       expect(() => checkFilesExist(`libs/${lib}`)).not.toThrow();
@@ -284,7 +288,7 @@ describe('nx-dotnet e2e', () => {
     it("shouldn't create a solution by default if not specified", async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --skip-swagger-lib --template="webapi"`,
       );
 
       expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
@@ -294,7 +298,7 @@ describe('nx-dotnet e2e', () => {
     it('should create a default solution file if specified as true', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --solutionFile`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib --solutionFile`,
       );
 
       expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
@@ -315,12 +319,12 @@ describe('nx-dotnet e2e', () => {
     it('should add successive projects to default solution file', async () => {
       const app1 = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app1} --language="C#" --template="webapi" --solutionFile`,
+        `generate @nx-dotnet/core:app ${app1} --language="C#" --skip-swagger-lib --template="webapi" --solutionFile`,
       );
 
       const app2 = uniq('app2');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app2} --language="C#" --template="webapi" --solutionFile`,
+        `generate @nx-dotnet/core:app ${app2} --language="C#" --skip-swagger-lib --template="webapi" --solutionFile`,
       );
 
       const slnFile = readFile('proj.nx-dotnet.sln');
@@ -333,7 +337,7 @@ describe('nx-dotnet e2e', () => {
     it('should add test project to same solution as app project', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --test-template="xunit" --solutionFile`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib --test-template="xunit" --solutionFile`,
       );
 
       const slnFile = readFile('proj.nx-dotnet.sln');
@@ -399,7 +403,7 @@ describe('nx-dotnet e2e', () => {
       const appProject = uniq('app');
       const testProject = `${appProject}-test`;
       runNxCommand(
-        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --test-runner xunit`,
+        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --skip-swagger-lib --test-runner xunit`,
       );
 
       expect(() => runNxCommand(`test ${testProject}`)).not.toThrow();
@@ -428,7 +432,7 @@ public class UnitTest1
       const appProject = uniq('app');
       const testProject = `${appProject}-test`;
       runNxCommand(
-        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --test-runner xunit`,
+        `generate @nx-dotnet/core:app ${appProject} --language="C#" --template="webapi" --skip-swagger-lib --test-runner xunit`,
       );
       const p = runCommandUntil(
         `test ${testProject} --watch`,
@@ -439,6 +443,24 @@ public class UnitTest1
         { kill: true },
       );
       await expect(p).resolves.not.toThrow();
+    });
+  });
+
+  describe('swagger integration', () => {
+    it('should generate swagger project for webapi', async () => {
+      const api = uniq('api');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${api} --language="C#" --template="webapi"`,
+      );
+
+      expect(() => checkFilesExist(`apps/${api}`)).not.toThrow();
+      expect(() =>
+        checkFilesExist(`libs/generated/${api}-swagger`),
+      ).not.toThrow();
+      expect(() => runNxCommand(`swagger ${api}`)).not.toThrow();
+      expect(() =>
+        checkFilesExist(`libs/generated/${api}-swagger/swagger.json`),
+      ).not.toThrow();
     });
   });
 });
