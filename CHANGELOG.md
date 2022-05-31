@@ -1,3 +1,9 @@
+# [1.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.1...v1.11.0) (2022-05-31)
+
+### Features
+
+- **core:** executor to generate swagger json ([#437](https://github.com/nx-dotnet/nx-dotnet/issues/437)) ([6c33d1a](https://github.com/nx-dotnet/nx-dotnet/commit/6c33d1a9bd87a900a4c7818e21fb0945e1fa2a9b))
+
 ## [1.10.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.0...v1.10.1) (2022-05-20)
 
 ### Bug Fixes
