@@ -6,7 +6,7 @@ import {
   getProjectFilesForProject,
   iterateChildrenByPath,
   readConfig,
-  readXml,
+  readXmlInTree,
   updateConfig,
 } from '@nx-dotnet/utils';
 
@@ -24,7 +24,7 @@ export default async function (host: Tree) {
       projectName,
     );
     for (const f of projectFiles) {
-      const xmldoc = readXml(host, f);
+      const xmldoc = readXmlInTree(host, f);
       console.log(`Scanning packages for ${projectName} (${f})`);
       await iterateChildrenByPath(
         xmldoc,

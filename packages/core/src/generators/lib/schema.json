@@ -71,6 +71,10 @@
         }
       ],
       "aliases": ["solution", "s"]
+    },
+    "skipSwaggerLib": {
+      "description": "By default, if using webapi template, an additional library is scaffolded for swagger files. This skips that setup.",
+      "default": false
     }
   },
   "required": ["name", "language", "testTemplate"]

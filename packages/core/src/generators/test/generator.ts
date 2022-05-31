@@ -32,6 +32,7 @@ export default async function (
     template: '',
     standalone: options.standalone,
     projectType: project.projectType ?? 'library',
+    skipSwaggerLib: true,
   };
 
   const normalizedOptions = await normalizeOptions(

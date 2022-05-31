@@ -117,6 +117,10 @@ Generate a .NET test project for an existing application or library
 
 Import existing projects into your nx workspace
 
+### [add-swagger-target](./generators/add-swagger-target.md)
+
+Generate a target to extract the swagger.json file from a .NET webapi
+
 ## Executors
 
 ### [build](./executors/build.md)
@@ -138,3 +142,7 @@ publish executor
 ### [format](./executors/format.md)
 
 Formats and lints a project using the dotnet-format tool
+
+### [update-swagger](./executors/update-swagger.md)
+
+Generates a swagger document for an API project

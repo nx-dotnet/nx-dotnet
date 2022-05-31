@@ -21,7 +21,6 @@
       "@nx-dotnet/nx-ghpages": ["packages/nx-ghpages/src/index.ts"],
       "@nx-dotnet/nxdoc": ["packages/nxdoc/src/index.ts"],
       "@nx-dotnet/smoke/core": ["smoke/core/src/index.ts"],
-      "@nx-dotnet/typescript": ["packages/typescript/src/index.ts"],
       "@nx-dotnet/utils": ["packages/utils/src/index.ts"],
       "@nx-dotnet/utils/e2e": ["packages/utils/src/e2e.ts"],
       "@nx-dotnet/utils/src/*": ["packages/utils/src/*"],

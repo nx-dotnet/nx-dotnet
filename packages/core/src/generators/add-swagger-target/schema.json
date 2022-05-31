@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "@nx-dotnet/core:add-swagger-target",
+  "title": "Swagger Target Generator",
+  "description": "Generates a swagger setup for a given project",
+  "type": "object",
+  "properties": {
+    "swaggerDoc": {
+      "type": "string",
+      "description": "Which swagger doc should be used?",
+      "default": "v1"
+    },
+    "startupAssembly": {
+      "type": "string",
+      "description": "Path from workspace root to the built api's startup dll file"
+    },
+    "project": {
+      "type": "string",
+      "description": "Which project should the target be added to?"
+    },
+    "swaggerProject": {
+      "type": "string",
+      "description": "What should the project created to hold the swagger files be called?"
+    },
+    "target": {
+      "type": "string",
+      "description": "What should the project be called?",
+      "default": "swagger"
+    }
+  },
+  "required": ["project"]
+}

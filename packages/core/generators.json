@@ -54,6 +54,11 @@
       "factory": "./src/generators/import-projects/generator",
       "schema": "./src/generators/import-projects/schema.json",
       "description": "Import existing projects into your nx workspace"
+    },
+    "add-swagger-target": {
+      "factory": "./src/generators/add-swagger-target/add-swagger-target",
+      "schema": "./src/generators/add-swagger-target/schema.json",
+      "description": "Generate a target to extract the swagger.json file from a .NET webapi"
     }
   }
 }

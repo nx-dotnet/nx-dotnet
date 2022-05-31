@@ -15,4 +15,5 @@ export interface NxDotnetProjectGeneratorSchema {
   standalone: boolean;
   projectType?: ProjectType;
   solutionFile?: string | boolean;
+  skipSwaggerLib: boolean;
 }

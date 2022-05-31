@@ -178,6 +178,24 @@ export class DotNetClient {
     return this.logAndExecute(params);
   }
 
+  runTool<T extends Record<string, string | boolean>>(
+    tool: string,
+    positionalParameters?: string[],
+    parameters?: T,
+  ) {
+    const params = ['tool', 'run', tool];
+
+    if (positionalParameters) {
+      params.push(...positionalParameters);
+    }
+
+    if (parameters) {
+      params.push(...getSpawnParameterArray(parameters));
+    }
+
+    return this.logAndExecute(params);
+  }
+
   addProjectToSolution(solutionFile: string, project: string) {
     const params = [`sln`, solutionFile, `add`, project];
     this.logAndExecute(params);

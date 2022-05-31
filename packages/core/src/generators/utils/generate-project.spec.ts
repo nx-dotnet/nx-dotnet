@@ -30,6 +30,7 @@ describe('nx-dotnet project generator', () => {
       testTemplate: 'none',
       skipOutputPathManipulation: true,
       standalone: false,
+      skipSwaggerLib: true,
       projectType: 'application',
     };
 
@@ -37,6 +38,12 @@ describe('nx-dotnet project generator', () => {
       {
         shortNames: ['classlib'],
         templateName: 'Class Library',
+        languages: ['C#'],
+        tags: [],
+      },
+      {
+        shortNames: ['webapi'],
+        templateName: 'Web API',
         languages: ['C#'],
         tags: [],
       },
@@ -103,5 +110,18 @@ describe('nx-dotnet project generator', () => {
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.name;
     expect(nameFlag).toBe('Proj.SubDir.Test');
+  });
+
+  describe('swagger library', () => {
+    it('should generate swagger backed project', async () => {
+      options.name = 'api';
+      options.skipSwaggerLib = false;
+      options.template = 'webapi';
+      await GenerateProject(appTree, options, dotnetClient, 'application');
+      expect(readProjectConfiguration(appTree, options.name)).toBeDefined();
+      expect(
+        readProjectConfiguration(appTree, `${options.name}-swagger`),
+      ).toBeDefined();
+    });
   });
 });

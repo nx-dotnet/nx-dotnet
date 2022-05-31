@@ -39,3 +39,7 @@ Generate a dotnet project under the library directory.
 - (string): The name of the solution file to add the project to
 
 - (boolean): Should the project be added to the default solution file?
+
+### skipSwaggerLib
+
+- (): By default, if using webapi template, an additional library is scaffolded for swagger files. This skips that setup.

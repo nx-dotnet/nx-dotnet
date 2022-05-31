@@ -85,6 +85,7 @@ describe('nx-dotnet test project generator', () => {
       projectLanguage: 'C#',
       parsedTags: [],
       projectTemplate: 'xunit',
+      skipSwaggerLib: true,
       className: 'DomainExistingApp',
       namespaceName: 'Domain.ExistingApp',
     };

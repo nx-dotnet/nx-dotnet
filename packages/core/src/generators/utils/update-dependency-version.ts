@@ -4,7 +4,7 @@ import {
   getNxDotnetProjects,
   getProjectFilesForProject,
   iterateChildrenByPath,
-  readXml,
+  readXmlInTree,
 } from '@nx-dotnet/utils';
 
 export async function updateDependencyVersions(
@@ -20,7 +20,7 @@ export async function updateDependencyVersions(
       projectName,
     );
     for (const f of projectFiles) {
-      const xmldoc = readXml(host, f);
+      const xmldoc = readXmlInTree(host, f);
       let updateFile = false;
       await iterateChildrenByPath(
         xmldoc,

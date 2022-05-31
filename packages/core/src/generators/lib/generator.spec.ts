@@ -21,6 +21,7 @@ describe('nx-dotnet library generator', () => {
     skipOutputPathManipulation: true,
     standalone: false,
     projectType: 'library',
+    skipSwaggerLib: true,
   };
 
   beforeEach(() => {
