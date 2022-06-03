@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'demo-libs-generated-webapi-types',
   preset: '../../../../jest.preset.js',
   globals: {

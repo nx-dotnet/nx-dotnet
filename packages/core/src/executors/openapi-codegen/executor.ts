@@ -1,5 +1,7 @@
 import { getPackageManagerCommand, logger, workspaceRoot } from '@nrwl/devkit';
+
 import { exec } from 'child_process';
+
 import { OpenapiCodegenExecutorSchema } from './schema';
 
 export default function runExecutor(

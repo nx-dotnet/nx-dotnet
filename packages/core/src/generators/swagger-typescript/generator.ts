@@ -6,14 +6,16 @@ import {
   readJson,
   Tree,
 } from '@nrwl/devkit';
+
 import * as path from 'path';
-import { SwaggerTypescriptGeneratorSchema } from './schema';
-import type { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
-import { TypeScriptRepresentation } from './models/typescript-model';
-import { builtInTypes } from './constants/swagger-ts-type-map';
+
 import { generateInterfacesFromDefinitions } from './build-typescript-representation/build-interfaces';
+import { builtInTypes } from './constants/swagger-ts-type-map';
+import { TypeScriptRepresentation } from './models/typescript-model';
+import { SwaggerTypescriptGeneratorSchema } from './schema';
 import { NormalizedOptions, normalizeOptions } from './utils/normalize-options';
 
+import type { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 function generateInterfaceFiles(
   tree: Tree,
   interfaces: TypeScriptRepresentation[],

@@ -6,7 +6,7 @@ public class WeatherForecast
 
   public Temperature? Temperature { get; set; }
 
-  public int? Summary { get; set; }
+  public string? Summary { get; set; }
 
   public Person? Forecaster { get; set; }
 }

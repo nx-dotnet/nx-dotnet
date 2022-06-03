@@ -8,6 +8,7 @@ import {
   updateProjectConfiguration,
 } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/js/src/generators/library/library';
+
 import { getSwaggerExecutorConfiguration } from '../../models/swagger-executor-configuration';
 import { AddSwaggerJsonExecutorSchema } from './schema';
 

@@ -1,5 +1,5 @@
-import { OpenapiCodegenExecutorSchema } from './schema';
 import executor from './executor';
+import { OpenapiCodegenExecutorSchema } from './schema';
 
 const options: OpenapiCodegenExecutorSchema = {};
 

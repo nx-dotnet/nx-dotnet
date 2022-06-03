@@ -16,5 +16,6 @@
     "nxdoc-e2e": "e2e/nxdoc-e2e",
     "smoke-core": "smoke/core",
     "utils": "packages/utils"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

@@ -1,8 +1,8 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree } from '@nrwl/devkit';
+import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { libraryGenerator } from '@nrwl/workspace';
 
 import generator from './generator';
-import { libraryGenerator } from '@nrwl/workspace';
 
 const MOCK_SWAGGER_JSON = `{
   "openapi": "3.0.1",

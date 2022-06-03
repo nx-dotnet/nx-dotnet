@@ -1,5 +1,5 @@
 {
-  "root": "demo/libs/generated/webapi-types",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "demo/libs/generated/webapi-types/src",
   "targets": {
     "build": {
@@ -23,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/demo/libs/generated/webapi-types"],
       "options": {
-        "jestConfig": "demo/libs/generated/webapi-types/jest.config.js",
+        "jestConfig": "demo/libs/generated/webapi-types/jest.config.ts",
         "passWithNoTests": true
       }
     }

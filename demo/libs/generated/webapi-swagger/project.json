@@ -1,12 +1,9 @@
 {
-  "root": "demo/libs/generated/webapi-swagger",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "build": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
-      "options": {
-        "commands": []
-      }
+      "executor": "nx:noop",
+      "outputs": ["demo/libs/generated/webapi-swagger"]
     },
     "codegen": {
       "executor": "@nx-dotnet/core:openapi-codegen",

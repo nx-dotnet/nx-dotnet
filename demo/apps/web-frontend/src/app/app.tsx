@@ -11,8 +11,8 @@ const x: WeatherForecast = {
   summary: 'My weather forecast',
   temperature: {
     temperatureC: 12,
-    temperatureF: 53
-  }
+    temperatureF: 53,
+  },
 };
 
 export function App() {

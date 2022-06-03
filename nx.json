@@ -70,6 +70,12 @@
         "target": "swagger",
         "projects": "self"
       }
+    ],
+    "swagger": [
+      {
+        "target": "build",
+        "projects": "self"
+      }
     ]
   },
   "generators": {
@@ -92,8 +98,6 @@
       }
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/js"
-  },
-  "plugins": ["@nx-dotnet/core"]
+  "plugins": ["@nx-dotnet/core"],
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

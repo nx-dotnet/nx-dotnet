@@ -4,6 +4,7 @@ import {
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
+
 import { SwaggerTypescriptGeneratorSchema } from '../schema';
 
 export interface NormalizedOptions extends SwaggerTypescriptGeneratorSchema {
