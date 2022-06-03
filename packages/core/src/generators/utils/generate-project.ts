@@ -189,6 +189,7 @@ export async function GenerateProject(
     generateSwaggerSetup(host, {
       project: normalizedOptions.projectName,
       swaggerProject: `${normalizedOptions.projectName}-swagger`,
+      codegenProject: `${normalizedOptions.projectName}-types`,
     });
   }
 

@@ -28,5 +28,6 @@
       }
     }
   },
-  "tags": []
+  "tags": [],
+  "implicitDependencies": ["demo-libs-generated-webapi-swagger"]
 }

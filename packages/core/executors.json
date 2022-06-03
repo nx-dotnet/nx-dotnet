@@ -30,6 +30,11 @@
       "implementation": "./src/executors/update-swagger/executor",
       "schema": "./src/executors/update-swagger/schema.json",
       "description": "Generates a swagger document for an API project"
+    },
+    "openapi-codegen": {
+      "implementation": "./src/executors/openapi-codegen/executor",
+      "schema": "./src/executors/openapi-codegen/schema.json",
+      "description": "openapi-codegen executor"
     }
   }
 }

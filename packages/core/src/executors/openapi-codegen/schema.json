@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "OpenapiCodegen executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "openapiJsonPath": {
+      "type": "string",
+      "description": "Path to OpenAPI spec file"
+    },
+    "outputProject": {
+      "type": "string",
+      "description": "Which project should hold the generated code?"
+    }
+  },
+  "required": ["outputProject", "openapiJsonPath"]
+}

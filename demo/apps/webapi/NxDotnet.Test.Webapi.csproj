@@ -8,7 +8,7 @@
     
     <ImplicitUsings>enable</ImplicitUsings>
     
-    <OutputPath>../../dist/test/webapi</OutputPath>
+    <OutputPath>../../../dist/demo/apps/webapi</OutputPath>
   </PropertyGroup>
   
   <ItemGroup>

@@ -1,4 +1,20 @@
 {
   "root": "demo/libs/generated/webapi-swagger",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "commands": []
+      }
+    },
+    "codegen": {
+      "executor": "@nx-dotnet/core:openapi-codegen",
+      "options": {
+        "openapiJsonPath": "demo/libs/generated/webapi-swagger/swagger.json",
+        "outputProject": "demo-libs-generated-webapi-types"
+      }
+    }
+  },
   "implicitDependencies": ["demo-apps-webapi"]
 }
