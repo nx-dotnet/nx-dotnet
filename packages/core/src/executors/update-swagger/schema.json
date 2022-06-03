@@ -17,6 +17,11 @@
     "startupAssembly": {
       "type": "string",
       "description": "Path from workspace root to the built api's startup dll file"
+    },
+    "skipInstall": {
+      "type": "boolean",
+      "description": "Skips installing Swashbuckle.AspNetCore.Cli. This option should be used if you are managing the installation on your own.",
+      "default": false
     }
   },
   "required": []

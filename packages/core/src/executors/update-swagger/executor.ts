@@ -36,6 +36,7 @@ function normalizeOptions(
       opts.startupAssembly ??
       buildStartupAssemblyPath(projectName, project, csProjFilePath),
     swaggerDoc: opts.swaggerDoc ?? 'v1',
+    skipInstall: opts.skipInstall ?? false,
   };
 }
 
@@ -85,11 +86,14 @@ export default async function runExecutor(
   );
   ensureDirSync(dirname(options.output));
 
-  ensureSwaggerToolInstalled(
-    context,
-    dotnetClient,
-    await readSwashbuckleVersion(csProjFilePath),
-  );
+  if (!options.skipInstall) {
+    ensureSwaggerToolInstalled(
+      context,
+      dotnetClient,
+      await readSwashbuckleVersion(csProjFilePath),
+    );
+  }
+
   dotnetClient.runTool('swagger', [
     'tofile',
     '--output',

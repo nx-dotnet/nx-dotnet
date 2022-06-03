@@ -24,6 +24,7 @@ const options: UpdateSwaggerJsonExecutorSchema = {
   output: '',
   startupAssembly: '',
   swaggerDoc: '',
+  skipInstall: false,
 };
 
 const root = '/virtual';
@@ -109,7 +110,7 @@ describe('Update-Swagger Executor', () => {
     expect(res.success).toBeTruthy();
   });
 
-  it(`doesnt install ${SWAGGER_CLI_TOOL} if already installed`, async () => {
+  it(`doesn't install ${SWAGGER_CLI_TOOL} if already installed`, async () => {
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync').mockImplementation((p): string => {
       if (p === '1.csproj') {
@@ -129,6 +130,26 @@ describe('Update-Swagger Executor', () => {
       });
 
     const res = await executor(options, context, dotnetClient);
+    expect(
+      (dotnetClient as jest.Mocked<DotNetClient>).installTool,
+    ).not.toHaveBeenCalled();
+    expect(res.success).toBeTruthy();
+  });
+
+  it(`skips installation when skipInstall is true`, async () => {
+    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+    jest.spyOn(fs, 'readFileSync').mockImplementation((p): string => {
+      if (p === '1.csproj') {
+        return mockCSProj;
+      }
+      throw new Error('Attempted to read unexpected file');
+    });
+    jest.spyOn(devkit, 'readJsonFile').mockReturnValue({});
+    const res = await executor(
+      { ...options, skipInstall: true },
+      context,
+      dotnetClient,
+    );
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
     ).not.toHaveBeenCalled();
