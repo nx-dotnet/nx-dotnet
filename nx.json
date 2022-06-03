@@ -19,7 +19,14 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e", "prebuild"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "prebuild",
+          "swagger"
+        ],
         "accessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
@@ -29,7 +36,7 @@
   },
   "workspaceLayout": {
     "appsDir": "",
-    "libsDir": "packages"
+    "libsDir": ""
   },
   "targetDependencies": {
     "build": [
@@ -51,9 +58,24 @@
     "@nx-dotnet/nxdoc:generate-docs": {
       "outputDirectory": "docs",
       "gettingStartedFile": "<src>/README.md"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/js"
+  },
+  "plugins": ["@nx-dotnet/core"]
 }

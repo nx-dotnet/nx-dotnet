@@ -1,0 +1,4 @@
+{
+  "root": "demo/libs/generated/webapi-swagger",
+  "implicitDependencies": ["demo-apps-webapi"]
+}
