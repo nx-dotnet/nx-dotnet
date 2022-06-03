@@ -121,6 +121,10 @@ Import existing projects into your nx workspace
 
 Generate a target to extract the swagger.json file from a .NET webapi
 
+### [swagger-typescript](./generators/swagger-typescript.md)
+
+swagger-typescript generator
+
 ## Executors
 
 ### [build](./executors/build.md)
