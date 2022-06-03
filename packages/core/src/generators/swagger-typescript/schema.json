@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "SwaggerTypescript",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "outputProject": {
+      "type": "string",
+      "description": "Which project should the typescript be generated inside of?"
+    },
+    "openapiJsonPath": {
+      "type": "string",
+      "description": "Path to the openapi specification file.",
+      "aliases": ["swaggerJsonPath"]
+    },
+    "templateDirectory": {
+      "type": "string",
+      "description": "Used to override the templates that are used when generating the typescript"
+    }
+  },
+  "required": ["outputProject", "openapiJsonPath"]
+}
