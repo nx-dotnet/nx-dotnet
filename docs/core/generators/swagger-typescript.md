@@ -1,5 +1,9 @@
 # @nx-dotnet/core:swagger-typescript
 
+## Swagger Typescript Generator
+
+Generates typescript code based on a specified openapi/swagger json file
+
 ## Options
 
 ### <span className="required">outputProject</span>

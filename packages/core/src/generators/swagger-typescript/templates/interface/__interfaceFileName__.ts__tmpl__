@@ -5,7 +5,7 @@ import {<%=i.className%>} from './<%=i.fileName%>';
 <% if (tsInterface.type === 'interface') { %>
 export interface <%= interfaceClassName %> {
     <% for (const property of tsInterface.properties) {-%>
-    <%= property.name %>: <%= property.type %>
+    <%= property.name %><% if (property.nullable) { %>?<%}%>: <%= property.type %>
     <% } %>
 }
 <% } else if (tsInterface.type === 'array') {%>

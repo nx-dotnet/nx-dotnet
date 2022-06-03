@@ -100,8 +100,6 @@ export default async function (
     );
   }
 
-  console.log(JSON.stringify(interfaces, null, 2));
-
   generateInterfaceFiles(tree, interfaces, options);
   generateIndex(tree, options);
 

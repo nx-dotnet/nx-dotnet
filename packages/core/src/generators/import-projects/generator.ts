@@ -3,6 +3,7 @@ import {
   formatFiles,
   getProjects,
   getWorkspaceLayout,
+  logger,
   names,
   ProjectConfiguration,
   TargetConfiguration,
@@ -30,13 +31,13 @@ export default async function (host: Tree) {
   for (const projectFile of projectFiles.newLibs) {
     if (!existingProjectRoots.some((x) => projectFile.startsWith(x))) {
       await addNewDotnetProject(host, projectFile, false);
-      console.log('Found new library', projectFile);
+      logger.log('Found new library', projectFile);
     }
   }
   for (const projectFile of projectFiles.newApps) {
     if (!existingProjectRoots.some((x) => projectFile.startsWith(x))) {
       await addNewDotnetProject(host, projectFile, true);
-      console.log('Found new application', projectFile);
+      logger.log('Found new application', projectFile);
     }
   }
   return formatFiles(host);

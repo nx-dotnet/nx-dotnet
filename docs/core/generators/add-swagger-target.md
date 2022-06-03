@@ -22,6 +22,10 @@ Generates a swagger setup for a given project
 
 - (string): What should the project created to hold the swagger files be called?
 
+### codegenProject
+
+- (string): What project should hold the generated types? If null, no codegen target will be added.
+
 ### target
 
 - (string): What should the project be called?

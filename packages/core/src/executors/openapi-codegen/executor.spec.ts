@@ -1,11 +1,22 @@
 import executor from './executor';
-import { OpenapiCodegenExecutorSchema } from './schema';
 
-const options: OpenapiCodegenExecutorSchema = {};
+import * as childProcess from 'child_process';
 
 describe('OpenapiCodegen Executor', () => {
   it('can run', async () => {
-    const output = await executor(options);
+    const execSpy = jest
+      .spyOn(childProcess, 'exec')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .mockImplementation((cmd, opts, cb: any) => {
+        cb();
+        return null as unknown as childProcess.ChildProcess;
+      });
+    const output = await executor({
+      openapiJsonPath: 'mock-path',
+      outputProject: 'mock-project',
+    });
+
+    expect(execSpy).toHaveBeenCalled();
     expect(output.success).toBe(true);
   });
 });

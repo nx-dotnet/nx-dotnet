@@ -42,6 +42,7 @@ export function parsePropertyDefintion(
 
     return {
       type: reference,
+      nullable: true,
     };
   } else if (
     propertyDefinition.type &&
@@ -52,11 +53,17 @@ export function parsePropertyDefintion(
       type: builtInTypeMap[
         propertyDefinition.type as keyof typeof builtInTypeMap
       ],
+      nullable:
+        'nullable' in propertyDefinition
+          ? !!propertyDefinition.nullable
+          : false,
     };
   } else if (propertyDefinition.type === 'object') {
     return {
       type: 'object',
       properties: generatePropertiesFromSchema(propertyDefinition.properties),
+      nullable:
+        'nullable' in propertyDefinition ? !!propertyDefinition.nullable : true,
     } as Omit<TypeScriptObjectProperty, 'name'>;
   } else if (
     propertyDefinition.type === 'array' &&
@@ -67,6 +74,10 @@ export function parsePropertyDefintion(
     if (property?.type !== 'object') {
       return {
         type: `${property?.type}[]`,
+        nullable:
+          'nullable' in propertyDefinition
+            ? !!propertyDefinition.nullable
+            : true,
       };
     }
   }

@@ -19,6 +19,7 @@ export type TypeScriptProperty =
   | TypeScriptObjectProperty;
 export type TypeScriptBaseProperty = {
   name: string;
+  nullable: boolean;
 };
 export type TypeScriptLiteralProperty = TypeScriptBaseProperty & {
   type: 'string' | 'number' | 'boolean' | string;

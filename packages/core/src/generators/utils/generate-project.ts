@@ -186,7 +186,7 @@ export async function GenerateProject(
   }
 
   if (normalizedOptions.projectTemplate === 'webapi') {
-    generateSwaggerSetup(host, {
+    await generateSwaggerSetup(host, {
       project: normalizedOptions.projectName,
       swaggerProject: `${normalizedOptions.projectName}-swagger`,
       codegenProject: `${normalizedOptions.projectName}-types`,

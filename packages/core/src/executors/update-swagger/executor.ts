@@ -78,8 +78,6 @@ export default async function runExecutor(
     nxProjectConfiguration,
   );
 
-  console.log(nxProjectConfiguration, csProjFilePath);
-
   const options = normalizeOptions(
     schema,
     nxProjectConfiguration,
@@ -87,11 +85,9 @@ export default async function runExecutor(
     context.projectName as string,
   );
 
-  console.log('BEFORE ENSURE DIR');
   ensureDirSync(dirname(options.output));
 
   if (!options.skipInstall) {
-    console.log('BEFORE ENSURE TOOL');
     ensureSwaggerToolInstalled(
       context,
       dotnetClient,
@@ -117,9 +113,7 @@ function ensureSwaggerToolInstalled(
   dotnetClient: DotNetClient,
   version: string,
 ) {
-  console.log({ workspaceRoot });
   const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
-  console.log({ manifestPath });
   const manifest = existsSync(manifestPath)
     ? readJsonFile(manifestPath)
     : undefined;

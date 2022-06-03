@@ -29,7 +29,16 @@ export default async function (host: Tree, options: Schema) {
     executors: number;
   }[] = [];
 
+  options.exclude ??= [];
+  const excludedProjects = Array.isArray(options.exclude)
+    ? options.exclude
+    : options.exclude.split(',');
+
   projects.forEach((project) => {
+    if (excludedProjects.includes(project.name)) {
+      return;
+    }
+
     let gettingStartedFile: string | null = options.gettingStartedFile.replace(
       '<src>',
       project.root,

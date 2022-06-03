@@ -1,4 +1,5 @@
 import {
+  logger,
   NxJsonConfiguration,
   readJson,
   readWorkspaceConfiguration,
@@ -74,7 +75,7 @@ function updateNxJson(host: Tree) {
 function initToolManifest(host: Tree, dotnetClient: DotNetClient) {
   const initialized = host.exists('.config/dotnet-tools.json');
   if (!initialized && !isDryRun()) {
-    console.log('Tool Manifest created for managing local .NET tools');
+    logger.log('Tool Manifest created for managing local .NET tools');
     dotnetClient.new('tool-manifest');
   }
 }

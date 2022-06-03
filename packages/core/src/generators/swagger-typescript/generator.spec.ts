@@ -1,6 +1,6 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { libraryGenerator } from '@nrwl/workspace';
+import { libraryGenerator } from '@nrwl/js';
 
 import generator from './generator';
 
@@ -118,7 +118,7 @@ describe('swagger-typescript generator', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace(2);
     libraryGenerator(tree, { name: 'generated-ts' });
     tree.write('swagger.json', MOCK_SWAGGER_JSON);
   });

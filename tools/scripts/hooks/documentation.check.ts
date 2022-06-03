@@ -4,6 +4,7 @@ const parser = require('yargs-parser');
 
 const cwd = join(__dirname, '../../../');
 let { verbose } = parser(process.argv, { boolean: ['verbose'] });
+const excluded = 'workspace-utils';
 verbose ||= process.env.VERBOSE_LOGGING;
 
 export function getChangedFiles(
@@ -31,7 +32,7 @@ export function getChangedFiles(
 }
 
 console.log(`📖 Checking for documentation changes`);
-let generateCmd = 'nx g @nx-dotnet/nxdoc:generate-docs';
+let generateCmd = `nx g @nx-dotnet/nxdoc:generate-docs --exclude=${excluded}`;
 if (verbose) {
   generateCmd += ' --verbose-logging';
 }

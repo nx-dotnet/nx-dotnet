@@ -39,13 +39,18 @@ export default async function generateSwaggerSetup(
           openapiJsonPath: options.output,
           outputProject: options.codegenProject,
         },
+        dependsOn: [
+          {
+            target: options.target || 'swagger',
+            projects: 'self',
+          },
+        ],
       };
     }
   }
   project.targets[options.target || 'swagger'] = {
     ...getSwaggerExecutorConfiguration(options.output),
   };
-  updateProjectConfiguration(host, options.project, project);
 
   if (options.codegenProject) {
     await libraryGenerator(host, {
@@ -62,6 +67,8 @@ export default async function generateSwaggerSetup(
       options.swaggerProject ? options.swaggerProject : options.project,
     );
   }
+
+  updateProjectConfiguration(host, options.project, project);
 }
 
 function swaggerProjectRoot(host: Tree, swaggerProject: string) {
@@ -76,8 +83,16 @@ function generateShellProject(
   host: Tree,
   options: { project: string; swaggerProject: string; codegenProject?: string },
 ) {
+  const root = swaggerProjectRoot(host, options.swaggerProject);
   const targets: ProjectConfiguration['targets'] = {};
   if (options.codegenProject) {
+    // If typescript lib is buildable,
+    // then this lib must be too. It seems
+    // a little silly, but we **need** this target.
+    targets.build = {
+      executor: 'nx:noop',
+      outputs: [root],
+    };
     targets.codegen = {
       executor: '@nx-dotnet/core:openapi-codegen',
       options: {
@@ -87,10 +102,16 @@ function generateShellProject(
         )}/swagger.json`,
         outputProject: `generated-${options.codegenProject}`,
       },
+      dependsOn: [
+        {
+          projects: 'dependencies',
+          target: 'swagger',
+        },
+      ],
     };
   }
   addProjectConfiguration(host, options.swaggerProject, {
-    root: swaggerProjectRoot(host, options.swaggerProject),
+    root,
     targets,
     implicitDependencies: [options.project],
   });

@@ -16,7 +16,7 @@
       "version": "1.8.0-beta.0",
       "description": "update-1.8.0-beta.0",
       "cli": "nx",
-      "implementation": "./src/migrations/update-1.8.0-beta.0/update-1.8.0-beta.0"
+      "implementation": "./src/migrations/1.8.0/remove-output-option"
     }
   }
 }

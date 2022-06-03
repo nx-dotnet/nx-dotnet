@@ -123,25 +123,25 @@ Generate a target to extract the swagger.json file from a .NET webapi
 
 ### [swagger-typescript](./generators/swagger-typescript.md)
 
-swagger-typescript generator
+Generates typescript code based on a specified openapi/swagger json file
 
 ## Executors
 
 ### [build](./executors/build.md)
 
-build executor
+Invokes `dotnet build` to build a project with .NET Core CLI
 
 ### [serve](./executors/serve.md)
 
-serve executor
+Invokes `dotnet watch` in combination with `dotnet build` to run a dev-server
 
 ### [test](./executors/test.md)
 
-test executor
+Invokes `dotnet test` to execute unit tests via .NET Core CLI
 
 ### [publish](./executors/publish.md)
 
-publish executor
+Invokes `dotnet publish`
 
 ### [format](./executors/format.md)
 
@@ -150,3 +150,7 @@ Formats and lints a project using the dotnet-format tool
 ### [update-swagger](./executors/update-swagger.md)
 
 Generates a swagger document for an API project
+
+### [openapi-codegen](./executors/openapi-codegen.md)
+
+Invokes `nx g @nx-dotnet/core:swagger-typescript` with the proper parameters to update a codegen based library
