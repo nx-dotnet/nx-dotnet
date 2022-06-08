@@ -1,5 +1,6 @@
+import { workspaceRoot } from '@nrwl/devkit';
+
 import * as fg from 'fast-glob';
-import { workspaceRoot } from 'nx/src/utils/app-root';
 import { join } from 'path';
 
 const globOptions = {

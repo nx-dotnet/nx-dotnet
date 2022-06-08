@@ -1,6 +1,7 @@
+import * as cp from 'child_process';
+
 import { DotNetClient } from './dotnet.client';
 import { dotnetFactory, mockDotnetFactory } from './dotnet.factory';
-import * as cp from 'child_process';
 
 describe('dotnet client', () => {
   describe('publish', () => {

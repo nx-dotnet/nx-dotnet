@@ -6,18 +6,15 @@ import {
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { mkdirSync } from 'fs';
 import * as fs from 'fs';
-
 import { resolve } from 'path';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-
-import { GenerateTestProject } from './generate-test-project';
-import { NormalizedSchema } from './generate-project';
-import { initGenerator } from '../init/generator';
-
 import * as utils from '@nx-dotnet/utils';
+
+import { initGenerator } from '../init/generator';
+import { NormalizedSchema } from './generate-project';
+import { GenerateTestProject } from './generate-test-project';
 
 const MOCK_CS_PROJ = `<Project>
 <PropertyGroup>
@@ -54,7 +51,7 @@ describe('nx-dotnet test project generator', () => {
       targets: {},
     });
 
-    mkdirSync('apps/domain/existing-app', { recursive: true });
+    fs.mkdirSync('apps/domain/existing-app', { recursive: true });
     jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_CS_PROJ);
     jest
       .spyOn(utils, 'glob')

@@ -1,9 +1,11 @@
+import { getProjects, readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration, getProjects } from '@nrwl/devkit';
+
+import * as fs from 'fs';
+
+import * as utils from '@nx-dotnet/utils';
 
 import generator from './generator';
-import * as utils from '@nx-dotnet/utils';
-import * as fs from 'fs';
 
 jest.mock('@nx-dotnet/utils', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

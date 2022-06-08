@@ -1,4 +1,4 @@
-import { workspaceRoot } from 'nx/src/utils/app-root';
+import { workspaceRoot } from '@nrwl/devkit';
 import { existsSync } from 'fs';
 import { readJsonSync } from 'fs-extra';
 import { join } from 'path';

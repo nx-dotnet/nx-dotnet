@@ -446,8 +446,8 @@ public class UnitTest1
     });
   });
 
-  fdescribe('swagger integration', () => {
-    fit('should generate swagger project for webapi', async () => {
+  describe('swagger integration', () => {
+    it('should generate swagger project for webapi', async () => {
       const api = uniq('api');
       await runNxCommandAsync(
         `generate @nx-dotnet/core:app ${api} --language="C#" --template="webapi"`,

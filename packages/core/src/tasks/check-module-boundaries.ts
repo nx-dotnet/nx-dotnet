@@ -1,21 +1,21 @@
-import { workspaceRoot } from 'nx/src/utils/app-root';
+import {
+  NxJsonConfiguration,
+  ProjectConfiguration,
+  readJsonFile,
+  Tree,
+  WorkspaceJsonConfiguration,
+  workspaceRoot,
+} from '@nrwl/devkit';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { ESLint } from 'eslint';
+import { join } from 'path';
 
 import {
   getDependantProjectsForNxProject,
   ModuleBoundaries,
   readConfig,
 } from '@nx-dotnet/utils';
-import {
-  WorkspaceJsonConfiguration,
-  readJsonFile,
-  Tree,
-  NxJsonConfiguration,
-  ProjectConfiguration,
-} from '@nrwl/devkit';
-import { join } from 'path';
 
 export async function checkModuleBoundariesForProject(
   project: string,

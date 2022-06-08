@@ -17,10 +17,10 @@ describe('nx-dotnet project generator', () => {
   let options: NxDotnetProjectGeneratorSchema;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyWorkspace(2);
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
-    const packageJson = { scripts: {} };
+    const packageJson = { scripts: {}, devDependencies: {} };
     writeJson(appTree, 'package.json', packageJson);
 
     options = {

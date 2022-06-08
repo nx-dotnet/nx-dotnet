@@ -1,5 +1,5 @@
 {
-  "root": "packages/nxdoc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nxdoc/src",
   "projectType": "library",
   "targets": {
@@ -14,7 +14,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/nxdoc"],
       "options": {
-        "jestConfig": "packages/nxdoc/jest.config.js",
+        "jestConfig": "packages/nxdoc/jest.config.ts",
         "passWithNoTests": true
       }
     },

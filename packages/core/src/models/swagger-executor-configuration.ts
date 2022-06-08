@@ -1,4 +1,5 @@
 import { TargetConfiguration } from '@nrwl/devkit';
+
 import { UpdateSwaggerJsonExecutorSchema } from '../executors/update-swagger/schema';
 
 /**

@@ -1,5 +1,5 @@
 {
-  "root": "packages/dotnet",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/dotnet/src",
   "projectType": "library",
   "targets": {
@@ -14,7 +14,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/dotnet"],
       "options": {
-        "jestConfig": "packages/dotnet/jest.config.js",
+        "jestConfig": "packages/dotnet/jest.config.ts",
         "passWithNoTests": true
       }
     },

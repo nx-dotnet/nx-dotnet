@@ -1,6 +1,8 @@
-import { registerProjectTargets } from './infer-project';
-import * as config from '@nx-dotnet/utils/src/lib/utility-functions/config';
 import * as fs from 'fs';
+
+import * as config from '@nx-dotnet/utils/src/lib/utility-functions/config';
+
+import { registerProjectTargets } from './infer-project';
 
 describe('infer-project', () => {
   it('should obey inferProjectTargets: false', () => {

@@ -1,5 +1,5 @@
 {
-  "root": "packages/nx-ghpages",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-ghpages/src",
   "projectType": "library",
   "targets": {
@@ -14,7 +14,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/nx-ghpages"],
       "options": {
-        "jestConfig": "packages/nx-ghpages/jest.config.js",
+        "jestConfig": "packages/nx-ghpages/jest.config.ts",
         "passWithNoTests": true
       }
     },

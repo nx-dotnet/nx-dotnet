@@ -1,9 +1,9 @@
-import { TargetConfiguration } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
-import { readConfig } from '@nx-dotnet/utils';
+import { TargetConfiguration, workspaceRoot } from '@nrwl/devkit';
 
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
+
+import { readConfig } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,

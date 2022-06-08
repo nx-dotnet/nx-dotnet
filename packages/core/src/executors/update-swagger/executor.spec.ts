@@ -1,13 +1,13 @@
 import { ExecutorContext } from '@nrwl/devkit';
-
-import * as fs from 'fs';
 import * as devkit from '@nrwl/devkit';
 
+import * as fs from 'fs';
+
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import * as utils from '@nx-dotnet/utils';
 
 import executor, { SWAGGER_CLI_TOOL } from './executor';
 import { UpdateSwaggerJsonExecutorSchema } from './schema';
-import * as utils from '@nx-dotnet/utils';
 
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
@@ -28,7 +28,8 @@ const options: UpdateSwaggerJsonExecutorSchema = {
 };
 
 const root = '/virtual';
-jest.mock('nx/src/utils/app-root', () => ({
+jest.mock('@nrwl/devkit', () => ({
+  ...jest.requireActual('@nrwl/devkit'),
   appRootPath: '/virtual',
   workspaceRoot: '/virtual',
 }));

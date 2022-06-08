@@ -6,12 +6,15 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nrwl/devkit';
+
+import { basename, resolve } from 'path';
+import { XmlDocument } from 'xmldoc';
+
 import {
   getNxDotnetProjects,
   getProjectFileForNxProject,
 } from '@nx-dotnet/utils';
-import { basename, resolve } from 'path';
-import { XmlDocument } from 'xmldoc';
+
 import { BuildExecutorConfiguration } from '../../models';
 
 export default async function removeOutputOption(host: Tree) {

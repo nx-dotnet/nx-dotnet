@@ -5,9 +5,10 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import update from './remove-output-option';
 
 import * as utils from '@nx-dotnet/utils';
+
+import update from './remove-output-option';
 
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),

@@ -1,6 +1,6 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/docs-site",
   "sourceRoot": "apps/docs-site/src",
   "targets": {
     "build": {

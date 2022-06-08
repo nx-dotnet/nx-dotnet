@@ -3,9 +3,11 @@ import {
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
+
+import { parse, relative, resolve } from 'path';
+
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { readConfigSection } from '@nx-dotnet/utils';
-import { parse, relative, resolve } from 'path';
 
 export function addToSolutionFile(
   host: Tree,

@@ -17,3 +17,7 @@ Extract openapi swagger documentation from the webapi
 ### startupAssembly
 
 - (string): Path from workspace root to the built api&#39;s startup dll file
+
+### skipInstall
+
+- (boolean): Skips installing Swashbuckle.AspNetCore.Cli. This option should be used if you are managing the installation on your own.

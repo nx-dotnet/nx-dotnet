@@ -1,5 +1,4 @@
-import { ExecutorContext, readJsonFile } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
+import { ExecutorContext, readJsonFile, workspaceRoot } from '@nrwl/devkit';
 
 import { existsSync } from 'fs';
 import { join } from 'path';

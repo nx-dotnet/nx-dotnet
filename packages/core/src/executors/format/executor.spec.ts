@@ -1,13 +1,13 @@
+import * as devkit from '@nrwl/devkit';
 import { ExecutorContext } from '@nrwl/devkit';
 
 import * as fs from 'fs';
-import * as devkit from '@nrwl/devkit';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import * as utils from '@nx-dotnet/utils';
 
 import executor from './executor';
 import { FormatExecutorSchema } from './schema';
-import * as utils from '@nx-dotnet/utils';
 
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),

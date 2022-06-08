@@ -1,17 +1,19 @@
 import { Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+
+import * as ESLintNamespace from 'eslint';
+
 import {
   CONFIG_FILE_PATH,
   ModuleBoundaries,
   NxDotnetConfig,
 } from '@nx-dotnet/utils';
 
+import * as checkModule from './check-module-boundaries';
 import {
   checkModuleBoundariesForProject,
   loadModuleBoundaries,
 } from './check-module-boundaries';
-import * as checkModule from './check-module-boundaries';
-import * as ESLintNamespace from 'eslint';
 
 const MOCK_BOUNDARIES: ModuleBoundaries = [
   {

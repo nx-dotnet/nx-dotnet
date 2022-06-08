@@ -3,10 +3,11 @@ import {
   logger,
   ProjectConfiguration,
   readJsonFile,
+  workspaceRoot,
 } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { existsSync } from 'fs';
+import { ensureDirSync } from 'fs-extra';
 import { dirname, join } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
@@ -18,9 +19,8 @@ import {
   readXml,
 } from '@nx-dotnet/utils';
 
-import { UpdateSwaggerJsonExecutorSchema } from './schema';
 import { buildStartupAssemblyPath } from '../../generators/utils/get-path-to-startup-assembly';
-import { ensureDirSync } from 'fs-extra';
+import { UpdateSwaggerJsonExecutorSchema } from './schema';
 
 export const SWAGGER_CLI_TOOL = 'Swashbuckle.AspNetCore.Cli';
 
