@@ -1,12 +1,12 @@
-import { ExecutorContext } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
+import { ExecutorContext, workspaceRoot } from '@nrwl/devkit';
+
+import { resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
 } from '@nx-dotnet/utils';
-import { resolve } from 'path';
 
 import { BuildExecutorSchema } from './schema';
 

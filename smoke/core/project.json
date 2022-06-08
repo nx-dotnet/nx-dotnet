@@ -1,12 +1,12 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "smoke/core",
   "sourceRoot": "smoke/core/src",
   "targets": {
     "smoke": {
       "executor": "@nrwl/jest:jest",
       "options": {
-        "jestConfig": "smoke/core/jest.config.js"
+        "jestConfig": "smoke/core/jest.config.ts"
       }
     }
   },

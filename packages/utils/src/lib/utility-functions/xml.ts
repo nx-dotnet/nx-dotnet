@@ -1,6 +1,6 @@
 import { Tree } from '@nrwl/devkit';
-import { readFileSync } from 'fs';
 
+import { readFileSync } from 'fs';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 export function readXmlInTree(host: Tree, path: string): XmlDocument {

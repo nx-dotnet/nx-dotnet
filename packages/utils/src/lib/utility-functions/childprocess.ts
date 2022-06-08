@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as cp from 'child_process';
-import { ChildProcess } from 'child_process';
 
 /**
  * TypeScript typings think ChildProcess is an interface, its a class.
@@ -10,7 +9,7 @@ export function isChildProcess(obj: any): obj is cp.ChildProcess {
 }
 
 export async function handleChildProcessPassthrough(
-  childProcess: ChildProcess,
+  childProcess: cp.ChildProcess,
 ) {
   let resolver: () => void;
 

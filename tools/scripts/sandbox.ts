@@ -8,7 +8,6 @@ import {
 } from 'fs-extra';
 import { basename, dirname, join, resolve } from 'path';
 import { getWorkspacePackages } from '../utils';
-import { workspaceRoot } from 'nx/src/utils/app-root';
 import { startCleanVerdaccioInstance } from './local-registry/setup';
 
 const sandboxDirectory = join(__dirname, '../../tmp/sandbox');

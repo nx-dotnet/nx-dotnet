@@ -9,11 +9,10 @@ import {
   GetTestExecutorConfig,
 } from '../../models';
 import { addToSolutionFile } from './add-to-sln';
-
 import {
+  manipulateXmlProjectFile,
   NormalizedSchema,
   normalizeOptions,
-  manipulateXmlProjectFile,
 } from './generate-project';
 
 export async function GenerateTestProject(

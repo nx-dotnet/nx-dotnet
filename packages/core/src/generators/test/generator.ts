@@ -1,9 +1,9 @@
 import { readProjectConfiguration, Tree } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
+
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { normalizeOptions } from '../utils/generate-project';
-
 import { GenerateTestProject } from '../utils/generate-test-project';
 import { NxDotnetGeneratorSchema } from './schema';
 

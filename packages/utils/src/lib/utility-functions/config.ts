@@ -1,5 +1,10 @@
-import { readJson, readJsonFile, Tree, writeJson } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
+import {
+  readJson,
+  readJsonFile,
+  Tree,
+  workspaceRoot,
+  writeJson,
+} from '@nrwl/devkit';
 
 import { CONFIG_FILE_PATH } from '../constants';
 import { NxDotnetConfig } from '../models';

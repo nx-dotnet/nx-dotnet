@@ -9,8 +9,8 @@ import {
   ProjectType,
   readWorkspaceConfiguration,
   Tree,
+  workspaceRoot,
 } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
 
 //  Files generated via `dotnet` are not available in the virtual fs
 import { readFileSync, writeFileSync } from 'fs';
@@ -30,11 +30,11 @@ import {
   GetServeExecutorConfig,
   NxDotnetProjectGeneratorSchema,
 } from '../../models';
-import initSchematic from '../init/generator';
-import { GenerateTestProject } from './generate-test-project';
-import { addToSolutionFile } from './add-to-sln';
-import { promptForTemplate } from './prompt-for-template';
 import generateSwaggerSetup from '../add-swagger-target/add-swagger-target';
+import initSchematic from '../init/generator';
+import { addToSolutionFile } from './add-to-sln';
+import { GenerateTestProject } from './generate-test-project';
+import { promptForTemplate } from './prompt-for-template';
 
 export interface NormalizedSchema
   extends Omit<NxDotnetProjectGeneratorSchema, 'template'> {
@@ -61,11 +61,15 @@ export async function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(/\//g, '-');
-  const projectRoot = `${
+  const workspaceLayoutRoot =
     (projectType || options.projectType) === 'application'
       ? getWorkspaceLayout(host).appsDir
-      : getWorkspaceLayout(host).libsDir
-  }/${projectDirectory}`;
+      : getWorkspaceLayout(host).libsDir;
+
+  const projectRoot = workspaceLayoutRoot
+    ? joinPathFragments(workspaceLayoutRoot, projectDirectory)
+    : projectDirectory;
+
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];

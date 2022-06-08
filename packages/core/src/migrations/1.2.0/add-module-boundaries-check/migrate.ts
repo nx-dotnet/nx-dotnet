@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Tree } from '@nrwl/devkit';
+
+import { XmlDocument } from 'xmldoc';
+
 import {
   getNxDotnetProjects,
   getProjectFileForNxProject,
 } from '@nx-dotnet/utils';
 
 import { addPrebuildMsbuildTask } from '../../../generators/utils/generate-project';
-
-import { XmlDocument } from 'xmldoc';
 
 export default async function update(host: Tree) {
   const projects = await getNxDotnetProjects(host);

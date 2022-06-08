@@ -1,4 +1,5 @@
 import { NxPlugin } from '@nrwl/devkit';
+
 import {
   projectFilePatterns,
   registerProjectTargets,

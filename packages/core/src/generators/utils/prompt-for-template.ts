@@ -1,6 +1,6 @@
-import { DotNetClient } from '@nx-dotnet/dotnet';
-
 import { prompt } from 'inquirer';
+
+import { DotNetClient } from '@nx-dotnet/dotnet';
 
 export function promptForTemplate(
   client: DotNetClient,

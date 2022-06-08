@@ -1,6 +1,7 @@
-import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 import * as semver from 'semver';
+
+import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
 
 import {
   addPackageKeyMap,
@@ -11,17 +12,17 @@ import {
   dotnetNewOptions,
   dotnetPublishOptions,
   dotnetRunOptions,
-  KnownDotnetTemplates,
+  DotnetTemplate,
   dotnetTestOptions,
   formatKeyMap,
+  KnownDotnetTemplates,
   newKeyMap,
   publishKeyMap,
   runKeyMap,
   testKeyMap,
-  DotnetTemplate,
 } from '../models';
-import { LoadedCLI } from './dotnet.factory';
 import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
+import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}

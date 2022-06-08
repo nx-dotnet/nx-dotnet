@@ -1,9 +1,10 @@
 import {
-  ProjectConfiguration,
-  joinPathFragments,
-  TargetConfiguration,
   getPackageManagerCommand,
+  joinPathFragments,
+  ProjectConfiguration,
+  TargetConfiguration,
 } from '@nrwl/devkit';
+
 import { execSync } from 'child_process';
 import { sync } from 'fast-glob';
 import { existsSync } from 'fs';

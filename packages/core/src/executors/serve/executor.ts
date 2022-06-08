@@ -1,5 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
+import { ExecutorContext, workspaceRoot } from '@nrwl/devkit';
 
 import { ChildProcess } from 'child_process';
 import { resolve as pathResolve } from 'path';

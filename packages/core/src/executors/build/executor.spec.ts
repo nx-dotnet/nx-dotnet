@@ -1,16 +1,15 @@
 import { ExecutorContext } from '@nrwl/devkit';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-
 import * as utils from '@nx-dotnet/utils';
+
+import executor from './executor';
+import { BuildExecutorSchema } from './schema';
 
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
   getProjectFileForNxProject: () => Promise.resolve('1.csproj'),
 }));
-
-import executor from './executor';
-import { BuildExecutorSchema } from './schema';
 
 const options: BuildExecutorSchema = {
   configuration: 'Debug',

@@ -1,6 +1,6 @@
+import { execSync } from 'child_process';
 import { readJson, remove } from 'fs-extra';
 import { join } from 'path';
-import { execSync } from 'child_process';
 
 export async function readDependenciesFromNxDepGraph(
   workspaceRoot: string,

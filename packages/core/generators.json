@@ -59,11 +59,6 @@
       "factory": "./src/generators/add-swagger-target/add-swagger-target",
       "schema": "./src/generators/add-swagger-target/schema.json",
       "description": "Generate a target to extract the swagger.json file from a .NET webapi"
-    },
-    "swagger-typescript": {
-      "factory": "./src/generators/swagger-typescript/generator",
-      "schema": "./src/generators/swagger-typescript/schema.json",
-      "description": "swagger-typescript generator"
     }
   }
 }

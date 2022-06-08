@@ -1,4 +1,5 @@
 import { TargetConfiguration } from '@nrwl/devkit';
+
 import { BuildExecutorSchema } from '../executors/build/schema';
 
 /**

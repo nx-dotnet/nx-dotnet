@@ -4,8 +4,8 @@ import {
   ProjectConfiguration,
   Tree,
   WorkspaceJsonConfiguration,
+  workspaceRoot,
 } from '@nrwl/devkit';
-import { workspaceRoot } from 'nx/src/utils/app-root';
 
 import { readFileSync } from 'fs';
 import { dirname, isAbsolute, relative, resolve } from 'path';
