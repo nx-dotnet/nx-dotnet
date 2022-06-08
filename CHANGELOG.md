@@ -1,3 +1,13 @@
+# [1.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.11.0...v1.12.0) (2022-06-08)
+
+### Bug Fixes
+
+- **core:** compatibility with Nx 14.2+ ([1bb134b](https://github.com/nx-dotnet/nx-dotnet/commit/1bb134b6367b0d6da1950204b2eb2879764bd1e3))
+
+### Features
+
+- **core:** allow tool installation to be skipped for update-swagger ([d1044f6](https://github.com/nx-dotnet/nx-dotnet/commit/d1044f6eb5080beec8d1b31eed2c8610d85c825d))
+
 # [1.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.1...v1.11.0) (2022-05-31)
 
 ### Features
