@@ -81,7 +81,7 @@
     "openapi-types": "^11.0.1",
     "prettier": "2.6.2",
     "run-p": "*",
-    "semantic-release": "^19.0.2",
+    "semantic-release": "^19.0.3",
     "ts-jest": "27.1.4",
     "ts-node": "10.8.1",
     "tslib": "^2.3.1",
