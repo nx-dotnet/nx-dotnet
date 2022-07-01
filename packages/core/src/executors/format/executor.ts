@@ -61,7 +61,7 @@ function ensureFormatToolInstalled(
   majorVersion: number,
 ) {
   const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
-  console.log(manifestPath);
+
   const manifest = existsSync(manifestPath)
     ? readJsonFile(manifestPath)
     : undefined;

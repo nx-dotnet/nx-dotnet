@@ -19,7 +19,15 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e", "prebuild"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "prebuild",
+          "swagger",
+          "codegen"
+        ],
         "accessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
@@ -29,7 +37,7 @@
   },
   "workspaceLayout": {
     "appsDir": "",
-    "libsDir": "packages"
+    "libsDir": ""
   },
   "targetDependencies": {
     "build": [
@@ -44,6 +52,30 @@
       {
         "target": "prebuild",
         "projects": "dependencies"
+      },
+      {
+        "target": "codegen",
+        "projects": "dependencies"
+      },
+      {
+        "target": "codegen",
+        "projects": "self"
+      }
+    ],
+    "codegen": [
+      {
+        "target": "swagger",
+        "projects": "dependencies"
+      },
+      {
+        "target": "swagger",
+        "projects": "self"
+      }
+    ],
+    "swagger": [
+      {
+        "target": "build",
+        "projects": "self"
       }
     ]
   },
@@ -51,9 +83,22 @@
     "@nx-dotnet/nxdoc:generate-docs": {
       "outputDirectory": "docs",
       "gettingStartedFile": "<src>/README.md"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+  "plugins": ["@nx-dotnet/core"],
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

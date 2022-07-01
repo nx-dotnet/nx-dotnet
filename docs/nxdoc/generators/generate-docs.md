@@ -21,3 +21,9 @@
 ### verboseLogging
 
 - (boolean): Print some additional logs during doc generation
+
+### exclude
+
+- (string): A comma separated list of projects that should not be included in documentation
+
+- (array): An array of projects that should not be included in documentation

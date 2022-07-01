@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "demo/apps/web-frontend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/demo/apps/web-frontend",
+        "index": "demo/apps/web-frontend/src/index.html",
+        "baseHref": "/",
+        "main": "demo/apps/web-frontend/src/main.tsx",
+        "polyfills": "demo/apps/web-frontend/src/polyfills.ts",
+        "tsConfig": "demo/apps/web-frontend/tsconfig.app.json",
+        "assets": [
+          "demo/apps/web-frontend/src/favicon.ico",
+          "demo/apps/web-frontend/src/assets"
+        ],
+        "styles": ["demo/apps/web-frontend/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "demo/apps/web-frontend/src/environments/environment.ts",
+              "with": "demo/apps/web-frontend/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "demo-web-frontend:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "demo-web-frontend:build:production",
+          "hmr": false
+        },
+        "development": {
+          "buildTarget": "demo-web-frontend:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["demo/apps/web-frontend/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coveragedemo/apps/web-frontend"],
+      "options": {
+        "jestConfig": "demo/apps/web-frontend/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

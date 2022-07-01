@@ -166,7 +166,6 @@ describe('nx-dotnet e2e', () => {
       await runNxCommandAsync(
         `generate @nx-dotnet/core:app ${app} --template webapi --language="C#"  --skip-swagger-lib`,
       );
-      console.log('LINT TEST PROJECT GENERATED', app);
       const promise = runNxCommandAsync(`lint ${app}`);
       await expect(promise).rejects.toThrow(
         expect.objectContaining({

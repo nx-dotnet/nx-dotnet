@@ -4,6 +4,10 @@
   "projects": {
     "core": "packages/core",
     "core-e2e": "e2e/core-e2e",
+    "demo-apps-webapi": "demo/apps/webapi",
+    "demo-libs-generated-webapi-swagger": "demo/libs/generated/webapi-swagger",
+    "demo-libs-generated-webapi-types": "demo/libs/generated/webapi-types",
+    "demo-web-frontend": "demo/apps/web-frontend",
     "docs-site": "apps/docs-site",
     "dotnet": "packages/dotnet",
     "nx-ghpages": "packages/nx-ghpages",

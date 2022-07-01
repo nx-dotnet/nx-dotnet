@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "nx:noop",
+      "outputs": ["demo/libs/generated/webapi-swagger"]
+    },
+    "codegen": {
+      "executor": "@nx-dotnet/core:openapi-codegen",
+      "outputs": ["demo/libs/generated/webapi-types"],
+      "options": {
+        "openapiJsonPath": "demo/libs/generated/webapi-swagger/swagger.json",
+        "outputProject": "demo-libs-generated-webapi-types"
+      }
+    }
+  },
+  "implicitDependencies": ["demo-apps-webapi"]
+}

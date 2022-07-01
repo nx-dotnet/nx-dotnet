@@ -35,7 +35,11 @@
     "url": "https://github.com/nx-dotnet/nx-dotnet"
   },
   "nx-migrations": {
-    "migrations": "./migrations.json"
+    "migrations": "./migrations.json",
+    "packageGroup": [
+      "@nx-dotnet/utils",
+      "@nx-dotnet/dotnet"
+    ]
   },
   "version": "1.12.0"
 }

@@ -45,13 +45,12 @@ export function PatchPackageVersions(
       return;
     }
 
-    const pkgPath = `${
-      prebuild
-        ? projectConfiguration.root
-        : projectConfiguration.targets?.build.options.outputPath
-    }/package.json`;
-    if (!existsSync(pkgPath)) {
-      console.log('pkgPath not found', pkgPath);
+    const p = prebuild
+      ? projectConfiguration.root
+      : projectConfiguration.targets?.build.options?.outputPath;
+    const pkgPath = p ? `${p}/package.json` : null;
+    if (!pkgPath || !existsSync(pkgPath)) {
+      console.log('pkgPath not found:', pkgPath);
       return;
     }
     const pkg = readJson(pkgPath);

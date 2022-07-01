@@ -84,6 +84,7 @@ export default async function runExecutor(
     csProjFilePath,
     context.projectName as string,
   );
+
   ensureDirSync(dirname(options.output));
 
   if (!options.skipInstall) {

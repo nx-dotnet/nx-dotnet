@@ -27,6 +27,22 @@
       "type": "boolean",
       "description": "Print some additional logs during doc generation",
       "default": false
+    },
+    "exclude": {
+      "description": "Projects that should not be included in documentation",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "A comma separated list of projects that should not be included in documentation"
+        },
+        {
+          "type": "array",
+          "description": "An array of projects that should not be included in documentation",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     }
   },
   "required": ["outputDirectory"]

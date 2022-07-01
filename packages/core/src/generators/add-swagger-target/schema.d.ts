@@ -5,4 +5,5 @@ export type AddSwaggerJsonExecutorSchema = {
   startupAssembly?: string;
   target?: string;
   swaggerProject?: string;
+  codegenProject?: string;
 };

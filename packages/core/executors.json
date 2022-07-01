@@ -4,22 +4,22 @@
     "build": {
       "implementation": "./src/executors/build/executor",
       "schema": "./src/executors/build/schema.json",
-      "description": "build executor"
+      "description": "Invokes `dotnet build` to build a project with .NET Core CLI"
     },
     "serve": {
       "implementation": "./src/executors/serve/executor",
       "schema": "./src/executors/serve/schema.json",
-      "description": "serve executor"
+      "description": "Invokes `dotnet watch` in combination with `dotnet build` to run a dev-server"
     },
     "test": {
       "implementation": "./src/executors/test/executor",
       "schema": "./src/executors/test/schema.json",
-      "description": "test executor"
+      "description": "Invokes `dotnet test` to execute unit tests via .NET Core CLI"
     },
     "publish": {
       "implementation": "./src/executors/publish/executor",
       "schema": "./src/executors/publish/schema.json",
-      "description": "publish executor"
+      "description": "Invokes `dotnet publish`"
     },
     "format": {
       "implementation": "./src/executors/format/executor",
@@ -30,6 +30,11 @@
       "implementation": "./src/executors/update-swagger/executor",
       "schema": "./src/executors/update-swagger/schema.json",
       "description": "Generates a swagger document for an API project"
+    },
+    "openapi-codegen": {
+      "implementation": "./src/executors/openapi-codegen/executor",
+      "schema": "./src/executors/openapi-codegen/schema.json",
+      "description": "Invokes `nx g @nx-dotnet/core:swagger-typescript` with the proper parameters to update a codegen based library"
     }
   }
 }

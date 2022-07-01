@@ -27,10 +27,12 @@ export function buildStartupAssemblyPath(
   if (!existsSync(outputDirectory)) {
     execSync(`${getPackageManagerCommand().exec} nx ${target} ${projectName}`);
   }
+  console.log('before dll name');
   const dllName = basename(csProjFilePath).replace(
     /(?:\.csproj|\.vbproj|\.fsproj)$/,
     '.dll',
   );
+  console.log('dll name', dllName, outputDirectory);
   return joinPathFragments(
     outputDirectory,
     sync(`**/${dllName}`, { cwd: outputDirectory })[0],

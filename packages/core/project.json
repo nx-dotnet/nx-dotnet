@@ -6,7 +6,13 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/core/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/core/**/*.ts",
+          "packages/core/generators.json",
+          "packages/core/executors.json",
+          "packages/core/package.json",
+          "packages/core/migrations.json"
+        ]
       },
       "outputs": ["{options.outputFile}"]
     },
