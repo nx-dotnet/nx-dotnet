@@ -21,7 +21,7 @@
     "@docusaurus/core": "^2.0.0-beta.8",
     "@docusaurus/preset-classic": "^2.0.0-beta.16",
     "@docusaurus/theme-search-algolia": "^2.0.0-beta.8",
-    "@mdx-js/react": "^1.6.21",
+    "@mdx-js/react": "^2.1.2",
     "@swc/helpers": "~0.3.3",
     "@types/xmldoc": "^1.1.6",
     "chokidar": "^3.5.2",
