@@ -27,7 +27,7 @@
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",
-    "eslint": "8.15.0",
+    "eslint": "8.19.0",
     "fast-glob": "3.2.7",
     "inquirer": "^8.2.0",
     "prism-react-renderer": "^1.2.1",
