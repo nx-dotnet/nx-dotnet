@@ -32,6 +32,7 @@ describe('nx-dotnet project generator', () => {
       standalone: false,
       skipSwaggerLib: true,
       projectType: 'application',
+      pathScheme: 'nx',
     };
 
     jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([

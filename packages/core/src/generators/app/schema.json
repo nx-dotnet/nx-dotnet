@@ -81,6 +81,20 @@
     "skipSwaggerLib": {
       "description": "By default, if using webapi template, an additional library is scaffolded for swagger files. This skips that setup.",
       "default": true
+    },
+    "pathScheme": {
+      "description": "Determines if the project should follow NX or dotnet path naming conventions",
+      "default": "nx",
+      "enum": ["nx", "dotnet"],
+      "x-prompt": {
+        "message": "Which path naming conventions should the project use?",
+        "type": "list",
+        "items": [
+          { "value": "nx", "label": "NX naming conventions" },
+          { "value": "dotnet", "label": "Dotnet naming conventions" }
+        ]
+      },
+      "aliases": ["p"]
     }
   },
   "required": ["name", "language"]

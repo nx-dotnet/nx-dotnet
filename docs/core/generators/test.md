@@ -35,3 +35,7 @@ Generate a .NET test project for an existing application or library
 - (string): The name of the solution file to add the project to
 
 - (boolean): Should the project be added to the default solution file?
+
+### pathScheme
+
+- (): Determines if the project should follow NX or dotnet path naming conventions

@@ -25,8 +25,9 @@ export async function GenerateTestProject(
   }
 
   const suffix = schema.testProjectNameSuffix || 'test';
-  const testRoot = schema.projectRoot + '-' + suffix;
-  const testProjectName = schema.projectName + '-' + suffix;
+  const separator = schema.pathScheme === 'nx' ? '-' : '.';
+  const testRoot = schema.projectRoot + separator + suffix;
+  const testProjectName = schema.projectName + separator + suffix;
 
   addProjectConfiguration(
     host,
@@ -48,7 +49,7 @@ export async function GenerateTestProject(
   const newParams: dotnetNewOptions = {
     language: schema.language,
     name: schema.namespaceName + '.' + names(suffix).className,
-    output: schema.projectRoot + '-' + suffix,
+    output: schema.projectRoot + separator + suffix,
   };
 
   if (isDryRun()) {

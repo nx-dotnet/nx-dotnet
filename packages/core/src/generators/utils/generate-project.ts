@@ -55,12 +55,16 @@ export async function normalizeOptions(
   client?: DotNetClient,
   projectType?: ProjectType,
 ): Promise<NormalizedSchema> {
-  const name = names(options.name).fileName;
+  const name =
+    options.pathScheme === 'nx' ? names(options.name).fileName : options.name;
   const className = names(options.name).className;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
-  const projectName = projectDirectory.replace(/\//g, '-');
+  const projectName =
+    options.pathScheme === 'nx'
+      ? projectDirectory.replace(/\//g, '-')
+      : projectDirectory;
   const workspaceLayoutRoot =
     (projectType || options.projectType) === 'application'
       ? getWorkspaceLayout(host).appsDir

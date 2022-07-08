@@ -241,6 +241,18 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
+  describe('nx g using dotnet pathSchema', () => {
+    it('Should use dotnet pathScheme by not changing the name of the lib', async () => {
+      const libName = uniq('CurveDental.Foobar.SomeLib');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:lib ${libName} --language="C#" --template="classlib" --pathScheme=dotnet`,
+      );
+
+      expect(() => checkFilesExist(`libs/${libName}`)).not.toThrow();
+      expect(() => checkFilesExist(`libs/${libName}.test`)).not.toThrow();
+    });
+  });
+
   describe('nx g import-projects', () => {
     it('should import apps, libs, and test', async () => {
       const testApp = uniq('app');
