@@ -38,4 +38,4 @@ Generate a .NET test project for an existing application or library
 
 ### pathScheme
 
-- (): Determines if the project should follow NX or dotnet path naming conventions
+- (string): Determines if the project should follow NX or dotnet path naming conventions

@@ -46,4 +46,4 @@ Generate a dotnet project under the library directory.
 
 ### pathScheme
 
-- (): Determines if the project should follow NX or dotnet path naming conventions
+- (string): Determines if the project should follow NX or dotnet path naming conventions

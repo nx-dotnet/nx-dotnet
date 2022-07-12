@@ -50,4 +50,4 @@ Generate a dotnet project under the application directory.
 
 ### pathScheme
 
-- (): Determines if the project should follow NX or dotnet path naming conventions
+- (string): Determines if the project should follow NX or dotnet path naming conventions
