@@ -84,6 +84,7 @@
     },
     "pathScheme": {
       "description": "Determines if the project should follow NX or dotnet path naming conventions",
+      "type": "string",
       "default": "nx",
       "enum": ["nx", "dotnet"],
       "x-prompt": {
@@ -93,8 +94,7 @@
           { "value": "nx", "label": "NX naming conventions" },
           { "value": "dotnet", "label": "Dotnet naming conventions" }
         ]
-      },
-      "aliases": ["p"]
+      }
     }
   },
   "required": ["name", "language"]

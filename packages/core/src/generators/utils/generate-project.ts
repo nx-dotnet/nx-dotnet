@@ -55,42 +55,21 @@ export async function normalizeOptions(
   client?: DotNetClient,
   projectType?: ProjectType,
 ): Promise<NormalizedSchema> {
-  const name =
-    options.pathScheme === 'nx' ? names(options.name).fileName : options.name;
+  const name = getNameFromSchema(options);
   const className = names(options.name).className;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
-  const projectName =
-    options.pathScheme === 'nx'
-      ? projectDirectory.replace(/\//g, '-')
-      : projectDirectory;
-  const workspaceLayoutRoot =
-    (projectType || options.projectType) === 'application'
-      ? getWorkspaceLayout(host).appsDir
-      : getWorkspaceLayout(host).libsDir;
-
-  const projectRoot = workspaceLayoutRoot
-    ? joinPathFragments(workspaceLayoutRoot, projectDirectory)
-    : projectDirectory;
-
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
-
-  const template = client
-    ? await promptForTemplate(client, options.template, options.language)
-    : options.template;
-
-  const npmScope = names(
-    readWorkspaceConfiguration(host).npmScope || '',
-  ).className;
-  const featureScope = projectDirectory
-    // not sure why eslint complains here, testing in devtools shows different results without the escape character.
-    // eslint-disable-next-line no-useless-escape
-    .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
-    .map((part: string) => names(part).className);
-  const namespaceName = [npmScope, ...featureScope].join('.');
+  const projectName = getProjectNameFromSchema(options, projectDirectory);
+  const projectRoot = getProjectRootFromSchema(
+    host,
+    options,
+    projectDirectory,
+    projectType,
+  );
+  const parsedTags = getProjectTagsFromSchema(options);
+  const template = await getTemplate(options, client);
+  const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
 
   return {
     ...options,
@@ -105,6 +84,80 @@ export async function normalizeOptions(
     namespaceName,
     projectType: projectType ?? options.projectType ?? 'library',
   };
+}
+
+function getNameFromSchema(options: NxDotnetProjectGeneratorSchema): string {
+  return options.pathScheme === 'nx'
+    ? names(options.name).fileName
+    : options.name;
+}
+
+function getNamespaceFromSchema(
+  host: Tree,
+  options: NxDotnetProjectGeneratorSchema,
+  projectDirectory: string,
+): string {
+  const npmScope = names(
+    readWorkspaceConfiguration(host).npmScope || '',
+  ).className;
+  const featureScope = projectDirectory
+    // not sure why eslint complains here, testing in devtools shows different results without the escape character.
+    // eslint-disable-next-line no-useless-escape
+    .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
+    .map((part: string) => names(part).className);
+
+  return [npmScope, ...featureScope].join('.');
+}
+
+async function getTemplate(
+  options: NxDotnetProjectGeneratorSchema,
+  client?: DotNetClient,
+): Promise<string> {
+  let template = options.template || '';
+  if (client) {
+    template = await promptForTemplate(
+      client,
+      options.template,
+      options.language,
+    );
+  }
+
+  return template;
+}
+
+function getProjectTagsFromSchema(
+  options: NxDotnetProjectGeneratorSchema,
+): string[] {
+  return options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
+}
+
+function getProjectRootFromSchema(
+  host: Tree,
+  options: NxDotnetProjectGeneratorSchema,
+  projectDirectory: string,
+  projectType?: string,
+): string {
+  const workspaceLayoutRoot =
+    (projectType || options.projectType) === 'application'
+      ? getWorkspaceLayout(host).appsDir
+      : getWorkspaceLayout(host).libsDir;
+
+  return workspaceLayoutRoot
+    ? joinPathFragments(workspaceLayoutRoot, projectDirectory)
+    : projectDirectory;
+}
+
+function getProjectNameFromSchema(
+  options: NxDotnetProjectGeneratorSchema,
+  projectDirectory: string,
+): string {
+  if (options.pathScheme === 'dotnet') {
+    return options.directory
+      ? `${names(options.directory).className}.${options.name}`
+      : options.name;
+  }
+
+  return projectDirectory.replace(/\//g, '-');
 }
 
 export async function manipulateXmlProjectFile(

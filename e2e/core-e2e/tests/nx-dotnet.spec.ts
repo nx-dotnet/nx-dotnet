@@ -242,14 +242,24 @@ describe('nx-dotnet e2e', () => {
   });
 
   describe('nx g using dotnet pathSchema', () => {
-    it('Should use dotnet pathScheme by not changing the name of the lib', async () => {
+    it('no directory', async () => {
       const libName = uniq('CurveDental.Foobar.SomeLib');
       await runNxCommandAsync(
         `generate @nx-dotnet/core:lib ${libName} --language="C#" --template="classlib" --pathScheme=dotnet`,
       );
 
       expect(() => checkFilesExist(`libs/${libName}`)).not.toThrow();
-      expect(() => checkFilesExist(`libs/${libName}.test`)).not.toThrow();
+      expect(() => checkFilesExist(`libs/${libName}.Test`)).not.toThrow();
+    });
+
+    it('with directory', async () => {
+      const libName = uniq('CurveDental.Foobar.SomeLib');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:lib ${libName} --language="C#" --template="classlib" --pathScheme=dotnet --directory foo`,
+      );
+
+      expect(() => checkFilesExist(`libs/foo/${libName}`)).not.toThrow();
+      expect(() => checkFilesExist(`libs/foo/${libName}.Test`)).not.toThrow();
     });
   });
 

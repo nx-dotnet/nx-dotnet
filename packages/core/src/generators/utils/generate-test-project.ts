@@ -14,6 +14,24 @@ import {
   NormalizedSchema,
   normalizeOptions,
 } from './generate-project';
+export interface PathParts {
+  suffix: string;
+  separator: '.' | '-';
+}
+
+function getPathPartsFromSchema(schema: NormalizedSchema): PathParts {
+  if (schema.pathScheme === 'nx') {
+    return {
+      separator: '-',
+      suffix: schema.testProjectNameSuffix || 'test',
+    };
+  } else {
+    return {
+      separator: '.',
+      suffix: schema.testProjectNameSuffix || 'Test',
+    };
+  }
+}
 
 export async function GenerateTestProject(
   host: Tree,
@@ -24,8 +42,7 @@ export async function GenerateTestProject(
     schema = await normalizeOptions(host, schema);
   }
 
-  const suffix = schema.testProjectNameSuffix || 'test';
-  const separator = schema.pathScheme === 'nx' ? '-' : '.';
+  const { separator, suffix } = getPathPartsFromSchema(schema);
   const testRoot = schema.projectRoot + separator + suffix;
   const testProjectName = schema.projectName + separator + suffix;
 
@@ -49,7 +66,7 @@ export async function GenerateTestProject(
   const newParams: dotnetNewOptions = {
     language: schema.language,
     name: schema.namespaceName + '.' + names(suffix).className,
-    output: schema.projectRoot + separator + suffix,
+    output: testRoot,
   };
 
   if (isDryRun()) {
