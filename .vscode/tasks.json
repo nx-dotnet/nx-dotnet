@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-webapi",
+      "command": "npx",
+      "type": "process",
+      "args": ["nx", "build", "demo-apps-webapi"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch-webapi",
+      "command": "npx",
+      "type": "process",
+      "args": ["nx", "serve", "demo-apps-webapi"],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
