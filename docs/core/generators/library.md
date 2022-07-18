@@ -43,3 +43,7 @@ Generate a dotnet project under the library directory.
 ### skipSwaggerLib
 
 - (): By default, if using webapi template, an additional library is scaffolded for swagger files. This skips that setup.
+
+### pathScheme
+
+- (string): Determines if the project should follow NX or dotnet path naming conventions

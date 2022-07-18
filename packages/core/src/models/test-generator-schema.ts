@@ -5,4 +5,5 @@ export interface NxDotnetTestGeneratorSchema {
   suffix?: string;
   skipOutputPathManipulation: boolean;
   standalone: boolean;
+  pathScheme: 'nx' | 'dotnet';
 }

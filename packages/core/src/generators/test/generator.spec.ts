@@ -19,6 +19,7 @@ describe('nx-dotnet test generator', () => {
     language: 'C#',
     skipOutputPathManipulation: true,
     standalone: false,
+    pathScheme: 'nx',
   };
 
   beforeEach(() => {
