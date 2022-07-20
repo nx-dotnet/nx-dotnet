@@ -1,5 +1,5 @@
-<p align="center">
-  <image src="https://user-images.githubusercontent.com/6933928/135131740-66939491-dc3e-4982-82ac-e6584530bb1b.png" alt="nx-dotnet logo"/>
+<p style="text-align: center;">
+  <image src="https://raw.githubusercontent.com/nx-dotnet/nx-dotnet/master/assets/color.svg" alt="nx-dotnet logo"/>
 </p>
 
 # NxDotnet
