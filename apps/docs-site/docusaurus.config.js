@@ -26,8 +26,10 @@ module.exports = {
         // { to: 'blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/nx-dotnet/nx-dotnet',
-          label: 'GitHub',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
           position: 'right',
+          title: 'nx-dotnet on Github',
         },
       ],
     },
