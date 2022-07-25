@@ -1,4 +1,5 @@
 import { DotnetTemplate } from '../models';
+import { CombinedFieldMap } from './language-mappings';
 
 /**
  * Expected input is from running `dotnet new --list`.
@@ -52,7 +53,7 @@ export function parseDotnetNewListOutput(rawOutput: string): DotnetTemplate[] {
   const fieldLine = lines[sepLineIdx - 1];
   const fields = columnIndicies.map((start, idx) => {
     // Values end at the beginning of the next column, or the end of the line
-    const end = columnIndicies[idx + 1] || fieldLine.length;
+    const end = columnIndicies[idx + 1] || sepLine.length;
     return {
       start,
       end,
@@ -65,17 +66,36 @@ export function parseDotnetNewListOutput(rawOutput: string): DotnetTemplate[] {
     // Construct an object from its fields
     fields.reduce((obj, field) => {
       const value = l.slice(field.start, field.end).trim();
-      // Map field name + value into expected form
-      if (field.name === 'Short Name') {
-        obj.shortNames = value.split(',') as [string, ...string[]];
-      } else if (field.name === 'Template Name' || field.name === 'Templates') {
-        obj.templateName = value;
-      } else if (field.name === 'Language') {
-        obj.languages = value.replace(/[[\]]/g, '').split(',');
-      } else if (field.name === 'Tags') {
-        obj.tags = value.split('/');
-      }
+      const propertyName = CombinedFieldMap[field.name];
+      const mappedValue = fieldMappingFunction(propertyName)(value);
+      // Typescript doesn't really like this. Its not easy to statically check,
+      // which is sad. We will ignore it here.
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      obj[propertyName] = mappedValue;
       return obj;
     }, {} as DotnetTemplate),
   );
+}
+
+function fieldMappingFunction<T extends keyof DotnetTemplate>(
+  field: T,
+): (value: string) => DotnetTemplate[T] {
+  type FieldMap = {
+    [key in keyof DotnetTemplate]: (value: string) => DotnetTemplate[key];
+  };
+
+  const mappedFields: Partial<FieldMap> = {
+    shortNames: (value) => value.split(',') as [string, ...string[]],
+    languages: (value) => value.replace(/[[\]]/g, '').split(','),
+    tags: (value) => value.split('/'),
+  };
+
+  if (!mappedFields[field]) {
+    return (v) => v as unknown as DotnetTemplate[T];
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return mappedFields[field];
 }

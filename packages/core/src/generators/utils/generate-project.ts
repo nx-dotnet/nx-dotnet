@@ -242,7 +242,10 @@ export async function GenerateProject(
     await manipulateXmlProjectFile(host, normalizedOptions);
   }
 
-  if (normalizedOptions.projectTemplate === 'webapi') {
+  if (
+    normalizedOptions.projectTemplate === 'webapi' &&
+    !normalizedOptions.skipSwaggerLib
+  ) {
     await generateSwaggerSetup(host, {
       project: normalizedOptions.projectName,
       swaggerProject: `${normalizedOptions.projectName}-swagger`,
@@ -289,3 +292,5 @@ export function addPrebuildMsbuildTask(
 
   xml.children.push(fragment);
 }
+
+export function abc() {}
