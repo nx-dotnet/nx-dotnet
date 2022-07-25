@@ -471,7 +471,7 @@ public class UnitTest1
     it('should generate swagger project for webapi', async () => {
       const api = uniq('api');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${api} --language="C#" --template="webapi"`,
+        `generate @nx-dotnet/core:app ${api} --language="C#" --template="webapi" --skipSwaggerLib=false`,
       );
 
       expect(() => checkFilesExist(`apps/${api}`)).not.toThrow();
