@@ -11,10 +11,11 @@ module.exports = {
   themeConfig: {
     navbar: {
       title: 'nx-dotnet',
-      // logo: {
-      //   alt: 'nx-dotnet logo',
-      //   src: 'img/nx-dotnet-logo.png',
-      // },
+      logo: {
+        alt: 'nx-dotnet Logo',
+        src: 'img/nx-dotnet-logo-dark.svg',
+        srcDark: 'img/nx-dotnet-logo-light.svg',
+      },
       items: [
         {
           to: 'docs/',
