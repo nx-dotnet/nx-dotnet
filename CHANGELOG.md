@@ -1,3 +1,14 @@
+# [1.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.12.0...v1.13.0) (2022-07-29)
+
+### Bug Fixes
+
+- **core:** skip-swagger-lib should be true while experimental ([92cd2d8](https://github.com/nx-dotnet/nx-dotnet/commit/92cd2d8a8be554de74091761404be4fa2901f63a))
+
+### Features
+
+- **core:** added pathScheme for project generators ([#464](https://github.com/nx-dotnet/nx-dotnet/issues/464)) ([ded5eb8](https://github.com/nx-dotnet/nx-dotnet/commit/ded5eb8ad789d1cc3e71b729507a50d6146a1ae9))
+- **core:** generate typescript models from swagger/openapi project ([#447](https://github.com/nx-dotnet/nx-dotnet/issues/447)) ([cd56d1c](https://github.com/nx-dotnet/nx-dotnet/commit/cd56d1c4e08a632462cc5354f0965ffe8684a9b4))
+
 # [1.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.11.0...v1.12.0) (2022-06-08)
 
 ### Bug Fixes
