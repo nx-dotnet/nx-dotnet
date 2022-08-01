@@ -31,7 +31,7 @@ import {
   NxDotnetProjectGeneratorSchema,
 } from '../../models';
 import generateSwaggerSetup from '../add-swagger-target/add-swagger-target';
-import initSchematic from '../init/generator';
+import { initGenerator } from '../init/generator';
 import { addToSolutionFile } from './add-to-sln';
 import { GenerateTestProject } from './generate-test-project';
 import { promptForTemplate } from './prompt-for-template';
@@ -182,7 +182,7 @@ export async function GenerateProject(
   dotnetClient: DotNetClient,
   projectType: ProjectType,
 ) {
-  await initSchematic(host, null, dotnetClient);
+  const installTask = await initGenerator(host, null, dotnetClient);
 
   options.testTemplate = options.testTemplate ?? 'none';
 
@@ -253,7 +253,10 @@ export async function GenerateProject(
     });
   }
 
-  await formatFiles(host);
+  return async () => {
+    installTask();
+    await formatFiles(host);
+  };
 }
 
 export function setOutputPath(

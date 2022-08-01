@@ -37,7 +37,7 @@ describe('nx-dotnet smoke', () => {
 
   it('should work', async () => {
     execSync(
-      'npx create-nx-workspace@latest test --preset empty --nxCloud false',
+      'npx create-nx-workspace@latest test --preset ts --nxCloud false',
       {
         cwd: smokeDirectory,
         env: process.env,
