@@ -1,4 +1,6 @@
 import {
+  addDependenciesToPackageJson,
+  GeneratorCallback,
   logger,
   NxJsonConfiguration,
   readJson,
@@ -10,12 +12,14 @@ import {
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, isDryRun, NxDotnetConfig } from '@nx-dotnet/utils';
+import type { PackageJson } from 'nx/src/utils/package-json';
 
 export async function initGenerator(
   host: Tree,
   _: null, // Nx will populate this with options, which are currently unused.
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
+  const tasks: GeneratorCallback[] = [];
   const initialized = host.isFile(CONFIG_FILE_PATH);
 
   const configObject: NxDotnetConfig = initialized
@@ -33,12 +37,33 @@ export async function initGenerator(
   if (!initialized) {
     updateGitIgnore(host, readWorkspaceConfiguration(host));
     addPrepareScript(host);
+    tasks.push(installNpmPackages(host));
   }
 
   initToolManifest(host, dotnetClient);
+
+  return async () => {
+    for (const task of tasks) {
+      await task();
+    }
+  };
 }
 
 export default initGenerator;
+
+function installNpmPackages(host: Tree): GeneratorCallback {
+  const packageJson = readJson<PackageJson>(host, 'package.json');
+  const nxVersion: string =
+    packageJson.devDependencies?.['nx'] ??
+    (packageJson.dependencies?.['nx'] as string);
+  return addDependenciesToPackageJson(
+    host,
+    {},
+    {
+      '@nrwl/js': nxVersion,
+    },
+  );
+}
 
 function updateGitIgnore(
   host: Tree,
