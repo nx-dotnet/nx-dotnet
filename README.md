@@ -19,6 +19,7 @@
 ## Prerequisites
 
 - You have an existing nx workspace (empty, or otherwise)
+- You have the [@nrwl/js](https://www.npmjs.com/package/@nrwl/js) plugin added to the workspace
 
 ## Adding .NET capabilities to your workspace
 
