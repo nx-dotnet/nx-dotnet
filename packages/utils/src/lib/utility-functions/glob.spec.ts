@@ -1,24 +1,18 @@
 import { findProjectFileInPath, findProjectFileInPathSync } from './glob';
 
 const dotnetProjectFiles = [
-  'packages/utils/src/lib/utility-functions/fixtures/cs/file.csproj',
-  'packages/utils/src/lib/utility-functions/fixtures/fs/file.fsproj',
-  'packages/utils/src/lib/utility-functions/fixtures/vb/file.vbproj',
+  'packages/utils/fixtures/cs/file.csproj',
+  'packages/utils/fixtures/fs/file.fsproj',
+  'packages/utils/fixtures/vb/file.vbproj',
 ];
 
 describe('Glob util functions', () => {
   describe('findProjectFileInPath', () => {
     it('should find .net project file', async () => {
       const result = await Promise.all([
-        findProjectFileInPath(
-          'packages/utils/src/lib/utility-functions/fixtures/cs',
-        ),
-        findProjectFileInPath(
-          'packages/utils/src/lib/utility-functions/fixtures/fs',
-        ),
-        findProjectFileInPath(
-          'packages/utils/src/lib/utility-functions/fixtures/vb',
-        ),
+        findProjectFileInPath('packages/utils/fixtures/cs'),
+        findProjectFileInPath('packages/utils/fixtures/fs'),
+        findProjectFileInPath('packages/utils/fixtures/vb'),
       ]);
 
       expect(result).toEqual(dotnetProjectFiles);
@@ -26,9 +20,7 @@ describe('Glob util functions', () => {
 
     it('should ignore non .net project files', async () => {
       await expect(
-        findProjectFileInPath(
-          'packages/utils/src/lib/utility-functions/fixtures/other',
-        ),
+        findProjectFileInPath('packages/utils/fixtures/other'),
       ).rejects.toThrow(
         `Unable to find a build-able project within project's source directory!`,
       );
@@ -38,15 +30,9 @@ describe('Glob util functions', () => {
   describe('findProjectFileInPathSync', () => {
     it('should find .net project file synchronously', () => {
       const result = [
-        findProjectFileInPathSync(
-          'packages/utils/src/lib/utility-functions/fixtures/cs',
-        ),
-        findProjectFileInPathSync(
-          'packages/utils/src/lib/utility-functions/fixtures/fs',
-        ),
-        findProjectFileInPathSync(
-          'packages/utils/src/lib/utility-functions/fixtures/vb',
-        ),
+        findProjectFileInPathSync('packages/utils/fixtures/cs'),
+        findProjectFileInPathSync('packages/utils/fixtures/fs'),
+        findProjectFileInPathSync('packages/utils/fixtures/vb'),
       ];
 
       expect(result).toEqual(dotnetProjectFiles);
@@ -54,9 +40,7 @@ describe('Glob util functions', () => {
 
     it('should ignore non .net project files', () => {
       expect(() =>
-        findProjectFileInPathSync(
-          'packages/utils/src/lib/utility-functions/fixtures/other',
-        ),
+        findProjectFileInPathSync('packages/utils/fixtures/other'),
       ).toThrow(
         `Unable to find a build-able project within project's source directory!`,
       );
