@@ -8,6 +8,10 @@ const globOptions = {
   ignore: ['**/bin/**', '**/obj/**'],
 };
 
+export function projPattern(path: string): string {
+  return `${path}/**/*.@(cs|fs|vb)proj`;
+}
+
 /**
  * Wraps the fast-glob package.
  * @returns array of file paths
@@ -20,7 +24,7 @@ export function glob(path: string, cwd?: string): Promise<string[]> {
 }
 
 export function findProjectFileInPath(path: string): Promise<string> {
-  return glob(`${path}/**/*.*proj`).then((results) => {
+  return glob(projPattern(path)).then((results) => {
     if (!results || results.length === 0) {
       throw new Error(
         "Unable to find a build-able project within project's source directory!",
@@ -39,7 +43,7 @@ export function findProjectFileInPath(path: string): Promise<string> {
 }
 
 export function findProjectFileInPathSync(path: string): string {
-  const results = fg.sync(`${path}/**/*.*proj`, globOptions);
+  const results = fg.sync(projPattern(path), globOptions);
   if (!results || results.length === 0) {
     throw new Error(
       "Unable to find a build-able project within project's source directory!",

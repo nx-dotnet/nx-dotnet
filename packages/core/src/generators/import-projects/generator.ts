@@ -13,7 +13,7 @@ import {
 import { basename, dirname } from 'path';
 import { XmlDocument } from 'xmldoc';
 
-import { glob, iterateChildrenByPath } from '@nx-dotnet/utils';
+import { glob, iterateChildrenByPath, projPattern } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -80,11 +80,11 @@ async function addNewDotnetProject(
 async function getProjectFilesInWorkspace(host: Tree) {
   const { appsDir, libsDir } = getWorkspaceLayout(host);
   const newProjects = {
-    newLibs: await glob(`${libsDir}/**/*.@(cs|fs|vb)proj`),
+    newLibs: await glob(projPattern(libsDir)),
     newApps: [] as string[],
   };
   if (libsDir !== appsDir) {
-    newProjects.newApps = await glob(`${appsDir}/**/*.@(cs|fs|vb)proj`);
+    newProjects.newApps = await glob(projPattern(appsDir));
   }
   return newProjects;
 }
