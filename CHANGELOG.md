@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.0...v1.13.1) (2022-08-19)
+
+### Bug Fixes
+
+- **core:** @nrwl/js is required for library generation ([#484](https://github.com/nx-dotnet/nx-dotnet/issues/484)) ([13e2c93](https://github.com/nx-dotnet/nx-dotnet/commit/13e2c93d17486c497b362e69959553223d0d7591))
+- **core:** use strict proj glob pattern ([#495](https://github.com/nx-dotnet/nx-dotnet/issues/495)) ([9720168](https://github.com/nx-dotnet/nx-dotnet/commit/97201684cdbd91578047c4aceaf6ac6078cc7db7))
+
 # [1.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.12.0...v1.13.0) (2022-07-29)
 
 ### Bug Fixes
