@@ -56,6 +56,9 @@ const MOCK_SWAGGER_JSON = `{
       "Company": {
         "type": "object",
         "properties": {
+          "CEO": {
+            "$ref": "#/components/schemas/Person"
+          },
           "employees": {
             "type": "array",
             "items": {
@@ -129,24 +132,31 @@ describe('swagger-typescript generator', () => {
       outputProject: 'generated-ts',
     });
 
+    // tree
+    //   .listChanges()
+    //   .forEach((change) =>
+    //     console.log(change.path, change.content?.toString()),
+    //   );
+
     expectFileToMatchSnapshot(
-      'libs/generated-ts/src/interfaces/weather-forecast',
+      'libs/generated-ts/src/interfaces/weather-forecast.ts',
       tree,
     );
     expectFileToMatchSnapshot(
-      'libs/generated-ts/src/interfaces/weather-forecasts',
+      'libs/generated-ts/src/interfaces/temperature.ts',
       tree,
     );
     expectFileToMatchSnapshot(
-      'libs/generated-ts/src/interfaces/temperature',
+      'libs/generated-ts/src/interfaces/person.ts',
       tree,
     );
-    expectFileToMatchSnapshot('libs/generated-ts/src/interfaces/person', tree);
-    expectFileToMatchSnapshot('libs/generated-ts/src/interfaces/company', tree);
-    // const config = readProjectConfiguration(appTree, 'test');
-    // expect(config).toBeDefined();
+    expectFileToMatchSnapshot(
+      'libs/generated-ts/src/interfaces/company.ts',
+      tree,
+    );
+    expectFileToMatchSnapshot('libs/generated-ts/src/index.ts', tree);
   });
 });
 
 const expectFileToMatchSnapshot = (file: string, tree: Tree) =>
-  expect(tree.read(file)?.toString()).toMatchSnapshot;
+  expect(tree.read(file)?.toString()).toMatchSnapshot(file);

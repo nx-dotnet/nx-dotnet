@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: libs/generated-ts/src/index.ts 1`] = `
+"export * from './interfaces/company';
+export * from './interfaces/person';
+export * from './interfaces/temperature';
+export * from './interfaces/weather-forecast';
+"
+`;
+
+exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: libs/generated-ts/src/interfaces/company.ts 1`] = `
+"import { Person } from './person';
+
+export interface Company {
+    CEO?: Person
+    employees?: Person[]
+}
+"
+`;
+
+exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: libs/generated-ts/src/interfaces/person.ts 1`] = `
+"import { Company } from './company';
+
+export interface Person {
+    employer?: Company
+}
+"
+`;
+
+exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: libs/generated-ts/src/interfaces/temperature.ts 1`] = `
+"
+export interface Temperature {
+    temperatureC: number
+    temperatureF: number
+}
+"
+`;
+
+exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: libs/generated-ts/src/interfaces/weather-forecast.ts 1`] = `
+"import { Temperature } from './temperature';
+import { Person } from './person';
+
+export interface WeatherForecast {
+    date: string
+    temperature?: Temperature
+    summary?: string
+    forecaster?: Person
+}
+"
+`;
