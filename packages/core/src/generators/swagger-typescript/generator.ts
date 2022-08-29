@@ -33,11 +33,15 @@ function generateInterfaceFiles(
         ? [tsInterface.elements]
         : []
     )?.reduce((necessary, next) => {
-      if (next !== 'object' && !builtInTypes.has(next)) {
-        necessary.push(names(next));
+      if (
+        next !== 'object' &&
+        !builtInTypes.has(next) &&
+        !necessary.has(next)
+      ) {
+        necessary.set(next, names(next));
       }
       return necessary;
-    }, [] as ReturnType<typeof names>[]);
+    }, new Map<string, ReturnType<typeof names>>());
 
     const templateOptions = {
       ...options,

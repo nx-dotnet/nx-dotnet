@@ -1,13 +1,13 @@
-<% if (necessaryImports) for (const i of necessaryImports) { -%>
-import {<%=i.className%>} from './<%=i.fileName%>';
-<% } %>
+<% if (necessaryImports) for (const [, i] of necessaryImports) { -%>
+import { <%=i.className%> } from './<%=i.fileName%>';
+<% } -%>
 
-<% if (tsInterface.type === 'interface') { %>
+<% if (tsInterface.type === 'interface') { -%>
 export interface <%= interfaceClassName %> {
-    <% for (const property of tsInterface.properties) {-%>
+    <%_ for (const property of tsInterface.properties) {-%>
     <%= property.name %><% if (property.nullable) { %>?<%}%>: <%= property.type %>
-    <% } %>
+    <%_ } -%>
 }
-<% } else if (tsInterface.type === 'array') {%>
+<% } else if (tsInterface.type === 'array') { -%>
 export type <%= interfaceClassName %> = <%= tsInterface.elements %>[]
-<% } %>
+<% } -%>
