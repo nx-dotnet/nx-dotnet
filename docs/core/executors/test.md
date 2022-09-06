@@ -104,3 +104,7 @@ Runs test via the dotnet cli
 ### watch
 
 - (boolean): Determines if `dotnet test` or `dotnet watch test` is used to execute tests.
+
+### extraParameters
+
+- (string): Extra command-line arguments that are passed verbatim to the dotnet command.

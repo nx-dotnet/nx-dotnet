@@ -22,11 +22,14 @@ export default async function runExecutor(
     workspaceRoot,
     await getProjectFileForNxProject(nxProjectConfiguration),
   );
+
+  const { extraParameters, ...flags } = options;
+
   options.output = options.output
     ? resolve(workspaceRoot, options.output)
     : undefined;
 
-  dotnetClient.build(projectFilePath, options);
+  dotnetClient.build(projectFilePath, flags, extraParameters);
 
   return {
     success: true,

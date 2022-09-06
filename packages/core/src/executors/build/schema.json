@@ -47,6 +47,10 @@
       "type": "string",
       "enum": ["quiet", "minimal", "normal", "detailed", "diagnostic"],
       "default": "minimal"
+    },
+    "extraParameters": {
+      "type": "string",
+      "description": "Extra command-line arguments that are passed verbatim to the dotnet command."
     }
   },
   "required": ["configuration"]
