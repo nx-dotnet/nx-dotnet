@@ -1,3 +1,9 @@
+## [1.13.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.2...v1.13.3) (2022-09-06)
+
+### Bug Fixes
+
+- **core:** add extraParameters support to build and test executors ([#514](https://github.com/nx-dotnet/nx-dotnet/issues/514)) ([c6c648d](https://github.com/nx-dotnet/nx-dotnet/commit/c6c648db4f7067c6668771a064bfc0c330d39386))
+
 ## [1.13.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.1...v1.13.2) (2022-08-29)
 
 ### Bug Fixes
