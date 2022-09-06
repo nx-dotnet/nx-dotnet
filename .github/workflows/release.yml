@@ -42,7 +42,7 @@ jobs:
         with:
           registry-url: 'https://registry.npmjs.org'
           always-auth: true,
-          node-version: 14
+          node-version: 16
       - uses: bahmutov/npm-install@v1.4.5
       - name: Git Config
         run: |
