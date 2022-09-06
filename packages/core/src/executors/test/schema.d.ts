@@ -32,4 +32,5 @@ export interface TestExecutorSchema {
     | 'diag'
     | 'diagnostic';
   watch?: boolean;
+  extraParameters?: string;
 }

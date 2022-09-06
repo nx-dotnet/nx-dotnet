@@ -45,3 +45,7 @@ Builds an app via the `dotnet` cli command.
 ### verbosity
 
 - (string):
+
+### extraParameters
+
+- (string): Extra command-line arguments that are passed verbatim to the dotnet command.

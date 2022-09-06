@@ -26,13 +26,14 @@ export default async function runExecutor(
     nxProjectConfiguration,
   );
   dotnetClient.cwd = projectDirectory;
-  const { watch, ...parsedOptions } = options;
+  const { watch, extraParameters, ...parsedOptions } = options;
 
   try {
     const result = dotnetClient.test(
       resolve(workspaceRoot, projectFilePath),
       watch,
       parsedOptions,
+      extraParameters,
     );
 
     if (watch && isChildProcess(result)) {

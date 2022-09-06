@@ -60,11 +60,19 @@ export class DotNetClient {
     return parseDotnetNewListOutput(output);
   }
 
-  build(project: string, parameters?: dotnetBuildOptions): void {
+  build(
+    project: string,
+    parameters?: dotnetBuildOptions,
+    extraParameters?: string,
+  ): void {
     const params = [`build`, project];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, buildKeyMap);
       params.push(...getSpawnParameterArray(parameters));
+    }
+    if (extraParameters) {
+      const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
+      params.push(...(matches as string[]));
     }
     return this.logAndExecute(params);
   }
@@ -89,6 +97,7 @@ export class DotNetClient {
     project: string,
     watch?: boolean,
     parameters?: dotnetTestOptions,
+    extraParameters?: string,
   ): void | ChildProcess {
     const params = watch
       ? [`watch`, `--project`, project, `test`]
@@ -97,6 +106,10 @@ export class DotNetClient {
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, testKeyMap);
       params.push(...getSpawnParameterArray(parameters));
+    }
+    if (extraParameters) {
+      const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
+      params.push(...(matches as string[]));
     }
     if (!watch) {
       return this.logAndExecute(params);
@@ -138,7 +151,7 @@ export class DotNetClient {
     }
     if (extraParameters) {
       const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
-      params.push(...(matches as RegExpMatchArray));
+      params.push(...(matches as string[]));
     }
     return this.logAndExecute(params);
   }
