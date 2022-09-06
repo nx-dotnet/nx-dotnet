@@ -99,7 +99,7 @@
     "node-fetch": "2.6.6",
     "nx": "14.2.2",
     "openapi-types": "^11.0.1",
-    "prettier": "2.6.2",
+    "prettier": "2.7.1",
     "react-test-renderer": "18.1.0",
     "run-p": "*",
     "semantic-release": "^19.0.5",
