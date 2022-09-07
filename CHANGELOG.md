@@ -1,3 +1,9 @@
+## [1.13.4](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.3...v1.13.4) (2022-09-07)
+
+### Bug Fixes
+
+- **core:** .sqlproj is a valid project extension ([#523](https://github.com/nx-dotnet/nx-dotnet/issues/523)) ([5d4f2d6](https://github.com/nx-dotnet/nx-dotnet/commit/5d4f2d6a273c1d1060a1db2c03e6a58d693b7175))
+
 ## [1.13.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.2...v1.13.3) (2022-09-06)
 
 ### Bug Fixes
