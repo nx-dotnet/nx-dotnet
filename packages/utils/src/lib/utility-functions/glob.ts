@@ -27,7 +27,8 @@ export function findProjectFileInPath(path: string): Promise<string> {
   return glob(projPattern(path)).then((results) => {
     if (!results || results.length === 0) {
       throw new Error(
-        "Unable to find a build-able project within project's source directory!",
+        `Unable to find a build-able project within project's source directory!
+- Looked in: ${path}`,
       );
     }
 
@@ -46,7 +47,8 @@ export function findProjectFileInPathSync(path: string): string {
   const results = fg.sync(projPattern(path), globOptions);
   if (!results || results.length === 0) {
     throw new Error(
-      "Unable to find a build-able project within project's source directory!",
+      `Unable to find a build-able project within project's source directory!
+- Looked in: ${path}`,
     );
   }
 

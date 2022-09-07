@@ -22,7 +22,8 @@ describe('Glob util functions', () => {
       await expect(
         findProjectFileInPath('packages/utils/fixtures/other'),
       ).rejects.toThrow(
-        `Unable to find a build-able project within project's source directory!`,
+        `Unable to find a build-able project within project's source directory!
+- Looked in: packages/utils/fixtures/other`,
       );
     });
   });
@@ -42,7 +43,8 @@ describe('Glob util functions', () => {
       expect(() =>
         findProjectFileInPathSync('packages/utils/fixtures/other'),
       ).toThrow(
-        `Unable to find a build-able project within project's source directory!`,
+        `Unable to find a build-able project within project's source directory!
+- Looked in: packages/utils/fixtures/other`,
       );
     });
   });
