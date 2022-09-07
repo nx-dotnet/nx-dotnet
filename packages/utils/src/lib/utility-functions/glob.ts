@@ -9,7 +9,7 @@ const globOptions = {
 };
 
 export function projPattern(path: string): string {
-  return `${path}/**/*.@(cs|fs|vb)proj`;
+  return `${path}/**/*.@(cs|fs|vb|sql)proj`;
 }
 
 /**
