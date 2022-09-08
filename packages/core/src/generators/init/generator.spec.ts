@@ -1,3 +1,4 @@
+import * as devkit from '@nrwl/devkit';
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
@@ -76,5 +77,24 @@ describe('init generator', () => {
     expect(updated.scripts.prepare).toBe(
       'npm run clean && npm run build && nx g @nx-dotnet/core:restore',
     );
+  });
+
+  it('should add directory build props and targets files', async () => {
+    await generator(appTree, null, dotnetClient);
+    const hasPropsFile = appTree.isFile('Directory.Build.props');
+    expect(hasPropsFile).toBeTruthy();
+
+    const hasTargetsFile = appTree.isFile('Directory.Build.targets');
+    expect(hasTargetsFile).toBeTruthy();
+  });
+
+  it('should not add directory build props and targets files if props file exists', async () => {
+    appTree.write('Directory.Build.props', '');
+    const spy = jest.spyOn(devkit, 'generateFiles');
+    await generator(appTree, null, dotnetClient);
+
+    expect(spy).not.toHaveBeenCalled();
+    const hasTargetsFile = appTree.isFile('Directory.Build.targets');
+    expect(hasTargetsFile).toBeFalsy();
   });
 });

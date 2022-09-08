@@ -1,5 +1,6 @@
 import {
   addDependenciesToPackageJson,
+  generateFiles,
   GeneratorCallback,
   logger,
   NxJsonConfiguration,
@@ -13,6 +14,7 @@ import {
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, isDryRun, NxDotnetConfig } from '@nx-dotnet/utils';
 import type { PackageJson } from 'nx/src/utils/package-json';
+import * as path from 'path';
 
 export async function initGenerator(
   host: Tree,
@@ -41,6 +43,8 @@ export async function initGenerator(
   }
 
   initToolManifest(host, dotnetClient);
+
+  initBuildCustomization(host);
 
   return async () => {
     for (const task of tasks) {
@@ -118,4 +122,13 @@ function addPrepareScript(host: Tree) {
   packageJson.scripts ??= {};
   packageJson.scripts.prepare = prepareSteps.join(' && ');
   writeJson(host, 'package.json', packageJson);
+}
+
+function initBuildCustomization(host: Tree) {
+  const initialized = host.exists('Directory.Build.props');
+  if (!initialized && !isDryRun()) {
+    generateFiles(host, path.join(__dirname, 'templates/root'), '.', {
+      tmpl: '',
+    });
+  }
 }
