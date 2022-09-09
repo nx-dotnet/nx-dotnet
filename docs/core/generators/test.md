@@ -22,10 +22,6 @@ Generate a .NET test project for an existing application or library
 
 - (string): What suffix should be used for the tests project name?
 
-### skipOutputPathManipulation
-
-- (boolean): Skip XML changes for default build path
-
 ### standalone
 
 - (boolean): Should the project use project.json? If false, the project config is inside workspace.json

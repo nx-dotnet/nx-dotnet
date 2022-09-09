@@ -7,6 +7,11 @@ import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
 
+jest.mock('@nx-dotnet/utils', () => ({
+  ...jest.requireActual('@nx-dotnet/utils'),
+  resolve: jest.fn(() => 'check-module-boundaries.js'),
+}));
+
 describe('init generator', () => {
   let appTree: Tree;
   let dotnetClient: DotNetClient;
@@ -86,6 +91,10 @@ describe('init generator', () => {
 
     const hasTargetsFile = appTree.isFile('Directory.Build.targets');
     expect(hasTargetsFile).toBeTruthy();
+    const hasPreBuildTask = appTree
+      .read('Directory.Build.targets', 'utf-8')
+      ?.includes('check-module-boundaries.js');
+    expect(hasPreBuildTask).toBeTruthy();
   });
 
   it('should not add directory build props and targets files if props file exists', async () => {

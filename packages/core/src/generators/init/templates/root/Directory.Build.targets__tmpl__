@@ -3,4 +3,11 @@
   Use it to override properties and define dependent properties.
 -->
 <Project>
+  <PropertyGroup>
+    <NxProjectName>$([System.IO.Path]::GetFileName($(MSBuildProjectDirectory)))</NxProjectName>
+    <NodeModulesRelativePath>$([System.IO.Path]::GetRelativePath($(MSBuildProjectDirectory), $(RepoRoot)))</NodeModulesRelativePath>
+  </PropertyGroup>
+  <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">    
+    <Exec Command="node $(NodeModulesRelativePath)/<%= checkModuleBoundariesScriptPath %> -p $(NxProjectName)"/>
+  </Target>
 </Project>

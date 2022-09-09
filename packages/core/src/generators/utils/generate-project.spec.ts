@@ -11,6 +11,11 @@ import { GenerateProject } from './generate-project';
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.spyOn(console, 'log').mockImplementation(() => {});
 
+jest.mock('@nx-dotnet/utils', () => ({
+  ...jest.requireActual('@nx-dotnet/utils'),
+  resolve: jest.fn(() => 'check-module-boundaries.js'),
+}));
+
 describe('nx-dotnet project generator', () => {
   let appTree: Tree;
   let dotnetClient: DotNetClient;
@@ -28,7 +33,6 @@ describe('nx-dotnet project generator', () => {
       language: 'C#',
       template: 'classlib',
       testTemplate: 'none',
-      skipOutputPathManipulation: true,
       standalone: false,
       skipSwaggerLib: true,
       projectType: 'application',

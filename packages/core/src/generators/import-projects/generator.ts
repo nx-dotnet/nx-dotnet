@@ -21,7 +21,6 @@ import {
   GetServeExecutorConfig,
   GetTestExecutorConfig,
 } from '../../models';
-import { manipulateXmlProjectFile } from '../utils/generate-project';
 
 export default async function (host: Tree) {
   const projectFiles = await getProjectFilesInWorkspace(host);
@@ -71,10 +70,6 @@ async function addNewDotnetProject(
     configuration.targets.test = GetTestExecutorConfig();
   }
   addProjectConfiguration(host, projectName, configuration);
-  await manipulateXmlProjectFile(host, {
-    projectName,
-    projectRoot,
-  });
 }
 
 async function getProjectFilesInWorkspace(host: Tree) {

@@ -12,9 +12,15 @@ import {
 } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
-import { CONFIG_FILE_PATH, isDryRun, NxDotnetConfig } from '@nx-dotnet/utils';
+import {
+  CONFIG_FILE_PATH,
+  isDryRun,
+  NxDotnetConfig,
+  resolve,
+} from '@nx-dotnet/utils';
 import type { PackageJson } from 'nx/src/utils/package-json';
 import * as path from 'path';
+import { normalize, relative } from 'path';
 
 export async function initGenerator(
   host: Tree,
@@ -127,8 +133,16 @@ function addPrepareScript(host: Tree) {
 function initBuildCustomization(host: Tree) {
   const initialized = host.exists('Directory.Build.props');
   if (!initialized && !isDryRun()) {
+    const checkModuleBoundariesScriptPath = normalize(
+      relative(
+        host.root,
+        resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
+      ),
+    );
+
     generateFiles(host, path.join(__dirname, 'templates/root'), '.', {
       tmpl: '',
+      checkModuleBoundariesScriptPath,
     });
   }
 }

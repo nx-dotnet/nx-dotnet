@@ -50,11 +50,6 @@
         "type": "string"
       }
     },
-    "skipOutputPathManipulation": {
-      "type": "boolean",
-      "description": "Skip XML changes for default build path",
-      "default": false
-    },
     "standalone": {
       "type": "boolean",
       "description": "Should the project use project.json? If false, the project config is inside workspace.json"
