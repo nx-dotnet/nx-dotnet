@@ -1,4 +1,5 @@
 import {
+  normalizePath,
   NxJsonConfiguration,
   ProjectConfiguration,
   readJsonFile,
@@ -88,7 +89,7 @@ export async function loadModuleBoundaries(
 
 async function main() {
   const parser = await import('yargs-parser');
-  const { project } = parser(process.argv.slice(2), {
+  let { project, projectRoot } = parser(process.argv.slice(2), {
     alias: {
       project: 'p',
     },
@@ -110,6 +111,27 @@ async function main() {
     });
   }
   // End Nx v12 support
+
+  // Find the associated nx project for the msbuild project directory.
+  if (!project && projectRoot) {
+    projectRoot = normalizePath(projectRoot);
+
+    // Note that this returns the first matching project and would succeed for multiple (cs|fs...)proj under an nx project path,
+    // but getProjectFileForNxProject explicitly throws if it's not exactly one.
+    const [projectName] =
+      Object.entries(workspaceJson.projects).find(([, projectConfig]) =>
+        projectRoot.startsWith(projectConfig.root),
+      ) || [];
+
+    if (projectName) {
+      project = projectName;
+    } else {
+      console.error(
+        `Failed to find nx workspace project associated with dotnet project directory: ${projectRoot}`,
+      );
+      process.exit(1);
+    }
+  }
 
   console.log(`Checking module boundaries for ${project}`);
   const violations = await checkModuleBoundariesForProject(

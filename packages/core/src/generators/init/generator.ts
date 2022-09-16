@@ -132,7 +132,7 @@ function addPrepareScript(host: Tree) {
 
 function initBuildCustomization(host: Tree) {
   const initialized = host.exists('Directory.Build.props');
-  if (!initialized && !isDryRun()) {
+  if (!initialized) {
     const checkModuleBoundariesScriptPath = normalize(
       relative(
         host.root,
