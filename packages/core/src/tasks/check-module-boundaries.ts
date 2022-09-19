@@ -1,5 +1,4 @@
 import {
-  normalizePath,
   NxJsonConfiguration,
   ProjectConfiguration,
   readJsonFile,
@@ -10,7 +9,7 @@ import {
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { ESLint } from 'eslint';
-import { join } from 'path';
+import { join, relative } from 'path';
 
 import {
   getDependantProjectsForNxProject,
@@ -89,11 +88,12 @@ export async function loadModuleBoundaries(
 
 async function main() {
   const parser = await import('yargs-parser');
-  let { project, projectRoot } = parser(process.argv.slice(2), {
+  const { project, projectRoot } = parser(process.argv.slice(2), {
     alias: {
       project: 'p',
     },
   });
+  let nxProject = project;
   const workspace = new Workspaces(workspaceRoot);
   const workspaceJson: WorkspaceJsonConfiguration =
     workspace.readWorkspaceConfiguration();
@@ -114,17 +114,16 @@ async function main() {
 
   // Find the associated nx project for the msbuild project directory.
   if (!project && projectRoot) {
-    projectRoot = normalizePath(projectRoot);
-
     // Note that this returns the first matching project and would succeed for multiple (cs|fs...)proj under an nx project path,
     // but getProjectFileForNxProject explicitly throws if it's not exactly one.
     const [projectName] =
-      Object.entries(workspaceJson.projects).find(([, projectConfig]) =>
-        projectRoot.startsWith(projectConfig.root),
-      ) || [];
+      Object.entries(workspaceJson.projects).find(([, projectConfig]) => {
+        const relativePath = relative(projectConfig.root, projectRoot);
+        return relativePath?.startsWith('..') === false;
+      }) || [];
 
     if (projectName) {
-      project = projectName;
+      nxProject = projectName;
     } else {
       console.error(
         `Failed to find nx workspace project associated with dotnet project directory: ${projectRoot}`,
@@ -135,7 +134,7 @@ async function main() {
 
   console.log(`Checking module boundaries for ${project}`);
   const violations = await checkModuleBoundariesForProject(
-    project,
+    nxProject,
     workspaceJson,
   );
   if (violations.length) {
