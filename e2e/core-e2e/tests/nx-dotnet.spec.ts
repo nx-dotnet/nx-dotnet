@@ -17,16 +17,14 @@ import {
 } from '@nrwl/nx-plugin/testing';
 import { runCommandUntil } from '../../utils';
 
-import { readFileSync, unlinkSync, writeFileSync } from 'fs';
+import { unlinkSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
 
-import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 import { exec, execSync } from 'child_process';
 import { ensureDirSync } from 'fs-extra';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
-import { PackageJson } from 'nx/src/utils/package-json';
 
 const e2eDir = tmpProjPath();
 
@@ -35,6 +33,14 @@ describe('nx-dotnet e2e', () => {
     ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
     initializeGitRepo(e2eDir);
   }, 1500000);
+
+  it('should initialize workspace build customization', async () => {
+    await runNxCommandAsync(`generate @nx-dotnet/core:init`);
+
+    expect(() =>
+      checkFilesExist('Directory.Build.props', 'Directory.Build.targets'),
+    ).not.toThrow();
+  });
 
   it('should create apps, libs, and project references', async () => {
     const testApp = uniq('app');
@@ -143,22 +149,6 @@ describe('nx-dotnet e2e', () => {
       expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
       expect(() => checkFilesExist(`dist/apps/${app}`)).not.toThrow();
       expect(() => checkFilesExist(`dist/libs/${lib}`)).not.toThrow();
-    });
-
-    it('should update output paths', async () => {
-      const app = uniq('app');
-      await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib`,
-      );
-      const configFilePath = findProjectFileInPathSync(
-        join(e2eDir, 'apps', app),
-      );
-      const config = readFileSync(configFilePath).toString();
-      const projectXml = new XmlDocument(config);
-      const outputPath = projectXml
-        .childNamed('PropertyGroup')
-        ?.childNamed('OutputPath')?.val as string;
-      expect(outputPath).toBeTruthy();
     });
 
     it('should lint', async () => {

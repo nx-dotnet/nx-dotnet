@@ -1,7 +1,7 @@
 import { addProjectConfiguration, names, Tree } from '@nrwl/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
-import { isDryRun } from '@nx-dotnet/utils';
+import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -72,5 +72,9 @@ export async function GenerateTestProject(
   dotnetClient.new(schema.testTemplate, newParams);
   if (!isDryRun()) {
     addToSolutionFile(host, testRoot, dotnetClient, schema.solutionFile);
+
+    const testCsProj = await findProjectFileInPath(testRoot);
+    const baseCsProj = await findProjectFileInPath(schema.projectRoot);
+    dotnetClient.addProjectReference(testCsProj, baseCsProj);
   }
 }
