@@ -93,7 +93,6 @@ async function main() {
       project: 'p',
     },
   });
-  let nxProject = project;
   const workspace = new Workspaces(workspaceRoot);
   const workspaceJson: WorkspaceJsonConfiguration =
     workspace.readWorkspaceConfiguration();
@@ -112,6 +111,7 @@ async function main() {
   }
   // End Nx v12 support
 
+  let nxProject = project;
   // Find the associated nx project for the msbuild project directory.
   if (!project && projectRoot) {
     // Note that this returns the first matching project and would succeed for multiple (cs|fs...)proj under an nx project path,

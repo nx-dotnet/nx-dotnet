@@ -7,6 +7,7 @@ import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
+import * as mockedGenerateTestProject from './generate-test-project';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.spyOn(console, 'log').mockImplementation(() => {});
@@ -15,6 +16,8 @@ jest.mock('@nx-dotnet/utils', () => ({
   ...jest.requireActual('@nx-dotnet/utils'),
   resolve: jest.fn(() => 'check-module-boundaries.js'),
 }));
+
+jest.mock('./generate-test-project');
 
 describe('nx-dotnet project generator', () => {
   let appTree: Tree;
@@ -96,10 +99,19 @@ describe('nx-dotnet project generator', () => {
   });
 
   it('should generate test project', async () => {
+    const generateTestProject = (
+      mockedGenerateTestProject as jest.Mocked<typeof mockedGenerateTestProject>
+    ).GenerateTestProject;
+
     options.testTemplate = 'nunit';
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
     expect(config.targets?.serve).toBeDefined();
+    expect(generateTestProject).toHaveBeenCalledWith(
+      appTree,
+      expect.objectContaining(options),
+      dotnetClient,
+    );
   });
 
   it('should include lint target', async () => {
