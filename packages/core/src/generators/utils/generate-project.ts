@@ -9,12 +9,10 @@ import {
   ProjectType,
   readWorkspaceConfiguration,
   Tree,
-  workspaceRoot,
 } from '@nrwl/devkit';
 
 //  Files generated via `dotnet` are not available in the virtual fs
-import { readFileSync, writeFileSync } from 'fs';
-import { dirname, relative } from 'path';
+import { relative } from 'path';
 import { XmlDocument } from 'xmldoc';
 
 import {
@@ -22,7 +20,7 @@ import {
   dotnetNewOptions,
   KnownDotnetTemplates,
 } from '@nx-dotnet/dotnet';
-import { findProjectFileInPath, isDryRun, resolve } from '@nx-dotnet/utils';
+import { isDryRun, resolve } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -160,22 +158,6 @@ function getProjectNameFromSchema(
   return projectDirectory.replace(/\//g, '-');
 }
 
-export async function manipulateXmlProjectFile(
-  host: Tree,
-  options: Pick<NormalizedSchema, 'projectRoot' | 'projectName'>,
-): Promise<void> {
-  const projectFilePath = await findProjectFileInPath(options.projectRoot);
-
-  const xml: XmlDocument = new XmlDocument(
-    readFileSync(projectFilePath).toString(),
-  );
-
-  setOutputPath(xml, options.projectRoot, projectFilePath);
-  addPrebuildMsbuildTask(host, options, xml);
-
-  writeFileSync(projectFilePath, xml.toString());
-}
-
 export async function GenerateProject(
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
@@ -238,10 +220,6 @@ export async function GenerateProject(
     await GenerateTestProject(host, normalizedOptions, dotnetClient);
   }
 
-  if (!options.skipOutputPathManipulation && !isDryRun()) {
-    await manipulateXmlProjectFile(host, normalizedOptions);
-  }
-
   if (
     normalizedOptions.projectTemplate === 'webapi' &&
     !normalizedOptions.skipSwaggerLib
@@ -257,22 +235,6 @@ export async function GenerateProject(
     installTask();
     await formatFiles(host);
   };
-}
-
-export function setOutputPath(
-  xml: XmlDocument,
-  projectRootPath: string,
-  projectFilePath: string,
-) {
-  let outputPath = joinPathFragments(
-    relative(dirname(projectFilePath), workspaceRoot),
-    'dist',
-    projectRootPath,
-  );
-  outputPath = normalizePath(outputPath); // Forward slash works on windows, backslash does not work on mac/linux
-
-  const fragment = new XmlDocument(`<OutputPath>${outputPath}</OutputPath>`);
-  xml.childNamed('PropertyGroup')?.children.push(fragment);
 }
 
 export function addPrebuildMsbuildTask(

@@ -3,8 +3,10 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import * as fs from 'fs';
 
+import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import * as utils from '@nx-dotnet/utils';
 
+import * as mockedInitGenerator from '../init/generator';
 import generator from './generator';
 
 jest.mock('@nx-dotnet/utils', () => ({
@@ -34,20 +36,28 @@ const MOCK_TEST_PROJECT = `
   </ItemGroup>
 </Project>`;
 
+jest.mock('../init/generator', () => ({
+  initGenerator: jest.fn(() => {
+    return Promise.resolve(jest.fn(() => Promise.resolve()));
+  }),
+}));
+
 describe('import-projects generator', () => {
   let appTree: Tree;
+  let dotnetClient: DotNetClient;
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
+    dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should run successfully if no new projects are found', async () => {
     jest.spyOn(utils, 'glob').mockResolvedValue([]);
-    const promise = generator(appTree);
+    const promise = generator(appTree, dotnetClient);
     const oldProjects = getProjects(appTree);
     await expect(promise).resolves.not.toThrow();
     const newProjects = getProjects(appTree);
@@ -72,7 +82,7 @@ describe('import-projects generator', () => {
     jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_TEST_PROJECT);
     jest.spyOn(fs, 'writeFileSync').mockImplementation(() => null);
     appTree.write('apps/my-api/my-api.csproj', MOCK_API_PROJECT);
-    const promise = generator(appTree);
+    const promise = generator(appTree, dotnetClient);
     await expect(promise).resolves.not.toThrow();
     expect(readProjectConfiguration(appTree, 'my-test-api')).toBeDefined();
   });
@@ -95,7 +105,7 @@ describe('import-projects generator', () => {
     jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_TEST_PROJECT);
     jest.spyOn(fs, 'writeFileSync').mockImplementation(() => null);
     appTree.write('apps/my-api-test/my-api-test.csproj', MOCK_TEST_PROJECT);
-    const promise = generator(appTree);
+    const promise = generator(appTree, dotnetClient);
     await expect(promise).resolves.not.toThrow();
     expect(readProjectConfiguration(appTree, 'my-test-api-test')).toBeDefined();
     expect(
@@ -104,5 +114,15 @@ describe('import-projects generator', () => {
     expect(
       readProjectConfiguration(appTree, 'my-test-api-test').targets?.serve,
     ).not.toBeDefined();
+  });
+
+  it('should call init generator', async () => {
+    const initGenerator = (
+      mockedInitGenerator as jest.Mocked<typeof mockedInitGenerator>
+    ).initGenerator;
+
+    jest.spyOn(utils, 'glob').mockResolvedValue([]);
+    await generator(appTree, dotnetClient);
+    expect(initGenerator).toHaveBeenCalledWith(appTree, null, dotnetClient);
   });
 });

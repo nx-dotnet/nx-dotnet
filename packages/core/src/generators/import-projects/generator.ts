@@ -13,6 +13,7 @@ import {
 import { basename, dirname } from 'path';
 import { XmlDocument } from 'xmldoc';
 
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { glob, iterateChildrenByPath, projPattern } from '@nx-dotnet/utils';
 
 import {
@@ -21,9 +22,14 @@ import {
   GetServeExecutorConfig,
   GetTestExecutorConfig,
 } from '../../models';
-import { manipulateXmlProjectFile } from '../utils/generate-project';
+import { initGenerator } from '../init/generator';
 
-export default async function (host: Tree) {
+export default async function (
+  host: Tree,
+  dotnetClient = new DotNetClient(dotnetFactory()),
+) {
+  const installTask = await initGenerator(host, null, dotnetClient);
+
   const projectFiles = await getProjectFilesInWorkspace(host);
   const existingProjectRoots = Array.from(getProjects(host).values()).map(
     (x) => x.root,
@@ -40,7 +46,10 @@ export default async function (host: Tree) {
       logger.log('Found new application', projectFile);
     }
   }
-  return formatFiles(host);
+  return async () => {
+    await installTask();
+    await formatFiles(host);
+  };
 }
 
 async function addNewDotnetProject(
@@ -71,10 +80,6 @@ async function addNewDotnetProject(
     configuration.targets.test = GetTestExecutorConfig();
   }
   addProjectConfiguration(host, projectName, configuration);
-  await manipulateXmlProjectFile(host, {
-    projectName,
-    projectRoot,
-  });
 }
 
 async function getProjectFilesInWorkspace(host: Tree) {

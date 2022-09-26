@@ -1,0 +1,13 @@
+<!-- 
+  This file is imported late in the build order. 
+  Use it to override properties and define dependent properties.
+-->
+<Project>
+  <PropertyGroup>
+    <MSBuildProjectDirRelativePath>$([System.IO.Path]::GetRelativePath($(RepoRoot), $(MSBuildProjectDirectory)))</MSBuildProjectDirRelativePath>
+    <NodeModulesRelativePath>$([System.IO.Path]::GetRelativePath($(MSBuildProjectDirectory), $(RepoRoot)))</NodeModulesRelativePath>
+  </PropertyGroup>
+  <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
+    <Exec Command="node $(NodeModulesRelativePath)/<%= checkModuleBoundariesScriptPath %> --project-root $(MSBuildProjectDirRelativePath)"/>
+  </Target>
+</Project>

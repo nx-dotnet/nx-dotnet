@@ -9,7 +9,7 @@ import {
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { ESLint } from 'eslint';
-import { join } from 'path';
+import { join, relative } from 'path';
 
 import {
   getDependantProjectsForNxProject,
@@ -88,7 +88,7 @@ export async function loadModuleBoundaries(
 
 async function main() {
   const parser = await import('yargs-parser');
-  const { project } = parser(process.argv.slice(2), {
+  const { project, projectRoot } = parser(process.argv.slice(2), {
     alias: {
       project: 'p',
     },
@@ -111,9 +111,30 @@ async function main() {
   }
   // End Nx v12 support
 
+  let nxProject = project;
+  // Find the associated nx project for the msbuild project directory.
+  if (!project && projectRoot) {
+    // Note that this returns the first matching project and would succeed for multiple (cs|fs...)proj under an nx project path,
+    // but getProjectFileForNxProject explicitly throws if it's not exactly one.
+    const [projectName] =
+      Object.entries(workspaceJson.projects).find(([, projectConfig]) => {
+        const relativePath = relative(projectConfig.root, projectRoot);
+        return relativePath?.startsWith('..') === false;
+      }) || [];
+
+    if (projectName) {
+      nxProject = projectName;
+    } else {
+      console.error(
+        `Failed to find nx workspace project associated with dotnet project directory: ${projectRoot}`,
+      );
+      process.exit(1);
+    }
+  }
+
   console.log(`Checking module boundaries for ${project}`);
   const violations = await checkModuleBoundariesForProject(
-    project,
+    nxProject,
     workspaceJson,
   );
   if (violations.length) {

@@ -25,7 +25,6 @@ export default async function (
     testProjectNameSuffix: options.suffix,
     name,
     language: options.language,
-    skipOutputPathManipulation: options.skipOutputPathManipulation,
     testTemplate: options.testTemplate,
     directory,
     tags: project.tags?.join(','),

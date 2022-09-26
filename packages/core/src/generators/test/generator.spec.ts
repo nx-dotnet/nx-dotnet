@@ -17,7 +17,6 @@ describe('nx-dotnet test generator', () => {
     name: 'existing',
     testTemplate: 'xunit',
     language: 'C#',
-    skipOutputPathManipulation: true,
     standalone: false,
     pathScheme: 'nx',
   };

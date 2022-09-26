@@ -9,11 +9,7 @@ import {
   GetTestExecutorConfig,
 } from '../../models';
 import { addToSolutionFile } from './add-to-sln';
-import {
-  manipulateXmlProjectFile,
-  NormalizedSchema,
-  normalizeOptions,
-} from './generate-project';
+import { NormalizedSchema, normalizeOptions } from './generate-project';
 export interface PathParts {
   suffix: string;
   separator: '.' | '-';
@@ -76,14 +72,7 @@ export async function GenerateTestProject(
   dotnetClient.new(schema.testTemplate, newParams);
   if (!isDryRun()) {
     addToSolutionFile(host, testRoot, dotnetClient, schema.solutionFile);
-  }
 
-  if (!isDryRun() && !schema.skipOutputPathManipulation) {
-    await manipulateXmlProjectFile(host, {
-      ...schema,
-      projectRoot: testRoot,
-      projectName: testProjectName,
-    });
     const testCsProj = await findProjectFileInPath(testRoot);
     const baseCsProj = await findProjectFileInPath(schema.projectRoot);
     dotnetClient.addProjectReference(testCsProj, baseCsProj);

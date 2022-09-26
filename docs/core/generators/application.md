@@ -30,10 +30,6 @@ Generate a dotnet project under the application directory.
 
 - (string): Which template should be used for creating the tests project?
 
-### skipOutputPathManipulation
-
-- (boolean): Skip XML changes for default build path
-
 ### standalone
 
 - (boolean): Should the project use project.json? If false, the project config is inside workspace.json
