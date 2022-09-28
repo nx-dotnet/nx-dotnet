@@ -28,10 +28,11 @@
           "swagger",
           "codegen"
         ],
-        "accessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
+        "accessToken": "YjA5MDM3MmYtYTM5ZC00MzgzLWIzNzUtYmM0NjVmNzg2ZjkxfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "parallel": 3
+        "parallel": 3,
+        "url": "https://nxcloud-integration-test.ngrok.io"
       }
     }
   },
