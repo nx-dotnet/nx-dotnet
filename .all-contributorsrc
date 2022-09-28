@@ -97,6 +97,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tzuge",
+      "name": "tzuge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47162374?v=4",
+      "profile": "https://github.com/tzuge",
+      "contributions": [
+        "code",
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
