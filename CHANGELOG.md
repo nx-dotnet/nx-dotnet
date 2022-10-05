@@ -1,3 +1,9 @@
+# [1.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.4...v1.14.0) (2022-10-05)
+
+### Features
+
+- **core:** adding templates with default output path properties to init generator ([#526](https://github.com/nx-dotnet/nx-dotnet/issues/526)) ([c57fbd3](https://github.com/nx-dotnet/nx-dotnet/commit/c57fbd33dec87fe882617a8b39bc11e91d937615))
+
 ## [1.13.4](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.3...v1.13.4) (2022-09-07)
 
 ### Bug Fixes
