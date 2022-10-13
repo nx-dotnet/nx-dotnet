@@ -5,7 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/demo/apps/webapi"],
+      "outputs": ["{workspaceRoot}/dist/demo/apps/webapi"],
       "options": {
         "configuration": "Debug",
         "noDependencies": true
@@ -32,7 +32,7 @@
     },
     "swagger": {
       "executor": "@nx-dotnet/core:update-swagger",
-      "outputs": ["options.output"],
+      "outputs": ["{workspaceRoot}/options.output"],
       "options": {
         "output": "demo/libs/generated/webapi-swagger/swagger.json"
       }

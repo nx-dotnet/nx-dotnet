@@ -12,14 +12,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nxdoc"],
+      "outputs": ["{workspaceRoot}/coverage/packages/nxdoc"],
       "options": {
         "jestConfig": "packages/nxdoc/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "prebuild": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "npx ts-node tools/scripts/patch-package-versions --project nxdoc"
@@ -70,7 +70,7 @@
       }
     },
     "noop": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "echo"
       }

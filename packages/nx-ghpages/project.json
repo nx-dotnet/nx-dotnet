@@ -12,14 +12,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-ghpages"],
+      "outputs": ["{workspaceRoot}/coverage/packages/nx-ghpages"],
       "options": {
         "jestConfig": "packages/nx-ghpages/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "prebuild": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "npx ts-node tools/scripts/patch-package-versions --project nx-ghpages"
@@ -60,7 +60,7 @@
       }
     },
     "noop": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "echo"
       }

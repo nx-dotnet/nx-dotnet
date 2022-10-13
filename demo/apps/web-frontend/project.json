@@ -4,7 +4,7 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -47,7 +47,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/webpack:dev-server",
       "options": {
         "buildTarget": "demo-web-frontend:build",
         "hmr": true
@@ -72,7 +72,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coveragedemo/apps/web-frontend"],
+      "outputs": ["{workspaceRoot}/coveragedemo/apps/web-frontend"],
       "options": {
         "jestConfig": "demo/apps/web-frontend/jest.config.ts",
         "passWithNoTests": true
