@@ -10,7 +10,7 @@
       }
     },
     "prebuild": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["echo"]
       }
@@ -22,7 +22,7 @@
       }
     },
     "deploy": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "nx g @nx-dotnet/nxdoc:generate-docs",
@@ -33,5 +33,8 @@
       }
     }
   },
-  "tags": []
+  "tags": [],
+  "namedInputs": {
+    "projectSpecificFiles": ["{workspaceRoot}/docs/*"]
+  }
 }

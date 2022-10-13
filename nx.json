@@ -1,19 +1,8 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "nx-dotnet",
   "affected": {
     "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*",
-    "docs/*": ["docs-site"]
   },
   "tasksRunnerOptions": {
     "default": {
@@ -39,66 +28,50 @@
     "appsDir": "",
     "libsDir": ""
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      },
-      {
-        "target": "prebuild",
-        "projects": "self"
-      },
-      {
-        "target": "prebuild",
-        "projects": "dependencies"
-      },
-      {
-        "target": "codegen",
-        "projects": "dependencies"
-      },
-      {
-        "target": "codegen",
-        "projects": "self"
-      }
-    ],
-    "codegen": [
-      {
-        "target": "swagger",
-        "projects": "dependencies"
-      },
-      {
-        "target": "swagger",
-        "projects": "self"
-      }
-    ],
-    "swagger": [
-      {
-        "target": "build",
-        "projects": "self"
-      }
-    ]
-  },
+  "plugins": ["@nx-dotnet/core"],
   "generators": {
     "@nx-dotnet/nxdoc:generate-docs": {
       "outputDirectory": "docs",
       "gettingStartedFile": "<src>/README.md"
-    },
-    "@nrwl/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint"
-      }
     }
   },
-  "plugins": ["@nx-dotnet/core"],
-  "$schema": "./node_modules/nx/schemas/nx-schema.json"
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
+      "inputs": ["production", "^production"]
+    },
+    "codegen": {
+      "dependsOn": ["^swagger", "swagger"]
+    },
+    "swagger": {
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    },
+    "smoke": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals", "projectSpecificFiles"],
+    "sharedGlobals": [
+      "{workspaceRoot}/workspace.json",
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/tslint.json",
+      "{workspaceRoot}/nx.json",
+      "{workspaceRoot}/babel.config.json"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/.eslintrc.json"
+    ],
+    "projectSpecificFiles": []
+  }
 }
