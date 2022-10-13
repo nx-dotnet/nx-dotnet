@@ -15,7 +15,7 @@ import {
 import * as path from 'path';
 import { dirSync } from 'tmp';
 
-import isCI = require('is-ci');
+import * as isCI from 'is-ci';
 import { workspaceConfigName } from 'nx/src/config/workspaces';
 import { detectPackageManager } from '@nrwl/devkit';
 interface RunCmdOpts {
@@ -143,11 +143,6 @@ export function runCLI(
       console.log(r);
     }
 
-    const needsMaxWorkers = /g.*(express|nest|node|web|react):app.*/;
-    if (command && needsMaxWorkers.test(command)) {
-      setMaxWorkers();
-    }
-
     return r;
   } catch (e: any) {
     if (opts.silenceError) {
@@ -178,39 +173,6 @@ export function runCommand(command: string): string {
     return r;
   } catch (e: any) {
     return e.stdout.toString() + e.stderr.toString();
-  }
-}
-
-/**
- * Sets maxWorkers in CI on all projects that require it
- * so that it doesn't try to run it with 34 workers
- *
- * maxWorkers required for: node, web, jest
- */
-function setMaxWorkers() {
-  if (isCI) {
-    const workspaceFile = workspaceConfigName(tmpProjPath());
-    const workspace = readJson(workspaceFile);
-
-    Object.keys(workspace.projects).forEach((appName) => {
-      const project = workspace.projects[appName];
-      const { build } = project.targets ?? project.architect;
-
-      if (!build) {
-        return;
-      }
-
-      const executor = build.builder ?? build.executor;
-      if (
-        executor.startsWith('@nrwl/node') ||
-        executor.startsWith('@nrwl/web') ||
-        executor.startsWith('@nrwl/jest')
-      ) {
-        build.options.maxWorkers = 4;
-      }
-    });
-
-    updateFile(workspaceFile, JSON.stringify(workspace));
   }
 }
 

@@ -1,8 +1,6 @@
 import { readProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { resolve } from 'path';
-
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
@@ -25,7 +23,7 @@ describe('nx-dotnet project generator', () => {
   let options: NxDotnetProjectGeneratorSchema;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace(2);
+    appTree = createTreeWithEmptyWorkspace();
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
     const packageJson = { scripts: {}, devDependencies: {} };
@@ -86,10 +84,7 @@ describe('nx-dotnet project generator', () => {
     const outputPath = config.targets?.build.outputs || [];
     expect(outputPath.length).toBe(1);
 
-    const absoluteDistPath = resolve(appTree.root, outputPath[0]);
-    const expectedDistPath = resolve(appTree.root, './dist/apps/test');
-
-    expect(absoluteDistPath).toEqual(expectedDistPath);
+    expect(outputPath[0]).toEqual('{workspaceRoot}/dist/apps/test');
   });
 
   it('should include serve target for applications', async () => {

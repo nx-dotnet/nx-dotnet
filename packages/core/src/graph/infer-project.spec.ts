@@ -5,6 +5,10 @@ import * as config from '@nx-dotnet/utils/src/lib/utility-functions/config';
 import { registerProjectTargets } from './infer-project';
 
 describe('infer-project', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('should obey inferProjectTargets: false', () => {
     jest.spyOn(config, 'readConfig').mockReturnValue({
       nugetPackages: {},
@@ -15,14 +19,13 @@ describe('infer-project', () => {
     expect(registerProjectTargets('libs/api/my.csproj')).toEqual({});
   });
 
-  it('should generate build, lint, serve targets for projects', async () => {
+  it('should generate build, lint, serve targets for projects', () => {
     jest.spyOn(config, 'readConfig').mockReturnValue({
       nugetPackages: {},
     });
     jest.spyOn(fs, 'readFileSync').mockReturnValueOnce('<project></project>');
 
     const targets = registerProjectTargets('libs/api/my.csproj');
-    console.log(targets);
     expect(targets.build).toMatchInlineSnapshot(`
       Object {
         "configurations": Object {
@@ -36,7 +39,7 @@ describe('infer-project', () => {
           "noDependencies": true,
         },
         "outputs": Array [
-          "dist/libs/api",
+          "{workspaceRoot}/dist/libs/api",
         ],
       }
     `);
@@ -61,7 +64,7 @@ describe('infer-project', () => {
     expect(targets.test).not.toBeDefined();
   });
 
-  it('should generate test target for test projects', async () => {
+  it('should generate test target for test projects', () => {
     jest.spyOn(config, 'readConfig').mockReturnValue({
       nugetPackages: {},
     });
@@ -70,7 +73,6 @@ describe('infer-project', () => {
       .mockReturnValueOnce('<project ref=Microsoft.NET.Test.Sdk></project>');
 
     const targets = registerProjectTargets('libs/api/my.csproj');
-    console.log(targets);
     expect(targets.test).toMatchInlineSnapshot(`
       Object {
         "executor": "@nx-dotnet/core:test",

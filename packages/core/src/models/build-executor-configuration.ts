@@ -1,5 +1,5 @@
 import { TargetConfiguration } from '@nrwl/devkit';
-
+import { lt } from 'semver';
 import { BuildExecutorSchema } from '../executors/build/schema';
 
 /**
@@ -8,7 +8,12 @@ import { BuildExecutorSchema } from '../executors/build/schema';
 export function GetBuildExecutorConfiguration(
   projectRoot: string,
 ): BuildExecutorConfiguration {
-  const outputDirectory = `dist/${projectRoot}`;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const nxVersion = require('nx/package.json').version;
+
+  const outputDirectory =
+    (lt(nxVersion, '15.0.0-beta.0') ? '' : '{workspaceRoot}/') +
+    `dist/${projectRoot}`;
 
   return {
     executor: '@nx-dotnet/core:build',
