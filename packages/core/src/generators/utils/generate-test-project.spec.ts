@@ -7,7 +7,6 @@ import {
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import * as fs from 'fs';
-import { resolve } from 'path';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import * as utils from '@nx-dotnet/utils';
@@ -100,15 +99,9 @@ describe('nx-dotnet test project generator', () => {
     const config = readProjectConfiguration(appTree, testProjectName);
     console.log(config.targets?.build.options);
     const outputPath = config.targets?.build.outputs?.[0];
-    expect(outputPath).toBeTruthy();
-
-    const absoluteDistPath = resolve(appTree.root, outputPath || '');
-    const expectedDistPath = resolve(
-      appTree.root,
-      './dist/apps/domain/existing-app-test',
+    expect(outputPath).toEqual(
+      '{workspaceRoot}/dist/apps/domain/existing-app-test',
     );
-
-    expect(absoluteDistPath).toEqual(expectedDistPath);
   });
 
   it('should include lint target', async () => {

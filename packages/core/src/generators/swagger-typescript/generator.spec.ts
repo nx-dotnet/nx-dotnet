@@ -121,7 +121,7 @@ describe('swagger-typescript generator', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
     libraryGenerator(tree, { name: 'generated-ts' });
     tree.write('swagger.json', MOCK_SWAGGER_JSON);
   });

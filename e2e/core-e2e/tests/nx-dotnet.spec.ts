@@ -376,34 +376,23 @@ describe('nx-dotnet e2e', () => {
       });
     });
 
-    it('should work with workspace.json + project.json', () => {
-      const relativeProjectPath = joinPathFragments('apps', api);
+    it('should work with project.json', () => {
       writeFileSync(
         join(projectFolder, 'project.json'),
         JSON.stringify({
-          root: relativeProjectPath,
+          targets: {},
         }),
       );
-      updateFile('workspace.json', (c) => {
-        const json = JSON.parse(c);
-        json.projects[api] = relativeProjectPath;
-        return JSON.stringify(json, null, 2);
-      });
       expect(() => runNxCommand(`build ${api}`)).not.toThrow();
     });
 
-    it('should work without workspace.json or project.json', () => {
-      const workspaceJsonContents = readFile('workspace.json');
-      unlinkSync(join(e2eDir, 'workspace.json'));
-
+    it('should work without project.json', () => {
       const projectJsonContents = readFile(
         joinPathFragments('apps', api, 'project.json'),
       );
       unlinkSync(join(projectFolder, 'project.json'));
 
       expect(() => runNxCommand(`build ${api}`)).not.toThrow();
-
-      writeFileSync(join(e2eDir, 'workspace.json'), workspaceJsonContents);
 
       writeFileSync(join(projectFolder, 'project.json'), projectJsonContents);
     });
