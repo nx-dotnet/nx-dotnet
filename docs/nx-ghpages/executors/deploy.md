@@ -17,3 +17,7 @@ Deploy a page to a specified repository&#39;s gh-pages branch.
 ### remoteName
 
 - (string): Name of the remote to push to
+
+### commitMessage
+
+- (string): Message of the git commit to gh-pages branch

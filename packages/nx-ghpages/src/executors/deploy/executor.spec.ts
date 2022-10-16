@@ -21,6 +21,7 @@ const options: BuildExecutorSchema = {
   directory: '',
   remote: '',
   remoteName: '',
+  commitMessage: '',
 };
 
 describe('Build Executor', () => {
