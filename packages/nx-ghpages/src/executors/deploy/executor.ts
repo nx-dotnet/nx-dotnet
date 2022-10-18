@@ -48,7 +48,7 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
   logger.info('Authoring Commit');
 
   await exec(`git add .`, { cwd: directory });
-  await exec(` git commit -m "deploy to gh-pages (nx-ghpages)"`, {
+  await exec(` git commit -m "${options.commitMessage}"`, {
     cwd: directory,
   });
 

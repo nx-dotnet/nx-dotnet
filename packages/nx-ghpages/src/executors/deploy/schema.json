@@ -17,6 +17,11 @@
       "type": "string",
       "description": "Name of the remote to push to",
       "default": "origin"
+    },
+    "commitMessage": {
+      "type": "string",
+      "description": "Message of the git commit to gh-pages branch",
+      "default": "chore: :rocket: deploy new version to Github Pages"
     }
   },
   "required": ["remote", "directory"]
