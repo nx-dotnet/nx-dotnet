@@ -1,3 +1,13 @@
+# [1.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.14.0...v1.15.0) (2022-10-18)
+
+### Bug Fixes
+
+- **core:** getProjectFilesForProject should consider project root in addition to source root ([#543](https://github.com/nx-dotnet/nx-dotnet/issues/543)) ([374e30f](https://github.com/nx-dotnet/nx-dotnet/commit/374e30f2be1f6ede5ac4c4145cbe33f6b75738af))
+
+### Features
+
+- **nx-ghpages:** add option to customize commit message to `gh-pages` ([#542](https://github.com/nx-dotnet/nx-dotnet/issues/542)) ([cff00e0](https://github.com/nx-dotnet/nx-dotnet/commit/cff00e04be43581a323c3f6f0f0a6f1769d1f76e))
+
 # [1.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.4...v1.14.0) (2022-10-05)
 
 ### Features
