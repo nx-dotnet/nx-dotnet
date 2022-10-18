@@ -126,7 +126,7 @@ export function getProjectFilesForProject(
   return host
     .children(project.sourceRoot ?? project.root)
     .filter((x) => x.endsWith('proj'))
-    .map((x) => `${project.sourceRoot}/${x}`);
+    .map((x) => `${project.sourceRoot ?? project.root}/${x}`);
 }
 
 /**
