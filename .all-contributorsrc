@@ -107,6 +107,15 @@
         "code",
         "design"
       ]
+    },
+    {
+      "login": "tinesoft",
+      "name": "Tine Kondo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4053092?v=4",
+      "profile": "https://www.tinesoft.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
