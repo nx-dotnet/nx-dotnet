@@ -8,6 +8,6 @@
     <NodeModulesRelativePath>$([MSBuild]::MakeRelative($(MSBuildProjectDirectory), $(RepoRoot)))</NodeModulesRelativePath>
   </PropertyGroup>
   <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
-    <Exec Command="node $(NodeModulesRelativePath)/<%= checkModuleBoundariesScriptPath %> --project-root $(MSBuildProjectDirRelativePath)"/>
+    <Exec Command="node $(NodeModulesRelativePath)/<%= checkModuleBoundariesScriptPath %> --project-root '$(MSBuildProjectDirRelativePath)'"/>
   </Target>
 </Project>
