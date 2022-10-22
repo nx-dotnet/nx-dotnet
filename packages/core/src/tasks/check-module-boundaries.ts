@@ -132,7 +132,7 @@ async function main() {
     }
   }
 
-  console.log(`Checking module boundaries for ${project}`);
+  console.log(`Checking module boundaries for ${nxProject}`);
   const violations = await checkModuleBoundariesForProject(
     nxProject,
     workspaceJson,
