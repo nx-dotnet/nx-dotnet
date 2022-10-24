@@ -9,8 +9,11 @@ import {
 import { CONFIG_FILE_PATH } from '../constants';
 import { NxDotnetConfig } from '../models';
 
-export const DefaultConfigValues: Partial<NxDotnetConfig> = {
+export const DefaultConfigValues: NxDotnetConfig = {
   solutionFile: '{npmScope}.nx-dotnet.sln',
+  inferProjects: true,
+  inferProjectTargets: true,
+  nugetPackages: {},
 };
 
 let cachedConfig: NxDotnetConfig;
@@ -18,7 +21,14 @@ export function readConfig(host?: Tree): NxDotnetConfig {
   if (host) {
     return readJson(host, CONFIG_FILE_PATH);
   } else {
-    cachedConfig ??= readJsonFile(`${workspaceRoot}/${CONFIG_FILE_PATH}`);
+    try {
+      cachedConfig ??= {
+        ...DefaultConfigValues,
+        ...readJsonFile(`${workspaceRoot}/${CONFIG_FILE_PATH}`),
+      };
+    } catch {
+      return DefaultConfigValues;
+    }
     return cachedConfig;
   }
 }

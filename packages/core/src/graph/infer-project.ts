@@ -12,11 +12,13 @@ import {
   GetTestExecutorConfig,
 } from '../models';
 
-export const projectFilePatterns = ['*.csproj', '*.fsproj', '*.vbproj'];
+export const projectFilePatterns = readConfig().inferProjects
+  ? ['*.csproj', '*.fsproj', '*.vbproj']
+  : [];
 
 export const registerProjectTargets = (projectFile: string) => {
-  const { inferProjectTargets } = readConfig();
   const targets: Record<string, TargetConfiguration> = {};
+  const { inferProjectTargets } = readConfig();
   if (inferProjectTargets ?? true) {
     const projectFileContents = readFileSync(
       resolve(workspaceRoot, projectFile),
