@@ -272,6 +272,9 @@ describe('nx-dotnet e2e', () => {
 
       const workspace = new Workspaces(e2eDir).readWorkspaceConfiguration();
 
+      console.log({ testApp, testLib, testAppTest });
+      console.log(workspace.projects);
+
       expect(workspace.projects[testApp].targets?.serve).toBeDefined();
       expect(workspace.projects[testApp].targets?.build).toBeDefined();
       expect(workspace.projects[testApp].targets?.lint).toBeDefined();
