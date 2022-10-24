@@ -97,7 +97,7 @@
     "jsonc-eslint-parser": "^2.1.0",
     "kill-port": "^1.6.1",
     "lint-staged": "^13.0.3",
-    "node-fetch": "2.6.6",
+    "node-fetch": "3.2.10",
     "nx": "15.0.1",
     "openapi-types": "^11.0.1",
     "prettier": "2.7.1",
