@@ -50,7 +50,6 @@ export function PatchPackageVersions(
       : projectConfiguration.targets?.build.options?.outputPath;
     const pkgPath = p ? `${p}/package.json` : null;
     if (!pkgPath || !existsSync(pkgPath)) {
-      console.log('pkgPath not found:', pkgPath);
       return;
     }
     const pkg = readJson(pkgPath);

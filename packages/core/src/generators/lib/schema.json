@@ -56,7 +56,8 @@
     },
     "standalone": {
       "type": "boolean",
-      "description": "Should the project use project.json? If false, the project config is inside workspace.json"
+      "description": "Should the project use project.json? If false, the project config is inside workspace.json",
+      "x-deprecated": "New Nx workspaces are created without workspace.json, thus inferring this option as true."
     },
     "solutionFile": {
       "description": "Determines if the project should be added to a solution file.",

@@ -129,7 +129,6 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
 
       const client = new DotNetClient(dotnetFactory());
       const results = client.listInstalledTemplates({ search: 'asp' });
-      console.log(results);
       for (const result of results) {
         expect(result.templateName).toMatch(/^asp.*/i);
       }

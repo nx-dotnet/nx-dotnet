@@ -1,8 +1,8 @@
-import { logger } from '@nrwl/devkit';
+import { logger, workspaceRoot } from '@nrwl/devkit';
 
 import { exec as execCallback } from 'child_process';
 import { stat } from 'fs';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import { promisify } from 'util';
 
 import { BuildExecutorSchema } from './schema';
@@ -16,7 +16,7 @@ async function exists(path: string) {
 }
 
 export default async function deployExecutor(options: BuildExecutorSchema) {
-  const directory = join(await findWorkspaceRoot(), options.directory);
+  const directory = join(workspaceRoot, options.directory);
 
   if (!(await exists(directory))) {
     logger.error(`Output directory does not exist! ${directory}`);
@@ -65,22 +65,7 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
   });
   logger.info('Pushing to GH Pages -- COMPLETE');
 
-  console.log('After exec statements');
-
   return {
     success: true,
   };
-}
-
-async function findWorkspaceRoot(dir: string = process.cwd()): Promise<string> {
-  if (dirname(dir) === dir) {
-    throw new Error(`The cwd isn't part of an Nx workspace`);
-  }
-  if (
-    (await exists(join(dir, 'angular.json'))) ||
-    (await exists(join(dir, 'workspace.json')))
-  ) {
-    return dir;
-  }
-  return findWorkspaceRoot(dirname(dir));
 }

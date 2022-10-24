@@ -35,7 +35,7 @@ function visitProject(
     projectFile = getProjectFileForNxProjectSync(project);
   } catch (e) {
     if (process.env['NX_VERBOSE_LOGGING'] === 'true') {
-      console.log(e);
+      console.error(e);
     }
   }
   if (projectFile !== null) {

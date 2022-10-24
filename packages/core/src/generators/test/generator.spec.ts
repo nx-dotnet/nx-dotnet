@@ -42,7 +42,6 @@ describe('nx-dotnet test generator', () => {
 
     await generator(appTree, options, dotnetClient);
     expect(projectGenerator).toHaveBeenCalled();
-    console.log(projectGenerator.mock.calls[0][1]);
     expect(projectGenerator.mock.calls[0][1].projectType).toEqual(
       'application',
     );

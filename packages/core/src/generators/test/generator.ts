@@ -18,8 +18,6 @@ export default async function (
   const directory = projectPaths.slice(1, -1).join('/'); // The middle portions contain the original path.
   const [name] = projectPaths.slice(-1); // The final folder contains the original name.
 
-  console.log(project);
-
   const projectGeneratorOptions: NxDotnetProjectGeneratorSchema = {
     ...options,
     testProjectNameSuffix: options.suffix,

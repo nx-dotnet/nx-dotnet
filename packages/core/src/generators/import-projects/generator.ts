@@ -26,6 +26,7 @@ import { initGenerator } from '../init/generator';
 
 export default async function (
   host: Tree,
+  options: null, // The second option is provided at runtime by Nx for options passed in to the generator.
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
   const installTask = await initGenerator(host, null, dotnetClient);
