@@ -23,4 +23,10 @@ export interface NxDotnetConfig {
    * @default true
    */
   inferProjectTargets?: boolean;
+
+  /**
+   * Set to false to skip project inference
+   * @default true
+   */
+  inferProjects?: boolean;
 }
