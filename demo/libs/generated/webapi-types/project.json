@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "demo-libs-generated-webapi-types",
   "sourceRoot": "demo/libs/generated/webapi-types/src",
   "targets": {
     "build": {

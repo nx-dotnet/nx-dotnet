@@ -1,3 +1,4 @@
 {
-  "nugetPackages": {}
+  "nugetPackages": {},
+  "inferProjects": false
 }

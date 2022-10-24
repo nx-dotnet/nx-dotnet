@@ -1,5 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "dotnet",
   "sourceRoot": "packages/dotnet/src",
   "projectType": "library",
   "targets": {
