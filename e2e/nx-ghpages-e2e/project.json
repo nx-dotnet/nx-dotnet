@@ -1,5 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "nx-ghpages-e2e",
   "projectType": "application",
   "sourceRoot": "e2e/nx-ghpages-e2e/src",
   "targets": {

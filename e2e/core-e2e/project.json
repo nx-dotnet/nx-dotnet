@@ -1,5 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "core-e2e",
   "projectType": "application",
   "sourceRoot": "e2e/core-e2e/src",
   "targets": {
