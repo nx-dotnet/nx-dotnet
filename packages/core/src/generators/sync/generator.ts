@@ -45,7 +45,6 @@ export default async function (host: Tree) {
               false,
               pkg,
             );
-            // console.log('Resolved:', resolved)
             config.nugetPackages[pkg] = resolved;
             if (resolved !== ALLOW_MISMATCH) {
               updateDependencyVersions(host, pkg, resolved);

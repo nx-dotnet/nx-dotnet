@@ -14,8 +14,6 @@ export async function handleChildProcessPassthrough(
   let resolver: () => void;
 
   const exitHandler = async () => {
-    console.log('Exit Handler Called');
-
     if (childProcess) {
       childProcess.kill('SIGINT');
       childProcess.kill('SIGINT');

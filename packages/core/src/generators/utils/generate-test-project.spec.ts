@@ -97,7 +97,6 @@ describe('nx-dotnet test project generator', () => {
   it('should set outputs for build target', async () => {
     await GenerateTestProject(appTree, options, dotnetClient);
     const config = readProjectConfiguration(appTree, testProjectName);
-    console.log(config.targets?.build.options);
     const outputPath = config.targets?.build.outputs?.[0];
     expect(outputPath).toEqual(
       '{workspaceRoot}/dist/apps/domain/existing-app-test',

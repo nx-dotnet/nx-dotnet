@@ -16,7 +16,7 @@ jest.mock('../../../../utils/src/lib/utility-functions/workspace');
 jest.mock('inquirer');
 
 describe('nuget-reference generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
 
   const options: NugetReferenceGeneratorSchema = {
     packageName: 'test',
@@ -27,8 +27,8 @@ describe('nuget-reference generator', () => {
   let dotnetClient: DotNetClient;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
-    appTree.write(
+    tree = createTreeWithEmptyWorkspace();
+    tree.write(
       'workspace.json',
       JSON.stringify({
         projects: {
@@ -36,7 +36,7 @@ describe('nuget-reference generator', () => {
         },
       }),
     );
-    appTree.write(
+    tree.write(
       'nx.json',
       JSON.stringify({
         projects: {
@@ -47,7 +47,7 @@ describe('nuget-reference generator', () => {
       }),
     );
 
-    updateConfig(appTree, { nugetPackages: {} });
+    updateConfig(tree, { nugetPackages: {} });
     (prompt as jest.MockedFunction<typeof prompt>)
       .mockReset()
       .mockImplementation((async () => {
@@ -58,13 +58,13 @@ describe('nuget-reference generator', () => {
   });
 
   it('runs calls dotnet add package reference', async () => {
-    await generator(appTree, options, dotnetClient);
+    await generator(tree, options, dotnetClient);
     const mock = dotnetClient as jest.Mocked<DotNetClient>;
     expect(mock.addPackageReference).toHaveBeenCalledTimes(1);
   });
 
   it('only prompts user once on version mismatch / miss', async () => {
-    await generator(appTree, options, dotnetClient);
+    await generator(tree, options, dotnetClient);
     expect(prompt).toHaveBeenCalledTimes(1);
   });
 
@@ -77,10 +77,10 @@ describe('nuget-reference generator', () => {
       .mockReset()
       .mockResolvedValue(projectFilePath);
 
-    updateConfig(appTree, {
+    updateConfig(tree, {
       nugetPackages: { [options.packageName]: '1.2.3' },
     });
-    await generator(appTree, options, dotnetClient);
+    await generator(tree, options, dotnetClient);
     const mock = dotnetClient as jest.Mocked<DotNetClient>;
     expect(mock.addPackageReference).toHaveBeenCalledWith(
       projectFilePath,

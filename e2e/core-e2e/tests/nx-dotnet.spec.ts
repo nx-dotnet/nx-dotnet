@@ -253,8 +253,19 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  describe('nx g import-projects', () => {
+  fdescribe('nx g import-projects', () => {
     it('should import apps, libs, and test', async () => {
+      updateFile(
+        '.nx-dotnet.rc.json',
+        JSON.stringify(
+          {
+            nugetPackages: {},
+            inferProjects: false,
+          },
+          null,
+          2,
+        ),
+      );
       const testApp = uniq('app');
       const testLib = uniq('lib');
       const testAppTest = `${testApp}-test`;
@@ -272,9 +283,6 @@ describe('nx-dotnet e2e', () => {
 
       const workspace = new Workspaces(e2eDir).readWorkspaceConfiguration();
 
-      console.log({ testApp, testLib, testAppTest });
-      console.log(workspace.projects);
-
       expect(workspace.projects[testApp].targets?.serve).toBeDefined();
       expect(workspace.projects[testApp].targets?.build).toBeDefined();
       expect(workspace.projects[testApp].targets?.lint).toBeDefined();
@@ -287,6 +295,17 @@ describe('nx-dotnet e2e', () => {
 
       await runNxCommandAsync(`build ${testApp}`);
       checkFilesExist(`dist/apps/${testApp}`);
+
+      updateFile(
+        '.nx-dotnet.rc.json',
+        JSON.stringify(
+          {
+            nugetPackages: {},
+          },
+          null,
+          2,
+        ),
+      );
     });
   });
 
