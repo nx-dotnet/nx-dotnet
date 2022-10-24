@@ -58,6 +58,8 @@ async function runTest() {
             ...process.env,
             NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
             NX_TERMINAL_CAPTURE_STDERR: 'true',
+            NX_CACHE_WORKSPACE_CONFIG: 'false',
+            NX_PROJECT_GLOB_CACHE: 'false',
             NPM_CONFIG_REGISTRY: 'http://localhost:4872',
             YARN_REGISTRY: 'http://localhost:4872',
           },
