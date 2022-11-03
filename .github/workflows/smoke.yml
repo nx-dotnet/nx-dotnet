@@ -25,5 +25,5 @@ jobs:
         with:
           dotnet-version: ${{matrix.dotnet_version}}
           include-prerelease: true
-      - uses: bahmutov/npm-install@v1.8.18
+      - uses: bahmutov/npm-install@v1.8.25
       - run: yarn nx run-many --all --target=smoke
