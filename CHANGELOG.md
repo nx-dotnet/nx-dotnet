@@ -1,3 +1,15 @@
+# [1.16.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.15.0...v1.16.0) (2022-11-03)
+
+### Bug Fixes
+
+- **core:** check-module-boundaries should not log undefined as project name([#561](https://github.com/nx-dotnet/nx-dotnet/issues/561)) ([5d1bea3](https://github.com/nx-dotnet/nx-dotnet/commit/5d1bea33f0f7e001e274784746382d4a4d67e2e7))
+- **core:** import-projects generator shouldn't fail ([8c2188d](https://github.com/nx-dotnet/nx-dotnet/commit/8c2188dc7cdacfc038765caf8a44c5b3d8c3b524))
+- **core:** nx v15 prefers output paths that start with {workspaceRoot} ([90b3aab](https://github.com/nx-dotnet/nx-dotnet/commit/90b3aab2856af4f50107a506b4c3a41bbbc6b6a3))
+
+### Features
+
+- **core:** allow disabling project inference from config file ([2c8eeeb](https://github.com/nx-dotnet/nx-dotnet/commit/2c8eeebe927e548630b6fc4692a9969c6510ec8d))
+
 # [1.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.14.0...v1.15.0) (2022-10-18)
 
 ### Bug Fixes
