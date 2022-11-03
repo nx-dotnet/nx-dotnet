@@ -253,7 +253,7 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  fdescribe('nx g import-projects', () => {
+  describe('nx g import-projects', () => {
     it('should import apps, libs, and test', async () => {
       updateFile(
         '.nx-dotnet.rc.json',
