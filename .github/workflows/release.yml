@@ -58,3 +58,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           VERBOSE_LOGGING: 'true'
+
+  post-release-smoke-tests:
+    uses: nx-dotnet/nx-dotnet/.github/workflows/smoke.yml@master
+    name: Run smoke tests post-release
+    needs: [semantic-release]

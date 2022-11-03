@@ -3,6 +3,7 @@ name: Nightly Smoke Tests
 on:
   # Trigger manually or on schedule
   workflow_dispatch:
+  workflow_call:
   schedule:
     - cron: '0 0 * * *'
 
@@ -15,7 +16,7 @@ jobs:
         dotnet_version: ['6.0.300', '7.0.x']
         os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{matrix.os}}
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       NX_RUN_GROUP: ${{ github.run_id }}-v${{matrix.dotnet_version}}
     steps:
