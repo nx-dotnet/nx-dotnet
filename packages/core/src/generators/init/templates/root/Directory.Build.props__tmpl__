@@ -6,7 +6,7 @@
   <PropertyGroup>
     <!-- Output path configuration -->
     <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))</RepoRoot>
-    <ProjectRelativePath>$([System.IO.Path]::GetRelativePath($(RepoRoot), $(MSBuildProjectDirectory)))</ProjectRelativePath>
+    <ProjectRelativePath>$([MSBuild]::MakeRelative($(RepoRoot), $(MSBuildProjectDirectory)))</ProjectRelativePath>
     <BaseOutputPath>$(RepoRoot)dist/$(ProjectRelativePath)</BaseOutputPath>
     <OutputPath>$(BaseOutputPath)</OutputPath>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
