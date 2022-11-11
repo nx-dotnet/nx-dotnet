@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.0...v1.16.1) (2022-11-11)
+
+### Bug Fixes
+
+- **core:** allow open solutions with Visual Studio ([#563](https://github.com/nx-dotnet/nx-dotnet/issues/563)) ([042a9db](https://github.com/nx-dotnet/nx-dotnet/commit/042a9db62ed57a7d16d684d4ef40a88cc58fba30)), closes [#548](https://github.com/nx-dotnet/nx-dotnet/issues/548)
+- **core:** usage of MSBuildProjectDirRelativePath should handle paths with white space ([a939c4b](https://github.com/nx-dotnet/nx-dotnet/commit/a939c4b3ced68c1c3234b624355b9b57d9706860))
+
 # [1.16.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.15.0...v1.16.0) (2022-11-03)
 
 ### Bug Fixes
