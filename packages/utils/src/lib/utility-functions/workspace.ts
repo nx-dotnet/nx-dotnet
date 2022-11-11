@@ -2,8 +2,8 @@ import {
   getProjects,
   normalizePath as nxNormalizePath,
   ProjectConfiguration,
+  ProjectsConfigurations,
   Tree,
-  WorkspaceJsonConfiguration,
   workspaceRoot,
 } from '@nrwl/devkit';
 
@@ -27,7 +27,7 @@ export function getProjectFileForNxProjectSync(project: ProjectConfiguration) {
 
 export function getDependantProjectsForNxProject(
   targetProject: string,
-  workspaceConfiguration: WorkspaceJsonConfiguration,
+  projectsConfiguration: ProjectsConfigurations,
   forEachCallback?: (
     project: ProjectConfiguration & { projectFile: string },
     projectName: string,
@@ -39,14 +39,14 @@ export function getDependantProjectsForNxProject(
   const projectRoots: { [key: string]: string } = {};
   const dependantProjects: { [key: string]: ProjectConfiguration } = {};
 
-  Object.entries(workspaceConfiguration.projects).forEach(([name, project]) => {
+  Object.entries(projectsConfiguration.projects).forEach(([name, project]) => {
     projectRoots[name] = normalizePath(resolve(project.root));
   });
 
   const absoluteNetProjectFilePath = resolve(
     workspaceRoot,
     getProjectFileForNxProjectSync(
-      workspaceConfiguration.projects[targetProject],
+      projectsConfiguration.projects[targetProject],
     ),
   );
   const netProjectFilePath = relative(
@@ -74,7 +74,7 @@ export function getDependantProjectsForNxProject(
           if (forEachCallback) {
             forEachCallback(
               {
-                ...workspaceConfiguration.projects[dependency],
+                ...projectsConfiguration.projects[dependency],
                 projectFile: workspaceFilePath,
               },
               dependency,
@@ -82,7 +82,7 @@ export function getDependantProjectsForNxProject(
             );
           }
           dependantProjects[dependency] =
-            workspaceConfiguration.projects[dependency];
+            projectsConfiguration.projects[dependency];
         }
       });
     }),
