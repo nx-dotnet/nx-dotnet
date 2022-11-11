@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.1...v1.16.2) (2022-11-11)
+
+### Bug Fixes
+
+- **core:** check-module-boundaries should work if single quotes not consumed by shell ([3870b55](https://github.com/nx-dotnet/nx-dotnet/commit/3870b5500761a12aaaf77f18e6ea975802a9ce7f))
+- **core:** normalize paths in Directory.Build.targets ([e8bf1bc](https://github.com/nx-dotnet/nx-dotnet/commit/e8bf1bc44adc144e16173085d42c4b5aefe41a81))
+
 ## [1.16.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.0...v1.16.1) (2022-11-11)
 
 ### Bug Fixes
