@@ -78,13 +78,10 @@ describe('enforce-module-boundaries', () => {
   it('should exit early if no tags on project', async () => {
     const spy = jest.spyOn(checkModule, 'loadModuleBoundaries');
     const results = await checkModuleBoundariesForProject('a', {
-      version: 2,
-      projects: {
-        a: {
-          tags: [],
-          targets: {},
-          root: '',
-        },
+      a: {
+        tags: [],
+        targets: {},
+        root: '',
       },
     });
     expect(spy).not.toHaveBeenCalled();
