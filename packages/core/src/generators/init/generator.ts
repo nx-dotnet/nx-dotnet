@@ -3,6 +3,7 @@ import {
   generateFiles,
   GeneratorCallback,
   logger,
+  normalizePath,
   NxJsonConfiguration,
   readJson,
   readWorkspaceConfiguration,
@@ -20,7 +21,6 @@ import {
 } from '@nx-dotnet/utils';
 import type { PackageJson } from 'nx/src/utils/package-json';
 import * as path from 'path';
-import { normalize, relative } from 'path';
 
 export async function initGenerator(
   host: Tree,
@@ -133,8 +133,8 @@ function addPrepareScript(host: Tree) {
 function initBuildCustomization(host: Tree) {
   const initialized = host.exists('Directory.Build.props');
   if (!initialized) {
-    const checkModuleBoundariesScriptPath = normalize(
-      relative(
+    const checkModuleBoundariesScriptPath = normalizePath(
+      path.relative(
         host.root,
         resolve('@nx-dotnet/core/src/tasks/check-module-boundaries'),
       ),
