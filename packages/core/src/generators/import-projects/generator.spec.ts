@@ -47,7 +47,7 @@ describe('import-projects generator', () => {
   let dotnetClient: DotNetClient;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     dotnetClient = new DotNetClient(mockDotnetFactory());
   });
 

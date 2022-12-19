@@ -12,5 +12,6 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["nxdoc"]
+  "implicitDependencies": ["nxdoc"],
+  "name": "nxdoc-e2e"
 }

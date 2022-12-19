@@ -17,7 +17,7 @@ describe('sync generator', () => {
   let appTree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     updateConfig(appTree, { nugetPackages: {} });
 
     (prompt as jest.MockedFunction<typeof prompt>)
