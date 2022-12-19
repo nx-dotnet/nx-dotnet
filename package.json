@@ -81,7 +81,7 @@
     "@types/rimraf": "^3.0.2",
     "@types/semver": "^7.3.9",
     "@types/tmp": "^0.2.3",
-    "@types/yargs-parser": "^20.2.1",
+    "@types/yargs-parser": "^21.0.0",
     "@typescript-eslint/eslint-plugin": "5.40.0",
     "@typescript-eslint/parser": "5.40.0",
     "babel-jest": "28.1.3",
