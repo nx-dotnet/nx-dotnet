@@ -1,3 +1,9 @@
+## [1.16.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.2...v1.16.3) (2022-12-19)
+
+### Bug Fixes
+
+- **utils:** should be able to find csproj files that start with dot ([#580](https://github.com/nx-dotnet/nx-dotnet/issues/580)) ([253971c](https://github.com/nx-dotnet/nx-dotnet/commit/253971c674ef55cfa5c573e89506f5c411f39105))
+
 ## [1.16.2](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.1...v1.16.2) (2022-11-11)
 
 ### Bug Fixes
