@@ -27,7 +27,7 @@ describe('nuget-reference generator', () => {
   let dotnetClient: DotNetClient;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     tree.write(
       'workspace.json',
       JSON.stringify({

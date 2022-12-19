@@ -22,7 +22,7 @@ describe('nx-dotnet test generator', () => {
   };
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     addProjectConfiguration(appTree, 'existing', {
       root: 'apps/existing',
       targets: {},

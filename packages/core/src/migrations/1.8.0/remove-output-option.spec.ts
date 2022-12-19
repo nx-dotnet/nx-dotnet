@@ -20,7 +20,7 @@ describe('remove-output-option', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
   });
 
   it('should not update projects where output != OutputPath', async () => {

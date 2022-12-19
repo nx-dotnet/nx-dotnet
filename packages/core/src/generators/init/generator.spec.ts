@@ -17,7 +17,7 @@ describe('init generator', () => {
   let dotnetClient: DotNetClient;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
     const packageJson = { scripts: {} };

@@ -3,9 +3,10 @@ import { workspaceRoot } from '@nrwl/devkit';
 import * as fg from 'fast-glob';
 import { join } from 'path';
 
-const globOptions = {
+const globOptions: fg.Options = {
   cwd: workspaceRoot,
   ignore: ['**/bin/**', '**/obj/**'],
+  dot: true,
 };
 
 export function projPattern(path: string): string {

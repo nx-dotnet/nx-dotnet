@@ -29,7 +29,7 @@ describe('nx-dotnet project reference', () => {
   });
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     // setup fake projects to test linking.
     addProjectConfiguration(appTree, appId, {

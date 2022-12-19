@@ -36,7 +36,7 @@ describe('nx-dotnet test project generator', () => {
   let testProjectName: string;
 
   beforeEach(async () => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     appTree.write('package.json', '{}');
     await initGenerator(appTree, null, new DotNetClient(mockDotnetFactory()));
     addProjectConfiguration(appTree, 'domain-existing-app', {
