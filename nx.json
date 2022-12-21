@@ -15,7 +15,8 @@
           "e2e",
           "prebuild",
           "swagger",
-          "codegen"
+          "codegen",
+          "build:test"
         ],
         "accessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,

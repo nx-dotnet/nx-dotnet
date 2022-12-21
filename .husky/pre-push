@@ -3,3 +3,4 @@
 . "$(dirname "$0")/common.sh"
 
 yarn documentation:check
+yarn nx format:check

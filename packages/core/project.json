@@ -88,6 +88,9 @@
       "options": {
         "command": "echo"
       }
+    },
+    "build:test": {
+      "command": "echo hello"
     }
   },
   "tags": []
