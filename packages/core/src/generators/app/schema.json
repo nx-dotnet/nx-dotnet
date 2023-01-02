@@ -92,6 +92,22 @@
           { "value": "dotnet", "label": "Dotnet naming conventions" }
         ]
       }
+    },
+    "args": {
+      "type": "array",
+      "description": "Additional arguments to pass to the dotnet command. For example: \"nx g @nx-dotnet/core:app myapp --args='--no-restore'\" Arguments can also be appended to the end of the command using '--'. For example, 'nx g @nx-dotnet/core:app myapp -- --no-restore'.",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "_": {
+      "type": "array",
+      "hidden": true,
+      "items": {
+        "type": "string"
+      },
+      "default": []
     }
   },
   "required": ["name", "language"]

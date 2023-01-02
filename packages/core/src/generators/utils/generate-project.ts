@@ -202,11 +202,24 @@ export async function GenerateProject(
     output: normalizedOptions.projectRoot,
   };
 
+  // Combine appended arguments with the ones that are passed in through the args property.
+  const additionalArguments = [];
+  if (options.args) {
+    additionalArguments.push(...options.args);
+  }
+  if (options._) {
+    additionalArguments.push(...options._);
+  }
+
   if (isDryRun()) {
     newParams['dryRun'] = true;
   }
 
-  dotnetClient.new(normalizedOptions.projectTemplate, newParams);
+  dotnetClient.new(
+    normalizedOptions.projectTemplate,
+    newParams,
+    additionalArguments,
+  );
   if (!isDryRun()) {
     addToSolutionFile(
       host,

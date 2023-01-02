@@ -38,6 +38,8 @@ describe('nx-dotnet project generator', () => {
       skipSwaggerLib: true,
       projectType: 'application',
       pathScheme: 'nx',
+      _: [],
+      args: [],
     };
 
     jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([
@@ -122,6 +124,18 @@ describe('nx-dotnet project generator', () => {
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.name;
     expect(nameFlag).toBe('Proj.SubDir.Test');
+  });
+
+  it('should forward args to dotnet new', async () => {
+    options._ = ['--foo', 'bar'];
+    options.args = ['--help'];
+    const spy = jest.spyOn(dotnetClient, 'new');
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const [, , additionalArguments] = spy.mock.calls[spy.mock.calls.length - 1];
+    expect(additionalArguments).toEqual(
+      expect.arrayContaining(['--help', '--foo', 'bar']),
+    );
+    expect(additionalArguments).toHaveLength(3);
   });
 
   describe('swagger library', () => {

@@ -16,4 +16,8 @@ export interface NxDotnetProjectGeneratorSchema {
   solutionFile?: string | boolean;
   skipSwaggerLib: boolean;
   pathScheme: 'nx' | 'dotnet';
+  /** The additional arguments passed to the generate command are stored here if appended to the end some reason. Ex: "nx g @nx-dotnet/core:app my-app -- --force --no-restore" would result in an array with ['--force', '--no-restore'] */
+  _?: string[];
+  /** Another location for the arguments to be forwarded to the dotnet command. Useful to allow it to show up in the UI */
+  args?: string[];
 }
