@@ -27,6 +27,7 @@ export default async function generateSwaggerSetup(
       generateShellProject(host, {
         swaggerProject: options.swaggerProject,
         project: options.project,
+        codegenProject: options.codegenProject,
       });
     } else {
       throw new Error('Either specify --output or --swagger-project');
