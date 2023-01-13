@@ -125,6 +125,10 @@ Generate a target to extract the swagger.json file from a .NET webapi
 
 Generates typescript code based on a specified openapi/swagger json file
 
+### [move](./generators/move.md)
+
+Moves a dotnet based project and updates project references which pointed to it.
+
 ## Executors
 
 ### [build](./executors/build.md)

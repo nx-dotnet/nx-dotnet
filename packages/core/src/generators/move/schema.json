@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Move",
+  "title": "@nx-dotnet/core:move",
+  "description": "Moves {projectName} to {destination}. Renames the Nx project to match the new folder location. Additionally, updates any .csproj, .vbproj, .fsproj, or .sln files which pointed to the project.",
+  "type": "object",
+  "properties": {
+    "projectName": {
+      "type": "string",
+      "description": "Name of the project to move",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?",
+      "x-dropdown": "projects"
+    },
+    "destination": {
+      "type": "string",
+      "description": "Where should it be moved to?",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "relativeToRoot": {
+      "type": "boolean",
+      "description": "If true, the destination path is relative to the root rather than the workspace layout from nx.json",
+      "default": false
+    }
+  },
+  "required": ["projectName", "destination"]
+}
