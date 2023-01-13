@@ -30,10 +30,6 @@ Generate a dotnet project under the application directory.
 
 - (string): Which template should be used for creating the tests project?
 
-### standalone
-
-- (boolean): Should the project use project.json? If false, the project config is inside workspace.json
-
 ### solutionFile
 
 - (string): The name of the solution file to add the project to
