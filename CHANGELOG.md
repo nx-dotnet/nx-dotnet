@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.3...v1.17.0) (2023-01-14)
+
+### Features
+
+- **core:** add move generator ([#588](https://github.com/nx-dotnet/nx-dotnet/issues/588)) ([d2a1d85](https://github.com/nx-dotnet/nx-dotnet/commit/d2a1d85c29f5024503b5d76d142b1281cc084f9f))
+- **core:** enable codegen setup by default for webapis ([#587](https://github.com/nx-dotnet/nx-dotnet/issues/587)) ([fe639d7](https://github.com/nx-dotnet/nx-dotnet/commit/fe639d767261a9a938b76628a1746f992e0e8be1))
+
 ## [1.16.3](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.2...v1.16.3) (2022-12-19)
 
 ### Bug Fixes
