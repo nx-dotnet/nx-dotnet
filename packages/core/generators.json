@@ -64,6 +64,12 @@
       "factory": "./src/generators/swagger-typescript/generator",
       "schema": "./src/generators/swagger-typescript/schema.json",
       "description": "Generates typescript code based on a specified openapi/swagger json file"
+    },
+    "move": {
+      "factory": "./src/generators/move/generator",
+      "schema": "./src/generators/move/schema.json",
+      "description": "Moves a dotnet based project and updates project references which pointed to it.",
+      "alias": "mv"
     }
   }
 }
