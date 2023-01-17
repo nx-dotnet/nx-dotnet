@@ -16,4 +16,5 @@ export interface NxDotnetProjectGeneratorSchema {
   solutionFile?: string | boolean;
   skipSwaggerLib: boolean;
   pathScheme: 'nx' | 'dotnet';
+  useNxPluginOpenAPI?: boolean;
 }

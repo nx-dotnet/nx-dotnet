@@ -29,3 +29,7 @@ Generates a swagger setup for a given project
 ### target
 
 - (string): What should the project be called?
+
+### useNxPluginOpenAPI
+
+- (boolean): Should the codegen target use nx-plugin-openapi instead?

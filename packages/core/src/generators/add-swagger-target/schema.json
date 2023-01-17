@@ -31,6 +31,11 @@
       "type": "string",
       "description": "What should the project be called?",
       "default": "swagger"
+    },
+    "useNxPluginOpenAPI": {
+      "type": "boolean",
+      "description": "Should the codegen target use nx-plugin-openapi instead?",
+      "default": "false"
     }
   },
   "required": ["project"]

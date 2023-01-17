@@ -14,6 +14,7 @@ export function getSwaggerExecutorConfiguration(
     options: {
       output: outputDirectory,
     },
+    dependsOn: ['build'],
   };
 }
 

@@ -5433,6 +5433,13 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
+"@trumbitta/nx-plugin-openapi@^1.12.1":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@trumbitta/nx-plugin-openapi/-/nx-plugin-openapi-1.12.1.tgz#c350213980509373fd25e48efc6d86c85071d657"
+  integrity sha512-vSQ+cDMtPuB/aBHtwrHsNKgElD55ubUMxsyCm7Vv81e/UQrNhIQ+/4zBFj3QWE2WO1PEi3TQD6jF5nbg173bUQ==
+  dependencies:
+    cross-spawn "^7.0.3"
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"

@@ -228,6 +228,7 @@ export async function GenerateProject(
       project: normalizedOptions.projectName,
       swaggerProject: `${normalizedOptions.projectName}-swagger`,
       codegenProject: `${normalizedOptions.projectName}-types`,
+      useNxPluginOpenAPI: normalizedOptions.useNxPluginOpenAPI,
     });
   }
 
