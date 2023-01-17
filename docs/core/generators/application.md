@@ -43,3 +43,7 @@ Generate a dotnet project under the application directory.
 ### pathScheme
 
 - (string): Determines if the project should follow NX or dotnet path naming conventions
+
+### useNxPluginOpenAPI
+
+- (boolean): If using a codgen project, use openapi-generator

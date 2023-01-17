@@ -6,4 +6,5 @@ export type AddSwaggerJsonExecutorSchema = {
   target?: string;
   swaggerProject?: string;
   codegenProject?: string;
+  useNxPluginOpenAPI?: boolean;
 };
