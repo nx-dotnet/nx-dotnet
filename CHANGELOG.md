@@ -1,3 +1,9 @@
+# [1.18.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.17.0...v1.18.0) (2023-01-17)
+
+### Features
+
+- **core:** support nx-plugin-openapi for more advanced openapi generation ([#589](https://github.com/nx-dotnet/nx-dotnet/issues/589)) ([ee1c7b1](https://github.com/nx-dotnet/nx-dotnet/commit/ee1c7b1918c37be2880a6b5e252019972c2eaeff))
+
 # [1.17.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.3...v1.17.0) (2023-01-14)
 
 ### Features
