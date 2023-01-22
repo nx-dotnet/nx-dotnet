@@ -1,4 +1,5 @@
 export type ModuleBoundaries = {
   sourceTag: '*' | string;
-  onlyDependOnLibsWithTags: string[];
+  onlyDependOnLibsWithTags?: string[];
+  notDependOnLibsWithTags?: string[];
 }[];

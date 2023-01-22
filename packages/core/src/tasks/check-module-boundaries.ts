@@ -27,7 +27,9 @@ export async function checkModuleBoundariesForProject(
   const configuredConstraints = await loadModuleBoundaries(projectRoot);
   const relevantConstraints = configuredConstraints.filter(
     (x) =>
-      tags.includes(x.sourceTag) && !x.onlyDependOnLibsWithTags.includes('*'),
+      tags.includes(x.sourceTag) &&
+      (!x.onlyDependOnLibsWithTags?.includes('*') ||
+        x.notDependOnLibsWithTags?.length),
   );
   if (!relevantConstraints.length) {
     return [];
@@ -43,7 +45,10 @@ export async function checkModuleBoundariesForProject(
       for (const constraint of relevantConstraints) {
         if (
           !dependencyTags.some((x) =>
-            constraint.onlyDependOnLibsWithTags.includes(x),
+            constraint.onlyDependOnLibsWithTags?.includes(x),
+          ) ||
+          dependencyTags.some((x) =>
+            constraint.notDependOnLibsWithTags?.includes(x),
           )
         ) {
           violations.push(
