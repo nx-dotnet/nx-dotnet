@@ -20,7 +20,7 @@ export default async function (
       getProjectFileForNxProject(sourceProject),
     ]);
   } catch {
-    console.warn('Unable to find project files to add dependency!');
+    throw new Error('Unable to find project files to add dependency!');
   }
 
   client.addProjectReference(hostProjectFile, sourceProjectFile);
