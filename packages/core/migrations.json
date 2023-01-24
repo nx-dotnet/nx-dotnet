@@ -17,6 +17,12 @@
       "description": "update-1.8.0-beta.0",
       "cli": "nx",
       "implementation": "./src/migrations/1.8.0/remove-output-option"
+    },
+    "update-1.18.1-add-outputs": {
+      "version": "1.18.1-beta.0",
+      "description": "Adds build intermediates to Nx outputs arrays s.t. nx cloud is more effective.",
+      "cli": "nx",
+      "implementation": "./src/migrations/update-1.18.1/add-intermediate-outputs"
     }
   }
 }

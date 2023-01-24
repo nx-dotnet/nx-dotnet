@@ -52,6 +52,7 @@ describe('infer-project', () => {
         },
         "outputs": Array [
           "{workspaceRoot}/dist/libs/api",
+          "{workspaceRoot}/dist/intermediates/libs/api",
         ],
       }
     `);

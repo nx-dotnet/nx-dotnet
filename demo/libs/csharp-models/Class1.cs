@@ -1,4 +1,4 @@
-﻿namespace NxDotnet.Demo.Libs.CsharpModels;
+namespace NxDotnet.Demo.Libs.CsharpModels;
 public class Class1
 {
 

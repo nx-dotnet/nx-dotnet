@@ -3,6 +3,10 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient } from '@nx-dotnet/dotnet';
 
+jest.mock('@nx-dotnet/utils/src/lib/utility-functions/glob', () => ({
+  getProjectFileForNxProject: () => Promise.resolve('my.csproj'),
+}));
+
 import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
 
