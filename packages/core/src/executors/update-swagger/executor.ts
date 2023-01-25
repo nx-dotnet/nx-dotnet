@@ -8,7 +8,7 @@ import {
 
 import { existsSync } from 'fs';
 import { ensureDirSync } from 'fs-extra';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
@@ -99,7 +99,7 @@ export default async function runExecutor(
     'tofile',
     '--output',
     options.output,
-    options.startupAssembly,
+    resolve(options.startupAssembly),
     options.swaggerDoc,
   ]);
 
