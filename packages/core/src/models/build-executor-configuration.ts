@@ -11,13 +11,16 @@ export function GetBuildExecutorConfiguration(
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const nxVersion = require('nx/package.json').version;
 
-  const outputDirectory =
-    (lt(nxVersion, '15.0.0-beta.0') ? '' : '{workspaceRoot}/') +
-    `dist/${projectRoot}`;
+  const outputs = lt(nxVersion, '15.0.0-beta.0')
+    ? [`dist/${projectRoot}`, `dist/intermediates/${projectRoot}`]
+    : [
+        `{workspaceRoot}/dist/${projectRoot}`,
+        `{workspaceRoot}/dist/intermediates/${projectRoot}`,
+      ];
 
   return {
     executor: '@nx-dotnet/core:build',
-    outputs: [outputDirectory],
+    outputs,
     options: {
       configuration: 'Debug',
       noDependencies: true,

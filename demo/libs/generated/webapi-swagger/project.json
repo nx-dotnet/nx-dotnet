@@ -15,5 +15,5 @@
       }
     }
   },
-  "implicitDependencies": ["demo-apps-webapi"]
+  "implicitDependencies": ["demo-webapi"]
 }

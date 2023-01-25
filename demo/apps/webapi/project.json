@@ -1,12 +1,15 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "name": "demo-apps-webapi",
+  "name": "demo-webapi",
   "projectType": "application",
   "sourceRoot": "demo/apps/webapi",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["{workspaceRoot}/dist/demo/apps/webapi"],
+      "outputs": [
+        "{workspaceRoot}/dist/demo/apps/webapi",
+        "{workspaceRoot}/dist/intermediates/demo/apps/webapi"
+      ],
       "options": {
         "configuration": "Debug",
         "noDependencies": true

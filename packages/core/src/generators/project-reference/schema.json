@@ -13,7 +13,8 @@
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "Which project should the reference be attached to?"
+      "x-prompt": "Which project should the reference be attached to?",
+      "x-dropdown": "projects"
     },
     "reference": {
       "type": "string",
@@ -22,7 +23,8 @@
         "$source": "argv",
         "index": 1
       },
-      "x-prompt": "Which project should the reference point to?"
+      "x-prompt": "Which project should the reference point to?",
+      "x-dropdown": "projects"
     }
   },
   "required": ["project", "reference"]

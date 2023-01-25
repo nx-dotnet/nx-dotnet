@@ -82,9 +82,11 @@ describe('nx-dotnet project generator', () => {
     await GenerateProject(appTree, options, dotnetClient, 'application');
     const config = readProjectConfiguration(appTree, 'test');
     const outputPath = config.targets?.build.outputs || [];
-    expect(outputPath.length).toBe(1);
 
     expect(outputPath[0]).toEqual('{workspaceRoot}/dist/apps/test');
+    expect(outputPath[1]).toEqual(
+      '{workspaceRoot}/dist/intermediates/apps/test',
+    );
   });
 
   it('should include serve target for applications', async () => {
