@@ -1,6 +1,7 @@
 import {
   addProjectConfiguration,
   formatFiles,
+  GeneratorCallback,
   getWorkspaceLayout,
   joinPathFragments,
   names,
@@ -164,7 +165,9 @@ export async function GenerateProject(
   dotnetClient: DotNetClient,
   projectType: ProjectType,
 ) {
-  const installTask = await initGenerator(host, null, dotnetClient);
+  const tasks: GeneratorCallback[] = [
+    await initGenerator(host, null, dotnetClient),
+  ];
 
   options.testTemplate = options.testTemplate ?? 'none';
 
@@ -224,17 +227,22 @@ export async function GenerateProject(
     normalizedOptions.projectTemplate === 'webapi' &&
     !normalizedOptions.skipSwaggerLib
   ) {
-    await generateSwaggerSetup(host, {
-      project: normalizedOptions.projectName,
-      swaggerProject: `${normalizedOptions.projectName}-swagger`,
-      codegenProject: `${normalizedOptions.projectName}-types`,
-      useNxPluginOpenAPI: normalizedOptions.useNxPluginOpenAPI,
-    });
+    tasks.push(
+      await generateSwaggerSetup(host, {
+        project: normalizedOptions.projectName,
+        swaggerProject: `${normalizedOptions.projectName}-swagger`,
+        codegenProject: `${normalizedOptions.projectName}-types`,
+        useNxPluginOpenAPI: normalizedOptions.useNxPluginOpenAPI,
+      }),
+    );
   }
 
+  await formatFiles(host);
+
   return async () => {
-    installTask();
-    await formatFiles(host);
+    for (const task of tasks) {
+      await task();
+    }
   };
 }
 
