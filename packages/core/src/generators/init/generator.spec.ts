@@ -30,13 +30,6 @@ describe('init generator', () => {
     expect(config).toBeTruthy();
   });
 
-  it('should update gitignore', async () => {
-    appTree.write('.gitignore', '');
-    await generator(appTree, null, dotnetClient);
-    const gitignoreValue = appTree.read('.gitignore')?.toString();
-    expect(gitignoreValue).toBeTruthy();
-  });
-
   it('should put dependency array inside config', async () => {
     await generator(appTree, null, dotnetClient);
     const config: NxDotnetConfig = readJson(appTree, CONFIG_FILE_PATH);

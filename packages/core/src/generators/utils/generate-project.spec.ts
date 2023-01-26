@@ -2,6 +2,7 @@ import { readProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import path = require('path');
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
@@ -137,5 +138,14 @@ describe('nx-dotnet project generator', () => {
         readProjectConfiguration(appTree, `${options.name}-swagger`),
       ).toBeDefined();
     });
+  });
+
+  it('should create .gitignore', async () => {
+    await GenerateProject(appTree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(appTree, options.name);
+    const gitignoreValue = appTree
+      .read(path.join(config.root, '.gitignore'))
+      ?.toString();
+    expect(gitignoreValue).toBeTruthy();
   });
 });
