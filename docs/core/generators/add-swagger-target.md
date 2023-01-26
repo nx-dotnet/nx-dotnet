@@ -18,6 +18,10 @@ Generates a swagger setup for a given project
 
 - (string): Which project should the target be added to?
 
+### target
+
+- (string): What should the target be called?
+
 ### swaggerProject
 
 - (string): What should the project created to hold the swagger files be called?
@@ -25,10 +29,6 @@ Generates a swagger setup for a given project
 ### codegenProject
 
 - (string): What project should hold the generated types? If null, no codegen target will be added.
-
-### target
-
-- (string): What should the project be called?
 
 ### useNxPluginOpenAPI
 

@@ -19,6 +19,11 @@
       "type": "string",
       "description": "Which project should the target be added to?"
     },
+    "target": {
+      "type": "string",
+      "description": "What should the target be called?",
+      "default": "swagger"
+    },
     "swaggerProject": {
       "type": "string",
       "description": "What should the project created to hold the swagger files be called?"
@@ -26,11 +31,6 @@
     "codegenProject": {
       "type": "string",
       "description": "What project should hold the generated types? If null, no codegen target will be added."
-    },
-    "target": {
-      "type": "string",
-      "description": "What should the project be called?",
-      "default": "swagger"
     },
     "useNxPluginOpenAPI": {
       "type": "boolean",
