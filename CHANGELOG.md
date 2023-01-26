@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.0...v1.18.1) (2023-01-26)
+
+### Bug Fixes
+
+- **core:** build intermediates need to be captured by cache for DTE / parallel builds ([#596](https://github.com/nx-dotnet/nx-dotnet/issues/596)) ([cdea76e](https://github.com/nx-dotnet/nx-dotnet/commit/cdea76e4b52e85071d7354bf3580bac742e68353))
+- **core:** resolve startupAssembly to ensure it is always an absolute path ([#595](https://github.com/nx-dotnet/nx-dotnet/issues/595)) ([2ea2570](https://github.com/nx-dotnet/nx-dotnet/commit/2ea25704b65c0079bfc363f3d470b35bccfbca68))
+
 # [1.18.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.17.0...v1.18.0) (2023-01-17)
 
 ### Features
