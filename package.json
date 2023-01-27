@@ -27,7 +27,7 @@
     "@types/xmldoc": "^1.1.6",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
-    "core-js": "^3.6.5",
+    "core-js": "^3.27.2",
     "eslint": "8.23.0",
     "fast-glob": "3.2.11",
     "inquirer": "^8.2.0",
