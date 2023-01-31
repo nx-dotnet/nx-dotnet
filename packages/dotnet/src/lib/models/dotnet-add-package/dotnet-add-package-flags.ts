@@ -6,9 +6,9 @@ export type dotnetAddPackageFlags =
   | 'noRestore'
   | 'source';
 
-export const addPackageKeyMap: Partial<
-  { [key in dotnetAddPackageFlags]: string }
-> = {
+export const addPackageKeyMap: Partial<{
+  [key in dotnetAddPackageFlags]: string;
+}> = {
   packageDirectory: 'package-directory',
   noRestore: 'no-restore',
 };

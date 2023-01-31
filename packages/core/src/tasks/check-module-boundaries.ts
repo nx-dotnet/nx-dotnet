@@ -6,7 +6,6 @@ import {
   Workspaces,
 } from '@nrwl/devkit';
 
-import { ESLint } from 'eslint';
 import { relative } from 'path';
 
 import {
@@ -74,16 +73,22 @@ export async function loadModuleBoundaries(
 ): Promise<ModuleBoundaries> {
   const configured = readConfig(host).moduleBoundaries;
   if (!configured) {
-    const result = await new ESLint()
-      .calculateConfigForFile(`${root}/non-existant.ts`)
-      .catch(() =>
-        Promise.resolve({
-          rules: { '@nrwl/nx/enforce-module-boundaries': [] },
-        }),
-      );
-    const [, moduleBoundaryConfig] =
-      result.rules['@nrwl/nx/enforce-module-boundaries'] || [];
-    return moduleBoundaryConfig?.depConstraints ?? [];
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { ESLint }: typeof import('eslint') = require('eslint');
+      const result = await new ESLint()
+        .calculateConfigForFile(`${root}/non-existant.ts`)
+        .catch(() =>
+          Promise.resolve({
+            rules: { '@nrwl/nx/enforce-module-boundaries': [] },
+          }),
+        );
+      const [, moduleBoundaryConfig] =
+        result.rules['@nrwl/nx/enforce-module-boundaries'] || [];
+      return moduleBoundaryConfig?.depConstraints ?? [];
+    } catch {
+      return [];
+    }
   } else {
     return configured;
   }
