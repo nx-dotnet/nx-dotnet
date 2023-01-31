@@ -118,13 +118,10 @@ describe('enforce-module-boundaries', () => {
     const globResults = ['libs/a/a.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
-    vol.fromJSON(
-      {
-        'D:/dev/github/nx-dotnet/libs/a/a.csproj':
-          '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\ui\\ui.csproj" /></ItemGroup></Project>',
-      },
-      '/root',
-    );
+    vol.fromJSON({
+      'libs/a/a.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\ui\\ui.csproj" /></ItemGroup></Project>',
+    });
 
     const results = await checkModuleBoundariesForProject('a', {
       a: {
@@ -145,13 +142,10 @@ describe('enforce-module-boundaries', () => {
     const globResults = ['libs/b/b.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
-    vol.fromJSON(
-      {
-        'D:/dev/github/nx-dotnet/libs/b/b.csproj':
-          '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
-      },
-      '/root',
-    );
+    vol.fromJSON({
+      'libs/b/b.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
+    });
 
     const results = await checkModuleBoundariesForProject('b', {
       a: {
@@ -172,13 +166,10 @@ describe('enforce-module-boundaries', () => {
     const globResults = ['libs/a/a.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
-    vol.fromJSON(
-      {
-        'D:/dev/github/nx-dotnet/libs/a/a.csproj':
-          '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\shared\\shared.csproj" /></ItemGroup></Project>',
-      },
-      '/root',
-    );
+    vol.fromJSON({
+      'libs/a/a.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\shared\\shared.csproj" /></ItemGroup></Project>',
+    });
 
     const results = await checkModuleBoundariesForProject('a', {
       a: {
