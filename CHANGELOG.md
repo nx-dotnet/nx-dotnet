@@ -1,3 +1,14 @@
+# [1.19.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.1...v1.19.0) (2023-02-01)
+
+### Bug Fixes
+
+- **core:** install not ran after generating a webapi with useNxPluginOpenAPI ([#601](https://github.com/nx-dotnet/nx-dotnet/issues/601)) ([15e4db5](https://github.com/nx-dotnet/nx-dotnet/commit/15e4db5a0b2388f6a90d7943855fbce66a46fc34))
+- **core:** make eslint optional dependency ([#608](https://github.com/nx-dotnet/nx-dotnet/issues/608)) ([3705469](https://github.com/nx-dotnet/nx-dotnet/commit/37054699d4c77b0abe5818e272df8e6a4cae1f34))
+
+### Features
+
+- **core:** add support for notDependOnLibsWithTags module boundaries ([#592](https://github.com/nx-dotnet/nx-dotnet/issues/592)) ([483086b](https://github.com/nx-dotnet/nx-dotnet/commit/483086b40308156984bd463bdb28799a260292cd))
+
 ## [1.18.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.0...v1.18.1) (2023-01-26)
 
 ### Bug Fixes
