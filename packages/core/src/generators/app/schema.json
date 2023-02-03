@@ -89,7 +89,7 @@
     },
     "useNxPluginOpenAPI": {
       "type": "boolean",
-      "description": "If using a codgen project, use openapi-generator"
+      "description": "If using a codegen project, use openapi-generator"
     }
   },
   "required": ["name", "language"]

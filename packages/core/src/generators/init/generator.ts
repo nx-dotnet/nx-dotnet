@@ -6,9 +6,7 @@ import {
   normalizePath,
   NxJsonConfiguration,
   readJson,
-  readWorkspaceConfiguration,
   Tree,
-  WorkspaceConfiguration,
   writeJson,
 } from '@nrwl/devkit';
 
@@ -43,7 +41,6 @@ export async function initGenerator(
   updateNxJson(host);
 
   if (!initialized) {
-    updateGitIgnore(host, readWorkspaceConfiguration(host));
     addPrepareScript(host);
     tasks.push(installNpmPackages(host));
   }
@@ -73,29 +70,6 @@ function installNpmPackages(host: Tree): GeneratorCallback {
       '@nrwl/js': nxVersion,
     },
   );
-}
-
-function updateGitIgnore(
-  host: Tree,
-  workspaceConfiguration: WorkspaceConfiguration,
-) {
-  if (!host.isFile('.gitignore')) {
-    return;
-  }
-  let lines = (host.read('.gitignore') ?? '').toString();
-  lines += `\n${
-    workspaceConfiguration.workspaceLayout?.appsDir || 'apps'
-  }/*/bin`;
-  lines += `\n${
-    workspaceConfiguration.workspaceLayout?.appsDir || 'apps'
-  }/*/obj`;
-  lines += `\n${
-    workspaceConfiguration.workspaceLayout?.libsDir || 'libs'
-  }/*/bin`;
-  lines += `\n${
-    workspaceConfiguration.workspaceLayout?.libsDir || 'libs'
-  }/*/obj`;
-  host.write('.gitignore', lines);
 }
 
 function updateNxJson(host: Tree) {

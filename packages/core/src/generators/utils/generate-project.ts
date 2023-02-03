@@ -237,6 +237,8 @@ export async function GenerateProject(
     );
   }
 
+  createGitIgnore(host, normalizedOptions.projectRoot);
+
   await formatFiles(host);
 
   return async () => {
@@ -244,6 +246,14 @@ export async function GenerateProject(
       await task();
     }
   };
+}
+
+function createGitIgnore(host: Tree, projectRoot: string) {
+  const gitIgnorePath = normalizePath(
+    joinPathFragments(projectRoot, '.gitignore'),
+  );
+
+  host.write(gitIgnorePath, `[Bb]in/\n[Oo]bj/`);
 }
 
 export function addPrebuildMsbuildTask(

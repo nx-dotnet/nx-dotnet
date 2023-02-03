@@ -46,4 +46,4 @@ Generate a dotnet project under the application directory.
 
 ### useNxPluginOpenAPI
 
-- (boolean): If using a codgen project, use openapi-generator
+- (boolean): If using a codegen project, use openapi-generator
