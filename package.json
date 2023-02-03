@@ -4,15 +4,14 @@
   "scripts": {
     "prepare": "husky install && nx g @nx-dotnet/core:restore",
     "lint-staged": "lint-staged",
-    "publish-dev": "ts-node tools/scripts/publish-dev",
     "e2e": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
-    "publish-local": "cp .npmrc.local .npmrc && run-p \"rimraf tmp\" e2e-registry \"ts-node ./tools/scripts/publish-all 99.99.99 local\"",
     "semantic-release": "semantic-release",
     "ts-node": "ts-node",
     "rimraf": "rimraf",
     "preinstall": "node ./tools/scripts/hooks/preinstall.js",
     "documentation:check": "ts-node ./tools/scripts/hooks/documentation.check.ts",
     "documentation": "nx g @nx-dotnet/nxdoc:generate-docs",
+    "publish-dev": "ts-node tools/scripts/publish-dev",
     "sandbox": "ts-node ./tools/scripts/sandbox.ts"
   },
   "private": false,
