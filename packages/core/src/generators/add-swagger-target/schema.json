@@ -3,17 +3,17 @@
   "cli": "nx",
   "id": "@nx-dotnet/core:add-swagger-target",
   "title": "Swagger Target Generator",
-  "description": "Generates a swagger setup for a given project",
+  "description": "Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project.  Optionally, also creates a project for code generation of the extracted swagger specification.",
   "type": "object",
   "properties": {
     "swaggerDoc": {
       "type": "string",
-      "description": "Which swagger doc should be used?",
+      "description": "Which version of the swagger spec should be used?",
       "default": "v1"
     },
     "startupAssembly": {
       "type": "string",
-      "description": "Path from workspace root to the built api's startup dll file"
+      "description": "Path from workspace root to the built api&#39;s startup dll file. If null, will be auto-discovered."
     },
     "project": {
       "type": "string",
@@ -21,20 +21,20 @@
     },
     "target": {
       "type": "string",
-      "description": "What should the target be called?",
+      "description": "What should the swagger target be called?",
       "default": "swagger"
     },
     "swaggerProject": {
       "type": "string",
-      "description": "What should the project created to hold the swagger files be called?"
+      "description": "What should the swagger project be called?"
     },
     "codegenProject": {
       "type": "string",
-      "description": "What project should hold the generated types? If null, no codegen target will be added."
+      "description": "What should the codegen project be called? If null, the project will not be created."
     },
     "useNxPluginOpenAPI": {
       "type": "boolean",
-      "description": "Should the codegen target use nx-plugin-openapi instead?",
+      "description": "If the codegen project is to be created, should the codegen target use nx-plugin-openapi instead?  Choose false if only type interfaces are needed.",
       "default": "false"
     }
   },

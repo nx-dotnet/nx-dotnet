@@ -13,14 +13,14 @@
     "application": {
       "factory": "./src/generators/app/generator",
       "schema": "./src/generators/app/schema.json",
-      "description": "Generate a new C# project.",
+      "description": "Generate a new C# project as an Nx application",
       "aliases": ["app"],
       "x-type": "application"
     },
     "project-reference": {
       "factory": "./src/generators/project-reference/generator",
       "schema": "./src/generators/project-reference/schema.json",
-      "description": "Adds a reference from one project to another."
+      "description": "Add a reference from one project to another"
     },
     "init": {
       "factory": "./src/generators/init/generator",
@@ -32,12 +32,12 @@
     "sync": {
       "factory": "./src/generators/sync/generator",
       "schema": "./src/generators/sync/schema.json",
-      "description": "sync generator"
+      "description": "Synchronizes NuGet references for the workspace"
     },
     "nuget-reference": {
       "factory": "./src/generators/nuget-reference/generator",
       "schema": "./src/generators/nuget-reference/schema.json",
-      "description": "nuget-reference generator"
+      "description": "Add a NuGet reference to a project"
     },
     "restore": {
       "factory": "./src/generators/restore/generator",
@@ -58,17 +58,17 @@
     "add-swagger-target": {
       "factory": "./src/generators/add-swagger-target/add-swagger-target",
       "schema": "./src/generators/add-swagger-target/schema.json",
-      "description": "Generate a target to extract the swagger.json file from a .NET webapi"
+      "description": "Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project"
     },
     "swagger-typescript": {
       "factory": "./src/generators/swagger-typescript/generator",
       "schema": "./src/generators/swagger-typescript/schema.json",
-      "description": "Generates typescript code based on a specified openapi/swagger json file"
+      "description": "Generate a typescript library project based on an openapi/swagger specification file"
     },
     "move": {
       "factory": "./src/generators/move/generator",
       "schema": "./src/generators/move/schema.json",
-      "description": "Moves a dotnet based project and updates project references which pointed to it.",
+      "description": "Moves a .NET project (including updating references)",
       "alias": "mv"
     }
   }

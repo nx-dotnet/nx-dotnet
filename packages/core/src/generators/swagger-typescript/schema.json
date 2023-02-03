@@ -3,7 +3,7 @@
   "cli": "nx",
   "$id": "@nx-dotnet/core:swagger-typescript",
   "title": "Swagger Typescript Generator",
-  "description": "Generates typescript code based on a specified openapi/swagger json file",
+  "description": "Generate typescript code based on an openapi/swagger specification file",
   "type": "object",
   "properties": {
     "outputProject": {
@@ -14,10 +14,6 @@
       "type": "string",
       "description": "Path to the openapi specification file.",
       "aliases": ["swaggerJsonPath"]
-    },
-    "templateDirectory": {
-      "type": "string",
-      "description": "Used to override the templates that are used when generating the typescript"
     }
   },
   "required": ["outputProject", "openapiJsonPath"]

@@ -87,11 +87,11 @@ nx-dotnet generator
 
 ### [application](./generators/application.md)
 
-Generate a new C# project.
+Generate a new C# project as an Nx application
 
 ### [project-reference](./generators/project-reference.md)
 
-Adds a reference from one project to another.
+Add a reference from one project to another
 
 ### [init](./generators/init.md)
 
@@ -99,11 +99,11 @@ init generator
 
 ### [sync](./generators/sync.md)
 
-sync generator
+Synchronizes NuGet references for the workspace
 
 ### [nuget-reference](./generators/nuget-reference.md)
 
-nuget-reference generator
+Add a NuGet reference to a project
 
 ### [restore](./generators/restore.md)
 
@@ -119,15 +119,15 @@ Import existing projects into your nx workspace
 
 ### [add-swagger-target](./generators/add-swagger-target.md)
 
-Generate a target to extract the swagger.json file from a .NET webapi
+Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project
 
 ### [swagger-typescript](./generators/swagger-typescript.md)
 
-Generates typescript code based on a specified openapi/swagger json file
+Generate a typescript library project based on an openapi/swagger specification file
 
 ### [move](./generators/move.md)
 
-Moves a dotnet based project and updates project references which pointed to it.
+Moves a .NET project (including updating references)
 
 ## Executors
 
