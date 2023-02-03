@@ -42,3 +42,19 @@ We support the following scopes:
 
 - ci // improvements to the CI / CD pipelines.
 - repo // improvements to the general repository.
+
+### Development tips
+
+#### Validating plug-in changes locally
+
+The recommended way to validate your changes is to deploy the plugin locally to a fresh nx workspace.
+
+- A sandbox workspace can be generated via `yarn sandbox`
+- This script will build/publish the plugin to a sandbox workspace (./tmp/sandbox)
+- Verdaccio is leveraged to start a locally running instance of npm (http://localhost:4872)
+  - The server will close when the script is stopped
+- use `nx generate @nx-dotnet/core:[generator]` to validate your changes manually
+
+#### Unit testing
+
+To validate against the affected tests, use `nx affected:test`
