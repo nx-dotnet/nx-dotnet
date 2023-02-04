@@ -5,9 +5,7 @@
 # NxDotnet
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
 [![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
-
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Join the chat at https://gitter.im/nx-dotnet-plugin/community](https://badges.gitter.im/nx-dotnet-plugin/community.svg)](https://gitter.im/nx-dotnet-plugin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Run CI checks](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml)
@@ -112,7 +110,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tzuge"><img src="https://avatars.githubusercontent.com/u/47162374?v=4?s=100" width="100px;" alt="tzuge"/><br /><sub><b>tzuge</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=tzuge" title="Code">💻</a> <a href="#design-tzuge" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.tinesoft.com"><img src="https://avatars.githubusercontent.com/u/4053092?v=4?s=100" width="100px;" alt="Tine Kondo"/><br /><sub><b>Tine Kondo</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=tinesoft" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kellyrbourg"><img src="https://avatars.githubusercontent.com/u/75750051?v=4?s=100" width="100px;" alt="Kelly Bourg"/><br /><sub><b>Kelly Bourg</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=kellyrbourg" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Tungsten78"><img src="https://avatars.githubusercontent.com/u/3805338?v=4?s=100" width="100px;" alt="Christopher Leigh"/><br /><sub><b>Christopher Leigh</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=Tungsten78" title="Tests">⚠️</a> <a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=Tungsten78" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Tungsten78"><img src="https://avatars.githubusercontent.com/u/3805338?v=4?s=100" width="100px;" alt="Christopher Leigh"/><br /><sub><b>Christopher Leigh</b></sub></a><br /><a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=Tungsten78" title="Tests">⚠️</a> <a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=Tungsten78" title="Code">💻</a> <a href="https://github.com/nx-dotnet/nx-dotnet/commits?author=Tungsten78" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
