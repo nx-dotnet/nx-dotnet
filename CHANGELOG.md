@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.0...v1.19.1) (2023-02-04)
+
+### Bug Fixes
+
+- **core:** adjust gitignore to support generation with directory ([#599](https://github.com/nx-dotnet/nx-dotnet/issues/599)) ([b3856e0](https://github.com/nx-dotnet/nx-dotnet/commit/b3856e0f04811fa06bda6870fa4058a908d715a5))
+- **core:** remove orphaned publish-local ([#611](https://github.com/nx-dotnet/nx-dotnet/issues/611)) ([7985e14](https://github.com/nx-dotnet/nx-dotnet/commit/7985e1496f226e187eb9c58c5e8dc86e3250d29e))
+
 # [1.19.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.1...v1.19.0) (2023-02-01)
 
 ### Bug Fixes
