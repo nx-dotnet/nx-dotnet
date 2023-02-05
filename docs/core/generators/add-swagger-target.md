@@ -2,17 +2,17 @@
 
 ## Swagger Target Generator
 
-Generates a swagger setup for a given project
+Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project. Optionally, also creates a project for code generation of the extracted swagger specification.
 
 ## Options
 
 ### swaggerDoc
 
-- (string): Which swagger doc should be used?
+- (string): Which version of the swagger spec should be used?
 
 ### startupAssembly
 
-- (string): Path from workspace root to the built api&#39;s startup dll file
+- (string): Path from workspace root to the built api&amp;#39;s startup dll file. If null, will be auto-discovered.
 
 ### <span className="required">project</span>
 
@@ -20,16 +20,16 @@ Generates a swagger setup for a given project
 
 ### target
 
-- (string): What should the target be called?
+- (string): What should the swagger target be called?
 
 ### swaggerProject
 
-- (string): What should the project created to hold the swagger files be called?
+- (string): What should the swagger project be called?
 
 ### codegenProject
 
-- (string): What project should hold the generated types? If null, no codegen target will be added.
+- (string): What should the codegen project be called? If null, the project will not be created.
 
 ### useNxPluginOpenAPI
 
-- (boolean): Should the codegen target use nx-plugin-openapi instead?
+- (boolean): If the codegen project is to be created, should the codegen target use nx-plugin-openapi instead? Choose false if only type interfaces are needed.
