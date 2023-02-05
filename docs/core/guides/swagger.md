@@ -16,7 +16,7 @@ Newly generated projects (`@nx-dotnet/core:application`/`@nx-dotnet/core:library
    - A `codegen` target is added to the webapi project to refresh this library
    - The typescript client can be produced in 2 flavors:
      1. Interfaces only - with `useNxPluginOpenApi = false`
-     2. A full fetch based implementation - with `useNxPluginOpenApi = true`
+     2. A full fetch based implementation - with `useNxPluginOpenApi = true`. Note: Java 8 is a pre-requisite for running this plugin.
 3. Nx dependencies ensure that the project targets are properly rebuilt whenever changes are made to the webapi
 4. To manually refresh the generated client, use `nx codegen {project}-types`
 
