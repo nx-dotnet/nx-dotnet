@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { Answers, prompt } from 'inquirer';
@@ -28,24 +28,9 @@ describe('nuget-reference generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    tree.write(
-      'workspace.json',
-      JSON.stringify({
-        projects: {
-          test: {},
-        },
-      }),
-    );
-    tree.write(
-      'nx.json',
-      JSON.stringify({
-        projects: {
-          test: {
-            tags: [],
-          },
-        },
-      }),
-    );
+    addProjectConfiguration(tree, 'test', {
+      root: 'libs/test',
+    });
 
     updateConfig(tree, { nugetPackages: {} });
     (prompt as jest.MockedFunction<typeof prompt>)

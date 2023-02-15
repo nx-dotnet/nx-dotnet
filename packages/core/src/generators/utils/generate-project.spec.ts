@@ -35,7 +35,6 @@ describe('nx-dotnet project generator', () => {
       language: 'C#',
       template: 'classlib',
       testTemplate: 'none',
-      standalone: false,
       skipSwaggerLib: true,
       projectType: 'application',
       pathScheme: 'nx',

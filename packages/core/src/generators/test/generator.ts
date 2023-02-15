@@ -27,7 +27,6 @@ export default async function (
     directory,
     tags: project.tags?.join(','),
     template: '',
-    standalone: options.standalone,
     projectType: project.projectType ?? 'library',
     skipSwaggerLib: true,
   };

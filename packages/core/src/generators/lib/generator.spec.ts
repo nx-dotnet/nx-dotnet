@@ -18,7 +18,6 @@ describe('nx-dotnet library generator', () => {
     language: 'C#',
     template: 'classlib',
     testTemplate: 'none',
-    standalone: false,
     projectType: 'library',
     skipSwaggerLib: true,
     pathScheme: 'nx',

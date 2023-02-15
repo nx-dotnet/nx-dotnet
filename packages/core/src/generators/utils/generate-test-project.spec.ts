@@ -15,18 +15,28 @@ import { initGenerator } from '../init/generator';
 import { NormalizedSchema } from './generate-project';
 import { GenerateTestProject } from './generate-test-project';
 
-const MOCK_CS_PROJ = `<Project>
-<PropertyGroup>
-  <TargetFramework>net5.0</TargetFramework>
-</PropertyGroup>
-</Project>`;
-
 jest.mock('@nx-dotnet/utils', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...(jest.requireActual('@nx-dotnet/utils') as any),
   glob: jest.fn(),
   findProjectFileInPath: jest.fn(),
   resolve: (m: string) => m,
+}));
+
+jest.mock('fs', () => ({
+  ...jest.requireActual('fs'),
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  readFileSync: (p: fs.PathOrFileDescriptor, ...args) => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    if (typeof p === 'string' && require('path').extname(p) === '.csproj')
+      return `<Project>
+      <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+      </PropertyGroup>
+      </Project>`;
+    return jest.requireActual('fs').readFileSync(p, ...args);
+  },
 }));
 
 describe('nx-dotnet test project generator', () => {
@@ -51,7 +61,6 @@ describe('nx-dotnet test project generator', () => {
     });
 
     fs.mkdirSync('apps/domain/existing-app', { recursive: true });
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_CS_PROJ);
     jest
       .spyOn(utils, 'glob')
       .mockResolvedValue([
@@ -72,7 +81,6 @@ describe('nx-dotnet test project generator', () => {
       name: 'domain-existing-app',
       testTemplate: 'xunit',
       language: 'C#',
-      standalone: false,
       projectType: 'application',
       projectRoot: 'apps/domain/existing-app',
       projectName: 'domain-existing-app',
