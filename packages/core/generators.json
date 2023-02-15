@@ -6,7 +6,7 @@
     "library": {
       "factory": "./src/generators/lib/generator",
       "schema": "./src/generators/lib/schema.json",
-      "description": "nx-dotnet generator",
+      "description": "Generate a new C# project as an Nx library",
       "aliases": ["lib"],
       "x-type": "library"
     },
@@ -53,7 +53,7 @@
     "import-projects": {
       "factory": "./src/generators/import-projects/generator",
       "schema": "./src/generators/import-projects/schema.json",
-      "description": "Import existing projects into your nx workspace"
+      "description": "Import existing projects into your Nx workspace"
     },
     "add-swagger-target": {
       "factory": "./src/generators/add-swagger-target/add-swagger-target",

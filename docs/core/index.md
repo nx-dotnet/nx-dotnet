@@ -83,7 +83,7 @@ If your workspace does not currently contain eslint, do not worry! You do not ha
 
 ### [library](./generators/library.md)
 
-nx-dotnet generator
+Generate a new C# project as an Nx library
 
 ### [application](./generators/application.md)
 
@@ -115,7 +115,7 @@ Generate a .NET test project for an existing application or library
 
 ### [import-projects](./generators/import-projects.md)
 
-Import existing projects into your nx workspace
+Import existing projects into your Nx workspace
 
 ### [add-swagger-target](./generators/add-swagger-target.md)
 
