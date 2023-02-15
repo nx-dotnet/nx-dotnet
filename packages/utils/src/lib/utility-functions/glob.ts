@@ -1,6 +1,6 @@
 import { workspaceRoot } from '@nrwl/devkit';
 
-import * as fg from 'fast-glob';
+import fg = require('fast-glob');
 import { join } from 'path';
 
 const globOptions: fg.Options = {
