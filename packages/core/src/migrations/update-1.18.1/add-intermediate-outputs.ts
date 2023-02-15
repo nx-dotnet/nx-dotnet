@@ -102,8 +102,8 @@ function updateTargetOutputs(
 
 function updateTargetDefaults(host: Tree, directoryBuildPropsUpdated: boolean) {
   let changed = false;
-  const nxJson = readNxJson();
-  const targetDefaults: TargetDefaults | undefined = nxJson.targetDefaults;
+  const nxJson = readNxJson(host);
+  const targetDefaults: TargetDefaults | undefined = nxJson?.targetDefaults;
 
   if (!targetDefaults) {
     return;
@@ -126,7 +126,7 @@ function updateTargetDefaults(host: Tree, directoryBuildPropsUpdated: boolean) {
     }
   }
 
-  if (changed) {
+  if (changed && nxJson) {
     writeJson(host, 'nx.json', nxJson);
   }
 }
