@@ -1,6 +1,6 @@
 {
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "name": "demo-frontend",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "demo/apps/web-frontend/src",
   "projectType": "application",
   "targets": {
@@ -22,7 +22,8 @@
         ],
         "styles": ["demo/apps/web-frontend/src/styles.scss"],
         "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
+        "webpackConfig": "demo/apps/web-frontend/webpack.config.js",
+        "isolatedConfig": true
       },
       "configurations": {
         "production": {
