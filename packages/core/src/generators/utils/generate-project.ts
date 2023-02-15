@@ -196,7 +196,6 @@ export async function GenerateProject(
     host,
     normalizedOptions.projectName,
     projectConfiguration,
-    normalizedOptions.standalone,
   );
 
   const newParams: dotnetNewOptions = {

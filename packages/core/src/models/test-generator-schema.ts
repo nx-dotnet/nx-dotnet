@@ -3,6 +3,5 @@ export interface NxDotnetTestGeneratorSchema {
   testTemplate: 'xunit' | 'nunit' | 'mstest';
   language: string;
   suffix?: string;
-  standalone: boolean;
   pathScheme: 'nx' | 'dotnet';
 }

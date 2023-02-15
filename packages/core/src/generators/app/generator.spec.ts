@@ -19,7 +19,6 @@ describe('nx-dotnet app generator', () => {
     template: 'webapi',
     testTemplate: 'none',
     projectType: 'application',
-    standalone: false,
     skipSwaggerLib: true,
     pathScheme: 'nx',
   };

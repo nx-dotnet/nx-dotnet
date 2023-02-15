@@ -11,7 +11,6 @@ export interface NxDotnetProjectGeneratorSchema {
   language: string;
   testTemplate: 'nunit' | 'mstest' | 'xunit' | 'none';
   testProjectNameSuffix?: string;
-  standalone: boolean;
   projectType?: ProjectType;
   solutionFile?: string | boolean;
   skipSwaggerLib: boolean;
