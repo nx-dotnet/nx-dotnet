@@ -6,12 +6,16 @@ import {
   joinPathFragments,
   ProjectConfiguration,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   Tree,
   updateProjectConfiguration,
-  updateWorkspaceConfiguration,
+  updateNxJson,
+  addDependenciesToPackageJson,
 } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/js/src/generators/library/library';
+
+import type NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
+import type NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
 
 import { getSwaggerExecutorConfiguration } from '../../models/swagger-executor-configuration';
 import { AddSwaggerJsonExecutorSchema } from './schema';
@@ -118,14 +122,21 @@ async function generateCodegenProject(
   const nameWithDirectory = `generated-${options.codegenProject}`;
   if (options.useNxPluginOpenAPI) {
     ensurePackage(host, '@trumbitta/nx-plugin-openapi', '^1.12.1');
+    tasks.push(
+      addDependenciesToPackageJson(
+        host,
+        {},
+        { '@trumbitta/nx-plugin-openapi': '^1.12.1' },
+      ),
+    );
     const {
       default: nxPluginOpenAPIGenerator,
     }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-    typeof import('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator') = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
+    typeof NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
     const {
       default: nxPluginOpenAPIInitGenerator,
     }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-    typeof import('@trumbitta/nx-plugin-openapi/src/generators/init/generator') = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
+    typeof NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
 
     tasks.push(await nxPluginOpenAPIInitGenerator(host));
 
@@ -176,7 +187,19 @@ async function generateCodegenProject(
     );
   }
 
-  const wc = readWorkspaceConfiguration(host);
+  updateNxJsonForCodegenTargets(host, options);
+
+  return tasks;
+}
+function updateNxJsonForCodegenTargets(
+  host: Tree,
+  options: AddSwaggerJsonExecutorSchema,
+) {
+  const wc = readNxJson(host);
+
+  if (!wc) {
+    return;
+  }
 
   const cacheableOperations: string[] | null =
     wc.tasksRunnerOptions?.default?.options?.cacheableOperations;
@@ -190,7 +213,5 @@ async function generateCodegenProject(
   wc.targetDefaults['build'].dependsOn ??= [];
   wc.targetDefaults['build'].dependsOn.push(...newBuildDeps);
 
-  updateWorkspaceConfiguration(host, wc);
-
-  return tasks;
+  updateNxJson(host, wc);
 }
