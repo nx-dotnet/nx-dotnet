@@ -1,4 +1,6 @@
 {
-  "nugetPackages": {},
+  "nugetPackages": {
+    "Swashbuckle.AspNetCore": "6.5.0"
+  },
   "inferProjects": false
 }
