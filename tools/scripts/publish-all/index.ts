@@ -22,7 +22,10 @@ export function publishAll(version: string, tag = 'latest') {
     NPM_CONFIG_REGISTRY: undefined,
   };
 
-  projects.forEach((projectConfiguration, idx) => {
+  for (const projectConfiguration of projects) {
+    if (projectConfiguration.root.includes('demo')) {
+      continue;
+    }
     const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
     if (existsSync(`${outputPath}/package.json`)) {
       execSync(`npm publish ${outputPath} --tag=${tag} --access=public`, {
@@ -30,7 +33,7 @@ export function publishAll(version: string, tag = 'latest') {
         env: environment,
       });
     }
-  });
+  }
 }
 
 if (require.main === module) {

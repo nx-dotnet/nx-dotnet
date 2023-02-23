@@ -8,7 +8,6 @@ import {
   normalizePath,
   ProjectConfiguration,
   ProjectType,
-  readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
 
@@ -96,16 +95,19 @@ function getNamespaceFromSchema(
   options: NxDotnetProjectGeneratorSchema,
   projectDirectory: string,
 ): string {
-  const npmScope = names(
-    readWorkspaceConfiguration(host).npmScope || '',
-  ).className;
-  const featureScope = projectDirectory
+  const { npmScope } = getWorkspaceLayout(host);
+
+  const namespaceParts = projectDirectory
     // not sure why eslint complains here, testing in devtools shows different results without the escape character.
     // eslint-disable-next-line no-useless-escape
     .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
     .map((part: string) => names(part).className);
 
-  return [npmScope, ...featureScope].join('.');
+  if (npmScope) {
+    namespaceParts.unshift(names(npmScope).className);
+  }
+
+  return namespaceParts.join('.');
 }
 
 async function getTemplate(
