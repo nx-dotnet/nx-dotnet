@@ -1,10 +1,8 @@
 import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { ChildProcess, exec, execSync } from 'child_process';
 import {
-  copySync,
   createFileSync,
   ensureDirSync,
-  moveSync,
   readdirSync,
   readFileSync,
   removeSync,
@@ -13,10 +11,8 @@ import {
   writeFileSync,
 } from 'fs-extra';
 import * as path from 'path';
-import { dirSync } from 'tmp';
 
 import * as isCI from 'is-ci';
-import { workspaceConfigName } from 'nx/src/config/workspaces';
 import { detectPackageManager } from '@nrwl/devkit';
 interface RunCmdOpts {
   silenceError?: boolean;

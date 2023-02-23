@@ -12,7 +12,7 @@ import {
   updateNxJson,
   addDependenciesToPackageJson,
 } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/js/src/generators/library/library';
+import type JsLibraryGenerator = require('@nrwl/js/src/generators/library/library');
 
 import type NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
 import type NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
@@ -121,76 +121,99 @@ async function generateCodegenProject(
   const tasks: GeneratorCallback[] = [];
   const nameWithDirectory = `generated-${options.codegenProject}`;
   if (options.useNxPluginOpenAPI) {
-    ensurePackage(host, '@trumbitta/nx-plugin-openapi', '^1.12.1');
-    tasks.push(
-      addDependenciesToPackageJson(
-        host,
-        {},
-        { '@trumbitta/nx-plugin-openapi': '^1.12.1' },
-      ),
-    );
-    const {
-      default: nxPluginOpenAPIGenerator,
-    }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-    typeof NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
-    const {
-      default: nxPluginOpenAPIInitGenerator,
-    }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-    typeof NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
-
-    tasks.push(await nxPluginOpenAPIInitGenerator(host));
-
-    tasks.push(
-      await nxPluginOpenAPIGenerator(host, {
-        isRemoteSpec: false,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        name: options.codegenProject!,
-        directory: 'generated',
-        generator: 'typescript-fetch',
-        sourceSpecLib: options.swaggerProject,
-      }),
-    );
-
-    const configuration = readProjectConfiguration(host, nameWithDirectory);
-    configuration.targets ??= {};
-    const targetConfiguration = configuration.targets?.['generate-sources'];
-    targetConfiguration.options['sourceSpecPathOrUrl'] = joinPathFragments(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      readProjectConfiguration(host, options.swaggerProject!).root,
-      'swagger.json',
-    );
-    targetConfiguration.dependsOn = ['^swagger'];
-    configuration.targets['codegen'] = targetConfiguration;
-    delete configuration.targets['generate-sources'];
-    updateProjectConfiguration(host, nameWithDirectory, configuration);
+    await setupOpenAPICodegen(host, tasks, options, nameWithDirectory);
   } else {
-    tasks.push(
-      await libraryGenerator(host, {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        name: options.codegenProject!,
-        directory: 'generated',
-        buildable: true,
-      }),
-    );
-    const codegenProjectConfiguration = readProjectConfiguration(
-      host,
-      nameWithDirectory,
-    );
-    codegenProjectConfiguration.implicitDependencies ??= [];
-    codegenProjectConfiguration.implicitDependencies.push(
-      options.swaggerProject ? options.swaggerProject : options.project,
-    );
-    updateProjectConfiguration(
-      host,
-      nameWithDirectory,
-      codegenProjectConfiguration,
-    );
+    await setupNxNETCodegen(tasks, host, options, nameWithDirectory);
   }
 
   updateNxJsonForCodegenTargets(host, options);
 
   return tasks;
 }
+
+async function setupOpenAPICodegen(
+  host: Tree,
+  tasks: GeneratorCallback[],
+  options: AddSwaggerJsonExecutorSchema,
+  nameWithDirectory: string,
+) {
+  ensurePackage(host, '@trumbitta/nx-plugin-openapi', '^1.12.1');
+  tasks.push(
+    addDependenciesToPackageJson(
+      host,
+      {},
+      { '@trumbitta/nx-plugin-openapi': '^1.12.1' },
+    ),
+  );
+  const {
+    default: nxPluginOpenAPIGenerator,
+  }: // eslint-disable-next-line @typescript-eslint/no-var-requires
+  typeof NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
+  const {
+    default: nxPluginOpenAPIInitGenerator,
+  }: // eslint-disable-next-line @typescript-eslint/no-var-requires
+  typeof NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
+
+  tasks.push(await nxPluginOpenAPIInitGenerator(host));
+
+  tasks.push(
+    await nxPluginOpenAPIGenerator(host, {
+      isRemoteSpec: false,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      name: options.codegenProject!,
+      directory: 'generated',
+      generator: 'typescript-fetch',
+      sourceSpecLib: options.swaggerProject,
+    }),
+  );
+
+  const configuration = readProjectConfiguration(host, nameWithDirectory);
+  configuration.targets ??= {};
+  const targetConfiguration = configuration.targets?.['generate-sources'];
+  targetConfiguration.options['sourceSpecPathOrUrl'] = joinPathFragments(
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    readProjectConfiguration(host, options.swaggerProject!).root,
+    'swagger.json',
+  );
+  targetConfiguration.dependsOn = ['^swagger'];
+  configuration.targets['codegen'] = targetConfiguration;
+  delete configuration.targets['generate-sources'];
+  updateProjectConfiguration(host, nameWithDirectory, configuration);
+}
+
+async function setupNxNETCodegen(
+  tasks: GeneratorCallback[],
+  host: Tree,
+  options: AddSwaggerJsonExecutorSchema,
+  nameWithDirectory: string,
+) {
+  const {
+    libraryGenerator,
+  }: // eslint-disable-next-line @typescript-eslint/no-var-requires
+  typeof JsLibraryGenerator = require('@nrwl/js/src/generators/library/library');
+  tasks.push(
+    await libraryGenerator(host, {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      name: options.codegenProject!,
+      directory: 'generated',
+      buildable: true,
+    }),
+  );
+  const codegenProjectConfiguration = readProjectConfiguration(
+    host,
+    nameWithDirectory,
+  );
+  codegenProjectConfiguration.implicitDependencies ??= [];
+  codegenProjectConfiguration.implicitDependencies.push(
+    options.swaggerProject ? options.swaggerProject : options.project,
+  );
+  updateProjectConfiguration(
+    host,
+    nameWithDirectory,
+    codegenProjectConfiguration,
+  );
+}
+
 function updateNxJsonForCodegenTargets(
   host: Tree,
   options: AddSwaggerJsonExecutorSchema,

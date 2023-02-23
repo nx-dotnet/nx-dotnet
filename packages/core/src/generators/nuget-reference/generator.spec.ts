@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Answers, prompt } from 'inquirer';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { updateConfig } from '@nx-dotnet/utils';
+import { updateConfig, getProjectFileForNxProject } from '@nx-dotnet/utils';
 
 import generator from './generator';
 import { NugetReferenceGeneratorSchema } from './schema';
@@ -54,8 +54,6 @@ describe('nuget-reference generator', () => {
   });
 
   it('provides resolved version to dotnet add package reference', async () => {
-    const { getProjectFileForNxProject } = await import('@nx-dotnet/utils');
-
     const projectFilePath = 'libs/test/Test.csproj';
 
     (getProjectFileForNxProject as jest.MockedFunction<() => Promise<string>>)
