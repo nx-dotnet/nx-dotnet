@@ -1,4 +1,5 @@
 import type { NxDotnetConfig } from '@nx-dotnet/utils';
+import type configUtils = require('@nx-dotnet/utils/src/lib/utility-functions/config');
 
 import * as fs from 'fs';
 
@@ -11,7 +12,7 @@ jest.mock(
   () =>
     ({
       readConfig: () => configValues,
-    } as typeof import('@nx-dotnet/utils/src/lib/utility-functions/config')),
+    } as typeof configUtils),
 );
 
 import { registerProjectTargets } from './infer-project';

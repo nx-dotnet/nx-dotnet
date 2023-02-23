@@ -41,6 +41,15 @@
       "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
       "inputs": ["production", "^production"]
     },
+    "@nx-dotnet/core:build": {
+      "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
+      "inputs": [
+        "production",
+        "^production",
+        "{workspaceRoot}/Directory.Build.props",
+        "{workspaceRoot}/Directory.Build.targets"
+      ]
+    },
     "codegen": {
       "dependsOn": ["^swagger", "swagger"]
     },
@@ -63,9 +72,7 @@
       "{workspaceRoot}/tsconfig.base.json",
       "{workspaceRoot}/tslint.json",
       "{workspaceRoot}/nx.json",
-      "{workspaceRoot}/babel.config.json",
-      "{workspaceRoot}/Directory.Build.props",
-      "{workspaceRoot}/Directory.Build.targets"
+      "{workspaceRoot}/babel.config.json"
     ],
     "production": [
       "default",

@@ -224,7 +224,8 @@ export async function GenerateProject(
 
   if (
     normalizedOptions.projectTemplate === 'webapi' &&
-    !normalizedOptions.skipSwaggerLib
+    !normalizedOptions.skipSwaggerLib &&
+    packageIsInstalled('@nrwl/js')
   ) {
     tasks.push(
       await generateSwaggerSetup(host, {
@@ -274,4 +275,13 @@ export function addPrebuildMsbuildTask(
   `);
 
   xml.children.push(fragment);
+}
+
+function packageIsInstalled(pkg: string) {
+  try {
+    require.resolve(pkg);
+    return true;
+  } catch {
+    return false;
+  }
 }
