@@ -9,7 +9,7 @@ export function main(version: string) {
     version,
   )
     ? rootPkg.version.split('-')
-    : [version, null];
+    : version.split('-');
   let [tag, rev] = tagSpec ? tagSpec.split('.') : ['beta', '0'];
   rev = (parseInt(rev) + 1).toString();
   rev = rev === 'NaN' ? '0' : rev;
