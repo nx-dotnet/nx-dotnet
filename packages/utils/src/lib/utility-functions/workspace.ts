@@ -8,6 +8,7 @@ import {
 } from '@nrwl/devkit';
 
 import { readFileSync } from 'fs';
+import { NX_PREFIX } from 'nx/src/utils/logger';
 import { dirname, isAbsolute, relative, resolve } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
@@ -134,4 +135,17 @@ export function getProjectFilesForProject(
  */
 function normalizePath(p: string): string {
   return nxNormalizePath(p).split('\\').join('/');
+}
+
+export function inlineNxTokens(value: string, project: ProjectConfiguration) {
+  if (value.startsWith('{workspaceRoot}/')) {
+    value = value.replace(/^\{workspaceRoot\}\//, '');
+  }
+  if (value.includes('{workspaceRoot}')) {
+    throw new Error(
+      `${NX_PREFIX} The {workspaceRoot} token is only valid at the beginning of an output.`,
+    );
+  }
+  value = value.replace('{projectRoot}', project.root);
+  return value.replace('{projectName}', project.name as string);
 }

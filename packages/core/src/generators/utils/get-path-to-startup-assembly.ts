@@ -37,8 +37,8 @@ export function buildStartupAssemblyPath(
     /(?:\.csproj|\.vbproj|\.fsproj)$/,
     '.dll',
   );
-  const foundDll = sync(`**/${dllName}`, { cwd: outputDirectory })[0];
-  if (!foundDll) {
+  const matchingDlls = sync(`**/${dllName}`, { cwd: outputDirectory });
+  if (!matchingDlls.length) {
     throw new Error(
       `[nx-dotnet] Unable to locate ${dllName} in ${relative(
         workspaceRoot,
@@ -46,10 +46,15 @@ export function buildStartupAssemblyPath(
       )}`,
     );
   }
-  return joinPathFragments(
-    outputDirectory,
-    sync(`**/${dllName}`, { cwd: outputDirectory })[0],
-  );
+  if (matchingDlls.length > 1) {
+    throw new Error(
+      `[nx-dotnet] Located multiple matching dlls for ${projectName}.
+
+You may need to clean old build artifacts from your outputs, or manually
+specify the path to the output assembly within ${project.root}/project.json.`,
+    );
+  }
+  return joinPathFragments(outputDirectory, matchingDlls[0]);
 }
 
 function findBuildTarget(
