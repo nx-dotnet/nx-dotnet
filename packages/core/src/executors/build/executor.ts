@@ -1,11 +1,17 @@
-import { ExecutorContext, workspaceRoot } from '@nrwl/devkit';
+import {
+  ExecutorContext,
+  ProjectConfiguration,
+  workspaceRoot,
+} from '@nrwl/devkit';
 
-import { resolve } from 'path';
+import { rmSync, statSync } from 'fs';
+import { join, resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
+  inlineNxTokens,
 } from '@nx-dotnet/utils';
 
 import { BuildExecutorSchema } from './schema';
@@ -16,6 +22,8 @@ export default async function runExecutor(
   dotnetClient: DotNetClient = new DotNetClient(dotnetFactory()),
 ) {
   const nxProjectConfiguration = getExecutedProjectConfiguration(context);
+  removeOldArtifacts(context, nxProjectConfiguration);
+
   dotnetClient.cwd = resolve(workspaceRoot, nxProjectConfiguration.root);
   dotnetClient.printSdkVersion();
   const projectFilePath = resolve(
@@ -34,4 +42,47 @@ export default async function runExecutor(
   return {
     success: true,
   };
+}
+
+function removeOldArtifacts(
+  context: ExecutorContext,
+  projectConfiguration: ProjectConfiguration,
+) {
+  const outputs = context.target?.outputs?.map((output) =>
+    join(context.root, inlineNxTokens(output, projectConfiguration)),
+  );
+  if (
+    !outputs &&
+    Object.values(context.nxJsonConfiguration?.tasksRunnerOptions ?? {}).some(
+      (runnerOptions) =>
+        runnerOptions.options?.cacheableOperations?.includes(
+          context.targetName,
+        ),
+    )
+  ) {
+    throw new Error(`[nx-dotnet] ${context.projectGraph}:${context.targetName} is cacheable, but has no outputs listed. 
+
+This will result in cache hits not retrieving build artifacts, only terminal outputs.
+
+See: https://nx.dev/reference/project-configuration#outputs`);
+  }
+  for (const output of outputs || []) {
+    if (
+      // No reason to clear build intermediates, just makes the resulting build command slower.
+      !output.includes('intermediates') &&
+      !output.endsWith('obj') &&
+      // Prevent exceptions from trying to rmdirSync(globPattern)
+      getStatsOrNull(output)?.isDirectory()
+    ) {
+      rmSync(output, { recursive: true });
+    }
+  }
+}
+
+function getStatsOrNull(f: string) {
+  try {
+    return statSync(f);
+  } catch {
+    return null;
+  }
 }
