@@ -2,7 +2,7 @@
   "name": "nx-dotnet",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install && nx g @nx-dotnet/core:restore",
+    "prepare": "husky install",
     "lint-staged": "lint-staged",
     "e2e": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
     "semantic-release": "semantic-release",
