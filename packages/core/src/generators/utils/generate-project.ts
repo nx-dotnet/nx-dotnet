@@ -44,7 +44,7 @@ export interface NormalizedSchema
   parsedTags: string[];
   className: string;
   namespaceName: string;
-  nxFileName: string;
+  nxProjectName: string;
   projectType?: ProjectType;
 }
 
@@ -69,7 +69,7 @@ export async function normalizeOptions(
   const parsedTags = getProjectTagsFromSchema(options);
   const template = await getTemplate(options, client);
   const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
-  const nxFileName = names(options.name).fileName;
+  const nxProjectName = names(options.name).fileName;
 
   return {
     ...options,
@@ -82,7 +82,7 @@ export async function normalizeOptions(
     projectLanguage: options.language,
     projectTemplate: template as KnownDotnetTemplates,
     namespaceName,
-    nxFileName,
+    nxProjectName,
     projectType: projectType ?? options.projectType ?? 'library',
   };
 }
@@ -235,8 +235,8 @@ export async function GenerateProject(
     tasks.push(
       await generateSwaggerSetup(host, {
         project: normalizedOptions.projectName,
-        swaggerProject: `${normalizedOptions.nxFileName}-swagger`,
-        codegenProject: `${normalizedOptions.nxFileName}-types`,
+        swaggerProject: `${normalizedOptions.nxProjectName}-swagger`,
+        codegenProject: `${normalizedOptions.nxProjectName}-types`,
         useNxPluginOpenAPI: normalizedOptions.useNxPluginOpenAPI,
       }),
     );

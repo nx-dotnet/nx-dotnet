@@ -91,7 +91,7 @@ describe('nx-dotnet test project generator', () => {
       skipSwaggerLib: true,
       className: 'DomainExistingApp',
       namespaceName: 'Domain.ExistingApp',
-      nxFileName: 'domain-existing-app',
+      nxProjectName: 'domain-existing-app',
       pathScheme: 'nx',
     };
     testProjectName = options.name + '-test';
