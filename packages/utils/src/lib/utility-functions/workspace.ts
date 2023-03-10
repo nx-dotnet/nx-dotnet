@@ -102,7 +102,8 @@ export async function getNxDotnetProjects(
 
     let isNetProject = false;
     for (const pattern of ['*.csproj', '*.fsproj', '*.vbproj'] as const) {
-      if (await glob(pattern, p?.root)) {
+      const matches = await glob(pattern, p?.root);
+      if (matches?.length) {
         isNetProject = true;
         break;
       }
