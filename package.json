@@ -104,7 +104,7 @@
     "memfs": "3.4.13",
     "node-fetch": "3.3.0",
     "nx": "15.8.5",
-    "openapi-types": "^11.0.1",
+    "openapi-types": "^12.1.0",
     "prettier": "2.7.1",
     "react-refresh": "^0.10.0",
     "react-test-renderer": "18.2.0",
