@@ -1,3 +1,20 @@
+# [1.20.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.1...v1.20.0) (2023-03-10)
+
+### Bug Fixes
+
+- **core:** add @trumbitta/nx-plugin-openapi via the Tree ([c2f2781](https://github.com/nx-dotnet/nx-dotnet/commit/c2f27811d06ecd1b989b37cd6d4dccd39421d6ec))
+- **core:** app generation should work in encapuslated Nx workspaces ([13c0a2c](https://github.com/nx-dotnet/nx-dotnet/commit/13c0a2ca50c1119f26bb1f841b3dcdf1a9e91f15))
+- **core:** app swaggerLib generation should work using dotnet pathScheme ([#645](https://github.com/nx-dotnet/nx-dotnet/issues/645)) ([6443e32](https://github.com/nx-dotnet/nx-dotnet/commit/6443e32351dea9a048f2641aada5ce29db81b65b))
+- **core:** check glob for array length ([#647](https://github.com/nx-dotnet/nx-dotnet/issues/647)) ([8033f76](https://github.com/nx-dotnet/nx-dotnet/commit/8033f762b0faeb0010999d2764235a0c8d39e57b))
+- **core:** handle null npm scope properly ([455199a](https://github.com/nx-dotnet/nx-dotnet/commit/455199a7a3999de3e4ab52ef9c2da84d17868674))
+- **core:** prevent stale cache entries from breaking swagger on dotnet upgrades ([#633](https://github.com/nx-dotnet/nx-dotnet/issues/633)) ([71f6893](https://github.com/nx-dotnet/nx-dotnet/commit/71f6893fc1d1e2105ae67eb94da0010a3b217a24))
+- **core:** remove dependency on memfs and properly specify nx-plugin-openapi as optional peer dep ([cf8f8c3](https://github.com/nx-dotnet/nx-dotnet/commit/cf8f8c3e15ddb87d3a3c873a7b078a9d4496ffca))
+- **core:** remove dependency on workspace package.json ([d95a3ff](https://github.com/nx-dotnet/nx-dotnet/commit/d95a3ff972a767e956f960dbd998d97260137a09))
+
+### Features
+
+- **core:** nx 15.8.0 support ([897e1a0](https://github.com/nx-dotnet/nx-dotnet/commit/897e1a0c6008f40cd035924a3af27fc8aa44d715))
+
 ## [1.19.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.0...v1.19.1) (2023-02-04)
 
 ### Bug Fixes

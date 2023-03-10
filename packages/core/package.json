@@ -51,5 +51,5 @@
       "@nx-dotnet/dotnet"
     ]
   },
-  "version": "1.19.1"
+  "version": "1.20.0"
 }
