@@ -442,7 +442,7 @@ public class UnitTest1
     [Fact]
     public void Test1()
     {
-      Assert.Equal(1, 2)
+      Assert.Equal(1, 2);
     }
 }`,
       );
@@ -482,6 +482,25 @@ public class UnitTest1
       expect(() => runNxCommand(`swagger ${api}`)).not.toThrow();
       expect(() =>
         checkFilesExist(`libs/generated/${api}-swagger/swagger.json`),
+      ).not.toThrow();
+    });
+
+    it('should generate swagger project using dotnet pathScheme', async () => {
+      const apiName = uniq('CurveDental.Foobar.SomeApi');
+      const apiNxProjectName = names(apiName).fileName;
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${apiName} --language="C#" --pathScheme=dotnet --template="webapi" --skipSwaggerLib=false`,
+      );
+
+      expect(() => checkFilesExist(`apps/${apiName}`)).not.toThrow();
+      expect(() =>
+        checkFilesExist(`libs/generated/${apiNxProjectName}-swagger`),
+      ).not.toThrow();
+      expect(() => runNxCommand(`swagger ${apiName}`)).not.toThrow();
+      expect(() =>
+        checkFilesExist(
+          `libs/generated/${apiNxProjectName}-swagger/swagger.json`,
+        ),
       ).not.toThrow();
     });
   });
