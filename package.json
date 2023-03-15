@@ -119,7 +119,7 @@
     "typescript": "4.9.5",
     "url-loader": "^4.1.1",
     "verdaccio": "^5.15.2",
-    "webpack": "^5.75.0",
+    "webpack": "^5.76.0",
     "webpack-merge": "^5.8.0"
   },
   "lint-staged": {
