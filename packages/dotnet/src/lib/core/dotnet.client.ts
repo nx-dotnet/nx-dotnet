@@ -196,6 +196,7 @@ export class DotNetClient {
     tool: string,
     positionalParameters?: string[],
     parameters?: T,
+    extraParameters?: string,
   ) {
     const params = ['tool', 'run', tool];
 
@@ -205,6 +206,11 @@ export class DotNetClient {
 
     if (parameters) {
       params.push(...getSpawnParameterArray(parameters));
+    }
+
+    if (extraParameters) {
+      const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
+      params.push(...(matches as string[]));
     }
 
     return this.logAndExecute(params);
