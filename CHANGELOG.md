@@ -1,3 +1,9 @@
+# [1.21.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.20.0...v1.21.0) (2023-03-18)
+
+### Features
+
+- **core:** extra parameters support for run tool ([#658](https://github.com/nx-dotnet/nx-dotnet/issues/658)) ([fe4bc14](https://github.com/nx-dotnet/nx-dotnet/commit/fe4bc147254f310f6404774d78dea9a86227a6ac))
+
 # [1.20.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.1...v1.20.0) (2023-03-10)
 
 ### Bug Fixes
