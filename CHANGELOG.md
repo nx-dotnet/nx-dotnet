@@ -1,3 +1,9 @@
+## [1.21.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.0...v1.21.1) (2023-03-22)
+
+### Bug Fixes
+
+- **core:** use for of on loop on project Map ([#661](https://github.com/nx-dotnet/nx-dotnet/issues/661)) ([c9d31d7](https://github.com/nx-dotnet/nx-dotnet/commit/c9d31d75baf28399810df8dccfbc34d07bd2b5e1))
+
 # [1.21.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.20.0...v1.21.0) (2023-03-18)
 
 ### Features
