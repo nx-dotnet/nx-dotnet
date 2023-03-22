@@ -97,9 +97,7 @@ export async function getNxDotnetProjects(
 ): Promise<Map<string, ProjectConfiguration>> {
   const allProjects = getProjects(host);
 
-  for (const key in allProjects) {
-    const p = allProjects.get(key);
-
+  for (const [key, p] of allProjects) {
     let isNetProject = false;
     for (const pattern of ['*.csproj', '*.fsproj', '*.vbproj'] as const) {
       const matches = await glob(pattern, p?.root);
