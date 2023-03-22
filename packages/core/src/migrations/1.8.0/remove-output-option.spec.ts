@@ -10,10 +10,13 @@ import * as utils from '@nx-dotnet/utils';
 
 import update from './remove-output-option';
 
+const projects = new Map();
+
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
   getProjectFileForNxProject: () =>
     Promise.resolve('apps/my-app/my-app.csproj'),
+  getNxDotnetProjects: () => projects,
 }));
 
 describe('remove-output-option', () => {
@@ -33,6 +36,18 @@ describe('remove-output-option', () => {
       </Root>`,
     );
 
+    projects.clear();
+    projects.set('my-app', {
+      root: 'apps/my-app',
+      targets: {
+        build: {
+          executor: '@nx-dotnet/core:build',
+          options: {
+            output: 'dist/apps/my-app',
+          },
+        },
+      },
+    });
     addProjectConfiguration(tree, 'my-app', {
       root: 'apps/my-app',
       targets: {
@@ -63,6 +78,19 @@ describe('remove-output-option', () => {
       </Root>`,
     );
 
+    projects.clear();
+    projects.set('my-app', {
+      root: 'apps/my-app',
+      targets: {
+        build: {
+          executor: '@nx-dotnet/core:build',
+          outputs: ['{options.output}'],
+          options: {
+            output: 'dist/apps/my-app',
+          },
+        },
+      },
+    });
     addProjectConfiguration(tree, 'my-app', {
       root: 'apps/my-app',
       targets: {
@@ -96,6 +124,18 @@ describe('remove-output-option', () => {
       </Root>`,
     );
 
+    projects.clear();
+    projects.set('my-app', {
+      root: 'apps/my-app',
+      targets: {
+        build: {
+          executor: '@nx-dotnet/core:build',
+          options: {
+            output: 'dist/apps/my-app',
+          },
+        },
+      },
+    });
     addProjectConfiguration(tree, 'my-app', {
       root: 'apps/my-app',
       targets: {
