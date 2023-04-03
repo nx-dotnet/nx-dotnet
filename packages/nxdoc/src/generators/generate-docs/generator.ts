@@ -1,6 +1,8 @@
 import {
+  ExecutorsJson,
   formatFiles,
   generateFiles,
+  GeneratorsJson,
   getProjects,
   names,
   ProjectConfiguration,
@@ -9,14 +11,11 @@ import {
 } from '@nrwl/devkit';
 
 import { readFileSync } from 'fs';
+import { GeneratorsJsonEntry } from 'nx/src/config/misc-interfaces';
 import * as path from 'path';
 
 import { Schema } from './schema';
-import {
-  ExecutorsCollection,
-  GeneratorsCollection,
-  SchemaJSON,
-} from './schema-json.interface';
+import { SchemaJSON } from './schema-json.interface';
 
 export default async function (host: Tree, options: Schema) {
   const projects = await findProjectsWithGeneratorsOrExecutors(host);
@@ -34,7 +33,7 @@ export default async function (host: Tree, options: Schema) {
     ? options.exclude
     : options.exclude.split(',');
 
-  projects.forEach((project) => {
+  for (const project of projects) {
     if (excludedProjects.includes(project.name)) {
       return;
     }
@@ -53,15 +52,23 @@ export default async function (host: Tree, options: Schema) {
       console.log('Getting started file not found');
     }
 
-    const generatorsCollection: GeneratorsCollection = project.generators
-      ? readJson<GeneratorsCollection>(host, `${project.root}/generators.json`)
-      : ({} as GeneratorsCollection);
-    const generators = generatorsCollection.generators;
+    const generatorsCollection: GeneratorsJson = project.generators
+      ? readJson<GeneratorsJson>(host, `${project.root}/generators.json`)
+      : ({} as GeneratorsJson);
+    const generators = Object.fromEntries(
+      Object.entries(generatorsCollection.generators ?? {}).filter(
+        ([, config]) => !config.hidden,
+      ),
+    );
 
-    const executorsCollection: ExecutorsCollection = project.executors
-      ? readJson<ExecutorsCollection>(host, `${project.root}/executors.json`)
-      : ({} as ExecutorsCollection);
-    const executors = executorsCollection.executors;
+    const executorsCollection: ExecutorsJson = project.executors
+      ? readJson<ExecutorsJson>(host, `${project.root}/executors.json`)
+      : ({} as ExecutorsJson);
+    const executors = Object.fromEntries(
+      Object.entries(executorsCollection.executors ?? {}).filter(
+        ([, config]) => !(config as GeneratorsJsonEntry).hidden,
+      ),
+    );
 
     const packageName = readJson(host, `${project.root}/package.json`).name;
     const projectFileName = names(project.name).fileName;
@@ -97,7 +104,7 @@ export default async function (host: Tree, options: Schema) {
       },
     );
 
-    Object.entries(generators).forEach(([generatorName, config]) => {
+    for (const [generatorName, config] of Object.entries(generators)) {
       const generatorFileName = names(generatorName).fileName;
       const schema = readJson<SchemaJSON>(
         host,
@@ -116,7 +123,7 @@ export default async function (host: Tree, options: Schema) {
           packageName,
         },
       );
-    });
+    }
 
     Object.entries(executors).forEach(([generatorName, config]) => {
       const generatorFileName = names(generatorName).fileName;
@@ -138,7 +145,7 @@ export default async function (host: Tree, options: Schema) {
         },
       );
     });
-  });
+  }
 
   generateFiles(
     host,
