@@ -93,10 +93,6 @@ Generate a new C# project as an Nx application
 
 Add a reference from one project to another
 
-### [init](./generators/init.md)
-
-init generator
-
 ### [sync](./generators/sync.md)
 
 Synchronizes NuGet references for the workspace

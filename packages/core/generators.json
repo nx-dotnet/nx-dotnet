@@ -70,6 +70,12 @@
       "schema": "./src/generators/move/schema.json",
       "description": "Moves a .NET project (including updating references)",
       "alias": "mv"
+    },
+    "preset": {
+      "factory": "./src/generators/preset/generator",
+      "schema": "./src/generators/preset/schema.json",
+      "description": "preset generator",
+      "hidden": true
     }
   }
 }
