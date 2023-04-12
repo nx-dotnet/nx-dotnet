@@ -1,3 +1,13 @@
+# [1.22.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.1...v1.22.0) (2023-04-12)
+
+### Bug Fixes
+
+- **core:** import-projects should add project.json file for new projects ([#675](https://github.com/nx-dotnet/nx-dotnet/issues/675)) ([69068af](https://github.com/nx-dotnet/nx-dotnet/commit/69068af91400ba3a33ac64208e60f589cc2fe9f7))
+
+### Features
+
+- **core:** add preset generator ([#676](https://github.com/nx-dotnet/nx-dotnet/issues/676)) ([57725ea](https://github.com/nx-dotnet/nx-dotnet/commit/57725ead33165092ac81859f494559667f35fb7d))
+
 ## [1.21.1](https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.0...v1.21.1) (2023-03-22)
 
 ### Bug Fixes
