@@ -3,6 +3,7 @@ import {
   formatFiles,
   getProjects,
   getWorkspaceLayout,
+  joinPathFragments,
   logger,
   names,
   ProjectConfiguration,
@@ -32,17 +33,19 @@ export default async function (
   const installTask = await initGenerator(host, null, dotnetClient);
 
   const projectFiles = await getProjectFilesInWorkspace(host);
-  const existingProjectRoots = Array.from(getProjects(host).values()).map(
-    (x) => x.root,
-  );
+  const existingProjectJsonDirectories = getDirectoriesWithProjectJson(host);
   for (const projectFile of projectFiles.newLibs) {
-    if (!existingProjectRoots.some((x) => projectFile.startsWith(x))) {
+    if (
+      !existingProjectJsonDirectories.some((x) => projectFile.startsWith(x))
+    ) {
       await addNewDotnetProject(host, projectFile, false);
       logger.log('Found new library', projectFile);
     }
   }
   for (const projectFile of projectFiles.newApps) {
-    if (!existingProjectRoots.some((x) => projectFile.startsWith(x))) {
+    if (
+      !existingProjectJsonDirectories.some((x) => projectFile.startsWith(x))
+    ) {
       await addNewDotnetProject(host, projectFile, true);
       logger.log('Found new application', projectFile);
     }
@@ -110,4 +113,14 @@ async function checkIfTestProject(host: Tree, path: string): Promise<boolean> {
     }
   });
   return isTestProject;
+}
+function getDirectoriesWithProjectJson(host: Tree) {
+  const nxProjects = getProjects(host);
+  const collected: string[] = [];
+  for (const proj of nxProjects.values()) {
+    if (host.exists(joinPathFragments(proj.root, 'project.json'))) {
+      collected.push(proj.root);
+    }
+  }
+  return collected;
 }
