@@ -35,6 +35,10 @@ describe('nx-dotnet e2e', () => {
     initializeGitRepo(e2eDir);
   }, 1500000);
 
+  afterEach(() => {
+    runNxCommand('reset');
+  });
+
   it('should initialize workspace build customization', async () => {
     await runNxCommandAsync(`generate @nx-dotnet/core:init`);
 
