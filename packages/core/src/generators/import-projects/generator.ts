@@ -36,7 +36,9 @@ export default async function (
   const existingProjectJsonDirectories = getDirectoriesWithProjectJson(host);
   for (const projectFile of projectFiles.newLibs) {
     if (
-      !existingProjectJsonDirectories.some((x) => projectFile.startsWith(x))
+      !existingProjectJsonDirectories.some((x) =>
+        projectFile.startsWith(x + '/'),
+      )
     ) {
       await addNewDotnetProject(host, projectFile, false);
       logger.log('Found new library', projectFile);
@@ -44,7 +46,9 @@ export default async function (
   }
   for (const projectFile of projectFiles.newApps) {
     if (
-      !existingProjectJsonDirectories.some((x) => projectFile.startsWith(x))
+      !existingProjectJsonDirectories.some((x) =>
+        projectFile.startsWith(x + '/'),
+      )
     ) {
       await addNewDotnetProject(host, projectFile, true);
       logger.log('Found new application', projectFile);
