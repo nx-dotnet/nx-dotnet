@@ -103,7 +103,7 @@
     "lint-staged": "^13.0.3",
     "memfs": "3.4.13",
     "node-fetch": "3.3.0",
-    "nx": "15.8.5",
+    "nx": "16.0.1",
     "openapi-types": "^12.1.0",
     "prettier": "2.7.1",
     "react-refresh": "^0.10.0",
