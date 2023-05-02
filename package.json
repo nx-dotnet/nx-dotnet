@@ -22,7 +22,7 @@
     "@docusaurus/theme-search-algolia": "^2.1.0",
     "@mdx-js/react": "^1.6.21",
     "@nrwl/devkit": "15.8.5",
-    "@swc/helpers": "~0.4.14",
+    "@swc/helpers": "~0.5.1",
     "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "@types/xmldoc": "^1.1.6",
     "chokidar": "^3.5.2",
