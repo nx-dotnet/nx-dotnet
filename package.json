@@ -59,7 +59,7 @@
     "@nrwl/workspace": "15.8.5",
     "@nx-plus/docusaurus": "15.0.0-rc.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
-    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
