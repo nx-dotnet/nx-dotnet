@@ -51,16 +51,16 @@
     "serve": {
       "executor": "@nrwl/webpack:dev-server",
       "options": {
-        "buildTarget": "demo-web-frontend:build",
+        "buildTarget": "demo-frontend:build",
         "hmr": true
       },
       "configurations": {
         "production": {
-          "buildTarget": "demo-web-frontend:build:production",
+          "buildTarget": "demo-frontend:build:production",
           "hmr": false
         },
         "development": {
-          "buildTarget": "demo-web-frontend:build:development"
+          "buildTarget": "demo-frontend:build:development"
         }
       },
       "defaultConfiguration": "development"
