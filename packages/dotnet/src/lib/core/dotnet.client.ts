@@ -27,12 +27,17 @@ import { LoadedCLI } from './dotnet.factory';
 export class DotNetClient {
   constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
 
-  new(template: KnownDotnetTemplates, parameters?: dotnetNewOptions): void {
+  new(
+    template: KnownDotnetTemplates,
+    parameters?: dotnetNewOptions,
+    additionalArguments?: string[],
+  ): void {
     const params = [`new`, template];
     if (parameters) {
       parameters = swapKeysUsingMap(parameters, newKeyMap);
       params.push(...getSpawnParameterArray(parameters));
     }
+    params.push(...(additionalArguments || []));
     return this.logAndExecute(params);
   }
 

@@ -46,6 +46,8 @@ export interface NormalizedSchema
   namespaceName: string;
   nxProjectName: string;
   projectType?: ProjectType;
+  args: string[];
+  __unparsed__: string[];
 }
 
 export async function normalizeOptions(
@@ -70,6 +72,8 @@ export async function normalizeOptions(
   const template = await getTemplate(options, client);
   const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
   const nxProjectName = names(options.name).fileName;
+  const __unparsed__ = options.__unparsed__ || [];
+  const args = options.args || [];
 
   return {
     ...options,
@@ -83,6 +87,8 @@ export async function normalizeOptions(
     projectTemplate: template as KnownDotnetTemplates,
     namespaceName,
     nxProjectName,
+    args,
+    __unparsed__,
     projectType: projectType ?? options.projectType ?? 'library',
   };
 }
@@ -209,11 +215,19 @@ export async function GenerateProject(
     output: normalizedOptions.projectRoot,
   };
 
+  const additionalArguments = normalizedOptions.args.concat(
+    normalizedOptions.__unparsed__,
+  );
+
   if (isDryRun()) {
     newParams['dryRun'] = true;
   }
 
-  dotnetClient.new(normalizedOptions.projectTemplate, newParams);
+  dotnetClient.new(
+    normalizedOptions.projectTemplate,
+    newParams,
+    additionalArguments,
+  );
   if (!isDryRun()) {
     addToSolutionFile(
       host,

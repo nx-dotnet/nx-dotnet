@@ -2,11 +2,12 @@ import { readProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import path = require('path');
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
 import * as mockedGenerateTestProject from './generate-test-project';
+
+import path = require('path');
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.spyOn(console, 'log').mockImplementation(() => {});
@@ -38,6 +39,8 @@ describe('nx-dotnet project generator', () => {
       skipSwaggerLib: true,
       projectType: 'application',
       pathScheme: 'nx',
+      __unparsed__: [],
+      args: [],
     };
 
     jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([
@@ -124,6 +127,18 @@ describe('nx-dotnet project generator', () => {
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.name;
     expect(nameFlag).toBe('Proj.SubDir.Test');
+  });
+
+  it('should forward args to dotnet new', async () => {
+    options.__unparsed__ = ['--foo', 'bar'];
+    options.args = ['--help'];
+    const spy = jest.spyOn(dotnetClient, 'new');
+    await GenerateProject(appTree, options, dotnetClient, 'library');
+    const [, , additionalArguments] = spy.mock.calls[spy.mock.calls.length - 1];
+    expect(additionalArguments).toEqual(
+      expect.arrayContaining(['--help', '--foo', 'bar']),
+    );
+    expect(additionalArguments).toHaveLength(3);
   });
 
   describe('swagger library', () => {
