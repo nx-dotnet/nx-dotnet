@@ -109,7 +109,7 @@
     "react-refresh": "^0.10.0",
     "react-test-renderer": "18.2.0",
     "run-p": "*",
-    "semantic-release": "^19.0.5",
+    "semantic-release": "^21.0.6",
     "style-loader": "^3.3.0",
     "stylus": "^0.55.0",
     "stylus-loader": "^7.1.0",
