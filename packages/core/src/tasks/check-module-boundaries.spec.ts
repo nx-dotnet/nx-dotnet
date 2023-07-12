@@ -53,26 +53,29 @@ describe('load-module-boundaries', () => {
     expect(boundaries).toEqual(MOCK_BOUNDARIES);
   });
 
-  it('should load from eslint if boundaries not in config', async () => {
-    const eslintConfigSpy = jest
-      .spyOn(ESLintNamespace, 'ESLint')
-      .mockReturnValue({
-        calculateConfigForFile: jest.fn().mockResolvedValue({
-          rules: {
-            '@nrwl/nx/enforce-module-boundaries': [
-              1,
-              { depConstraints: MOCK_BOUNDARIES },
-            ],
-          },
-        }),
-      } as unknown as ESLintNamespace.ESLint);
-    writeJson<NxDotnetConfig>(appTree, CONFIG_FILE_PATH, {
-      nugetPackages: {},
-    });
-    const boundaries = await loadModuleBoundaries('', appTree);
-    expect(eslintConfigSpy).toHaveBeenCalledTimes(1);
-    expect(boundaries).toEqual(MOCK_BOUNDARIES);
-  });
+  it.each([
+    '@nrwl/nx/enforce-module-boundaries',
+    '@nx/enforce-module-boundaries',
+  ])(
+    'should load from eslint if boundaries not in config',
+    async (eslintRuleName) => {
+      const eslintConfigSpy = jest
+        .spyOn(ESLintNamespace, 'ESLint')
+        .mockReturnValue({
+          calculateConfigForFile: jest.fn().mockResolvedValue({
+            rules: {
+              [eslintRuleName]: [1, { depConstraints: MOCK_BOUNDARIES }],
+            },
+          }),
+        } as unknown as ESLintNamespace.ESLint);
+      writeJson<NxDotnetConfig>(appTree, CONFIG_FILE_PATH, {
+        nugetPackages: {},
+      });
+      const boundaries = await loadModuleBoundaries('', appTree);
+      expect(eslintConfigSpy).toHaveBeenCalledTimes(1);
+      expect(boundaries).toEqual(MOCK_BOUNDARIES);
+    },
+  );
 });
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -84,7 +87,7 @@ describe('enforce-module-boundaries', () => {
     jest.spyOn(ESLintNamespace, 'ESLint').mockReturnValue({
       calculateConfigForFile: jest.fn().mockResolvedValue({
         rules: {
-          '@nrwl/nx/enforce-module-boundaries': [
+          '@nx/enforce-module-boundaries': [
             1,
             { depConstraints: MOCK_BOUNDARIES },
           ],

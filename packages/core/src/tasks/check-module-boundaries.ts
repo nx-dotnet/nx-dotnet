@@ -80,11 +80,13 @@ export async function loadModuleBoundaries(
         .calculateConfigForFile(`${root}/non-existant.ts`)
         .catch(() =>
           Promise.resolve({
-            rules: { '@nrwl/nx/enforce-module-boundaries': [] },
+            rules: { '@nx/enforce-module-boundaries': [] },
           }),
         );
       const [, moduleBoundaryConfig] =
-        result.rules['@nrwl/nx/enforce-module-boundaries'] || [];
+        result.rules['@nx/enforce-module-boundaries'] ||
+        result.rules['@nrwl/nx/enforce-module-boundaries'] ||
+        [];
       return moduleBoundaryConfig?.depConstraints ?? [];
     } catch {
       return [];
