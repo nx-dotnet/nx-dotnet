@@ -1,7 +1,4 @@
-import * as devkit from '@nrwl/devkit';
 import { ExecutorContext } from '@nrwl/devkit';
-
-import * as fs from 'fs';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import * as utils from '@nx-dotnet/utils';
@@ -68,7 +65,9 @@ describe('Format Executor', () => {
   });
 
   it('installs dotnet-format if not already installed', async () => {
-    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+    jest
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockReturnValue(undefined);
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
@@ -77,11 +76,9 @@ describe('Format Executor', () => {
   });
 
   it('does not install dotnet-format if already installed', async () => {
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest
-      .spyOn(devkit, 'readJsonFile')
-      .mockReturnValue({ tools: { 'dotnet-format': '1.0.0' } });
-
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockReturnValue('1.0.0');
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
@@ -94,11 +91,6 @@ describe('Format Executor', () => {
       '6.0.101',
     );
 
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-    jest
-      .spyOn(devkit, 'readJsonFile')
-      .mockReturnValue({ tools: { 'dotnet-format': '1.0.0' } });
-
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
@@ -110,11 +102,9 @@ describe('Format Executor', () => {
     (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
       '5.0.101',
     );
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest
-      .spyOn(devkit, 'readJsonFile')
-      .mockReturnValue({ tools: { 'dotnet-format': '1.0.0' } });
-
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockReturnValue('1.0.0');
     const res = await executor(options, context, dotnetClient);
     expect(res.success).toBeTruthy();
 

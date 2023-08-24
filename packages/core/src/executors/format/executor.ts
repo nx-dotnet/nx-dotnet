@@ -1,13 +1,12 @@
-import { ExecutorContext, readJsonFile, workspaceRoot } from '@nrwl/devkit';
+import { ExecutorContext } from '@nrwl/devkit';
 
-import { existsSync } from 'fs';
-import { join } from 'path';
 import * as semver from 'semver';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
+  readInstalledDotnetToolVersion,
 } from '@nx-dotnet/utils';
 
 import { FormatExecutorSchema } from './schema';
@@ -60,12 +59,7 @@ function ensureFormatToolInstalled(
   dotnetClient: DotNetClient,
   majorVersion: number,
 ) {
-  const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
-
-  const manifest = existsSync(manifestPath)
-    ? readJsonFile(manifestPath)
-    : undefined;
-  if (manifest?.tools['dotnet-format']) {
+  if (readInstalledDotnetToolVersion('dotnet-format')) {
     // dotnet-format is already installed.
     return;
   }

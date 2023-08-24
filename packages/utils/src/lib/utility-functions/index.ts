@@ -9,3 +9,4 @@ export * from './xml';
 export * from './is-buffer';
 export * from './childprocess';
 export * from './node';
+export * from './dotnet-tools-manifest';
