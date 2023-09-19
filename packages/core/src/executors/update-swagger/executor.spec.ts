@@ -89,12 +89,18 @@ describe('Update-Swagger Executor', () => {
       throw new Error('Attempted to read unexpected file');
     });
     jest
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockImplementation((tool) => {
+        if (tool === SWAGGER_CLI_TOOL) {
+          return '99.99.99';
+        }
+        throw new Error('unknown tool version read');
+      });
+    jest
       .spyOn(devkit, 'readJsonFile')
       .mockImplementation((p: string): object => {
         if (p === `${root}/.nx-dotnet.rc.json`) {
           return {};
-        } else if (p === `${root}/.config/dotnet-tools.json`) {
-          return { tools: { [SWAGGER_CLI_TOOL]: '99.99.99' } };
         }
         throw new Error(`Attempted to read unexpected file: ${p}`);
       });
@@ -122,6 +128,14 @@ describe('Update-Swagger Executor', () => {
       throw new Error('Attempted to read unexpected file');
     });
     jest.spyOn(devkit, 'readJsonFile').mockReturnValue({});
+    jest
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockImplementation((tool) => {
+        if (tool === SWAGGER_CLI_TOOL) {
+          return undefined;
+        }
+        throw new Error('unknown tool version read');
+      });
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
@@ -138,12 +152,18 @@ describe('Update-Swagger Executor', () => {
       throw new Error('Attempted to read unexpected file');
     });
     jest
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockImplementation((tool) => {
+        if (tool === SWAGGER_CLI_TOOL) {
+          return '99.99.99';
+        }
+        throw new Error('unknown tool version read');
+      });
+    jest
       .spyOn(devkit, 'readJsonFile')
       .mockImplementation((p: string): object => {
         if (p === `${root}/.nx-dotnet.rc.json`) {
           return {};
-        } else if (p === `${root}/.config/dotnet-tools.json`) {
-          return { tools: { [SWAGGER_CLI_TOOL]: '99.99.99' } };
         }
         throw new Error(`Attempted to read unexpected file: ${p}`);
       });
@@ -163,6 +183,10 @@ describe('Update-Swagger Executor', () => {
       }
       throw new Error('Attempted to read unexpected file');
     });
+    const readToolVersionSpy = jest
+      .spyOn(utils, 'readInstalledDotnetToolVersion')
+      .mockReset();
+
     jest.spyOn(devkit, 'readJsonFile').mockReturnValue({});
     const res = await executor(
       { ...options, skipInstall: true },
@@ -172,6 +196,7 @@ describe('Update-Swagger Executor', () => {
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
     ).not.toHaveBeenCalled();
+    expect(readToolVersionSpy).not.toBeCalled();
     expect(res.success).toBeTruthy();
   });
 });

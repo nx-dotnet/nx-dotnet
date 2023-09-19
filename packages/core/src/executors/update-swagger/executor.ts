@@ -2,13 +2,11 @@ import {
   ExecutorContext,
   logger,
   ProjectConfiguration,
-  readJsonFile,
   workspaceRoot,
 } from '@nrwl/devkit';
 
-import { existsSync } from 'fs';
 import { ensureDirSync } from 'fs-extra';
-import { dirname, join, resolve } from 'path';
+import { dirname, resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
@@ -17,6 +15,7 @@ import {
   iterateChildrenByPath,
   readConfig,
   readXml,
+  readInstalledDotnetToolVersion,
 } from '@nx-dotnet/utils';
 
 import { buildStartupAssemblyPath } from '../../generators/utils/get-path-to-startup-assembly';
@@ -118,16 +117,15 @@ function ensureSwaggerToolInstalled(
   dotnetClient: DotNetClient,
   version: string,
 ) {
-  const manifestPath = join(workspaceRoot, './.config/dotnet-tools.json');
-  const manifest = existsSync(manifestPath)
-    ? readJsonFile(manifestPath)
-    : undefined;
+  const installedSwaggerVersion =
+    readInstalledDotnetToolVersion(SWAGGER_CLI_TOOL);
 
-  if (manifest?.tools[SWAGGER_CLI_TOOL] === version) {
-    return;
-  } else if (manifest?.tools[SWAGGER_CLI_TOOL]) {
+  if (installedSwaggerVersion) {
+    if (installedSwaggerVersion === version) {
+      return;
+    }
     logger.warn(
-      `Swagger CLI was found, but the version does not match the version of Swashbuckle.AspNetCore in ${context.projectName}. We reinstalled it such that the version matches, but you may want to review the changes made.`,
+      `Swagger CLI was found, but the version "${installedSwaggerVersion}" does not match the expected version "${version}" of Swashbuckle.AspNetCore in ${context.projectName}. We reinstalled it such that the version matches, but you may want to review the changes made.`,
     );
   }
 
