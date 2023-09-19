@@ -31,10 +31,14 @@ function normalizeOptions(
   projectName: string,
 ): UpdateSwaggerJsonExecutorSchema {
   return {
-    output: opts.output ?? `dist/swagger/${project.root}/swagger.json`,
-    startupAssembly:
-      opts.startupAssembly ??
-      buildStartupAssemblyPath(projectName, project, csProjFilePath),
+    output: resolve(
+      workspaceRoot,
+      opts.output ?? `dist/swagger/${project.root}/swagger.json`,
+    ),
+    startupAssembly: opts.startupAssembly
+      ? resolve(workspaceRoot, opts.startupAssembly)
+      : resolve(buildStartupAssemblyPath(projectName, project, csProjFilePath)),
+
     swaggerDoc: opts.swaggerDoc ?? 'v1',
     skipInstall: opts.skipInstall ?? false,
   };
@@ -77,7 +81,8 @@ export default async function runExecutor(
   const csProjFilePath = await getProjectFileForNxProject(
     nxProjectConfiguration,
   );
-
+  const projectDirectory = resolve(workspaceRoot, nxProjectConfiguration.root);
+  dotnetClient.cwd = projectDirectory;
   const options = normalizeOptions(
     schema,
     nxProjectConfiguration,
@@ -99,7 +104,7 @@ export default async function runExecutor(
     'tofile',
     '--output',
     options.output,
-    resolve(options.startupAssembly),
+    options.startupAssembly,
     options.swaggerDoc,
   ]);
 

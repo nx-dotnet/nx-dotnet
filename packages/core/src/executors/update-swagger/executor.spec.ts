@@ -20,11 +20,8 @@ const mockCSProj = `<Project>
 </ItemGroup>
 </Project>`;
 
-const options: UpdateSwaggerJsonExecutorSchema = {
-  output: '',
-  startupAssembly: '',
-  swaggerDoc: '',
-  skipInstall: false,
+const options: Partial<UpdateSwaggerJsonExecutorSchema> = {
+  output: 'libs/generated/my-app-swagger/swagger.json',
 };
 
 const root = '/virtual';
@@ -35,6 +32,20 @@ jest.mock('@nrwl/devkit', () => ({
 }));
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
+
+jest.mock('fs-extra');
+
+jest.mock('../../generators/utils/get-path-to-startup-assembly', () => ({
+  buildStartupAssemblyPath: (
+    projectName: string,
+    _project: devkit.ProjectConfiguration,
+    csProjFilePath: string,
+  ) =>
+    `${root}/dist/apps/${projectName}/${csProjFilePath.replace(
+      'csproj',
+      'dll',
+    )}`,
+}));
 
 describe('Update-Swagger Executor', () => {
   let context: ExecutorContext;
@@ -91,7 +102,14 @@ describe('Update-Swagger Executor', () => {
     const res = await executor(options, context, dotnetClient);
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).runTool,
-    ).toHaveBeenCalled();
+    ).toHaveBeenCalledWith('swagger', [
+      'tofile',
+      '--output',
+      `${root}/libs/generated/my-app-swagger/swagger.json`,
+      `${root}/dist/apps/my-app/1.dll`,
+      'v1',
+    ]);
+    expect(dotnetClient.cwd).toEqual(`${root}/apps/my-app`);
     expect(res.success).toBeTruthy();
   });
 
