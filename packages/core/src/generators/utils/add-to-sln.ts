@@ -30,9 +30,10 @@ export function addToSolutionFile(
 
   if (solutionFile) {
     if (!host.exists(solutionFile)) {
+      const { name, dir } = parse(solutionFile);
       dotnetClient.new('sln', {
-        name: parse(solutionFile).name,
-        output: host.root,
+        name,
+        output: dir,
       });
     }
     const relativePath = relative(dotnetClient.cwd || host.root, host.root);
