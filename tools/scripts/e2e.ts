@@ -18,12 +18,18 @@ async function runTest() {
 
   let testNamePattern = '';
   if (process.argv[3] === '-t' || process.argv[3] === '--testNamePattern') {
-    testNamePattern = `--testNamePattern "${process.argv[4]}"`;
+    testNamePattern = `-t '${process.argv[4]}'`;
   }
 
   if (process.argv[3] === 'affected') {
     const affected = execSync(
       `npx nx print-affected --base=origin/master --select=projects`,
+      {
+        env: {
+          ...process.env,
+          NX_DAEMON: 'false',
+        },
+      },
     )
       .toString()
       .split(',')

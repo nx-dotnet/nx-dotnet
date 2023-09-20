@@ -31,8 +31,11 @@ export function dotnetFactory(): LoadedCLI {
   }
 }
 
-export function mockDotnetFactory(): LoadedCLI {
-  return { command: 'echo', info: { global: true, version: '6.0.100' } };
+export function mockDotnetFactory(version?: string): LoadedCLI {
+  return {
+    command: 'echo',
+    info: { global: true, version: version ?? '6.0.100' },
+  };
 }
 
 export type LoadedCLI = {

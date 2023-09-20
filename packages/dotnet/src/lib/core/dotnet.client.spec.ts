@@ -158,4 +158,298 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       }
     });
   });
+
+  describe('format', () => {
+    it('should call subcommands properly when on .NET 6 and passing --fixWhitespace', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixWhitespace: false,
+      });
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "style",
+              "my-project",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "analyzers",
+              "my-project",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call subcommands properly when on .NET 6 and passing --fixAnalyzers', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixAnalyzers: false,
+      });
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "whitespace",
+              "my-project",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "style",
+              "my-project",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call subcommands properly when on .NET 6 and passing --fixAnalyzers severity', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixAnalyzers: 'warn',
+      });
+      expect(spy).toHaveBeenCalledTimes(3);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "whitespace",
+              "my-project",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "style",
+              "my-project",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "analyzers",
+              "my-project",
+              "--severity",
+              "warn",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call subcommands properly when on .NET 6 and passing --fixStyle', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixStyle: false,
+      });
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "whitespace",
+              "my-project",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "analyzers",
+              "my-project",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call subcommands properly when on .NET 6 and passing --fixAnalyzers severity', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixStyle: 'warn',
+      });
+      expect(spy).toHaveBeenCalledTimes(3);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "whitespace",
+              "my-project",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "style",
+              "my-project",
+              "--severity",
+              "warn",
+            ],
+          ],
+          Array [
+            Array [
+              "format",
+              "analyzers",
+              "my-project",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should not pass `check` flag when on .NET 6', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        check: true,
+      });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "my-project",
+              "--verify-no-changes",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call single command when on .NET 6 and not passing any options', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project');
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "my-project",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call single command when on .NET 5 and not passing any options', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('5.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project');
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "my-project",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call single command when on .NET 5 if passing --fixWhitespace', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('5.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixWhitespace: false,
+      });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "my-project",
+              "--fix-whitespace",
+              "false",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call single command when on .NET 5 if passing --fixStyle', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('5.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixStyle: false,
+      });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "my-project",
+              "--fix-style",
+              "false",
+            ],
+          ],
+        ]
+      `);
+    });
+
+    it('should call single command when on .NET 5 if passing --fixAnalyzers', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('5.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixAnalyzers: false,
+      });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            Array [
+              "format",
+              "my-project",
+              "--fix-analyzers",
+              "false",
+            ],
+          ],
+        ]
+      `);
+    });
+  });
 });

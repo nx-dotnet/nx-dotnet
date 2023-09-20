@@ -188,13 +188,88 @@ export class DotNetClient {
     forceToolUsage?: boolean,
   ): void {
     const params = forceToolUsage
-      ? ['tool', 'run', 'dotnet-format', '--', project]
-      : [`format`, project];
+      ? ['tool', 'run', 'dotnet-format', '--']
+      : [`format`];
+
+    // The --check flag is for .NET 5 and older
+    // The --verify-no-changes flag is for .NET 6 and newer
+    // They do the same thing, but the flag name changed in .NET 6, so we need to handle that.
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, formatKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      if (semver.major(this.getSdkVersion()) >= 6) {
+        parameters.verifyNoChanges ??= parameters.check;
+        delete parameters.check;
+      } else {
+        parameters.check ??= parameters.verifyNoChanges;
+        delete parameters.verifyNoChanges;
+      }
     }
-    return this.logAndExecute(params);
+    if (
+      semver.major(this.getSdkVersion()) >= 6 &&
+      (parameters?.fixWhitespace !== undefined ||
+        parameters?.fixStyle !== undefined ||
+        parameters?.fixAnalyzers !== undefined)
+    ) {
+      // The handling of these 3 options changed in .NET 6.
+      // Now, we need to run the command separately for each option that isn't disabled
+      // if any of them were disabled or modified.
+      const whitespace = parameters.fixWhitespace;
+      const style = parameters.fixStyle;
+      const analyzers = parameters.fixAnalyzers;
+      delete parameters.fixWhitespace;
+      delete parameters.fixStyle;
+      delete parameters.fixAnalyzers;
+
+      if (whitespace !== false) {
+        const subcommandParams = [...params, 'whitespace', project];
+        const subcommandParameterObject = {
+          ...parameters,
+        };
+        delete subcommandParameterObject.fixWhitespace;
+        subcommandParams.push(
+          ...getSpawnParameterArray(subcommandParameterObject),
+        );
+        this.logAndExecute(subcommandParams);
+      }
+      if (style !== false) {
+        const subcommandParams = [...params, 'style', project];
+        const subcommandParameterObject: dotnetFormatOptions & {
+          severity?: string;
+        } = {
+          ...parameters,
+        };
+        if (typeof style === 'string') {
+          subcommandParameterObject.severity = style;
+        }
+        delete subcommandParameterObject.fixStyle;
+        subcommandParams.push(
+          ...getSpawnParameterArray(subcommandParameterObject),
+        );
+        this.logAndExecute(subcommandParams);
+      }
+      if (analyzers !== false) {
+        const subcommandParams = [...params, 'analyzers', project];
+        const subcommandParameterObject: dotnetFormatOptions & {
+          severity?: string;
+        } = {
+          ...parameters,
+        };
+        if (typeof analyzers === 'string') {
+          subcommandParameterObject.severity = analyzers;
+        }
+        delete subcommandParameterObject.fixAnalyzers;
+        subcommandParams.push(
+          ...getSpawnParameterArray(subcommandParameterObject),
+        );
+        this.logAndExecute(subcommandParams);
+      }
+    } else {
+      params.push(project);
+      if (parameters) {
+        parameters = swapKeysUsingMap(parameters, formatKeyMap);
+        params.push(...getSpawnParameterArray(parameters));
+      }
+      return this.logAndExecute(params);
+    }
   }
 
   runTool<T extends Record<string, string | boolean>>(
@@ -234,7 +309,7 @@ export class DotNetClient {
     this.logAndExecute(['--version']);
   }
 
-  private logAndExecute(params: string[]): void {
+  public logAndExecute(params: string[]): void {
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );

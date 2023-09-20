@@ -34,9 +34,7 @@ function visitProject(
   try {
     projectFile = getProjectFileForNxProjectSync(project);
   } catch (e) {
-    if (process.env['NX_VERBOSE_LOGGING'] === 'true') {
-      console.error(e);
-    }
+    // not a .NET project
   }
   if (projectFile !== null) {
     getDependantProjectsForNxProject(
