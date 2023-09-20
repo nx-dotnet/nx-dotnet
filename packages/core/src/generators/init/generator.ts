@@ -18,7 +18,6 @@ import {
   NxDotnetConfig,
   resolve,
 } from '@nx-dotnet/utils';
-import type { PackageJson } from 'nx/src/utils/package-json';
 import * as path from 'path';
 
 const noop = () => void 0;
@@ -63,7 +62,6 @@ export default initGenerator;
 
 function installNpmPackages(host: Tree): GeneratorCallback {
   if (host.exists('package.json')) {
-    const packageJson = readJson<PackageJson>(host, 'package.json');
     return addDependenciesToPackageJson(
       host,
       {},

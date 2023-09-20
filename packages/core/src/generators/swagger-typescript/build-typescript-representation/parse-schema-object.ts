@@ -1,6 +1,6 @@
 import { logger } from '@nx/devkit';
 
-import { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+import type { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 
 import { builtInTypeMap } from '../constants/swagger-ts-type-map';
 import { OpenAPIPropertyDescription } from '../models/openapi-model';

@@ -2,7 +2,11 @@
   "name": "@nx-dotnet/dotnet",
   "private": false,
   "main": "src/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "@nx-dotnet/utils": "*",
+    "semver": "7.5.4",
+    "tslib": "^2.5.0"
+  },
   "license": "MIT",
   "keywords": [
     ".NET",

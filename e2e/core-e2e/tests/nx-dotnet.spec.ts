@@ -66,7 +66,7 @@ describe('nx-dotnet e2e', () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
 
-    runCommand('git checkout -b "affected-tests"');
+    runCommand('git checkout -b "affected-tests"', {});
     updateFile('package.json', (f) => {
       const json = JSON.parse(f);
       json.dependencies['@nrwl/angular'] = json.devDependencies['nx'];
@@ -93,7 +93,7 @@ describe('nx-dotnet e2e', () => {
 
     const deps = await readDependenciesFromNxDepGraph(join(e2eDir), testApp);
     expect(deps).toContain(testLib);
-    runCommand('git checkout main');
+    runCommand('git checkout main', {});
   }, 300000);
 
   describe('nx g app', () => {
@@ -520,12 +520,12 @@ public class UnitTest1
 });
 
 function initializeGitRepo(cwd: string) {
-  runCommand('git init');
-  runCommand('git branch -m main');
-  runCommand('git config user.email no-one@some-website.com');
-  runCommand('git config user.name CI-Bot');
-  runCommand('git add .');
-  runCommand('git commit -m "initial commit"');
+  runCommand('git init', {});
+  runCommand('git branch -m main', {});
+  runCommand('git config user.email no-one@some-website.com', {});
+  runCommand('git config user.name CI-Bot', {});
+  runCommand('git add .', {});
+  runCommand('git commit -m "initial commit"', {});
 }
 
 function runCommandAsync(

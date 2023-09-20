@@ -44,9 +44,16 @@ if (require.main === module) {
     },
   );
   copySync('.npmrc.local', join(sandboxDirectory, '.npmrc'));
-  execSync(`yarn add --dev ${getWorkspacePackages().join(' ')}`, {
-    cwd: sandboxDirectory,
-    stdio: 'inherit',
-  });
-  console.log('Sandbox created at', resolve(sandboxDirectory));
+  getWorkspacePackages()
+    .then((pkgs) => {
+      execSync(`yarn add --dev ${pkgs}`, {
+        cwd: sandboxDirectory,
+        stdio: 'inherit',
+      });
+      console.log('Sandbox created at', resolve(sandboxDirectory));
+    })
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
 }

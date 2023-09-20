@@ -5,7 +5,6 @@ import {
   workspaceRoot,
 } from '@nx/devkit';
 
-import { ensureDirSync } from 'fs-extra';
 import { dirname, resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
@@ -20,6 +19,7 @@ import {
 
 import { buildStartupAssemblyPath } from '../../generators/utils/get-path-to-startup-assembly';
 import { UpdateSwaggerJsonExecutorSchema } from './schema';
+import { existsSync, mkdirSync } from 'fs';
 
 export const SWAGGER_CLI_TOOL = 'Swashbuckle.AspNetCore.Cli';
 
@@ -89,7 +89,10 @@ export default async function runExecutor(
     context.projectName as string,
   );
 
-  ensureDirSync(dirname(options.output));
+  const outputDirectory = dirname(options.output);
+  if (!existsSync(outputDirectory)) {
+    mkdirSync(outputDirectory, { recursive: true });
+  }
 
   if (!options.skipInstall) {
     ensureSwaggerToolInstalled(

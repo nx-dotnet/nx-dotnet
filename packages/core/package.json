@@ -7,12 +7,22 @@
   "scripts": {
     "postinstall": "node ./src/tasks/post-install"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@nx-dotnet/dotnet": "*",
+    "@nx-dotnet/utils": "*",
+    "@nx/devkit": "16.8.1",
+    "fast-glob": "3.2.12",
+    "inquirer": "^8.2.0",
+    "semver": "7.5.4",
+    "tslib": "^2.5.0",
+    "xmldoc": "^1.1.2",
+    "yargs-parser": "^21.0.0"
+  },
   "peerDependencies": {
     "@trumbitta/nx-plugin-openapi": "^1.12.1",
-    "nx": ">14.0.0-beta.1",
-    "eslint": ">8.0.0",
-    "@nx/workspace": ">14.0.0-beta.1"
+    "@nx/js": ">=16.0.0-beta.1",
+    "nx": ">16.0.0-beta.1",
+    "eslint": ">8.0.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
@@ -20,9 +30,14 @@
     },
     "@trumbitta/nx-plugin-openapi": {
       "optional": true
+    },
+    "@nx/js": {
+      "optional": true
     }
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "openapi-types": "^12.1.0"
+  },
   "homepage": "https://nx-dotnet.com/docs/core",
   "bugs": {
     "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen+is%3Aissue+label%3Anx-dotnet%2Fcore",

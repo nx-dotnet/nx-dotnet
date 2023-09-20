@@ -1,9 +1,10 @@
 import {
+  createProjectGraphAsync,
   ProjectConfiguration,
   ProjectsConfigurations,
+  readProjectsConfigurationFromProjectGraph,
   Tree,
   workspaceRoot,
-  Workspaces,
 } from '@nx/devkit';
 
 import { relative } from 'path';
@@ -127,9 +128,9 @@ async function main() {
     },
     string: ['project', 'projectRoot'],
   }) as { project?: string; projectRoot?: string };
-  const workspace = new Workspaces(workspaceRoot);
+  const graph = await createProjectGraphAsync();
   const { projects }: ProjectsConfigurations =
-    workspace.readWorkspaceConfiguration();
+    readProjectsConfigurationFromProjectGraph(graph);
 
   // Find the associated nx project for the msbuild project directory.
   const nxProject: string =

@@ -9,6 +9,8 @@ import * as utils from '@nx-dotnet/utils';
 import executor, { SWAGGER_CLI_TOOL } from './executor';
 import { UpdateSwaggerJsonExecutorSchema } from './schema';
 
+jest.mock('fs');
+
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
   getProjectFileForNxProject: () => Promise.resolve('1.csproj'),
@@ -32,8 +34,6 @@ jest.mock('@nx/devkit', () => ({
 }));
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
-
-jest.mock('fs-extra');
 
 jest.mock('../../generators/utils/get-path-to-startup-assembly', () => ({
   buildStartupAssemblyPath: (

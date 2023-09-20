@@ -7,7 +7,10 @@
     "lint": {
       "executor": "@nx/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/utils/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/utils/**/*.ts",
+          "packages/utils/package.json"
+        ]
       },
       "outputs": ["{options.outputFile}"]
     },
@@ -34,7 +37,6 @@
         "outputPath": "dist/packages/utils",
         "tsConfig": "packages/utils/tsconfig.lib.json",
         "packageJson": "packages/utils/package.json",
-        "updateBuildableProjectDepsInPackageJson": true,
         "main": "packages/utils/src/index.ts",
         "assets": [
           "packages/utils/*.md",

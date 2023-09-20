@@ -7,7 +7,10 @@
     "lint": {
       "executor": "@nx/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/nxdoc/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/nxdoc/**/*.ts",
+          "packages/nxdoc/package.json"
+        ]
       },
       "outputs": ["{options.outputFile}"]
     },
@@ -67,8 +70,7 @@
             "glob": "LICENSE",
             "output": "/"
           }
-        ],
-        "updateBuildableProjectDepsInPackageJson": true
+        ]
       }
     },
     "noop": {

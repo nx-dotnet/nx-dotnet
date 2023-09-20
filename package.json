@@ -38,6 +38,7 @@
     "regenerator-runtime": "0.13.9",
     "rimraf": "^3.0.2",
     "rxjs": "^7.4.0",
+    "semver": "7.5.4",
     "tslib": "^2.5.0",
     "xmldoc": "^1.1.2",
     "yargs-parser": "^21.0.0"
@@ -50,12 +51,15 @@
     "@commitlint/types": "^17.4.4",
     "@nx-plus/docusaurus": "15.0.0-rc.0",
     "@nx/cypress": "16.8.1",
+    "@nx/eslint-plugin": "16.8.1",
     "@nx/jest": "16.8.1",
     "@nx/js": "16.8.1",
     "@nx/linter": "16.8.1",
+    "@nx/node": "16.8.1",
     "@nx/plugin": "16.8.1",
     "@nx/react": "16.8.1",
     "@nx/web": "16.8.1",
+    "@nx/webpack": "^16.8.1",
     "@nx/workspace": "16.8.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@semantic-release/changelog": "^6.0.3",
@@ -75,6 +79,7 @@
     "@types/jest": "^29.4.0",
     "@types/node": "20.1.0",
     "@types/node-fetch": "^2.6.2",
+    "@types/prettier": "2.7.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@types/rimraf": "^3.0.2",
@@ -119,9 +124,7 @@
     "url-loader": "^4.1.1",
     "verdaccio": "^5.24.1",
     "webpack": "^5.81.0",
-    "webpack-merge": "^5.8.0",
-    "@nx/eslint-plugin": "16.8.1",
-    "@nx/node": "16.8.1"
+    "webpack-merge": "^5.8.0"
   },
   "lint-staged": {
     "**/*.{js,ts,md,json}": [
