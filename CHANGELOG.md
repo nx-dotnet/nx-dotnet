@@ -1,3 +1,19 @@
+# [1.23.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.22.0...v1.23.0) (2023-09-20)
+
+### Bug Fixes
+
+- **core:** add slash to use exact path ([#685](https://github.com/nx-dotnet/nx-dotnet/issues/685)) ([#687](https://github.com/nx-dotnet/nx-dotnet/issues/687)) ([1a87d83](https://github.com/nx-dotnet/nx-dotnet/commit/1a87d83e65e60e977028a531ef6acb922424d8fd))
+- **core:** codegen should not import self and default to required reference types ([#761](https://github.com/nx-dotnet/nx-dotnet/issues/761)) ([2310556](https://github.com/nx-dotnet/nx-dotnet/commit/231055688035fd4df41a090f70d1497b442f5373))
+- **core:** obey path in solution-file parameter when generating projects ([#762](https://github.com/nx-dotnet/nx-dotnet/issues/762)) ([29c234d](https://github.com/nx-dotnet/nx-dotnet/commit/29c234de25467f7693c63ecc206dc90c5b2155d0))
+- **core:** support new name for enforce-module-boundaries eslint rule ([#742](https://github.com/nx-dotnet/nx-dotnet/issues/742)) ([24eb831](https://github.com/nx-dotnet/nx-dotnet/commit/24eb831567906ef20febeaadacac886f2a4c7835))
+- **core:** update-swagger executor always reinstalls tool ([#757](https://github.com/nx-dotnet/nx-dotnet/issues/757)) ([63cf4b4](https://github.com/nx-dotnet/nx-dotnet/commit/63cf4b43cd92b9943c8c8cab85d61ba83e223674))
+- **dotnet:** update args handling for dotnet format ([#678](https://github.com/nx-dotnet/nx-dotnet/issues/678)) ([772303e](https://github.com/nx-dotnet/nx-dotnet/commit/772303e62e3e8661e101146132f2af180a949767))
+
+### Features
+
+- **core:** add argument forwarding to dotnet new ([#722](https://github.com/nx-dotnet/nx-dotnet/issues/722)) ([cdc3654](https://github.com/nx-dotnet/nx-dotnet/commit/cdc36543c7f1c4551a69466619a0e0e8039b7e82))
+- **core:** make swagger tool run in project directory ([#758](https://github.com/nx-dotnet/nx-dotnet/issues/758)) ([12d89ac](https://github.com/nx-dotnet/nx-dotnet/commit/12d89ac38f62f64c43a303a9063b46e9e5ecfb6b))
+
 # [1.22.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.1...v1.22.0) (2023-04-12)
 
 ### Bug Fixes
