@@ -42,7 +42,10 @@ export function parsePropertyDefintion(
 
     return {
       type: reference,
-      nullable: true,
+      nullable:
+        'nullable' in propertyDefinition
+          ? !!propertyDefinition.nullable
+          : false,
     };
   } else if (
     propertyDefinition.type &&

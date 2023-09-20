@@ -5,6 +5,7 @@ exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: l
 export * from './interfaces/person';
 export * from './interfaces/temperature';
 export * from './interfaces/weather-forecast';
+export * from './interfaces/my-type';
 "
 `;
 
@@ -12,8 +13,17 @@ exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: l
 "import { Person } from './person';
 
 export interface Company {
-    CEO?: Person
+    CEO: Person
     employees?: Person[]
+}
+"
+`;
+
+exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: libs/generated-ts/src/interfaces/my-type.ts 1`] = `
+"
+export interface MyType {
+    id: string
+    children: MyType
 }
 "
 `;
@@ -22,7 +32,7 @@ exports[`swagger-typescript generator should run successfully for OpenAPI 3.0: l
 "import { Company } from './company';
 
 export interface Person {
-    employer?: Company
+    employer: Company
 }
 "
 `;
@@ -42,9 +52,9 @@ import { Person } from './person';
 
 export interface WeatherForecast {
     date: string
-    temperature?: Temperature
+    temperature: Temperature
     summary?: string
-    forecaster?: Person
+    forecaster: Person
 }
 "
 `;
