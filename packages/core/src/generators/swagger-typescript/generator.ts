@@ -36,7 +36,8 @@ function generateInterfaceFiles(
       if (
         next !== 'object' &&
         !builtInTypes.has(next) &&
-        !necessary.has(next)
+        !necessary.has(next) &&
+        !(next === tsInterface.name)
       ) {
         necessary.set(next, names(next));
       }
