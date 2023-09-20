@@ -93,6 +93,8 @@ describe('nx-dotnet test project generator', () => {
       namespaceName: 'Domain.ExistingApp',
       nxProjectName: 'domain-existing-app',
       pathScheme: 'nx',
+      args: [],
+      __unparsed__: [],
     };
     testProjectName = options.name + '-test';
   });

@@ -15,16 +15,17 @@ import {
   uniq,
   updateFile,
 } from '@nrwl/nx-plugin/testing';
-import { runCommandUntil } from '../../utils';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
+import { exec, execSync } from 'child_process';
 import { unlinkSync, writeFileSync } from 'fs';
+import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
 
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
-import { exec, execSync } from 'child_process';
-import { ensureDirSync } from 'fs-extra';
-import { Workspaces } from '@nrwl/tao/src/shared/workspace';
+
+import { runCommandUntil } from '../../utils';
 
 const e2eDir = tmpProjPath();
 
@@ -114,6 +115,18 @@ describe('nx-dotnet e2e', () => {
       expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
       expect(() =>
         checkFilesExist(`libs/generated/${app}-swaggger/project.json`),
+      ).toThrow();
+    });
+
+    it('should generate an app without launchSettings.json', async () => {
+      const app = uniq('app');
+      await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --args="--exclude-launch-settings=true"`,
+      );
+
+      expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+      expect(() =>
+        checkFilesExist(`apps/${app}/Properties/launchSettings.json`),
       ).toThrow();
     });
 
