@@ -2,7 +2,7 @@ import {
   joinPathFragments,
   readWorkspaceConfiguration,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { parse, relative, resolve } from 'path';
 

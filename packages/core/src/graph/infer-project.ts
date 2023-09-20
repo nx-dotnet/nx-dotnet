@@ -1,4 +1,4 @@
-import { TargetConfiguration, workspaceRoot } from '@nrwl/devkit';
+import { TargetConfiguration, workspaceRoot } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';

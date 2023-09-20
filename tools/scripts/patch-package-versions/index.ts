@@ -1,4 +1,4 @@
-import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+import { WorkspaceJsonConfiguration } from '@nx/devkit';
 import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import { execSync } from 'child_process';

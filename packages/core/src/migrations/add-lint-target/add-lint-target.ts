@@ -1,4 +1,4 @@
-import { formatFiles, Tree, updateProjectConfiguration } from '@nrwl/devkit';
+import { formatFiles, Tree, updateProjectConfiguration } from '@nx/devkit';
 
 import { getNxDotnetProjects } from '@nx-dotnet/utils';
 

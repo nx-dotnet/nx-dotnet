@@ -4,7 +4,7 @@ import {
   Tree,
   workspaceRoot,
   Workspaces,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { relative } from 'path';
 

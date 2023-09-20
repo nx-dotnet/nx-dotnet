@@ -1,4 +1,4 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import {
   Tree,
   readProjectConfiguration,
@@ -7,8 +7,8 @@ import {
   names,
   offsetFromRoot,
   ProjectConfiguration,
-} from '@nrwl/devkit';
-import { uniq } from '@nrwl/nx-plugin/testing';
+} from '@nx/devkit';
+import { uniq } from '@nx/plugin/testing';
 
 import generator from './generator';
 import { basename } from 'path';

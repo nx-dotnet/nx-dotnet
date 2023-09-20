@@ -9,7 +9,7 @@ import {
   ProjectConfiguration,
   ProjectType,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 //  Files generated via `dotnet` are not available in the virtual fs
 import { relative } from 'path';
@@ -244,7 +244,7 @@ export async function GenerateProject(
   if (
     normalizedOptions.projectTemplate === 'webapi' &&
     !normalizedOptions.skipSwaggerLib &&
-    packageIsInstalled('@nrwl/js')
+    packageIsInstalled('@nx/js')
   ) {
     tasks.push(
       await generateSwaggerSetup(host, {

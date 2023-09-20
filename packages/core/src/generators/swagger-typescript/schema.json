@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "@nx-dotnet/core:swagger-typescript",
   "title": "Swagger Typescript Generator",
   "description": "Generate typescript code based on an openapi/swagger specification file",

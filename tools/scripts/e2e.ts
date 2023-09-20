@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { copySync, removeSync } from 'fs-extra';
 
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 import { startCleanVerdaccioInstance } from './local-registry/setup';
 import { publishAll } from './publish-all';
 

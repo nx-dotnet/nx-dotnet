@@ -1,7 +1,6 @@
 {
   "version": 2,
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "title": "OpenapiCodegen executor",
   "description": "Invokes `nx g @nx-dotnet/core:swagger-typescript` with the proper parameters to update a codegen based library",
   "type": "object",

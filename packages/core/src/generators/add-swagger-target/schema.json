@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "id": "@nx-dotnet/core:add-swagger-target",
   "title": "Swagger Target Generator",
   "description": "Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project.  Optionally, also creates a project for code generation of the extracted swagger specification.",

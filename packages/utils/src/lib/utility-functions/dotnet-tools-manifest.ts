@@ -1,4 +1,4 @@
-import { readJsonFile, workspaceRoot, logger } from '@nrwl/devkit';
+import { readJsonFile, workspaceRoot, logger } from '@nx/devkit';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { DotnetToolsManifest } from '../models';

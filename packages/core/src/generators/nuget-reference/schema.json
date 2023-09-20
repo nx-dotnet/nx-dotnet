@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "id": "NugetReference",
   "title": "Nuget Reference",
   "description": "Add a nuget reference to a .NET project",

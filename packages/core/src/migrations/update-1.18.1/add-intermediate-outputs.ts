@@ -8,7 +8,7 @@ import {
   Tree,
   updateProjectConfiguration,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { TargetDefaults } from 'nx/src/config/nx-json';
 import { gt } from 'semver';
 import { XmlDocument } from 'xmldoc';

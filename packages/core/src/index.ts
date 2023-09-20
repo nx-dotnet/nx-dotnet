@@ -1,4 +1,4 @@
-import { NxPlugin } from '@nrwl/devkit';
+import { NxPlugin } from '@nx/devkit';
 
 import {
   projectFilePatterns,

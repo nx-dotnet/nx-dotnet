@@ -1,17 +1,18 @@
 {
+  "name": "nxdoc-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "e2e/nxdoc-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/nx-plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "nxdoc:noop",
-        "jestConfig": "e2e/nxdoc-e2e/jest.config.js"
-      }
+        "jestConfig": "e2e/nxdoc-e2e/jest.config.js",
+        "runInBand": true
+      },
+      "dependsOn": ["nxdoc:noop"]
     }
   },
   "tags": [],
-  "implicitDependencies": ["nxdoc"],
-  "name": "nxdoc-e2e"
+  "implicitDependencies": ["nxdoc"]
 }

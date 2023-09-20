@@ -9,7 +9,7 @@ import {
   ProjectConfiguration,
   TargetConfiguration,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { basename, dirname } from 'path';
 import { XmlDocument } from 'xmldoc';

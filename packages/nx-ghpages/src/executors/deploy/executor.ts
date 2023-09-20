@@ -1,4 +1,4 @@
-import { logger, workspaceRoot } from '@nrwl/devkit';
+import { logger, workspaceRoot } from '@nx/devkit';
 
 import { exec as execCallback } from 'child_process';
 import { stat } from 'fs';

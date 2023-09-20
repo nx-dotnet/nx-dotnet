@@ -8,7 +8,8 @@ import {
   readJson,
   Tree,
   writeJson,
-} from '@nrwl/devkit';
+  NX_VERSION,
+} from '@nx/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import {
@@ -63,14 +64,11 @@ export default initGenerator;
 function installNpmPackages(host: Tree): GeneratorCallback {
   if (host.exists('package.json')) {
     const packageJson = readJson<PackageJson>(host, 'package.json');
-    const nxVersion: string =
-      packageJson.devDependencies?.['nx'] ??
-      (packageJson.dependencies?.['nx'] as string);
     return addDependenciesToPackageJson(
       host,
       {},
       {
-        '@nrwl/js': nxVersion,
+        '@nx/js': NX_VERSION,
       },
     );
   } else {

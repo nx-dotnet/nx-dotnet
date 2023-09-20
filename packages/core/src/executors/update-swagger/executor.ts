@@ -3,7 +3,7 @@ import {
   logger,
   ProjectConfiguration,
   workspaceRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { ensureDirSync } from 'fs-extra';
 import { dirname, resolve } from 'path';

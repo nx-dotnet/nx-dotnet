@@ -8,7 +8,7 @@ import {
   ProjectConfiguration,
   readJson,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { readFileSync } from 'fs';
 import { GeneratorsJsonEntry } from 'nx/src/config/misc-interfaces';

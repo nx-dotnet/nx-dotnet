@@ -5,7 +5,7 @@ import {
   ProjectsConfigurations,
   Tree,
   workspaceRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { readFileSync } from 'fs';
 import { NX_PREFIX } from 'nx/src/utils/logger';
@@ -130,7 +130,7 @@ export function getProjectFilesForProject(
 }
 
 /**
- * Currently @nrwl/devkit[normalizePath] functionality differs a bit based on OS. See
+ * Currently @nx/devkit[normalizePath] functionality differs a bit based on OS. See
  */
 function normalizePath(p: string): string {
   return nxNormalizePath(p).split('\\').join('/');

@@ -1,15 +1,16 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "core-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "e2e/core-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/nx-plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "core:noop",
-        "jestConfig": "e2e/core-e2e/jest.config.js"
-      }
+        "jestConfig": "e2e/core-e2e/jest.config.js",
+        "runInBand": true
+      },
+      "dependsOn": ["core:noop"]
     }
   },
   "tags": [],

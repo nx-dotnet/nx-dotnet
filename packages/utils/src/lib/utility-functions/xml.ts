@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
 import { XmlDocument, XmlElement } from 'xmldoc';

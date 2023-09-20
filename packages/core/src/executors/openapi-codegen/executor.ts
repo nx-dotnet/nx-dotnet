@@ -1,4 +1,4 @@
-import { getPackageManagerCommand, logger, workspaceRoot } from '@nrwl/devkit';
+import { getPackageManagerCommand, logger, workspaceRoot } from '@nx/devkit';
 
 import { exec } from 'child_process';
 

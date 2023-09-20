@@ -1,4 +1,4 @@
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 import { ChildProcess, exec, execSync } from 'child_process';
 import {
   createFileSync,
@@ -13,7 +13,7 @@ import {
 import * as path from 'path';
 
 import * as isCI from 'is-ci';
-import { detectPackageManager } from '@nrwl/devkit';
+import { detectPackageManager } from '@nx/devkit';
 interface RunCmdOpts {
   silenceError?: boolean;
   env?: Record<string, string> | NodeJS.ProcessEnv;

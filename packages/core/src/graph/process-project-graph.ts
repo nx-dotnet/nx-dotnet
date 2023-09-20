@@ -3,7 +3,7 @@ import {
   ProjectGraph,
   ProjectGraphBuilder,
   ProjectGraphProcessorContext,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import {
   getDependantProjectsForNxProject,

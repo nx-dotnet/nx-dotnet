@@ -1,4 +1,4 @@
-import { addProjectConfiguration, names, Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, names, Tree } from '@nx/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';

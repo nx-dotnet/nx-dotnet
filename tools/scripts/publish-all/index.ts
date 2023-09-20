@@ -1,4 +1,4 @@
-import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+import { WorkspaceJsonConfiguration } from '@nx/devkit';
 
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';

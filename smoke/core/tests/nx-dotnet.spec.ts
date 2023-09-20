@@ -1,4 +1,4 @@
-import { uniq } from '@nrwl/nx-plugin/testing';
+import { uniq } from '@nx/plugin/testing';
 
 import { execSync, ExecSyncOptions } from 'child_process';
 import { join } from 'path';

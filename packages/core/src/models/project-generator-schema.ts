@@ -1,4 +1,4 @@
-import { ProjectType } from '@nrwl/devkit';
+import { ProjectType } from '@nx/devkit';
 
 /**
  * Typing for the shared project generator's options

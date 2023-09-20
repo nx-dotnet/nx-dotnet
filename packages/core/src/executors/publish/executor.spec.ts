@@ -1,8 +1,4 @@
-import {
-  ExecutorContext,
-  joinPathFragments,
-  normalizePath,
-} from '@nrwl/devkit';
+import { ExecutorContext, joinPathFragments, normalizePath } from '@nx/devkit';
 
 import { isAbsolute } from 'path';
 

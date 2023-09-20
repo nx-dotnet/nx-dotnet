@@ -9,10 +9,10 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@nrwl/workspace": ">14.0.0-beta.1",
     "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "nx": ">14.0.0-beta.1",
-    "eslint": ">8.0.0"
+    "eslint": ">8.0.0",
+    "@nx/workspace": ">14.0.0-beta.1"
   },
   "peerDependenciesMeta": {
     "eslint": {

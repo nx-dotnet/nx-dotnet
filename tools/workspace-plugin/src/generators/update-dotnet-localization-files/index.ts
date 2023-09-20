@@ -7,7 +7,7 @@ import {
   logger,
   generateFiles,
   names,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { XmlDocument } from 'xmldoc';
 import fetch from 'node-fetch';
 import { join, relative } from 'path';
