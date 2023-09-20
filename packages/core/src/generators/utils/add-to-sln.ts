@@ -33,7 +33,7 @@ export function addToSolutionFile(
       const { name, dir } = parse(solutionFile);
       dotnetClient.new('sln', {
         name,
-        output: dir,
+        output: joinPathFragments(host.root, dir),
       });
     }
     const relativePath = relative(dotnetClient.cwd || host.root, host.root);
