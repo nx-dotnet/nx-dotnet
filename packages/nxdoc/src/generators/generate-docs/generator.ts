@@ -35,7 +35,7 @@ export default async function (host: Tree, options: Schema) {
 
   for (const project of projects) {
     if (excludedProjects.includes(project.name)) {
-      return;
+      continue;
     }
 
     let gettingStartedFile: string | null = options.gettingStartedFile.replace(

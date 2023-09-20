@@ -15,7 +15,7 @@ jest.mock(
     } as typeof configUtils),
 );
 
-import { registerProjectTargets } from './infer-project';
+import { registerProjectTargets } from './create-nodes';
 
 describe('infer-project', () => {
   beforeEach(() => {

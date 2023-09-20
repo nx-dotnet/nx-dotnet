@@ -1,8 +1,10 @@
 import {
+  DependencyType,
   getProjects,
   normalizePath as nxNormalizePath,
   ProjectConfiguration,
   ProjectsConfigurations,
+  RawProjectGraphDependency,
   Tree,
   workspaceRoot,
 } from '@nx/devkit';
@@ -30,7 +32,7 @@ export function getDependantProjectsForNxProject(
   targetProject: string,
   projectsConfiguration: ProjectsConfigurations,
   forEachCallback?: (
-    project: ProjectConfiguration & { projectFile: string },
+    project: ProjectConfiguration,
     projectName: string,
     implicit: boolean,
   ) => void,
@@ -41,7 +43,7 @@ export function getDependantProjectsForNxProject(
   const dependantProjects: { [key: string]: ProjectConfiguration } = {};
 
   Object.entries(projectsConfiguration.projects).forEach(([name, project]) => {
-    projectRoots[name] = normalizePath(resolve(project.root));
+    projectRoots[project.root] = name;
   });
 
   const absoluteNetProjectFilePath = resolve(
@@ -50,46 +52,89 @@ export function getDependantProjectsForNxProject(
       projectsConfiguration.projects[targetProject],
     ),
   );
+
+  const dependencies = getDependenciesFromXmlFile(
+    absoluteNetProjectFilePath,
+    targetProject,
+    projectRoots,
+  );
+
+  for (const dependency of dependencies) {
+    const project = projectsConfiguration.projects[dependency.target];
+    if (!project) {
+      throw new Error(
+        `Unable to find project ${dependency.target} in workspace`,
+      );
+    }
+    if (forEachCallback) {
+      forEachCallback(
+        project,
+        dependency.target,
+        dependency.type === DependencyType.implicit,
+      );
+    }
+    dependantProjects[dependency.target] = project;
+  }
+
+  return dependantProjects;
+}
+
+export function getDependenciesFromXmlFile(
+  filePath: string,
+  source: string,
+  projectRootMap: Record<string, string>,
+): RawProjectGraphDependency[] {
+  const found: RawProjectGraphDependency[] = [];
+
+  const absoluteNetProjectFilePath = isAbsolute(filePath)
+    ? filePath
+    : resolve(workspaceRoot, filePath);
   const netProjectFilePath = relative(
     workspaceRoot,
     absoluteNetProjectFilePath,
   );
   const hostProjectDirectory = normalizePath(dirname(netProjectFilePath));
 
-  const xml: XmlDocument = new XmlDocument(
-    readFileSync(absoluteNetProjectFilePath).toString(),
-  );
+  const xml: XmlDocument | null = tryGetXmlDocument(absoluteNetProjectFilePath);
+
+  if (!xml) {
+    return found;
+  }
 
   xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
       const includeFilePath = normalizePath(x.attr['Include']);
       const implicit = x.attr['ReferenceOutputAssembly'] === 'false';
       const workspaceFilePath = normalizePath(
-        isAbsolute(includeFilePath)
-          ? includeFilePath
-          : resolve(hostProjectDirectory, includeFilePath),
+        relative(
+          workspaceRoot,
+          isAbsolute(includeFilePath)
+            ? includeFilePath
+            : resolve(hostProjectDirectory, includeFilePath),
+        ),
       );
 
-      Object.entries(projectRoots).forEach(([dependency, path]) => {
-        if (workspaceFilePath.startsWith(`${path}/`)) {
-          if (forEachCallback) {
-            forEachCallback(
-              {
-                ...projectsConfiguration.projects[dependency],
-                projectFile: workspaceFilePath,
-              },
-              dependency,
-              implicit,
-            );
-          }
-          dependantProjects[dependency] =
-            projectsConfiguration.projects[dependency];
+      let potentialTargetRoot = dirname(workspaceFilePath);
+      while (
+        potentialTargetRoot !== workspaceRoot &&
+        potentialTargetRoot !== '.'
+      ) {
+        if (projectRootMap[potentialTargetRoot]) {
+          found.push({
+            source,
+            target: projectRootMap[potentialTargetRoot],
+            type: implicit ? DependencyType.implicit : DependencyType.static,
+            sourceFile: netProjectFilePath,
+          });
+          break;
         }
-      });
+
+        potentialTargetRoot = dirname(potentialTargetRoot);
+      }
     }),
   );
 
-  return dependantProjects;
+  return found;
 }
 
 export async function getNxDotnetProjects(
@@ -147,4 +192,12 @@ export function inlineNxTokens(value: string, project: ProjectConfiguration) {
   }
   value = value.replace('{projectRoot}', project.root);
   return value.replace('{projectName}', project.name as string);
+}
+
+function tryGetXmlDocument(file: string): XmlDocument | null {
+  try {
+    return new XmlDocument(readFileSync(file).toString());
+  } catch {
+    return null;
+  }
 }

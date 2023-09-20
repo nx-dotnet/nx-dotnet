@@ -4,7 +4,7 @@ const parser = require('yargs-parser');
 
 const cwd = join(__dirname, '../../../');
 let { verbose } = parser(process.argv, { boolean: ['verbose'] });
-const excluded = 'workspace-utils';
+const excluded = 'workspace-plugin';
 verbose ||= process.env.VERBOSE_LOGGING;
 
 export function getChangedFiles(
