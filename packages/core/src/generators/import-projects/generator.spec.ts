@@ -77,7 +77,7 @@ describe('import-projects generator', () => {
       .mockImplementation((x) =>
         x.startsWith('apps')
           ? Promise.resolve('apps/my-api/my-api.csproj')
-          : Promise.reject(),
+          : Promise.reject(new Error()),
       );
     jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_TEST_PROJECT);
     jest.spyOn(fs, 'writeFileSync').mockImplementation(() => null);
@@ -100,7 +100,7 @@ describe('import-projects generator', () => {
       .mockImplementation((x) =>
         x.startsWith('apps')
           ? Promise.resolve('apps/my-api/my-api-test.csproj')
-          : Promise.reject(),
+          : Promise.reject(new Error()),
       );
     jest.spyOn(fs, 'readFileSync').mockReturnValue(MOCK_TEST_PROJECT);
     jest.spyOn(fs, 'writeFileSync').mockImplementation(() => null);

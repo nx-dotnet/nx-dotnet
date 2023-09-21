@@ -108,7 +108,7 @@ function findProjectGivenRoot(
     Object.entries(projects).find(([, projectConfig]) => {
       const relativePath = relative(projectConfig.root, normalizedRoot);
       return relativePath?.startsWith('..') === false;
-    }) || [];
+    }) ?? [];
 
   if (projectName) {
     return projectName;

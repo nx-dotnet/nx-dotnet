@@ -37,7 +37,7 @@ export class DotNetClient {
       parameters = swapKeysUsingMap(parameters, newKeyMap);
       params.push(...getSpawnParameterArray(parameters));
     }
-    params.push(...(additionalArguments || []));
+    params.push(...(additionalArguments ?? []));
     return this.logAndExecute(params);
   }
 
@@ -187,22 +187,13 @@ export class DotNetClient {
     parameters?: dotnetFormatOptions,
     forceToolUsage?: boolean,
   ): void {
-    const params = forceToolUsage
-      ? ['tool', 'run', 'dotnet-format', '--']
-      : [`format`];
+    const params = getFormatBaseArgv(forceToolUsage);
 
-    // The --check flag is for .NET 5 and older
-    // The --verify-no-changes flag is for .NET 6 and newer
-    // They do the same thing, but the flag name changed in .NET 6, so we need to handle that.
-    if (parameters) {
-      if (semver.major(this.getSdkVersion()) >= 6) {
-        parameters.verifyNoChanges ??= parameters.check;
-        delete parameters.check;
-      } else {
-        parameters.check ??= parameters.verifyNoChanges;
-        delete parameters.verifyNoChanges;
-      }
-    }
+    parameters = updateFormatParametersForVersionCompatibility(
+      this.getSdkVersion(),
+      parameters,
+    );
+
     if (
       semver.major(this.getSdkVersion()) >= 6 &&
       (parameters?.fixWhitespace !== undefined ||
@@ -318,7 +309,7 @@ export class DotNetClient {
     console.log(`Executing Command: ${cmd}`);
 
     const res = spawnSync(this.cliCommand.command, params, {
-      cwd: this.cwd || process.cwd(),
+      cwd: this.cwd ?? process.cwd(),
       stdio: 'inherit',
     });
     if (res.status !== 0) {
@@ -332,7 +323,7 @@ export class DotNetClient {
     );
 
     const res = spawnSync(this.cliCommand.command, params, {
-      cwd: this.cwd || process.cwd(),
+      cwd: this.cwd ?? process.cwd(),
       stdio: 'pipe',
     });
     if (res.status !== 0) {
@@ -349,7 +340,7 @@ export class DotNetClient {
     );
     return spawn(this.cliCommand.command, params, {
       stdio: 'inherit',
-      cwd: this.cwd || process.cwd(),
+      cwd: this.cwd ?? process.cwd(),
     });
   }
 }
@@ -360,3 +351,26 @@ export class DotNetClient {
  * Second part of expression matches parameters such as --flag=my_answer
  */
 const EXTRA_PARAMS_REGEX = /\S*".+?"|\S+/g;
+
+function getFormatBaseArgv(forceToolUsage?: boolean) {
+  return forceToolUsage ? ['tool', 'run', 'dotnet-format', '--'] : [`format`];
+}
+
+function updateFormatParametersForVersionCompatibility(
+  sdkVersion: string,
+  parameters?: dotnetFormatOptions,
+) {
+  // The --check flag is for .NET 5 and older
+  // The --verify-no-changes flag is for .NET 6 and newer
+  // They do the same thing, but the flag name changed in .NET 6, so we need to handle that.
+  if (parameters) {
+    if (semver.major(sdkVersion) >= 6) {
+      parameters.verifyNoChanges ??= parameters.check;
+      delete parameters.check;
+    } else {
+      parameters.check ??= parameters.verifyNoChanges;
+      delete parameters.verifyNoChanges;
+    }
+  }
+  return parameters;
+}

@@ -19,12 +19,12 @@ function getPathPartsFromSchema(schema: NormalizedSchema): PathParts {
   if (schema.pathScheme === 'nx') {
     return {
       separator: '-',
-      suffix: schema.testProjectNameSuffix || 'test',
+      suffix: schema.testProjectNameSuffix ?? 'test',
     };
   } else {
     return {
       separator: '.',
-      suffix: schema.testProjectNameSuffix || 'Test',
+      suffix: schema.testProjectNameSuffix ?? 'Test',
     };
   }
 }

@@ -35,9 +35,9 @@ function generateInterfaceFiles(
     )?.reduce((necessary, next) => {
       if (
         next !== 'object' &&
+        next !== tsInterface.name &&
         !builtInTypes.has(next) &&
-        !necessary.has(next) &&
-        !(next === tsInterface.name)
+        !necessary.has(next)
       ) {
         necessary.set(next, names(next));
       }

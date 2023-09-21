@@ -36,7 +36,7 @@ export function addToSolutionFile(
         output: joinPathFragments(host.root, dir),
       });
     }
-    const relativePath = relative(dotnetClient.cwd || host.root, host.root);
+    const relativePath = relative(dotnetClient.cwd ?? host.root, host.root);
     dotnetClient.addProjectToSolution(
       joinPathFragments(relativePath, solutionFile),
       resolve(relativePath, projectRoot),

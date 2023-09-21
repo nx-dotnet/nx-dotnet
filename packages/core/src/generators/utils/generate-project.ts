@@ -72,8 +72,8 @@ export async function normalizeOptions(
   const template = await getTemplate(options, client);
   const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
   const nxProjectName = names(options.name).fileName;
-  const __unparsed__ = options.__unparsed__ || [];
-  const args = options.args || [];
+  const __unparsed__ = options.__unparsed__ ?? [];
+  const args = options.args ?? [];
 
   return {
     ...options,
@@ -84,7 +84,7 @@ export async function normalizeOptions(
     projectDirectory,
     parsedTags,
     projectLanguage: options.language,
-    projectTemplate: template as KnownDotnetTemplates,
+    projectTemplate: template,
     namespaceName,
     nxProjectName,
     args,
@@ -123,7 +123,7 @@ async function getTemplate(
   options: NxDotnetProjectGeneratorSchema,
   client?: DotNetClient,
 ): Promise<string> {
-  let template = options.template || '';
+  let template = options.template ?? '';
   if (client) {
     template = await promptForTemplate(
       client,

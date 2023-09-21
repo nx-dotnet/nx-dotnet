@@ -41,19 +41,17 @@ export default async function generateSwaggerSetup(
     } else {
       throw new Error('Either specify --output or --swagger-project');
     }
-  } else {
-    if (options.codegenProject && !options.useNxPluginOpenAPI) {
-      project.targets.codegen = {
-        executor: '@nx-dotnet/core:openapi-codegen',
-        options: {
-          openapiJsonPath: options.output,
-          outputProject: options.codegenProject,
-        },
-        dependsOn: ['swagger'],
-      };
-    }
+  } else if (options.codegenProject && !options.useNxPluginOpenAPI) {
+    project.targets.codegen = {
+      executor: '@nx-dotnet/core:openapi-codegen',
+      options: {
+        openapiJsonPath: options.output,
+        outputProject: options.codegenProject,
+      },
+      dependsOn: ['swagger'],
+    };
   }
-  project.targets[options.target || 'swagger'] = {
+  project.targets[options.target ?? 'swagger'] = {
     ...getSwaggerExecutorConfiguration(options.output),
   };
 

@@ -11,7 +11,7 @@ const exec = promisify(execCallback);
 
 async function exists(path: string) {
   return new Promise((resolve) => {
-    stat(path, (err) => resolve(err ? false : true));
+    stat(path, (err) => resolve(err === null));
   });
 }
 

@@ -7,7 +7,7 @@ export function readDotnetToolsManifest(
   pathOverride: string | undefined = undefined,
 ): DotnetToolsManifest | undefined {
   const manifestPath =
-    pathOverride || join(workspaceRoot, './.config/dotnet-tools.json');
+    pathOverride ?? join(workspaceRoot, './.config/dotnet-tools.json');
   const manifest = existsSync(manifestPath)
     ? readJsonFile<DotnetToolsManifest>(manifestPath)
     : undefined;

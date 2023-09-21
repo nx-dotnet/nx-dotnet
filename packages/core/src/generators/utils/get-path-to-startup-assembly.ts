@@ -63,6 +63,6 @@ function findBuildTarget(
   return (
     Object.entries(project?.targets || {}).find(
       ([, x]) => x.executor === '@nx-dotnet/core:build',
-    ) || []
+    ) ?? []
   );
 }

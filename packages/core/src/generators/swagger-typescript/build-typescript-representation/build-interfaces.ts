@@ -22,10 +22,8 @@ export function generateInterfacesFromDefinitions(
         properties: generatePropertiesFromSchema(def.properties),
         type: 'interface',
       });
-    } else if (def.type === 'array') {
-      const items = parsePropertyDefintion(
-        def.items as OpenAPIPropertyDescription,
-      );
+    } else if (def.type === 'array' && def.items) {
+      const items = parsePropertyDefintion(def.items);
       interfaces.push({
         name,
         type: 'array',
