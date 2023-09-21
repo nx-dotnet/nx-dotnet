@@ -145,6 +145,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "EchelonFour",
+      "name": "Frank Fenton",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1086789?v=4",
+      "profile": "https://github.com/EchelonFour",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
