@@ -11,6 +11,11 @@ const x: WeatherForecast = {
     temperatureC: 12,
     temperatureF: 53,
   },
+  forecaster: {
+    employer: {
+      employees: undefined,
+    },
+  },
 };
 
 export function App() {

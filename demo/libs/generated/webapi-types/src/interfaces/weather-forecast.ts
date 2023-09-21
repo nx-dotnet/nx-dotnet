@@ -3,7 +3,7 @@ import { Person } from './person';
 
 export interface WeatherForecast {
   date: string;
-  temperature?: Temperature;
+  temperature: Temperature;
   summary?: string;
-  forecaster?: Person;
+  forecaster: Person;
 }
