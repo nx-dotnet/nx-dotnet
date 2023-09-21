@@ -1,8 +1,14 @@
-import { CreateDependencies, RawProjectGraphDependency } from '@nx/devkit';
+import {
+  CreateDependencies,
+  ProjectGraphBuilder,
+  RawProjectGraphDependency,
+  workspaceRoot,
+  NxPluginV1,
+} from '@nx/devkit';
 
 import { getDependenciesFromXmlFile } from '@nx-dotnet/utils';
 
-import { parse } from 'path';
+import { parse } from 'node:path';
 
 export const createDependencies: CreateDependencies = (ctx) => {
   let dependencies: RawProjectGraphDependency[] = [];
@@ -14,7 +20,6 @@ export const createDependencies: CreateDependencies = (ctx) => {
     for (const file of changed) {
       const { ext } = parse(file.file);
       if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
-        console.log('Looking at file', file.file);
         dependencies = dependencies.concat(
           getDependenciesFromXmlFile(file.file, source, rootMap),
         );
@@ -23,3 +28,26 @@ export const createDependencies: CreateDependencies = (ctx) => {
   }
   return dependencies;
 };
+
+export const processProjectGraph: Required<NxPluginV1>['processProjectGraph'] =
+  async (g, ctx) => {
+    const builder = new ProjectGraphBuilder(g);
+    const deps = await createDependencies({
+      ...ctx,
+      fileMap: {
+        nonProjectFiles: [],
+        projectFileMap: ctx.fileMap,
+      },
+      filesToProcess: {
+        nonProjectFiles: [],
+        projectFileMap: ctx.filesToProcess,
+      },
+      externalNodes: g.externalNodes,
+      projects: ctx.projectsConfigurations.projects,
+      workspaceRoot,
+    });
+    for (const dep of deps) {
+      builder.addDependency(dep.source, dep.target, dep.type, dep.source);
+    }
+    return builder.getUpdatedProjectGraph();
+  };

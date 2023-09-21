@@ -22,7 +22,8 @@
     "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "@nx/js": ">=16.0.0-beta.1",
     "nx": ">16.0.0-beta.1",
-    "eslint": ">8.0.0"
+    "eslint": ">8.0.0",
+    "prettier": ">=2.0.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
@@ -32,6 +33,9 @@
       "optional": true
     },
     "@nx/js": {
+      "optional": true
+    },
+    "prettier": {
       "optional": true
     }
   },

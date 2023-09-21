@@ -20,6 +20,7 @@ import {
 import { buildStartupAssemblyPath } from '../../generators/utils/get-path-to-startup-assembly';
 import { UpdateSwaggerJsonExecutorSchema } from './schema';
 import { existsSync, mkdirSync } from 'fs';
+import { execSync } from 'child_process';
 
 export const SWAGGER_CLI_TOOL = 'Swashbuckle.AspNetCore.Cli';
 
@@ -109,6 +110,16 @@ export default async function runExecutor(
     options.startupAssembly,
     options.swaggerDoc,
   ]);
+
+  try {
+    const isInstalled = require.resolve('prettier');
+    if (isInstalled) {
+      execSync(`npx -y prettier --write ${options.output}`);
+    }
+  } catch {
+    // Its not a huge deal if prettier isn't installed or fails...
+    // We'll just leave the file as is and let the user decide what to do.
+  }
 
   return {
     success: true,
