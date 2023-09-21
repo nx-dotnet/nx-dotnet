@@ -18,7 +18,7 @@ jest.mock(
 import { registerProjectTargets } from './create-nodes';
 
 describe('infer-project', () => {
-  beforeEach(() => {
+  afterEach(() => {
     jest.resetAllMocks();
   });
 
@@ -39,42 +39,9 @@ describe('infer-project', () => {
     jest.spyOn(fs, 'readFileSync').mockReturnValueOnce('<project></project>');
 
     const targets = registerProjectTargets('libs/api/my.csproj');
-    expect(targets.build).toMatchInlineSnapshot(`
-      Object {
-        "configurations": Object {
-          "production": Object {
-            "configuration": "Release",
-          },
-        },
-        "executor": "@nx-dotnet/core:build",
-        "options": Object {
-          "configuration": "Debug",
-          "noDependencies": true,
-        },
-        "outputs": Array [
-          "{workspaceRoot}/dist/libs/api",
-          "{workspaceRoot}/dist/intermediates/libs/api",
-        ],
-      }
-    `);
-    expect(targets.lint).toMatchInlineSnapshot(`
-      Object {
-        "executor": "@nx-dotnet/core:format",
-      }
-    `);
-    expect(targets.serve).toMatchInlineSnapshot(`
-      Object {
-        "configurations": Object {
-          "production": Object {
-            "configuration": "Release",
-          },
-        },
-        "executor": "@nx-dotnet/core:serve",
-        "options": Object {
-          "configuration": "Debug",
-        },
-      }
-    `);
+    expect(targets.build).toMatchSnapshot();
+    expect(targets.lint).toMatchSnapshot();
+    expect(targets.serve).toMatchSnapshot();
     expect(targets.test).not.toBeDefined();
   });
 
@@ -87,13 +54,6 @@ describe('infer-project', () => {
       .mockReturnValueOnce('<project ref=Microsoft.NET.Test.Sdk></project>');
 
     const targets = registerProjectTargets('libs/api/my.csproj');
-    expect(targets.test).toMatchInlineSnapshot(`
-      Object {
-        "executor": "@nx-dotnet/core:test",
-        "options": Object {
-          "testProject": undefined,
-        },
-      }
-    `);
+    expect(targets.test).toMatchSnapshot();
   });
 });

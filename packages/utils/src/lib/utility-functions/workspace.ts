@@ -11,10 +11,11 @@ import {
 
 import { readFileSync } from 'fs';
 import { NX_PREFIX } from 'nx/src/utils/logger';
-import { dirname, isAbsolute, relative, resolve } from 'path';
+import { dirname, relative, resolve } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 import { findProjectFileInPath, findProjectFileInPathSync, glob } from './glob';
+import { getAbsolutePath } from './path';
 
 export async function getProjectFileForNxProject(
   project: ProjectConfiguration,
@@ -86,9 +87,7 @@ export function getDependenciesFromXmlFile(
 ): RawProjectGraphDependency[] {
   const found: RawProjectGraphDependency[] = [];
 
-  const absoluteNetProjectFilePath = isAbsolute(filePath)
-    ? filePath
-    : resolve(workspaceRoot, filePath);
+  const absoluteNetProjectFilePath = getAbsolutePath(filePath, workspaceRoot);
   const netProjectFilePath = relative(
     workspaceRoot,
     absoluteNetProjectFilePath,
@@ -108,9 +107,7 @@ export function getDependenciesFromXmlFile(
       const workspaceFilePath = normalizePath(
         relative(
           workspaceRoot,
-          isAbsolute(includeFilePath)
-            ? includeFilePath
-            : resolve(hostProjectDirectory, includeFilePath),
+          getAbsolutePath(includeFilePath, hostProjectDirectory),
         ),
       );
 

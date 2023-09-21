@@ -62,7 +62,7 @@ export default async function (tree: Tree) {
     }
   }
 
-  const languages = [];
+  const languages: (ReturnType<typeof names> & { raw: string })[] = [];
   for (const translation of translations) {
     generateFiles(tree, join(__dirname, 'files'), outputDirectory, {
       tmpl: '',

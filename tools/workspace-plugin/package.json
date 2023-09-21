@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0",
-    "@nx/devkit": "16.8.1",
+    "@nx/devkit": "16.9.0-beta.3",
     "xmldoc": "^1.1.2",
     "node-fetch": "3.3.0"
   },

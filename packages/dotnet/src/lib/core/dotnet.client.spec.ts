@@ -54,14 +54,14 @@ describe('dotnet client', () => {
           `--self-contained=false /p:CopyOutputSymbolsToPublishDirectory=false /p:Version=2022.03.25.1 /p:VersionAssembly=2022.03.25.1 /p:Name:"My Project"`,
         );
         expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
-          Array [
+          [
             "publish",
-            "\\"my-project\\"",
+            ""my-project"",
             "--self-contained=false",
             "/p:CopyOutputSymbolsToPublishDirectory=false",
             "/p:Version=2022.03.25.1",
             "/p:VersionAssembly=2022.03.25.1",
-            "/p:Name:\\"My Project\\"",
+            "/p:Name:"My Project"",
           ]
         `);
         expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
@@ -170,16 +170,16 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(2);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "style",
               "my-project",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "analyzers",
               "my-project",
@@ -199,16 +199,16 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(2);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "whitespace",
               "my-project",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "style",
               "my-project",
@@ -228,23 +228,23 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(3);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "whitespace",
               "my-project",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "style",
               "my-project",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "analyzers",
               "my-project",
@@ -266,16 +266,16 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(2);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "whitespace",
               "my-project",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "analyzers",
               "my-project",
@@ -295,16 +295,16 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(3);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "whitespace",
               "my-project",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "style",
               "my-project",
@@ -312,8 +312,8 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
               "warn",
             ],
           ],
-          Array [
-            Array [
+          [
+            [
               "format",
               "analyzers",
               "my-project",
@@ -333,9 +333,9 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "my-project",
               "--verify-no-changes",
@@ -353,9 +353,9 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       dotnetClient.format('my-project');
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "my-project",
             ],
@@ -372,9 +372,9 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       dotnetClient.format('my-project');
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "my-project",
             ],
@@ -393,9 +393,9 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "my-project",
               "--fix-whitespace",
@@ -416,9 +416,9 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "my-project",
               "--fix-style",
@@ -439,9 +439,9 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       });
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
-            Array [
+        [
+          [
+            [
               "format",
               "my-project",
               "--fix-analyzers",

@@ -1,6 +1,5 @@
 import type { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 
-import { OpenAPIPropertyDescription } from '../models/openapi-model';
 import { TypeScriptRepresentation } from '../models/typescript-model';
 import {
   generatePropertiesFromSchema,
