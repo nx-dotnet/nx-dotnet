@@ -37,7 +37,7 @@ export const registerProjectTargets = (projectFile: string) => {
 // Used in Nx 16.8+
 export const createNodes: CreateNodes | undefined = readConfig().inferProjects
   ? [
-      `{${projectFilePatterns.join(',')}}`,
+      `**/{${projectFilePatterns.join(',')}}`,
       (file) => {
         const root = dirname(file);
 

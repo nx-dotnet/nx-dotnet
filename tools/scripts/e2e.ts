@@ -10,7 +10,7 @@ const kill = require('tree-kill');
 export async function setup() {
   await startCleanVerdaccioInstance();
   copySync('.npmrc.local', '.npmrc');
-  publishAll('99.99.99', 'local');
+  await publishAll('99.99.99', 'local');
 }
 
 async function runTest() {

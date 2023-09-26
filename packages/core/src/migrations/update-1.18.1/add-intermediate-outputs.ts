@@ -4,13 +4,13 @@ import {
   getProjects,
   logger,
   NX_VERSION,
+  NxJsonConfiguration,
   ProjectConfiguration,
   readNxJson,
   Tree,
   updateProjectConfiguration,
   writeJson,
 } from '@nx/devkit';
-import { TargetDefaults } from 'nx/src/config/nx-json';
 import { gt } from 'semver';
 import { XmlDocument } from 'xmldoc';
 
@@ -110,7 +110,8 @@ function getWorkspaceRootPrefix(): string {
 function updateTargetDefaults(host: Tree, directoryBuildPropsUpdated: boolean) {
   let changed = false;
   const nxJson = readNxJson(host);
-  const targetDefaults: TargetDefaults | undefined = nxJson?.targetDefaults;
+  const targetDefaults: NxJsonConfiguration['targetDefaults'] | undefined =
+    nxJson?.targetDefaults;
 
   if (!targetDefaults) {
     return;

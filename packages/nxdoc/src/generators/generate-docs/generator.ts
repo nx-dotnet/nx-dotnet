@@ -11,8 +11,7 @@ import {
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { GeneratorsJsonEntry } from 'nx/src/config/misc-interfaces';
-import * as path from 'path';
+import * as path from 'node:path';
 
 import { Schema } from './schema';
 import { SchemaJSON } from './schema-json.interface';
@@ -94,7 +93,8 @@ function generateDocsForProject(
     : ({} as ExecutorsJson);
   const executors = Object.fromEntries(
     Object.entries(executorsCollection.executors ?? {}).filter(
-      ([, config]) => !(config as GeneratorsJsonEntry).hidden,
+      ([, config]) =>
+        !(config as Required<GeneratorsJson>['generators'][string]).hidden,
     ),
   );
 

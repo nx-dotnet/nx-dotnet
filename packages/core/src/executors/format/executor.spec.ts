@@ -17,9 +17,6 @@ const options: FormatExecutorSchema = {
 };
 
 const root = process.cwd() + '/tmp';
-jest.mock('@nrwl/tao/src/utils/app-root', () => ({
-  appRootPath: process.cwd() + '/tmp',
-}));
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 

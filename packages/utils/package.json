@@ -3,12 +3,14 @@
   "main": "src/index.js",
   "private": false,
   "dependencies": {
-    "@nx/devkit": "16.9.0-beta.3",
+    "@nx/devkit": "16.9.1",
     "fast-glob": "3.2.12",
     "rimraf": "^3.0.2",
-    "nx": "16.9.0-beta.3",
     "xmldoc": "^1.1.2",
     "tslib": "^2.5.0"
+  },
+  "peerDependencies": {
+    "nx": ">=16.0.0-beta.1"
   },
   "license": "MIT",
   "bugs": {

@@ -8,9 +8,9 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
-    "@nx-dotnet/dotnet": "*",
-    "@nx-dotnet/utils": "*",
-    "@nx/devkit": "16.9.0-beta.3",
+    "@nx-dotnet/dotnet": "1.23.0",
+    "@nx-dotnet/utils": "1.23.0",
+    "@nx/devkit": "16.9.1",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "semver": "7.5.4",
@@ -19,10 +19,10 @@
     "yargs-parser": "^21.0.0"
   },
   "peerDependencies": {
-    "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "@nx/js": ">=16.0.0-beta.1",
-    "nx": ">16.0.0-beta.1",
+    "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "eslint": ">8.0.0",
+    "nx": ">=16.0.0-beta.1",
     "prettier": ">=2.0.0"
   },
   "peerDependenciesMeta": {

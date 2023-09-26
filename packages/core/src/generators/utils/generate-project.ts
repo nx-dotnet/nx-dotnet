@@ -33,6 +33,7 @@ import { initGenerator } from '../init/generator';
 import { addToSolutionFile } from './add-to-sln';
 import { GenerateTestProject } from './generate-test-project';
 import { promptForTemplate } from './prompt-for-template';
+import { getWorkspaceScope } from './get-scope';
 
 export interface NormalizedSchema
   extends Omit<NxDotnetProjectGeneratorSchema, 'template'> {
@@ -104,7 +105,7 @@ function getNamespaceFromSchema(
   options: NxDotnetProjectGeneratorSchema,
   projectDirectory: string,
 ): string {
-  const { npmScope } = getWorkspaceLayout(host);
+  const scope = getWorkspaceScope(host);
 
   const namespaceParts = projectDirectory
     // not sure why eslint complains here, testing in devtools shows different results without the escape character.
@@ -112,8 +113,8 @@ function getNamespaceFromSchema(
     .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
     .map((part: string) => names(part).className);
 
-  if (npmScope) {
-    namespaceParts.unshift(names(npmScope).className);
+  if (scope) {
+    namespaceParts.unshift(names(scope).className);
   }
 
   return namespaceParts.join('.');
