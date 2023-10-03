@@ -5,6 +5,8 @@ import {
   addProjectConfiguration,
   joinPathFragments,
   names,
+  offsetFromRoot,
+  ProjectConfiguration,
 } from '@nrwl/devkit';
 import { uniq } from '@nrwl/nx-plugin/testing';
 
@@ -29,8 +31,8 @@ describe('move generator', () => {
     expect(tree.exists(`apps/${destination}/readme.md`)).toBeTruthy();
   });
 
-  it('should move simple projects down a directory', async () => {
-    const { project } = makeSimpleProject(tree, 'app', 'apps/libs/test');
+  it('should move simple projects up a directory', async () => {
+    const { project } = makeSimpleProject(tree, 'app', 'test');
     const destination = uniq('app');
     await generator(tree, { projectName: project, destination });
     const config = readProjectConfiguration(tree, destination);
@@ -39,8 +41,8 @@ describe('move generator', () => {
     expect(tree.exists(`apps/libs/test/readme.md`)).toBeFalsy();
   });
 
-  it('should move simple projects up a directory', async () => {
-    const { project } = makeSimpleProject(tree, 'app', 'apps/test');
+  it('should move simple projects down a directory', async () => {
+    const { project } = makeSimpleProject(tree, 'app', 'test');
     const destination = joinPathFragments('test', 'nested', uniq('app'));
     await generator(tree, { projectName: project, destination });
     const config = readProjectConfiguration(
@@ -53,15 +55,17 @@ describe('move generator', () => {
   });
 
   it('should update references in .csproj files', async () => {
-    const { project, root } = makeSimpleProject(tree, 'app', 'apps/test');
+    const { project, root } = makeSimpleProject(tree, 'app', 'test');
     const csProjPath = 'apps/other/Other.csproj';
     tree.write(
       csProjPath,
       `<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-      <ProjectReference Include="../test/${names(project).className}.csproj" />
+      <ProjectReference Include="../test/${project}/${
+        names(project).className
+      }.csproj" />
     </ItemGroup>
-  
+
     <PropertyGroup>
       <TargetFramework>net6.0</TargetFramework>
       <RootNamespace>test_lib2</RootNamespace>
@@ -86,15 +90,38 @@ describe('move generator', () => {
     expect(updatedCsProj).not.toContain(project);
     expect(updatedCsProj).toContain(basename(destination));
   });
+
+  it('should update paths in project configuration', async () => {
+    const { project, root: source } = makeSimpleProject(tree, 'app', 'a/b');
+    const destination = joinPathFragments('a', 'b', 'c', uniq('app'));
+    await generator(tree, { projectName: project, destination });
+    const config: ProjectConfiguration & { $schema?: string } =
+      readProjectConfiguration(tree, destination.replace(/[\\|/]/g, '-'));
+    expect(config).toBeDefined();
+    expect(JSON.stringify(config)).not.toContain(source);
+    expect(JSON.stringify(config)).toContain(destination);
+    expect(config.root.endsWith(destination)).toBeTruthy();
+    expect(config.sourceRoot?.startsWith(config.root)).toBeTruthy();
+    const relativeToRoot = offsetFromRoot(config.root);
+    expect(config.$schema).toMatch(
+      new RegExp(`^${joinPathFragments(relativeToRoot, 'node_modules')}.*`),
+    );
+  });
 });
 
 function makeSimpleProject(tree: Tree, type: 'app' | 'lib', path?: string) {
   const project = uniq(type);
-  const root = path ? path.replaceAll('{n}', project) : `${type}s/${project}`;
+  const root = joinPathFragments(`${type}s`, path ?? '', project);
   addProjectConfiguration(tree, project, {
-    root: root,
+    root,
+    sourceRoot: joinPathFragments(root, 'src'),
     projectType: type === 'app' ? 'application' : 'library',
-    targets: { 'my-target': { executor: 'nx:noop' } },
+    targets: {
+      'my-target': {
+        executor: 'nx:noop',
+        outputs: [`{workspaceRoot}/dist/${root}`],
+      },
+    },
   });
   tree.write(joinPathFragments(root, 'readme.md'), 'contents');
   return { project, root };
