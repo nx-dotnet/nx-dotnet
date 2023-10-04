@@ -14,12 +14,15 @@ import {
 } from '@nrwl/devkit';
 import { dirname, extname, relative } from 'path';
 import { MoveGeneratorSchema } from './schema';
+import { getNamespaceFromSchema } from '../utils/generate-project';
 
 type NormalizedSchema = {
   currentRoot: string;
   destinationRoot: string;
   currentProject: string;
   destinationProject: string;
+  currentNamespace: string;
+  destinationNamespace: string;
 };
 
 function normalizeOptions(
@@ -43,6 +46,8 @@ function normalizeOptions(
     }
   }
 
+  const trimPattern = new RegExp(`^${appsDir}[/\\\\]|^${libsDir}[/\\\\]`);
+
   return {
     currentRoot,
     destinationRoot,
@@ -50,6 +55,14 @@ function normalizeOptions(
     destinationProject: names(options.destination).fileName.replace(
       /[\\|/]/g,
       '-',
+    ),
+    currentNamespace: getNamespaceFromSchema(
+      tree,
+      currentRoot.replace(trimPattern, ''),
+    ),
+    destinationNamespace: getNamespaceFromSchema(
+      tree,
+      destinationRoot.replace(trimPattern, ''),
     ),
   };
 }
@@ -73,7 +86,14 @@ export default async function (tree: Tree, options: MoveGeneratorSchema) {
     options.projectName,
     transformConfiguration(tree, config, normalizedOptions),
   );
-  updateXmlReferences(tree, normalizedOptions);
+
+  console.log({
+    originalNamespace: normalizedOptions.currentNamespace,
+    newNamespace: normalizedOptions.destinationNamespace,
+  });
+
+  updateDotnetProject(tree, normalizedOptions);
+  updateReferencingDotnetProjects(tree, normalizedOptions);
   await formatFiles(tree);
 }
 
@@ -122,23 +142,68 @@ function updateReferencesInObject<
   return newValue;
 }
 
-function updateXmlReferences(tree: Tree, options: NormalizedSchema) {
+function updateDotnetProject(tree: Tree, options: NormalizedSchema) {
+  ['.csproj', '.vbproj', '.fsproj'].forEach((extension) => {
+    const source = joinPathFragments(
+      options.destinationRoot,
+      `${options.currentNamespace}${extension}`,
+    );
+    if (tree.exists(source)) {
+      const destination = joinPathFragments(
+        options.destinationRoot,
+        `${options.destinationNamespace}${extension}`,
+      );
+      tree.rename(source, destination);
+
+      let contents = tree.read(destination)?.toString() ?? '';
+      contents = contents.replaceAll(
+        options.currentNamespace,
+        options.destinationNamespace,
+      );
+
+      const referencePaths = contents.matchAll(
+        /<ProjectReference Include="(.*)" \/>/g,
+      );
+      for (const match of referencePaths) {
+        const path = match[1];
+        const referenceFromWorkspaceRoot = joinPathFragments(
+          options.currentRoot,
+          path,
+        );
+        const adjustedPath = normalizePath(
+          relative(options.destinationRoot, referenceFromWorkspaceRoot),
+        );
+        contents = contents.replace(path, adjustedPath);
+      }
+
+      tree.write(destination, contents);
+
+      updateReferencingDotnetCode(tree, options.destinationRoot, options);
+    }
+  });
+}
+
+function updateReferencingDotnetProjects(
+  tree: Tree,
+  options: NormalizedSchema,
+) {
   visitNotIgnoredFiles(tree, '.', (path) => {
     const extension = extname(path);
-    const directory = dirname(path);
+    const projectDirectory = dirname(path);
     if (['.csproj', '.vbproj', '.fsproj', '.sln'].includes(extension)) {
       const contents = tree.read(path);
       if (!contents) {
         return;
       }
       const pathToUpdate = normalizePath(
-        relative(directory, options.currentRoot),
+        relative(projectDirectory, options.currentRoot),
       );
-      const pathToUpdateWithWindowsSeparators = normalizePath(
-        relative(directory, options.currentRoot),
-      ).replaceAll('/', '\\');
+      const pathToUpdateWithWindowsSeparators = pathToUpdate.replaceAll(
+        '/',
+        '\\',
+      );
       const newPath = normalizePath(
-        relative(directory, options.destinationRoot),
+        relative(projectDirectory, options.destinationRoot),
       );
 
       console.log({ pathToUpdate, newPath });
@@ -148,7 +213,33 @@ function updateXmlReferences(tree: Tree, options: NormalizedSchema) {
         contents
           .toString()
           .replaceAll(pathToUpdate, newPath)
-          .replaceAll(pathToUpdateWithWindowsSeparators, newPath),
+          .replaceAll(pathToUpdateWithWindowsSeparators, newPath)
+          .replaceAll(options.currentNamespace, options.destinationNamespace),
+      );
+
+      updateReferencingDotnetCode(tree, projectDirectory, options);
+    }
+  });
+}
+
+function updateReferencingDotnetCode(
+  tree: Tree,
+  projectDirectory: string,
+  options: NormalizedSchema,
+) {
+  visitNotIgnoredFiles(tree, projectDirectory, (path) => {
+    const extension = extname(path);
+    if (['.cs', '.vb', '.fs'].includes(extension)) {
+      const contents = tree.read(path);
+      if (!contents) {
+        return;
+      }
+
+      tree.write(
+        path,
+        contents
+          .toString()
+          .replaceAll(options.currentNamespace, options.destinationNamespace),
       );
     }
   });

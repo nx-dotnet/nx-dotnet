@@ -3,7 +3,7 @@
   "cli": "nx",
   "$id": "Move",
   "title": "@nx-dotnet/core:move",
-  "description": "Moves {projectName} to {destination}. Renames the Nx project to match the new folder location. Additionally, updates any .csproj, .vbproj, .fsproj, or .sln files which pointed to the project.",
+  "description": "Moves {projectName} to {destination}. Renames the Nx and .NET project to match the destination. Additionally, updates all code references to the moved project.",
   "type": "object",
   "properties": {
     "projectName": {
