@@ -5,6 +5,7 @@ import {
   joinPathFragments,
   names,
   normalizePath,
+  offsetFromRoot,
   ProjectConfiguration,
   readProjectConfiguration,
   removeProjectConfiguration,
@@ -70,17 +71,32 @@ export default async function (tree: Tree, options: MoveGeneratorSchema) {
   addProjectConfiguration(
     tree,
     options.projectName,
-    transformConfiguration(config, normalizedOptions),
+    transformConfiguration(tree, config, normalizedOptions),
   );
   updateXmlReferences(tree, normalizedOptions);
   await formatFiles(tree);
 }
 
 function transformConfiguration(
+  tree: Tree,
   config: ProjectConfiguration,
   options: NormalizedSchema,
 ) {
-  return updateReferencesInObject(config, options);
+  const copy = updateReferencesInObject(config, options);
+  updateSchemaPath(tree, copy, config.root);
+  return copy;
+}
+
+function updateSchemaPath(
+  tree: Tree,
+  config: ProjectConfiguration & { $schema?: string },
+  projectRoot: string,
+) {
+  const relativeToRoot = offsetFromRoot(projectRoot);
+  config.$schema = config.$schema?.replace(
+    /^.*\/node_modules/,
+    joinPathFragments(relativeToRoot, 'node_modules'),
+  );
 }
 
 function updateReferencesInObject<
@@ -94,7 +110,7 @@ function updateReferencesInObject<
   for (const key in object) {
     if (typeof object[key] === 'string') {
       newValue[key] = (object[key] as string).replace(
-        options.currentProject,
+        options.currentRoot,
         options.destinationRoot,
       );
     } else if (typeof object[key] === 'object') {
