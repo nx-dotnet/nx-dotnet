@@ -27,7 +27,9 @@ export async function checkModuleBoundariesForProject(
   const configuredConstraints = await loadModuleBoundaries(projectRoot);
   const relevantConstraints = configuredConstraints.filter(
     (x) =>
-      tags.includes(x.sourceTag) &&
+      ((x.sourceTag && tags.includesWithWildcards(x.sourceTag)) ||
+        (x.allSourceTags &&
+          x.allSourceTags.every((tag) => tags.includesWithWildcards(tag)))) &&
       (!x.onlyDependOnLibsWithTags?.includes('*') ||
         x.notDependOnLibsWithTags?.length),
   );
@@ -45,10 +47,10 @@ export async function checkModuleBoundariesForProject(
       for (const constraint of relevantConstraints) {
         if (
           !dependencyTags.some((x) =>
-            constraint.onlyDependOnLibsWithTags?.includes(x),
+            constraint.onlyDependOnLibsWithTags?.includesWithWildcards(x),
           ) ||
           dependencyTags.some((x) =>
-            constraint.notDependOnLibsWithTags?.includes(x),
+            constraint.notDependOnLibsWithTags?.includesWithWildcards(x),
           )
         ) {
           violations.push(
@@ -119,6 +121,46 @@ function findProjectGivenRoot(
     process.exit(1);
   }
 }
+
+function includesWithWildcards(input: string, pattern: string): boolean {
+  if (pattern.includes('*')) {
+    const searchParts = pattern.split('*');
+    let lastIndex = 0;
+    for (const part of searchParts) {
+      const index = input.indexOf(part, lastIndex);
+      if (index === -1) {
+        return false;
+      }
+      lastIndex = index + part.length;
+    }
+    return true;
+  } else {
+    return input.includes(pattern);
+  }
+}
+
+declare global {
+  interface String {
+    includesWithWildcards(pattern: string): boolean;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface Array<T> {
+    includesWithWildcards(pattern: string): boolean;
+  }
+}
+String.prototype.includesWithWildcards = function (
+  this: string,
+  pattern: string,
+): boolean {
+  return includesWithWildcards(this, pattern);
+};
+
+Array.prototype.includesWithWildcards = function (
+  this: string[],
+  pattern: string,
+): boolean {
+  return this.some((x) => includesWithWildcards(x, pattern));
+};
 
 async function main() {
   const parser = await import('yargs-parser');

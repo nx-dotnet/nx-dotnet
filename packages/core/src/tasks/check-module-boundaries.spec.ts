@@ -29,6 +29,34 @@ const MOCK_BOUNDARIES: ModuleBoundaries = [
     onlyDependOnLibsWithTags: ['shared'],
     sourceTag: 'shared',
   },
+  {
+    onlyDependOnLibsWithTags: ['z'],
+    allSourceTags: ['x', 'only-z'],
+  },
+  {
+    notDependOnLibsWithTags: ['z'],
+    allSourceTags: ['x', 'not-z'],
+  },
+  {
+    onlyDependOnLibsWithTags: [],
+    sourceTag: 'no-deps',
+  },
+  {
+    onlyDependOnLibsWithTags: [],
+    allSourceTags: ['--*--'],
+  },
+  {
+    onlyDependOnLibsWithTags: [],
+    sourceTag: '--*--',
+  },
+  {
+    onlyDependOnLibsWithTags: ['*baz*'],
+    allSourceTags: ['--foo--'],
+  },
+  {
+    notDependOnLibsWithTags: ['b*z'],
+    sourceTag: '--foo--',
+  },
 ];
 
 describe('load-module-boundaries', () => {
@@ -117,7 +145,7 @@ describe('enforce-module-boundaries', () => {
     expect(results).toHaveLength(0);
   });
 
-  it('should find violations with onlyDependOnLibsWithTags', async () => {
+  it('should find violations with sourceTag/onlyDependOnLibsWithTags', async () => {
     const globResults = ['libs/a/a.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
@@ -141,7 +169,7 @@ describe('enforce-module-boundaries', () => {
     expect(results).toHaveLength(1);
   });
 
-  it('should find violations with notDependOnLibsWithTags', async () => {
+  it('should find violations with sourceTag/notDependOnLibsWithTags', async () => {
     const globResults = ['libs/b/b.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
@@ -165,7 +193,7 @@ describe('enforce-module-boundaries', () => {
     expect(results).toHaveLength(1);
   });
 
-  it('should pass without violations', async () => {
+  it('should pass without violations with single source rule (sourceTag)', async () => {
     const globResults = ['libs/a/a.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
@@ -187,5 +215,125 @@ describe('enforce-module-boundaries', () => {
       },
     });
     expect(results).toHaveLength(0);
+  });
+
+  it('should find violations with allSourceTags/notDependOnLibsWithTags', async () => {
+    const globResults = ['libs/x/x.csproj'];
+    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
+
+    vol.fromJSON({
+      'libs/x/x.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\z\\z.csproj" /></ItemGroup></Project>',
+    });
+
+    const results = await checkModuleBoundariesForProject('x', {
+      x: {
+        tags: ['x', 'not-z'],
+        targets: { z: {} },
+        root: 'libs/x',
+      },
+      z: {
+        tags: ['z'],
+        targets: {},
+        root: 'libs/z',
+      },
+    });
+    expect(results).toHaveLength(1);
+  });
+
+  it('should find violations with allSourceTags/onlyDependOnLibsWithTags', async () => {
+    const globResults = ['libs/x/x.csproj'];
+    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
+
+    vol.fromJSON({
+      'libs/x/x.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
+    });
+
+    const results = await checkModuleBoundariesForProject('x', {
+      x: {
+        tags: ['x', 'only-z'],
+        targets: { a: {} },
+        root: 'libs/x',
+      },
+      a: {
+        tags: ['a'],
+        targets: {},
+        root: 'libs/a',
+      },
+    });
+    expect(results).toHaveLength(1);
+  });
+
+  it('should pass without violations with single source rule (allSourceTags)', async () => {
+    const globResults = ['libs/x/x.csproj'];
+    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
+
+    vol.fromJSON({
+      'libs/x/x.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\z\\z.csproj" /></ItemGroup></Project>',
+    });
+
+    const results = await checkModuleBoundariesForProject('x', {
+      x: {
+        tags: ['x', 'only-z'],
+        targets: { z: {} },
+        root: 'libs/x',
+      },
+      z: {
+        tags: ['z'],
+        targets: {},
+        root: 'libs/z',
+      },
+    });
+    expect(results).toHaveLength(0);
+  });
+
+  it('should support { onlyDependOnLibsWithTags: [] } - no dependencies', async () => {
+    const globResults = ['libs/x/x.csproj'];
+    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
+
+    vol.fromJSON({
+      'libs/x/x.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
+    });
+
+    const results = await checkModuleBoundariesForProject('x', {
+      x: {
+        tags: ['no-deps'],
+        targets: { a: {} },
+        root: 'libs/x',
+      },
+      a: {
+        tags: ['a'],
+        targets: {},
+        root: 'libs/a',
+      },
+    });
+    expect(results).toHaveLength(1);
+  });
+
+  it('should support wildcards', async () => {
+    const globResults = ['libs/x/x.csproj'];
+    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
+
+    vol.fromJSON({
+      'libs/x/x.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
+    });
+
+    const results = await checkModuleBoundariesForProject('x', {
+      x: {
+        tags: ['--foo--'],
+        targets: { a: {} },
+        root: 'libs/x',
+      },
+      a: {
+        tags: ['biz'],
+        targets: {},
+        root: 'libs/a',
+      },
+    });
+    expect(results).toHaveLength(4);
   });
 });
