@@ -1,4 +1,4 @@
-import { TargetConfiguration } from '@nrwl/devkit';
+import { TargetConfiguration } from '@nx/devkit';
 import { lt } from 'semver';
 import { BuildExecutorSchema } from '../executors/build/schema';
 

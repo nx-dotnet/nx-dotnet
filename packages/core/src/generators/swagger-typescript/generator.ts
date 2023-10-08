@@ -5,7 +5,7 @@ import {
   names,
   readJson,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import * as path from 'path';
 
@@ -35,9 +35,9 @@ function generateInterfaceFiles(
     )?.reduce((necessary, next) => {
       if (
         next !== 'object' &&
+        next !== tsInterface.name &&
         !builtInTypes.has(next) &&
-        !necessary.has(next) &&
-        !(next === tsInterface.name)
+        !necessary.has(next)
       ) {
         necessary.set(next, names(next));
       }

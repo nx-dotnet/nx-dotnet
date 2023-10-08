@@ -1,4 +1,4 @@
-import { ExecutorContext, workspaceRoot } from '@nrwl/devkit';
+import { ExecutorContext, workspaceRoot } from '@nx/devkit';
 
 import { resolve } from 'path';
 

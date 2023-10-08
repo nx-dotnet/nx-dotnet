@@ -1,7 +1,6 @@
 {
   "version": 2,
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "title": "NxDotnet Test Executor",
   "description": "Runs test via the dotnet cli",
   "type": "object",

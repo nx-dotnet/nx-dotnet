@@ -1,18 +1,21 @@
-import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+import { ProjectsConfigurations } from '@nx/devkit';
 
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 
-import { readJson, readWorkspaceJson } from '../../utils';
+import { readJson, readProjectsConfigurations } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
 
-export function publishAll(version: string, tag = 'latest') {
-  const workspace: WorkspaceJsonConfiguration = readWorkspaceJson();
+export async function publishAll(version: string, tag = 'latest') {
+  const workspace: ProjectsConfigurations = await readProjectsConfigurations();
   const rootPkg = readJson('package.json');
 
-  execSync('npx nx run-many --all --target="build" --exclude="docs-site"', {
-    stdio: 'inherit',
-  });
+  execSync(
+    'npx nx run-many --all --target="build" --exclude="docs-site,tools/**,demo/**"',
+    {
+      stdio: 'inherit',
+    },
+  );
 
   PatchPackageVersions(version, 'all', false);
 
@@ -37,5 +40,8 @@ export function publishAll(version: string, tag = 'latest') {
 }
 
 if (require.main === module) {
-  publishAll(process.argv[2], process.argv[3] || 'latest');
+  publishAll(process.argv[2], process.argv[3] || 'latest').catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 }

@@ -1,7 +1,6 @@
 {
   "version": 2,
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "title": "Swagger executor",
   "description": "Extract openapi swagger documentation from the webapi",
   "type": "object",

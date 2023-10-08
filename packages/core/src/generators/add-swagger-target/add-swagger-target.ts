@@ -11,8 +11,7 @@ import {
   updateProjectConfiguration,
   updateNxJson,
   addDependenciesToPackageJson,
-} from '@nrwl/devkit';
-import type JsLibraryGenerator = require('@nrwl/js/src/generators/library/library');
+} from '@nx/devkit';
 
 import type NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
 import type NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
@@ -42,19 +41,17 @@ export default async function generateSwaggerSetup(
     } else {
       throw new Error('Either specify --output or --swagger-project');
     }
-  } else {
-    if (options.codegenProject && !options.useNxPluginOpenAPI) {
-      project.targets.codegen = {
-        executor: '@nx-dotnet/core:openapi-codegen',
-        options: {
-          openapiJsonPath: options.output,
-          outputProject: options.codegenProject,
-        },
-        dependsOn: ['swagger'],
-      };
-    }
+  } else if (options.codegenProject && !options.useNxPluginOpenAPI) {
+    project.targets.codegen = {
+      executor: '@nx-dotnet/core:openapi-codegen',
+      options: {
+        openapiJsonPath: options.output,
+        outputProject: options.codegenProject,
+      },
+      dependsOn: ['swagger'],
+    };
   }
-  project.targets[options.target || 'swagger'] = {
+  project.targets[options.target ?? 'swagger'] = {
     ...getSwaggerExecutorConfiguration(options.output),
   };
 
@@ -190,7 +187,7 @@ async function setupNxNETCodegen(
   const {
     libraryGenerator,
   }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-  typeof JsLibraryGenerator = require('@nrwl/js/src/generators/library/library');
+  typeof import('@nx/js') = require('@nx/js');
   tasks.push(
     await libraryGenerator(host, {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

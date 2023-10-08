@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import * as utils from '@nx-dotnet/utils';
@@ -17,9 +17,6 @@ const options: FormatExecutorSchema = {
 };
 
 const root = process.cwd() + '/tmp';
-jest.mock('@nrwl/tao/src/utils/app-root', () => ({
-  appRootPath: process.cwd() + '/tmp',
-}));
 
 jest.mock('../../../../dotnet/src/lib/core/dotnet.client');
 

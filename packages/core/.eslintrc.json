@@ -23,7 +23,13 @@
       ],
       "parser": "jsonc-eslint-parser",
       "rules": {
-        "@nrwl/nx/nx-plugin-checks": "error"
+        "@nx/nx-plugin-checks": "error",
+        "@nx/dependency-checks": [
+          "error",
+          {
+            "ignoredDependencies": ["openapi-types"]
+          }
+        ]
       }
     }
   ]

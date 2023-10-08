@@ -1,18 +1,21 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "dotnet",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/dotnet/src",
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/dotnet/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/dotnet/**/*.ts",
+          "packages/dotnet/package.json"
+        ]
       },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/dotnet"],
       "options": {
         "jestConfig": "packages/dotnet/jest.config.ts",
@@ -28,14 +31,13 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/dotnet",
         "tsConfig": "packages/dotnet/tsconfig.lib.json",
         "packageJson": "packages/dotnet/package.json",
         "main": "packages/dotnet/src/index.ts",
-        "updateBuildableProjectDepsInPackageJson": true,
         "assets": [
           "packages/dotnet/*.md",
           {

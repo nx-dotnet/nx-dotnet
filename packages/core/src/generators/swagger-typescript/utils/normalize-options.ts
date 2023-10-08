@@ -3,7 +3,7 @@ import {
   ProjectConfiguration,
   readProjectConfiguration,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { SwaggerTypescriptGeneratorSchema } from '../schema';
 

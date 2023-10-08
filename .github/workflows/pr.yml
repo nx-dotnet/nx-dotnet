@@ -6,6 +6,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+# TODO: Figure out why DTE is not handling demo app well.
+# It appears that the task graph on the DTE side doesn't
+# contain the relationship between the demo webapi and the
+# demo models library. This causes the C# build to fail.
+
 jobs:
   main:
     name: Nx Cloud - Main Job
@@ -17,8 +22,9 @@ jobs:
         npx nx-cloud record yarn nx format:check
         npx nx-cloud record yarn documentation:check --verbose
         npx nx-cloud record yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
+        yarn nx affected --target build --exclude='*,!demo/**/*'
       parallel-commands-on-agents: |
-        yarn nx affected --target lint build test --parallel 3
+        yarn nx affected --target lint build test --exclude 'demo/**/*'
       final-commands: |
         yarn e2e
 

@@ -1,4 +1,4 @@
-import { readJsonFile, workspaceRoot, logger } from '@nrwl/devkit';
+import { readJsonFile, workspaceRoot, logger } from '@nx/devkit';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { DotnetToolsManifest } from '../models';
@@ -7,7 +7,7 @@ export function readDotnetToolsManifest(
   pathOverride: string | undefined = undefined,
 ): DotnetToolsManifest | undefined {
   const manifestPath =
-    pathOverride || join(workspaceRoot, './.config/dotnet-tools.json');
+    pathOverride ?? join(workspaceRoot, './.config/dotnet-tools.json');
   const manifest = existsSync(manifestPath)
     ? readJsonFile<DotnetToolsManifest>(manifestPath)
     : undefined;

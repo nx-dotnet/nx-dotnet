@@ -1,7 +1,9 @@
-import { Workspaces } from '@nrwl/tao/src/shared/workspace';
-
 import { readFileSync, statSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import {
+  createProjectGraphAsync,
+  readProjectsConfigurationFromProjectGraph,
+} from '@nx/devkit';
+
 import { format } from 'prettier';
 
 export function existsSync(path: string) {
@@ -23,6 +25,8 @@ export function writeJson(path: string, object: any) {
   return writeFileSync(path, contents);
 }
 
-export function readWorkspaceJson() {
-  return new Workspaces(join(__dirname, '../../')).readWorkspaceConfiguration();
+export async function readProjectsConfigurations() {
+  return readProjectsConfigurationFromProjectGraph(
+    await createProjectGraphAsync(),
+  );
 }

@@ -1,8 +1,6 @@
-import { WorkspaceJsonConfiguration } from '@nrwl/devkit';
-import { Workspaces } from '@nrwl/tao/src/shared/workspace';
+import { ProjectsConfigurations } from '@nx/devkit';
 
 import { execSync } from 'child_process';
-import { join } from 'path';
 
 import * as yargsParser from 'yargs-parser';
 
@@ -10,17 +8,19 @@ import {
   existsSync,
   getWorkspacePackages,
   readJson,
-  readWorkspaceJson,
+  readProjectsConfigurations,
   writeJson,
 } from '../../utils';
 
-export function PatchPackageVersions(
+export async function PatchPackageVersions(
   newVersion: string,
   pkg: string,
   updateGit = true,
   prebuild = false,
 ) {
-  const workspace: WorkspaceJsonConfiguration = readWorkspaceJson();
+  console.log('Patching package versions', newVersion, pkg);
+  const workspace: ProjectsConfigurations = await readProjectsConfigurations();
+  console.log('Got workspace');
   const rootPkg = readJson('package.json');
   if (newVersion && prebuild) {
     rootPkg.version = newVersion;
@@ -40,9 +40,10 @@ export function PatchPackageVersions(
       ? Object.values(workspace.projects)
       : [workspace.projects[pkg]];
 
-  projects.forEach((projectConfiguration, idx) => {
+  for (let idx = 0; idx < projects.length; idx++) {
+    const projectConfiguration = projects[idx];
     if (!projectConfiguration.targets?.build) {
-      return;
+      continue;
     }
 
     const p = prebuild
@@ -50,12 +51,14 @@ export function PatchPackageVersions(
       : projectConfiguration.targets?.build.options?.outputPath;
     const pkgPath = p ? `${p}/package.json` : null;
     if (!pkgPath || !existsSync(pkgPath)) {
-      return;
+      continue;
     }
     const pkg = readJson(pkgPath);
     pkg.version = newVersion;
-    patchDependenciesSection('dependencies', pkg, newVersion);
-    patchDependenciesSection('devDependencies', pkg, newVersion);
+    await patchDependenciesSection('dependencies', pkg, newVersion);
+    console.log('Patched dependencies');
+    await patchDependenciesSection('devDependencies', pkg, newVersion);
+    console.log('Patched devDependencies');
 
     writeJson(pkgPath, pkg);
 
@@ -70,7 +73,7 @@ export function PatchPackageVersions(
         { stdio: ['ignore', 'inherit', 'inherit'] },
       );
     }
-  });
+  }
 
   if (updateGit) {
     execSync(`git tag v${newVersion}`, {
@@ -79,12 +82,12 @@ export function PatchPackageVersions(
   }
 }
 
-function patchDependenciesSection(
+async function patchDependenciesSection(
   section: 'dependencies' | 'devDependencies',
   packageJson: any,
   version: string,
 ) {
-  const localPackages = getWorkspacePackages();
+  const localPackages = await getWorkspacePackages();
   Object.keys(packageJson[section] || {}).forEach((pkg) => {
     if (localPackages.includes(pkg)) {
       packageJson[section][pkg] = version;
@@ -94,5 +97,8 @@ function patchDependenciesSection(
 
 if (require.main === module) {
   const args = yargsParser(process.argv);
-  PatchPackageVersions(args.version, args.project, false, true);
+  PatchPackageVersions(args.version, args.project, false, true).then(() => {
+    console.log('Done');
+    process.exit(0);
+  });
 }

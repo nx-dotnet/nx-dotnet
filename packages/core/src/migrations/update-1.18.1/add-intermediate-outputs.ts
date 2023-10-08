@@ -3,13 +3,14 @@ import {
   formatFiles,
   getProjects,
   logger,
+  NX_VERSION,
+  NxJsonConfiguration,
   ProjectConfiguration,
   readNxJson,
   Tree,
   updateProjectConfiguration,
   writeJson,
-} from '@nrwl/devkit';
-import { TargetDefaults } from 'nx/src/config/nx-json';
+} from '@nx/devkit';
 import { gt } from 'semver';
 import { XmlDocument } from 'xmldoc';
 
@@ -81,29 +82,36 @@ function updateTargetOutputs(
   for (const target of targets) {
     if (directoryBuildPropsUpdated) {
       if (!target.outputs?.some((x) => x.includes('intermediates'))) {
-        const prefix = gt(nxVersion, '15.0.0-beta.0') ? '{workspaceRoot}/' : '';
+        const prefix = getWorkspaceRootPrefix();
         target.outputs?.push(
           prefix + `dist/intermediates/${configuration.root}`,
         );
         changed = true;
       }
-    } else {
-      if (!target.outputs?.some((x) => x.includes('obj'))) {
-        const prefix = gt(nxVersion, '15.0.0-beta.0')
-          ? '{projectRoot}/'
-          : `${configuration.root}/`;
-        target.outputs?.push(prefix + `obj`);
-        changed = true;
-      }
+    } else if (!target.outputs?.some((x) => x.includes('obj'))) {
+      const prefix = getProjectRootPrefix(configuration);
+      target.outputs?.push(prefix + `obj`);
+      changed = true;
     }
   }
   return changed;
 }
 
+function getProjectRootPrefix(configuration: ProjectConfiguration): string {
+  return gt(NX_VERSION, '15.0.0-beta.0')
+    ? '{projectRoot}/'
+    : `${configuration.root}/`;
+}
+
+function getWorkspaceRootPrefix(): string {
+  return gt(NX_VERSION, '15.0.0-beta.0') ? '{workspaceRoot}/' : '';
+}
+
 function updateTargetDefaults(host: Tree, directoryBuildPropsUpdated: boolean) {
   let changed = false;
   const nxJson = readNxJson(host);
-  const targetDefaults: TargetDefaults | undefined = nxJson?.targetDefaults;
+  const targetDefaults: NxJsonConfiguration['targetDefaults'] | undefined =
+    nxJson?.targetDefaults;
 
   if (!targetDefaults) {
     return;
@@ -118,11 +126,9 @@ function updateTargetDefaults(host: Tree, directoryBuildPropsUpdated: boolean) {
         );
         changed = true;
       }
-    } else {
-      if (!configuration.outputs?.some((x) => x.includes('obj'))) {
-        configuration.outputs?.push(`{projectRoot}/obj`);
-        changed = true;
-      }
+    } else if (!configuration.outputs?.some((x) => x.includes('obj'))) {
+      configuration.outputs?.push(`{projectRoot}/obj`);
+      changed = true;
     }
   }
 

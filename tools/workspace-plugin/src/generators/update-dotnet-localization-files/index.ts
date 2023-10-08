@@ -2,15 +2,14 @@ import {
   Tree,
   formatFiles,
   installPackagesTask,
-  workspaceRoot,
   joinPathFragments,
   logger,
   generateFiles,
   names,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { XmlDocument } from 'xmldoc';
 import fetch from 'node-fetch';
-import { join, relative } from 'path';
+import { join } from 'path';
 
 const KeyPropertyMap: Record<string, string> = {
   ColumnNameLanguage: 'languages',
@@ -29,7 +28,7 @@ type Translation = {
   localizedName?: string;
 };
 
-export default async function (tree: Tree, schema: any) {
+export default async function (tree: Tree) {
   const enXml = await fetch(
     `https://raw.githubusercontent.com/dotnet/templating/master/src/Microsoft.TemplateEngine.Cli/LocalizableStrings.resx`,
   ).then((x) => x.text());
@@ -63,7 +62,7 @@ export default async function (tree: Tree, schema: any) {
     }
   }
 
-  const languages = [];
+  const languages: (ReturnType<typeof names> & { raw: string })[] = [];
   for (const translation of translations) {
     generateFiles(tree, join(__dirname, 'files'), outputDirectory, {
       tmpl: '',

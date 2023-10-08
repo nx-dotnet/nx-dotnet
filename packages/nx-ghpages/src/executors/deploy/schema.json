@@ -1,7 +1,6 @@
 {
   "version": 2,
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "title": "Deploy",
   "description": "Deploy a page to a specified repository's gh-pages branch.",
   "type": "object",

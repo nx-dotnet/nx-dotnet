@@ -2,12 +2,13 @@ import {
   joinPathFragments,
   readWorkspaceConfiguration,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { parse, relative, resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { readConfigSection } from '@nx-dotnet/utils';
+import { getWorkspaceScope } from './get-scope';
 
 export function addToSolutionFile(
   host: Tree,
@@ -15,10 +16,10 @@ export function addToSolutionFile(
   dotnetClient = new DotNetClient(dotnetFactory()),
   solutionFile?: string | boolean,
 ) {
-  const workspaceConfiguration = readWorkspaceConfiguration(host);
+  const scope = getWorkspaceScope(host);
   const defaultFilePath = readConfigSection(host, 'solutionFile')?.replace(
-    '{npmScope}',
-    workspaceConfiguration.npmScope || '',
+    /(\{npmScope\}|\{scope\})/g,
+    scope || '',
   );
   if (typeof solutionFile === 'boolean' && solutionFile) {
     solutionFile = defaultFilePath;
@@ -36,7 +37,7 @@ export function addToSolutionFile(
         output: joinPathFragments(host.root, dir),
       });
     }
-    const relativePath = relative(dotnetClient.cwd || host.root, host.root);
+    const relativePath = relative(dotnetClient.cwd ?? host.root, host.root);
     dotnetClient.addProjectToSolution(
       joinPathFragments(relativePath, solutionFile),
       resolve(relativePath, projectRoot),

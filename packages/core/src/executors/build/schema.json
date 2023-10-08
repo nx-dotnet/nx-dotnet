@@ -1,7 +1,6 @@
 {
   "version": 2,
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "title": "NxDotnet Build",
   "description": "Builds an app via the `dotnet` cli command.",
   "type": "object",

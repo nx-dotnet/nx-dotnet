@@ -1,6 +1,6 @@
 {
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "name": "demo-libs-generated-webapi-swagger",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "build": {
       "executor": "nx:noop",

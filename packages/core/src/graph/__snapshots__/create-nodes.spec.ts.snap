@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`infer-project should generate build, lint, serve targets for projects 1`] = `
+{
+  "configurations": {
+    "production": {
+      "configuration": "Release",
+    },
+  },
+  "executor": "@nx-dotnet/core:build",
+  "options": {
+    "configuration": "Debug",
+    "noDependencies": true,
+  },
+  "outputs": [
+    "{workspaceRoot}/dist/libs/api",
+    "{workspaceRoot}/dist/intermediates/libs/api",
+  ],
+}
+`;
+
+exports[`infer-project should generate build, lint, serve targets for projects 2`] = `
+{
+  "executor": "@nx-dotnet/core:format",
+}
+`;
+
+exports[`infer-project should generate build, lint, serve targets for projects 3`] = `
+{
+  "configurations": {
+    "production": {
+      "configuration": "Release",
+    },
+  },
+  "executor": "@nx-dotnet/core:serve",
+  "options": {
+    "configuration": "Debug",
+  },
+}
+`;
+
+exports[`infer-project should generate test target for test projects 1`] = `
+{
+  "executor": "@nx-dotnet/core:test",
+  "options": {
+    "testProject": undefined,
+  },
+}
+`;

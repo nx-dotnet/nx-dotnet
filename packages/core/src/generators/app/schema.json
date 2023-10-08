@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "id": "@nx-dotnet/core:app",
   "title": "NxDotnet Application Generator",
   "description": "Generate a dotnet project under the application directory.",
@@ -48,10 +47,22 @@
         "message": "Which template should be used for creating the tests project",
         "type": "list",
         "items": [
-          { "value": "nunit", "label": "NUnit 3 Test Project" },
-          { "value": "xunit", "label": "xUnit Test Project" },
-          { "value": "mstest", "label": "Unit Test Project" },
-          { "value": "none", "label": "No Unit Test Project" }
+          {
+            "value": "nunit",
+            "label": "NUnit 3 Test Project"
+          },
+          {
+            "value": "xunit",
+            "label": "xUnit Test Project"
+          },
+          {
+            "value": "mstest",
+            "label": "Unit Test Project"
+          },
+          {
+            "value": "none",
+            "label": "No Unit Test Project"
+          }
         ]
       }
     },
@@ -82,8 +93,14 @@
         "message": "Which path naming conventions should the project use?",
         "type": "list",
         "items": [
-          { "value": "nx", "label": "NX naming conventions" },
-          { "value": "dotnet", "label": "Dotnet naming conventions" }
+          {
+            "value": "nx",
+            "label": "NX naming conventions"
+          },
+          {
+            "value": "dotnet",
+            "label": "Dotnet naming conventions"
+          }
         ]
       }
     },

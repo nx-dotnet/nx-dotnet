@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "update-dotnet-localization-files": {
+      "implementation": "./src/generators/update-dotnet-localization-files",
+      "schema": "./src/generators/update-dotnet-localization-files/schema.json",
+      "description": "Generator update-dotnet-localization-files"
+    }
+  }
+}

@@ -4,7 +4,7 @@ import {
   Tree,
   workspaceRoot,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { CONFIG_FILE_PATH } from '../constants';
 import { NxDotnetConfig } from '../models';

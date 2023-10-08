@@ -19,7 +19,7 @@
 ## Prerequisites
 
 - You have an existing nx workspace (empty, or otherwise)
-- You have the [@nrwl/js](https://www.npmjs.com/package/@nrwl/js) plugin added to the workspace
+- You have the [@nx/js](https://www.npmjs.com/package/@nx/js) plugin added to the workspace
 
 ## Adding .NET capabilities to your workspace
 
@@ -53,7 +53,7 @@ Run `nx serve my-app` for a dev server. The app will automatically reload if you
 <!--
 ## Code scaffolding
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+Run `nx g @nx/react:component my-component --project=my-app` to generate a new component.
 -->
 
 ## Build

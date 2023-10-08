@@ -2,7 +2,7 @@ import {
   ExecutorContext,
   ProjectConfiguration,
   workspaceRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { rmSync, statSync } from 'fs';
 import { join, resolve } from 'path';

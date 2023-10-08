@@ -1,15 +1,16 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "nx-ghpages-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "e2e/nx-ghpages-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/nx-plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "nx-ghpages:noop",
-        "jestConfig": "e2e/nx-ghpages-e2e/jest.config.js"
-      }
+        "jestConfig": "e2e/nx-ghpages-e2e/jest.config.js",
+        "runInBand": true
+      },
+      "dependsOn": ["nx-ghpages:noop"]
     }
   },
   "tags": [],

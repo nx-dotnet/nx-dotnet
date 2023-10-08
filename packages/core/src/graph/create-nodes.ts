@@ -1,4 +1,4 @@
-import { TargetConfiguration, workspaceRoot } from '@nrwl/devkit';
+import { CreateNodes, TargetConfiguration, workspaceRoot } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
@@ -33,3 +33,31 @@ export const registerProjectTargets = (projectFile: string) => {
   }
   return targets;
 };
+
+// Used in Nx 16.8+
+export const createNodes: CreateNodes | undefined = readConfig().inferProjects
+  ? [
+      `**/{${projectFilePatterns.join(',')}}`,
+      (file) => {
+        const root = dirname(file);
+
+        // eslint-disable-next-line no-useless-escape -- eslint's wrong
+        const parts = root.split(/[\/\\]/g);
+        const name = parts[parts.length - 1].toLowerCase();
+
+        const targets = registerProjectTargets(file);
+
+        return {
+          projects: {
+            [name]: {
+              name,
+              root,
+              type: 'lib',
+              targets,
+              tags: ['nx-dotnet'],
+            },
+          },
+        };
+      },
+    ]
+  : undefined;

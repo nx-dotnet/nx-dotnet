@@ -4,7 +4,7 @@ import {
   ProjectConfiguration,
   TargetConfiguration,
   workspaceRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { execSync } from 'child_process';
 import { sync } from 'fast-glob';
@@ -63,6 +63,6 @@ function findBuildTarget(
   return (
     Object.entries(project?.targets || {}).find(
       ([, x]) => x.executor === '@nx-dotnet/core:build',
-    ) || []
+    ) ?? []
   );
 }

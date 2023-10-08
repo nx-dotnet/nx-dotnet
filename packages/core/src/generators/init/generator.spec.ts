@@ -1,6 +1,6 @@
-import * as devkit from '@nrwl/devkit';
-import { readJson, Tree, writeJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import * as devkit from '@nx/devkit';
+import { readJson, Tree, writeJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';

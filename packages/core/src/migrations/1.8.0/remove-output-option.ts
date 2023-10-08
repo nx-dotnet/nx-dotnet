@@ -5,7 +5,7 @@ import {
   TargetConfiguration,
   Tree,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { basename, resolve } from 'path';
 import { XmlDocument } from 'xmldoc';

@@ -1,4 +1,4 @@
-import { TargetConfiguration } from '@nrwl/devkit';
+import { TargetConfiguration } from '@nx/devkit';
 
 export function GetLintExecutorConfiguration(): TargetConfiguration {
   return {

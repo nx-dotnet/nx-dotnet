@@ -1,10 +1,11 @@
 import {
+  createProjectGraphAsync,
   ProjectConfiguration,
   ProjectsConfigurations,
+  readProjectsConfigurationFromProjectGraph,
   Tree,
   workspaceRoot,
-  Workspaces,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { relative } from 'path';
 
@@ -107,7 +108,7 @@ function findProjectGivenRoot(
     Object.entries(projects).find(([, projectConfig]) => {
       const relativePath = relative(projectConfig.root, normalizedRoot);
       return relativePath?.startsWith('..') === false;
-    }) || [];
+    }) ?? [];
 
   if (projectName) {
     return projectName;
@@ -127,9 +128,9 @@ async function main() {
     },
     string: ['project', 'projectRoot'],
   }) as { project?: string; projectRoot?: string };
-  const workspace = new Workspaces(workspaceRoot);
+  const graph = await createProjectGraphAsync();
   const { projects }: ProjectsConfigurations =
-    workspace.readWorkspaceConfiguration();
+    readProjectsConfigurationFromProjectGraph(graph);
 
   // Find the associated nx project for the msbuild project directory.
   const nxProject: string =

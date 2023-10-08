@@ -1,6 +1,5 @@
-import { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+import type { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 
-import { OpenAPIPropertyDescription } from '../models/openapi-model';
 import { TypeScriptRepresentation } from '../models/typescript-model';
 import {
   generatePropertiesFromSchema,
@@ -22,10 +21,8 @@ export function generateInterfacesFromDefinitions(
         properties: generatePropertiesFromSchema(def.properties),
         type: 'interface',
       });
-    } else if (def.type === 'array') {
-      const items = parsePropertyDefintion(
-        def.items as OpenAPIPropertyDescription,
-      );
+    } else if (def.type === 'array' && def.items) {
+      const items = parsePropertyDefintion(def.items);
       interfaces.push({
         name,
         type: 'array',

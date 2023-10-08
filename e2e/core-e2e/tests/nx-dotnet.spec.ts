@@ -1,8 +1,9 @@
 import {
+  NxJsonConfiguration,
   getPackageManagerCommand,
   joinPathFragments,
   names,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import {
   checkFilesExist,
   ensureNxProject,
@@ -14,8 +15,7 @@ import {
   tmpProjPath,
   uniq,
   updateFile,
-} from '@nrwl/nx-plugin/testing';
-import { Workspaces } from '@nrwl/tao/src/shared/workspace';
+} from '@nx/plugin/testing';
 
 import { exec, execSync } from 'child_process';
 import { unlinkSync, writeFileSync } from 'fs';
@@ -31,8 +31,7 @@ const e2eDir = tmpProjPath();
 
 describe('nx-dotnet e2e', () => {
   beforeAll(() => {
-    ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
-    initializeGitRepo(e2eDir);
+    setupWorkspace();
   }, 1500000);
 
   afterEach(() => {
@@ -70,7 +69,7 @@ describe('nx-dotnet e2e', () => {
     const testApp = uniq('app');
     const testLib = uniq('lib');
 
-    runCommand('git checkout -b "affected-tests"');
+    runCommand('git checkout -b "affected-tests"', {});
     updateFile('package.json', (f) => {
       const json = JSON.parse(f);
       json.dependencies['@nrwl/angular'] = json.devDependencies['nx'];
@@ -97,7 +96,7 @@ describe('nx-dotnet e2e', () => {
 
     const deps = await readDependenciesFromNxDepGraph(join(e2eDir), testApp);
     expect(deps).toContain(testLib);
-    runCommand('git checkout main');
+    runCommand('git checkout main', {});
   }, 300000);
 
   describe('nx g app', () => {
@@ -270,69 +269,12 @@ describe('nx-dotnet e2e', () => {
     });
   });
 
-  describe('nx g import-projects', () => {
-    it('should import apps, libs, and test', async () => {
-      updateFile(
-        '.nx-dotnet.rc.json',
-        JSON.stringify(
-          {
-            nugetPackages: {},
-            inferProjects: false,
-          },
-          null,
-          2,
-        ),
-      );
-      const testApp = uniq('app');
-      const testLib = uniq('lib');
-      const testAppTest = `${testApp}-test`;
-      const appDir = `${e2eDir}/apps/${testApp}`;
-      const testAppDir = `${e2eDir}/apps/${testAppTest}`;
-      const libDir = `${e2eDir}/libs/${testLib}`;
-      ensureDirSync(appDir);
-      ensureDirSync(libDir);
-      ensureDirSync(testAppDir);
-      execSync('dotnet new webapi', { cwd: appDir });
-      execSync('dotnet new classlib', { cwd: libDir });
-      execSync('dotnet new nunit', { cwd: testAppDir });
-
-      await runNxCommandAsync(`generate @nx-dotnet/core:import-projects`);
-
-      const workspace = new Workspaces(e2eDir).readWorkspaceConfiguration();
-
-      expect(workspace.projects[testApp].targets?.serve).toBeDefined();
-      expect(workspace.projects[testApp].targets?.build).toBeDefined();
-      expect(workspace.projects[testApp].targets?.lint).toBeDefined();
-      expect(workspace.projects[testLib].targets?.serve).not.toBeDefined();
-      expect(workspace.projects[testLib].targets?.build).toBeDefined();
-      expect(workspace.projects[testLib].targets?.lint).toBeDefined();
-      expect(workspace.projects[testAppTest].targets?.build).toBeDefined();
-      expect(workspace.projects[testAppTest].targets?.lint).toBeDefined();
-      expect(workspace.projects[testAppTest].targets?.test).toBeDefined();
-
-      await runNxCommandAsync(`build ${testApp}`);
-      checkFilesExist(`dist/apps/${testApp}`);
-
-      updateFile(
-        '.nx-dotnet.rc.json',
-        JSON.stringify(
-          {
-            nugetPackages: {},
-          },
-          null,
-          2,
-        ),
-      );
-    });
-  });
-
   describe('solution handling', () => {
     // For solution handling, defaults fall back to if a file exists.
     // This ensures that the tests are ran in a clean state, without previous
     // test projects interfering with the test.
     beforeAll(() => {
-      ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
-      initializeGitRepo(e2eDir);
+      setupWorkspace();
     }, 1500000);
 
     it("shouldn't create a solution by default if not specified", async () => {
@@ -524,12 +466,12 @@ public class UnitTest1
 });
 
 function initializeGitRepo(cwd: string) {
-  runCommand('git init');
-  runCommand('git branch -m main');
-  runCommand('git config user.email no-one@some-website.com');
-  runCommand('git config user.name CI-Bot');
-  runCommand('git add .');
-  runCommand('git commit -m "initial commit"');
+  runCommand('git init', {});
+  runCommand('git branch -m main', {});
+  runCommand('git config user.email no-one@some-website.com', {});
+  runCommand('git config user.name CI-Bot', {});
+  runCommand('git add .', {});
+  runCommand('git commit -m "initial commit"', {});
 }
 
 function runCommandAsync(
@@ -571,4 +513,17 @@ function runNxCommandAsync(
 ) {
   const pmc = getPackageManagerCommand();
   return runCommandAsync(`${pmc.exec} nx ${command}`, opts);
+}
+
+function setupWorkspace() {
+  ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+  // TODO: Update e2e tests and plugin generators to use the new workspace layout semantics.
+  updateFile('nx.json', (contents) => {
+    const nxJson: NxJsonConfiguration = JSON.parse(contents);
+    nxJson.workspaceLayout ??= {};
+    nxJson.workspaceLayout.appsDir = 'apps';
+    nxJson.workspaceLayout.libsDir = 'libs';
+    return JSON.stringify(nxJson, null, 2);
+  });
+  initializeGitRepo(e2eDir);
 }

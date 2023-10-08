@@ -2,7 +2,16 @@
   "name": "@nx-dotnet/utils",
   "main": "src/index.js",
   "private": false,
-  "dependencies": {},
+  "dependencies": {
+    "@nx/devkit": "16.9.1",
+    "fast-glob": "3.2.12",
+    "rimraf": "^3.0.2",
+    "xmldoc": "^1.1.2",
+    "tslib": "^2.5.0"
+  },
+  "peerDependencies": {
+    "nx": ">=16.0.0-beta.1"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nx-dotnet/nx-dotnet/issues?q=is%3Aopen",

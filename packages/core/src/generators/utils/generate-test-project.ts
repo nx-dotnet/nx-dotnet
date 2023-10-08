@@ -1,4 +1,4 @@
-import { addProjectConfiguration, names, Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, names, Tree } from '@nx/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
@@ -19,12 +19,12 @@ function getPathPartsFromSchema(schema: NormalizedSchema): PathParts {
   if (schema.pathScheme === 'nx') {
     return {
       separator: '-',
-      suffix: schema.testProjectNameSuffix || 'test',
+      suffix: schema.testProjectNameSuffix ?? 'test',
     };
   } else {
     return {
       separator: '.',
-      suffix: schema.testProjectNameSuffix || 'Test',
+      suffix: schema.testProjectNameSuffix ?? 'Test',
     };
   }
 }

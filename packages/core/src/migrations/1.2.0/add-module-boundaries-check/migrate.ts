@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
 import { XmlDocument } from 'xmldoc';
 

@@ -1,4 +1,4 @@
-import { readProjectConfiguration, Tree } from '@nrwl/devkit';
+import { readProjectConfiguration, Tree } from '@nx/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 

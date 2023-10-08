@@ -1,16 +1,22 @@
-import { NxPlugin } from '@nrwl/devkit';
+import { NxPluginV1, NxPluginV2 } from '@nx/devkit';
 
 import {
+  createNodes,
   projectFilePatterns,
   registerProjectTargets,
-} from './graph/infer-project';
-import { processProjectGraph } from './graph/process-project-graph';
-
-const nxPlugin: NxPlugin = {
-  name: '@nx-dotnet/core',
+} from './graph/create-nodes';
+import {
+  createDependencies,
   processProjectGraph,
-  registerProjectTargets,
+} from './graph/create-dependencies';
+
+const nxPlugin: NxPluginV2 & Required<NxPluginV1> = {
+  name: '@nx-dotnet/core',
+  createDependencies,
+  createNodes,
   projectFilePatterns,
+  registerProjectTargets,
+  processProjectGraph,
 };
 
 export = nxPlugin;

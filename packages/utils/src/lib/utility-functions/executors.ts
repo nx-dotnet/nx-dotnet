@@ -2,7 +2,7 @@ import {
   ExecutorContext,
   ProjectConfiguration,
   stripIndents,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 export const getExecutedProjectConfiguration = (context: ExecutorContext) => {
   if (!context.projectName) {

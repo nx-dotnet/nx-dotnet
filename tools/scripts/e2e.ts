@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { copySync, removeSync } from 'fs-extra';
 
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 import { startCleanVerdaccioInstance } from './local-registry/setup';
 import { publishAll } from './publish-all';
 
@@ -10,7 +10,7 @@ const kill = require('tree-kill');
 export async function setup() {
   await startCleanVerdaccioInstance();
   copySync('.npmrc.local', '.npmrc');
-  publishAll('99.99.99', 'local');
+  await publishAll('99.99.99', 'local');
 }
 
 async function runTest() {

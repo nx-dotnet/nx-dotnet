@@ -31,7 +31,7 @@ async function promptForDesiredVersion(packageName?: string): Promise<string> {
     {
       name: 'choice',
       message: `You have not yet set a version for ${
-        packageName ? packageName : 'this package'
+        packageName ?? 'this package'
       }. Which version would you like to install?`,
     },
   ]);
