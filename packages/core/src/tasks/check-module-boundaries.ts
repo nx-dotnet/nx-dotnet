@@ -12,6 +12,7 @@ import { relative } from 'path';
 import {
   getDependantProjectsForNxProject,
   ModuleBoundaries,
+  ModuleBoundary,
   readConfig,
 } from '@nx-dotnet/utils';
 
@@ -24,16 +25,8 @@ export async function checkModuleBoundariesForProject(
   if (!tags.length) {
     return [];
   }
-  const configuredConstraints = await loadModuleBoundaries(projectRoot);
-  const relevantConstraints = configuredConstraints.filter(
-    (x) =>
-      ((x.sourceTag && tags.includesWithWildcards(x.sourceTag)) ||
-        (x.allSourceTags &&
-          x.allSourceTags.every((tag) => tags.includesWithWildcards(tag)))) &&
-      (!x.onlyDependOnLibsWithTags?.includes('*') ||
-        x.notDependOnLibsWithTags?.length),
-  );
-  if (!relevantConstraints.length) {
+  const constraints = await getProjectConstraints(projectRoot, tags);
+  if (!constraints.length) {
     return [];
   }
 
@@ -44,15 +37,8 @@ export async function checkModuleBoundariesForProject(
     (configuration, name, implicit) => {
       if (implicit) return;
       const dependencyTags = configuration?.tags ?? [];
-      for (const constraint of relevantConstraints) {
-        if (
-          !dependencyTags.some((x) =>
-            constraint.onlyDependOnLibsWithTags?.includesWithWildcards(x),
-          ) ||
-          dependencyTags.some((x) =>
-            constraint.notDependOnLibsWithTags?.includesWithWildcards(x),
-          )
-        ) {
+      for (const constraint of constraints) {
+        if (hasConstraintViolation(constraint, dependencyTags)) {
           violations.push(
             `${project} cannot depend on ${name}. Project tag ${JSON.stringify(
               constraint,
@@ -65,6 +51,30 @@ export async function checkModuleBoundariesForProject(
   return violations;
 }
 
+async function getProjectConstraints(root: string, tags: string[]) {
+  const configuredConstraints = await loadModuleBoundaries(root);
+  return configuredConstraints.filter(
+    (x) =>
+      ((x.sourceTag && hasMatch(tags, x.sourceTag)) ||
+        x.allSourceTags?.every((tag) => hasMatch(tags, tag))) &&
+      (!x.onlyDependOnLibsWithTags?.includes('*') ||
+        x.notDependOnLibsWithTags?.length),
+  );
+}
+
+function hasConstraintViolation(
+  constraint: ModuleBoundary,
+  dependencyTags: string[],
+) {
+  return (
+    !dependencyTags.some((x) =>
+      hasMatch(constraint.onlyDependOnLibsWithTags ?? [], x),
+    ) ||
+    dependencyTags.some((x) =>
+      hasMatch(constraint.notDependOnLibsWithTags ?? [], x),
+    )
+  );
+}
 /**
  * Loads module boundaries from eslintrc or .nx-dotnet.rc.json
  * @param root Which file should be used when pulling from eslint
@@ -122,45 +132,40 @@ function findProjectGivenRoot(
   }
 }
 
-function includesWithWildcards(input: string, pattern: string): boolean {
-  if (pattern.includes('*')) {
-    const searchParts = pattern.split('*');
-    let lastIndex = 0;
-    for (const part of searchParts) {
-      const index = input.indexOf(part, lastIndex);
-      if (index === -1) {
-        return false;
-      }
-      lastIndex = index + part.length;
+const regexMap = new Map<string, RegExp>();
+
+function hasMatch(input: string[], pattern: string): boolean {
+  if (pattern === '*') return true;
+
+  // if the pattern is a regex, check if any of the input strings match the regex
+  if (pattern.startsWith('/') && pattern.endsWith('/')) {
+    let regex = regexMap.get(pattern);
+    if (!regex) {
+      regex = new RegExp(pattern.substring(1, pattern.length - 1));
+      regexMap.set(pattern, regex);
     }
-    return true;
-  } else {
-    return input.includes(pattern);
+    return input.some((t) => regex?.test(t));
   }
+
+  // if the pattern is a glob, check if any of the input strings match the glob prefix
+  if (pattern.includes('*')) {
+    const regex = mapGlobToRegExp(pattern);
+    return input.some((t) => regex.test(t));
+  }
+
+  return input.indexOf(pattern) > -1;
 }
 
-declare global {
-  interface String {
-    includesWithWildcards(pattern: string): boolean;
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Array<T> {
-    includesWithWildcards(pattern: string): boolean;
-  }
+/**
+ * Maps import with wildcards to regex pattern
+ * @param importDefinition
+ * @returns
+ */
+function mapGlobToRegExp(importDefinition: string): RegExp {
+  // we replace all instances of `*`, `**..*` and `.*` with `.*`
+  const mappedWildcards = importDefinition.split(/(?:\.\*)|\*+/).join('.*');
+  return new RegExp(`^${new RegExp(mappedWildcards).source}$`);
 }
-String.prototype.includesWithWildcards = function (
-  this: string,
-  pattern: string,
-): boolean {
-  return includesWithWildcards(this, pattern);
-};
-
-Array.prototype.includesWithWildcards = function (
-  this: string[],
-  pattern: string,
-): boolean {
-  return this.some((x) => includesWithWildcards(x, pattern));
-};
 
 async function main() {
   const parser = await import('yargs-parser');

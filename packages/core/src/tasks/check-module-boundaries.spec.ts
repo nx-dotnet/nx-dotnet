@@ -42,20 +42,20 @@ const MOCK_BOUNDARIES: ModuleBoundaries = [
     sourceTag: 'no-deps',
   },
   {
-    onlyDependOnLibsWithTags: [],
-    allSourceTags: ['--*--'],
-  },
-  {
-    onlyDependOnLibsWithTags: [],
-    sourceTag: '--*--',
-  },
-  {
     onlyDependOnLibsWithTags: ['*baz*'],
-    allSourceTags: ['--foo--'],
+    allSourceTags: ['--f*o--'],
   },
   {
     notDependOnLibsWithTags: ['b*z'],
-    sourceTag: '--foo--',
+    sourceTag: '--f*o--',
+  },
+  {
+    onlyDependOnLibsWithTags: ['/.*baz.*$/'],
+    allSourceTags: ['/^==f[o]{2}==$/'],
+  },
+  {
+    notDependOnLibsWithTags: ['/^b.*z$/'],
+    sourceTag: '/^==f[o]{2}==$/',
   },
 ];
 
@@ -313,7 +313,7 @@ describe('enforce-module-boundaries', () => {
     expect(results).toHaveLength(1);
   });
 
-  it('should support wildcards', async () => {
+  it('should support glob wildcards', async () => {
     const globResults = ['libs/x/x.csproj'];
     jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
 
@@ -334,6 +334,30 @@ describe('enforce-module-boundaries', () => {
         root: 'libs/a',
       },
     });
-    expect(results).toHaveLength(4);
+    expect(results).toHaveLength(2);
+  });
+
+  it('should support regexp', async () => {
+    const globResults = ['libs/x/x.csproj'];
+    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
+
+    vol.fromJSON({
+      'libs/x/x.csproj':
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
+    });
+
+    const results = await checkModuleBoundariesForProject('x', {
+      x: {
+        tags: ['==foo=='],
+        targets: { a: {} },
+        root: 'libs/x',
+      },
+      a: {
+        tags: ['biz'],
+        targets: {},
+        root: 'libs/a',
+      },
+    });
+    expect(results).toHaveLength(2);
   });
 });
