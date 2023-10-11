@@ -12,6 +12,7 @@ import { relative } from 'path';
 import {
   getDependantProjectsForNxProject,
   ModuleBoundaries,
+  ModuleBoundary,
   readConfig,
 } from '@nx-dotnet/utils';
 
@@ -24,14 +25,8 @@ export async function checkModuleBoundariesForProject(
   if (!tags.length) {
     return [];
   }
-  const configuredConstraints = await loadModuleBoundaries(projectRoot);
-  const relevantConstraints = configuredConstraints.filter(
-    (x) =>
-      tags.includes(x.sourceTag) &&
-      (!x.onlyDependOnLibsWithTags?.includes('*') ||
-        x.notDependOnLibsWithTags?.length),
-  );
-  if (!relevantConstraints.length) {
+  const constraints = await getProjectConstraints(projectRoot, tags);
+  if (!constraints.length) {
     return [];
   }
 
@@ -42,15 +37,8 @@ export async function checkModuleBoundariesForProject(
     (configuration, name, implicit) => {
       if (implicit) return;
       const dependencyTags = configuration?.tags ?? [];
-      for (const constraint of relevantConstraints) {
-        if (
-          !dependencyTags.some((x) =>
-            constraint.onlyDependOnLibsWithTags?.includes(x),
-          ) ||
-          dependencyTags.some((x) =>
-            constraint.notDependOnLibsWithTags?.includes(x),
-          )
-        ) {
+      for (const constraint of constraints) {
+        if (hasConstraintViolation(constraint, dependencyTags)) {
           violations.push(
             `${project} cannot depend on ${name}. Project tag ${JSON.stringify(
               constraint,
@@ -63,6 +51,30 @@ export async function checkModuleBoundariesForProject(
   return violations;
 }
 
+async function getProjectConstraints(root: string, tags: string[]) {
+  const configuredConstraints = await loadModuleBoundaries(root);
+  return configuredConstraints.filter(
+    (x) =>
+      ((x.sourceTag && hasMatch(tags, x.sourceTag)) ||
+        x.allSourceTags?.every((tag) => hasMatch(tags, tag))) &&
+      (!x.onlyDependOnLibsWithTags?.includes('*') ||
+        x.notDependOnLibsWithTags?.length),
+  );
+}
+
+function hasConstraintViolation(
+  constraint: ModuleBoundary,
+  dependencyTags: string[],
+) {
+  return (
+    !dependencyTags.some((x) =>
+      hasMatch(constraint.onlyDependOnLibsWithTags ?? [], x),
+    ) ||
+    dependencyTags.some((x) =>
+      hasMatch(constraint.notDependOnLibsWithTags ?? [], x),
+    )
+  );
+}
 /**
  * Loads module boundaries from eslintrc or .nx-dotnet.rc.json
  * @param root Which file should be used when pulling from eslint
@@ -118,6 +130,41 @@ function findProjectGivenRoot(
     );
     process.exit(1);
   }
+}
+
+const regexMap = new Map<string, RegExp>();
+
+function hasMatch(input: string[], pattern: string): boolean {
+  if (pattern === '*') return true;
+
+  // if the pattern is a regex, check if any of the input strings match the regex
+  if (pattern.startsWith('/') && pattern.endsWith('/')) {
+    let regex = regexMap.get(pattern);
+    if (!regex) {
+      regex = new RegExp(pattern.substring(1, pattern.length - 1));
+      regexMap.set(pattern, regex);
+    }
+    return input.some((t) => regex?.test(t));
+  }
+
+  // if the pattern is a glob, check if any of the input strings match the glob prefix
+  if (pattern.includes('*')) {
+    const regex = mapGlobToRegExp(pattern);
+    return input.some((t) => regex.test(t));
+  }
+
+  return input.indexOf(pattern) > -1;
+}
+
+/**
+ * Maps import with wildcards to regex pattern
+ * @param importDefinition
+ * @returns
+ */
+function mapGlobToRegExp(importDefinition: string): RegExp {
+  // we replace all instances of `*`, `**..*` and `.*` with `.*`
+  const mappedWildcards = importDefinition.split(/(?:\.\*)|\*+/).join('.*');
+  return new RegExp(`^${new RegExp(mappedWildcards).source}$`);
 }
 
 async function main() {
