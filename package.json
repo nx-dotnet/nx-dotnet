@@ -26,7 +26,6 @@
     "@swc/helpers": "0.5.2",
     "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "@types/xmldoc": "^1.1.6",
-    "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "core-js": "^3.27.2",
     "eslint": "8.46.0",
