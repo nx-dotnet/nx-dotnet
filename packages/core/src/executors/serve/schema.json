@@ -2,7 +2,7 @@
   "version": 2,
   "$schema": "http://json-schema.org/schema",
   "title": "NxDotnet Serve Executor",
-  "description": "Uses `dotnet run` and chokidar to run a .NET app.",
+  "description": "Uses `dotnet watch` to run a .NET app.",
   "type": "object",
   "properties": {
     "configuration": {

@@ -2,7 +2,7 @@
 
 ## NxDotnet Serve Executor
 
-Uses `dotnet run` and chokidar to run a .NET app.
+Uses `dotnet watch` to run a .NET app.
 
 ## Options
 
