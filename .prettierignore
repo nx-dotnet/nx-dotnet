@@ -4,3 +4,4 @@
 /coverage
 .docusaurus/
 .yarn/
+/.nx/cache

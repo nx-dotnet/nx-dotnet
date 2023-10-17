@@ -6,22 +6,9 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e",
-          "prebuild",
-          "swagger",
-          "codegen",
-          "build:test"
-        ],
-        "accessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "parallel": 3,
         "useLightClient": true
       }
     }
@@ -40,7 +27,8 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "@nx-dotnet/core:build": {
       "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
@@ -52,19 +40,43 @@
       ]
     },
     "codegen": {
-      "dependsOn": ["^swagger", "swagger"]
+      "dependsOn": ["^swagger", "swagger"],
+      "cache": true
     },
     "swagger": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "cache": true
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "cache": true
     },
     "smoke": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js",
+        {
+          "runtime": "npm show nx@latest version"
+        },
+        {
+          "runtime": "npm show @nx-dotnet/core@latest version"
+        }
+      ],
+      "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
+    },
+    "e2e": {
+      "cache": true
+    },
+    "prebuild": {
+      "cache": true
+    },
+    "build:test": {
+      "cache": true
     }
   },
   "namedInputs": {
@@ -84,5 +96,7 @@
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
     "projectSpecificFiles": []
-  }
+  },
+  "nxCloudAccessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
+  "parallel": 3
 }

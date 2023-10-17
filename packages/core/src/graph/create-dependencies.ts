@@ -4,13 +4,22 @@ import {
   RawProjectGraphDependency,
   workspaceRoot,
   NxPluginV1,
+  CreateDependenciesContext,
 } from '@nx/devkit';
 
 import { getDependenciesFromXmlFile } from '@nx-dotnet/utils';
 
 import { parse } from 'node:path';
 
-export const createDependencies: CreateDependencies = (ctx) => {
+export const createDependencies: CreateDependencies = (
+  ctxOrOpts: CreateDependenciesContext | unknown,
+  maybeCtx: CreateDependenciesContext | undefined,
+) => {
+  // In Nx version 16.8 - 16.10, CreateDependencies had a single option - the context.
+  // In v17, the signature was updated to pass options first, and context second.
+  const ctx: CreateDependenciesContext =
+    maybeCtx ?? (ctxOrOpts as CreateDependenciesContext);
+
   let dependencies: RawProjectGraphDependency[] = [];
   const rootMap = Object.fromEntries(
     Object.entries(ctx.projects).map(([name, project]) => [project.root, name]),

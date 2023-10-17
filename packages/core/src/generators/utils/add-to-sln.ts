@@ -1,8 +1,4 @@
-import {
-  joinPathFragments,
-  readWorkspaceConfiguration,
-  Tree,
-} from '@nx/devkit';
+import { joinPathFragments, Tree } from '@nx/devkit';
 
 import { parse, relative, resolve } from 'path';
 
