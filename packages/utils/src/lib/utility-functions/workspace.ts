@@ -92,7 +92,9 @@ export function getDependenciesFromXmlFile(
     workspaceRoot,
     absoluteNetProjectFilePath,
   );
-  const hostProjectDirectory = normalizePath(dirname(netProjectFilePath));
+  const hostProjectDirectory = normalizePath(
+    dirname(absoluteNetProjectFilePath),
+  );
 
   const xml: XmlDocument | null = tryGetXmlDocument(absoluteNetProjectFilePath);
 
@@ -104,11 +106,12 @@ export function getDependenciesFromXmlFile(
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
       const includeFilePath = normalizePath(x.attr['Include']);
       const implicit = x.attr['ReferenceOutputAssembly'] === 'false';
+      const absoluteIncludedPath = getAbsolutePath(
+        includeFilePath,
+        hostProjectDirectory,
+      );
       const workspaceFilePath = normalizePath(
-        relative(
-          workspaceRoot,
-          getAbsolutePath(includeFilePath, hostProjectDirectory),
-        ),
+        relative(workspaceRoot, absoluteIncludedPath),
       );
 
       let potentialTargetRoot = dirname(workspaceFilePath);

@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NxjsonConfig",
+  "title": "@nx-dotnet/core:nxjson-config",
+  "description": "Moves configuration from .nx-dotnet.rc to nx.json",
+  "type": "object",
+  "properties": {}
+}

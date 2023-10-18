@@ -1,6 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "nx-dotnet",
   "affected": {
     "defaultBase": "master"
   },
@@ -17,7 +16,17 @@
     "appsDir": "",
     "libsDir": ""
   },
-  "plugins": ["@nx-dotnet/core"],
+  "plugins": [
+    {
+      "plugin": "@nx-dotnet/core",
+      "options": {
+        "nugetPackages": {
+          "Swashbuckle.AspNetCore": "6.5.0"
+        },
+        "inferProjects": false
+      }
+    }
+  ],
   "generators": {
     "@nx-dotnet/nxdoc:generate-docs": {
       "outputDirectory": "docs",

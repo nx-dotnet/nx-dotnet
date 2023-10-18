@@ -8,9 +8,9 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
+    "@nx/devkit": "16.9.1",
     "@nx-dotnet/dotnet": "1.23.0",
     "@nx-dotnet/utils": "1.23.0",
-    "@nx/devkit": "16.9.1",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "semver": "7.5.4",
