@@ -4,7 +4,7 @@ import { NX_VERSION, Tree, output } from '@nx/devkit';
 import moveConfigToNxJson from '../../generators/nxjson-config/generator';
 import { major } from 'semver';
 
-export default function update(host: Tree) {
+export default async function update(host: Tree) {
   if (major(NX_VERSION) < 17) {
     output.warn({
       title: 'Skipping migration of nx-dotnet config.',
@@ -16,6 +16,6 @@ export default function update(host: Tree) {
       ],
     });
   } else {
-    moveConfigToNxJson(host);
+    await moveConfigToNxJson(host);
   }
 }

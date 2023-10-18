@@ -111,7 +111,6 @@ jest.mock('fs', () => require('memfs').fs);
 
 describe('enforce-module-boundaries', () => {
   beforeEach(() => {
-    const appTree = createTreeWithEmptyWorkspace();
     jest.spyOn(ESLintNamespace, 'ESLint').mockReturnValue({
       calculateConfigForFile: jest.fn().mockResolvedValue({
         rules: {
@@ -122,9 +121,6 @@ describe('enforce-module-boundaries', () => {
         },
       }),
     } as unknown as ESLintNamespace.ESLint);
-    writeJson<NxDotnetConfig>(appTree, CONFIG_FILE_PATH, {
-      nugetPackages: {},
-    });
   });
 
   afterEach(() => {

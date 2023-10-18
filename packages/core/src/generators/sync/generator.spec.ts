@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import { Tree, updateNxJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { Answers, prompt } from 'inquirer';
@@ -18,6 +18,9 @@ describe('sync generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    updateNxJson(appTree, {
+      plugins: ['@nx-dotnet/core'],
+    });
     updateConfig(appTree, { nugetPackages: {} });
 
     (prompt as jest.MockedFunction<typeof prompt>)

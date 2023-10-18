@@ -3,11 +3,12 @@
   "main": "src/index.js",
   "private": false,
   "dependencies": {
-    "@nx/devkit": "16.9.1",
+    "@nx/devkit": "17.0.0-rc.0",
     "fast-glob": "3.2.12",
     "rimraf": "^3.0.2",
     "xmldoc": "^1.1.2",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.0",
+    "semver": "7.5.4"
   },
   "peerDependencies": {
     "nx": ">=16.0.0-beta.1"

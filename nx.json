@@ -3,15 +3,6 @@
   "affected": {
     "defaultBase": "master"
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "options": {
-        "canTrackAnalytics": false,
-        "showUsageWarnings": true,
-        "useLightClient": true
-      }
-    }
-  },
   "workspaceLayout": {
     "appsDir": "",
     "libsDir": ""

@@ -1,4 +1,4 @@
-import { addProjectConfiguration, Tree } from '@nx/devkit';
+import { addProjectConfiguration, Tree, updateNxJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { Answers, prompt } from 'inquirer';
@@ -28,6 +28,9 @@ describe('nuget-reference generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    updateNxJson(tree, {
+      plugins: ['@nx-dotnet/core'],
+    });
     addProjectConfiguration(tree, 'test', {
       root: 'libs/test',
     });

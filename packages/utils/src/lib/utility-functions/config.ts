@@ -91,19 +91,24 @@ export function readConfigFromNxJson(host?: Tree): NxDotnetConfig | null {
   if (major(NX_VERSION) < 17) {
     return null;
   }
-  const nxJson: NxJsonConfiguration | null = host
-    ? readNxJson(host)
-    : readJsonFile(`${workspaceRoot}/nx.json`);
 
-  const plugin = nxJson?.plugins?.find((p) =>
-    typeof p === 'string'
-      ? p === '@nx-dotnet/core'
-      : p.plugin === '@nx-dotnet/core',
-  );
+  try {
+    const nxJson: NxJsonConfiguration | null = host
+      ? readNxJson(host)
+      : readJsonFile(`${workspaceRoot}/nx.json`);
 
-  if (!plugin || typeof plugin === 'string') {
+    const plugin = nxJson?.plugins?.find((p) =>
+      typeof p === 'string'
+        ? p === '@nx-dotnet/core'
+        : p.plugin === '@nx-dotnet/core',
+    );
+
+    if (!plugin || typeof plugin === 'string') {
+      return null;
+    } else {
+      return plugin.options as unknown as NxDotnetConfig;
+    }
+  } catch {
     return null;
-  } else {
-    return plugin.options as unknown as NxDotnetConfig;
   }
 }
