@@ -1,14 +1,18 @@
-import { ProjectsConfigurations } from '@nx/devkit';
+import { ProjectsConfigurations, readJsonFile } from '@nx/devkit';
 
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
+import * as yargs from 'yargs';
 
 import { readJson, readProjectsConfigurations } from '../../utils';
 import { PatchPackageVersions } from '../patch-package-versions';
+import { parse } from 'semver';
 
-export async function publishAll(version: string, tag = 'latest') {
+export async function publishAll(version: string, tag?: string) {
   const workspace: ProjectsConfigurations = await readProjectsConfigurations();
   const rootPkg = readJson('package.json');
+
+  await PatchPackageVersions(version, 'all', false, true);
 
   execSync(
     'npx nx run-many --all --target="build" --exclude="docs-site,tools/**,demo/**"',
@@ -17,7 +21,8 @@ export async function publishAll(version: string, tag = 'latest') {
     },
   );
 
-  PatchPackageVersions(version, 'all', false);
+  const channelTag = parse(version)?.prerelease?.[0] as string | undefined;
+  tag ??= channelTag ?? 'latest';
 
   const projects = Object.values(workspace.projects);
   const environment = {
@@ -31,17 +36,62 @@ export async function publishAll(version: string, tag = 'latest') {
     }
     const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
     if (existsSync(`${outputPath}/package.json`)) {
-      execSync(`npm publish ${outputPath} --tag=${tag} --access=public`, {
-        stdio: 'inherit',
-        env: environment,
-      });
+      const { private: isPrivate, name } = readJsonFile<{
+        private?: boolean;
+        name: string;
+      }>(`${outputPath}/package.json`);
+      if (!isPrivate) {
+        execSync(`npm publish ${outputPath} --tag=${tag} --access=public`, {
+          stdio: 'inherit',
+          env: environment,
+        });
+
+        if (channelTag && channelTag !== tag) {
+          execSync(`npm dist-tag add ${name}@${version} ${channelTag}`, {
+            stdio: 'inherit',
+            env: environment,
+          });
+        }
+      }
     }
   }
 }
 
+async function main() {
+  return yargs(process.argv.slice(2))
+    .version(false)
+    .command({
+      command: '$0 <version> [tag]',
+      builder: (yargs) =>
+        yargs
+          .positional('version', {
+            required: true,
+            type: 'string',
+            description: 'Version to publish',
+          })
+          .positional('tag', {
+            required: false,
+            type: 'string',
+            description:
+              'Tag to publish. If not specified, and the version is a prerelease, the tag will be the prerelease name. Otherwise, it will be "latest".',
+          }),
+      handler: async ({ version, tag }) => {
+        await publishAll(version!, tag).catch((err) => {
+          console.error(err);
+          process.exit(1);
+        });
+      },
+    })
+    .parse();
+}
+
 if (require.main === module) {
-  publishAll(process.argv[2], process.argv[3] || 'latest').catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
+  main()
+    .then(() => {
+      process.exit(0);
+    })
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    });
 }

@@ -46,8 +46,7 @@ export async function moveConfigToNxJson(tree: Tree) {
 
   nxJson.plugins[pluginIndex] = {
     plugin,
-    // TODO: remove cast after Nx typing fixed.
-    options: configFileConfig as unknown as Record<string, unknown>,
+    options: configFileConfig,
   };
 
   tree.delete(CONFIG_FILE_PATH);

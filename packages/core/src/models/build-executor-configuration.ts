@@ -1,4 +1,4 @@
-import { TargetConfiguration } from '@nx/devkit';
+import { NX_VERSION, TargetConfiguration } from '@nx/devkit';
 import { lt } from 'semver';
 import { BuildExecutorSchema } from '../executors/build/schema';
 
@@ -9,9 +9,8 @@ export function GetBuildExecutorConfiguration(
   projectRoot: string,
 ): BuildExecutorConfiguration {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const nxVersion = require('nx/package.json').version;
 
-  const outputs = lt(nxVersion, '15.0.0-beta.0')
+  const outputs = lt(NX_VERSION, '15.0.0-beta.0')
     ? [`dist/${projectRoot}`, `dist/intermediates/${projectRoot}`]
     : [
         `{workspaceRoot}/dist/${projectRoot}`,

@@ -40,21 +40,21 @@ jest.mock('fs', () => ({
 }));
 
 describe('nx-dotnet test project generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
   let dotnetClient: DotNetClient;
   let options: NormalizedSchema;
   let testProjectName: string;
 
   beforeEach(async () => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    appTree.write('package.json', '{}');
-    await initGenerator(appTree, null, new DotNetClient(mockDotnetFactory()));
-    addProjectConfiguration(appTree, 'domain-existing-app', {
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    tree.write('package.json', '{}');
+    await initGenerator(tree, null, new DotNetClient(mockDotnetFactory()));
+    addProjectConfiguration(tree, 'domain-existing-app', {
       root: 'apps/domain/existing-app',
       projectType: 'application',
       targets: {},
     });
-    addProjectConfiguration(appTree, 'domain-existing-lib', {
+    addProjectConfiguration(tree, 'domain-existing-lib', {
       root: 'libs/domain/existing-lib',
       projectType: 'library',
       targets: {},
@@ -75,7 +75,7 @@ describe('nx-dotnet test project generator', () => {
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
     const packageJson = { scripts: {} };
-    writeJson(appTree, 'package.json', packageJson);
+    writeJson(tree, 'package.json', packageJson);
 
     options = {
       name: 'domain-existing-app',
@@ -100,14 +100,14 @@ describe('nx-dotnet test project generator', () => {
   });
 
   it('should include test target', async () => {
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, testProjectName);
+    await GenerateTestProject(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
     expect(config.targets?.test).toBeDefined();
   });
 
   it('should set outputs for build target', async () => {
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, testProjectName);
+    await GenerateTestProject(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
     const outputPath = config.targets?.build.outputs?.[0];
     expect(outputPath).toEqual(
       '{workspaceRoot}/dist/apps/domain/existing-app-test',
@@ -115,22 +115,22 @@ describe('nx-dotnet test project generator', () => {
   });
 
   it('should include lint target', async () => {
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, testProjectName);
+    await GenerateTestProject(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
     expect(config.targets?.lint).toBeDefined();
   });
 
   it('should determine directory from existing project', async () => {
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, testProjectName);
+    await GenerateTestProject(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
     expect(config.root).toBe('apps/domain/existing-app-test');
   });
 
   it('should determine directory from existing project and suffix', async () => {
     options.testProjectNameSuffix = 'integration-tests';
     testProjectName = options.name + '-' + options.testProjectNameSuffix;
-    await GenerateTestProject(appTree, options, dotnetClient);
-    const config = readProjectConfiguration(appTree, testProjectName);
+    await GenerateTestProject(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
     expect(config.root).toBe('apps/domain/existing-app-integration-tests');
   });
 });

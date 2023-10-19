@@ -1,4 +1,9 @@
-import { readProjectConfiguration, Tree, writeJson } from '@nx/devkit';
+import {
+  readNxJson,
+  readProjectConfiguration,
+  Tree,
+  writeJson,
+} from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
@@ -20,16 +25,20 @@ jest.mock('@nx-dotnet/utils', () => ({
 jest.mock('./generate-test-project');
 
 describe('nx-dotnet project generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
   let dotnetClient: DotNetClient;
   let options: NxDotnetProjectGeneratorSchema;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
-    const packageJson = { scripts: {}, devDependencies: {} };
-    writeJson(appTree, 'package.json', packageJson);
+    const packageJson = {
+      name: '@proj/source',
+      scripts: {},
+      devDependencies: {},
+    };
+    writeJson(tree, 'package.json', packageJson);
 
     options = {
       name: 'test',
@@ -64,26 +73,26 @@ describe('nx-dotnet project generator', () => {
   });
 
   it('should run successfully for libraries', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'library');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'library');
+    const config = readProjectConfiguration(tree, 'test');
     expect(config).toBeDefined();
   });
 
   it('should not include serve target for libraries', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'library');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'library');
+    const config = readProjectConfiguration(tree, 'test');
     expect(config.targets?.serve).not.toBeDefined();
   });
 
   it('should run successfully for applications', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(tree, 'test');
     expect(config).toBeDefined();
   });
 
   it('should set outputs for build target', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(tree, 'test');
     const outputPath = config.targets?.build.outputs || [];
 
     expect(outputPath[0]).toEqual('{workspaceRoot}/dist/apps/test');
@@ -93,8 +102,8 @@ describe('nx-dotnet project generator', () => {
   });
 
   it('should include serve target for applications', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(tree, 'test');
     expect(config.targets?.serve).toBeDefined();
   });
 
@@ -104,26 +113,26 @@ describe('nx-dotnet project generator', () => {
     ).GenerateTestProject;
 
     options.testTemplate = 'nunit';
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(tree, 'test');
     expect(config.targets?.serve).toBeDefined();
     expect(generateTestProject).toHaveBeenCalledWith(
-      appTree,
+      tree,
       expect.objectContaining(options),
       dotnetClient,
     );
   });
 
   it('should include lint target', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, 'test');
+    await GenerateProject(tree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(tree, 'test');
     expect(config.targets?.lint).toBeDefined();
   });
 
   it('should prepend directory name to project name', async () => {
     options.directory = 'sub-dir';
     const spy = jest.spyOn(dotnetClient, 'new');
-    await GenerateProject(appTree, options, dotnetClient, 'library');
+    await GenerateProject(tree, options, dotnetClient, 'library');
     const [, dotnetOptions] = spy.mock.calls[spy.mock.calls.length - 1];
     const nameFlag = dotnetOptions?.name;
     expect(nameFlag).toBe('Proj.SubDir.Test');
@@ -133,7 +142,7 @@ describe('nx-dotnet project generator', () => {
     options.__unparsed__ = ['--foo', 'bar'];
     options.args = ['--help'];
     const spy = jest.spyOn(dotnetClient, 'new');
-    await GenerateProject(appTree, options, dotnetClient, 'library');
+    await GenerateProject(tree, options, dotnetClient, 'library');
     const [, , additionalArguments] = spy.mock.calls[spy.mock.calls.length - 1];
     expect(additionalArguments).toEqual(
       expect.arrayContaining(['--help', '--foo', 'bar']),
@@ -146,18 +155,23 @@ describe('nx-dotnet project generator', () => {
       options.name = 'api';
       options.skipSwaggerLib = false;
       options.template = 'webapi';
-      await GenerateProject(appTree, options, dotnetClient, 'application');
-      expect(readProjectConfiguration(appTree, options.name)).toBeDefined();
+      await GenerateProject(tree, options, dotnetClient, 'application');
+      expect(readProjectConfiguration(tree, options.name)).toBeDefined();
       expect(
-        readProjectConfiguration(appTree, `${options.name}-swagger`),
+        readProjectConfiguration(tree, `${options.name}-swagger`),
       ).toBeDefined();
+
+      const nxJson = readNxJson(tree);
+
+      expect(nxJson?.targetDefaults?.codegen.cache).toBeTruthy();
+      expect(nxJson?.targetDefaults?.swagger.cache).toBeTruthy();
     });
   });
 
   it('should create .gitignore', async () => {
-    await GenerateProject(appTree, options, dotnetClient, 'application');
-    const config = readProjectConfiguration(appTree, options.name);
-    const gitignoreValue = appTree
+    await GenerateProject(tree, options, dotnetClient, 'application');
+    const config = readProjectConfiguration(tree, options.name);
+    const gitignoreValue = tree
       .read(path.join(config.root, '.gitignore'))
       ?.toString();
     expect(gitignoreValue).toBeTruthy();

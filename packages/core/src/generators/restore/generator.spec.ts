@@ -14,14 +14,14 @@ jest.mock('../../../../utils/src/lib/utility-functions/workspace');
 jest.mock('inquirer');
 
 describe('restore generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    updateNxJson(appTree, {
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    updateNxJson(tree, {
       plugins: ['@nx-dotnet/core'],
     });
-    updateConfig(appTree, { nugetPackages: {} });
+    updateConfig(tree, { nugetPackages: {} });
 
     (prompt as jest.MockedFunction<typeof prompt>)
       .mockReset()
@@ -35,7 +35,7 @@ describe('restore generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, null);
+    await generator(tree, null);
     expect(true).toBeTruthy();
   });
 });

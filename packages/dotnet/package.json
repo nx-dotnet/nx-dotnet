@@ -3,7 +3,7 @@
   "private": false,
   "main": "src/index.js",
   "dependencies": {
-    "@nx-dotnet/utils": "*",
+    "@nx-dotnet/utils": "1.23.0",
     "semver": "7.5.4",
     "tslib": "^2.5.0"
   },

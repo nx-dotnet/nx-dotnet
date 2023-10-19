@@ -42,7 +42,6 @@ describe('Build Executor', () => {
             },
           },
         },
-        npmScope: 'unit-tests',
       },
       isVerbose: false,
     };

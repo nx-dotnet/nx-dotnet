@@ -56,23 +56,21 @@ async function runTest() {
     } else if (selectedProjects) {
       execSync(
         selectedProjects.split(',').length > 1
-          ? `yarn nx run-many --target=e2e --projects=${selectedProjects} ${testNamePattern}`
-          : `yarn nx run ${selectedProjects}:e2e ${testNamePattern}`,
+          ? `yarn nx run-many --target=e2e --projects=${selectedProjects} ${testNamePattern} --output-style=stream`
+          : `yarn nx run ${selectedProjects}:e2e ${testNamePattern} --output-style=stream`,
         {
           stdio: [0, 1, 2],
           env: {
             ...process.env,
             NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
             NX_TERMINAL_CAPTURE_STDERR: 'true',
-            NX_CACHE_WORKSPACE_CONFIG: 'false',
-            NX_PROJECT_GLOB_CACHE: 'false',
             NPM_CONFIG_REGISTRY: 'http://localhost:4872',
             YARN_REGISTRY: 'http://localhost:4872',
           },
         },
       );
     } else {
-      execSync(`yarn nx run-many --target=e2e --all`, {
+      execSync(`yarn nx run-many --target=e2e --all --output-style=stream`, {
         stdio: [0, 1, 2],
         env: {
           ...process.env,

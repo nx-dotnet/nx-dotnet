@@ -10,7 +10,7 @@ import { NxDotnetGeneratorSchema } from './schema';
 jest.mock('../utils/generate-test-project');
 
 describe('nx-dotnet test generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
   let dotnetClient: DotNetClient;
 
   const options: NxDotnetGeneratorSchema = {
@@ -21,8 +21,8 @@ describe('nx-dotnet test generator', () => {
   };
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    addProjectConfiguration(appTree, 'existing', {
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    addProjectConfiguration(tree, 'existing', {
       root: 'apps/existing',
       targets: {},
       projectType: 'application',
@@ -31,7 +31,7 @@ describe('nx-dotnet test generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, options, dotnetClient);
+    await generator(tree, options, dotnetClient);
   });
 
   it('should call project generator with application project type', async () => {
@@ -39,7 +39,7 @@ describe('nx-dotnet test generator', () => {
       mockedProjectGenerator as jest.Mocked<typeof mockedProjectGenerator>
     ).GenerateTestProject;
 
-    await generator(appTree, options, dotnetClient);
+    await generator(tree, options, dotnetClient);
     expect(projectGenerator).toHaveBeenCalled();
     expect(projectGenerator.mock.calls[0][1].projectType).toEqual(
       'application',
