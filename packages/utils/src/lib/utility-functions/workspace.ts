@@ -87,9 +87,8 @@ export function getDependenciesFromXmlFile(
   const found: RawProjectGraphDependency[] = [];
 
   const absoluteNetProjectFilePath = getAbsolutePath(filePath, workspaceRoot);
-  const netProjectFilePath = relative(
-    workspaceRoot,
-    absoluteNetProjectFilePath,
+  const netProjectFilePath = normalizePath(
+    relative(workspaceRoot, absoluteNetProjectFilePath),
   );
   const hostProjectDirectory = normalizePath(
     dirname(absoluteNetProjectFilePath),
