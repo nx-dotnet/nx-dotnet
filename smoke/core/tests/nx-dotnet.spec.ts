@@ -60,7 +60,7 @@ describe('nx-dotnet smoke', () => {
       'npm i --save-dev @nx-dotnet/core',
       await execAsyncOptions(),
     );
-  });
+  }, 20 * 60 * 1000); // 20 minutes
 
   afterAll(async () => {
     cleanup();
