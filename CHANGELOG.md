@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.23.0...v2.0.0) (2023-10-20)
+
+### Bug Fixes
+
+- **core:** move generator not updating paths correctly ([#767](https://github.com/nx-dotnet/nx-dotnet/issues/767)) ([6398a06](https://github.com/nx-dotnet/nx-dotnet/commit/6398a06709d49c8b137c19ab48124a0e714b04a9))
+
+### Features
+
+- **core:** migrate to v16 and nx plugin API v2 ([#763](https://github.com/nx-dotnet/nx-dotnet/issues/763)) ([4451e8a](https://github.com/nx-dotnet/nx-dotnet/commit/4451e8adf96b4d5cc4284f24a3fc59b2d250cbf9))
+- **core:** nx 17 support ([#778](https://github.com/nx-dotnet/nx-dotnet/issues/778)) ([33344cd](https://github.com/nx-dotnet/nx-dotnet/commit/33344cd461426e7a12db2572b039246e17eb39d2))
+- **core:** support allSourceTags ([#768](https://github.com/nx-dotnet/nx-dotnet/issues/768)) and wildcards in check-module-boundaries.js ([#771](https://github.com/nx-dotnet/nx-dotnet/issues/771)) ([b55c597](https://github.com/nx-dotnet/nx-dotnet/commit/b55c597a0ad3b81f272af213fe0b57e1d2554999))
+
+### BREAKING CHANGES
+
+- **core:** Drops Nx v15 support
+
 # [1.23.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.22.0...v1.23.0) (2023-09-20)
 
 ### Bug Fixes
