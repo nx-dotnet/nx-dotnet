@@ -61,6 +61,12 @@
         },
         {
           "runtime": "npm show @nx-dotnet/core@latest version"
+        },
+        {
+          "runtime": "dotnet -v"
+        },
+        {
+          "runtime": "node -e 'console.log(process.platform, process.arch)'"
         }
       ],
       "cache": true
