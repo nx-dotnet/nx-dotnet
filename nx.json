@@ -63,7 +63,7 @@
           "runtime": "npm show @nx-dotnet/core@latest version"
         },
         {
-          "runtime": "dotnet -v"
+          "runtime": "dotnet --version"
         },
         {
           "runtime": "node -e 'console.log(process.platform, process.arch)'"
