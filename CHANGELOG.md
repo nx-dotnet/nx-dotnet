@@ -1,3 +1,9 @@
+## [2.0.1](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.0...v2.0.1) (2023-10-20)
+
+### Bug Fixes
+
+- **core:** createDependencies should work on windows ([#782](https://github.com/nx-dotnet/nx-dotnet/issues/782)) ([472fedc](https://github.com/nx-dotnet/nx-dotnet/commit/472fedca4b8d1a01ce97973fa94126b8f882ef50))
+
 # [2.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.23.0...v2.0.0) (2023-10-20)
 
 ### Bug Fixes
