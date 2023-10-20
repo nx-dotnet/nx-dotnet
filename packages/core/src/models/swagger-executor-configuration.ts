@@ -10,7 +10,7 @@ export function getSwaggerExecutorConfiguration(
 ): SwaggerExecutorConfiguration {
   return {
     executor: '@nx-dotnet/core:update-swagger',
-    outputs: ['options.output'],
+    outputs: [`{workspaceRoot}/${outputDirectory}`],
     options: {
       output: outputDirectory,
     },

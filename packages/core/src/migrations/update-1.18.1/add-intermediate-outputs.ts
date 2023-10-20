@@ -14,9 +14,6 @@ import {
 import { gt } from 'semver';
 import { XmlDocument } from 'xmldoc';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nxVersion = require('nx/package.json').version;
-
 export default function update(host: Tree) {
   const projects = getProjects(host);
   const directoryBuildPropsExists = host.exists('Directory.Build.props');

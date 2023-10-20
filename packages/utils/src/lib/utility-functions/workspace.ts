@@ -10,7 +10,6 @@ import {
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { NX_PREFIX } from 'nx/src/utils/logger';
 import { dirname, relative, resolve } from 'path';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
@@ -92,7 +91,9 @@ export function getDependenciesFromXmlFile(
     workspaceRoot,
     absoluteNetProjectFilePath,
   );
-  const hostProjectDirectory = normalizePath(dirname(netProjectFilePath));
+  const hostProjectDirectory = normalizePath(
+    dirname(absoluteNetProjectFilePath),
+  );
 
   const xml: XmlDocument | null = tryGetXmlDocument(absoluteNetProjectFilePath);
 
@@ -104,11 +105,12 @@ export function getDependenciesFromXmlFile(
     itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
       const includeFilePath = normalizePath(x.attr['Include']);
       const implicit = x.attr['ReferenceOutputAssembly'] === 'false';
+      const absoluteIncludedPath = getAbsolutePath(
+        includeFilePath,
+        hostProjectDirectory,
+      );
       const workspaceFilePath = normalizePath(
-        relative(
-          workspaceRoot,
-          getAbsolutePath(includeFilePath, hostProjectDirectory),
-        ),
+        relative(workspaceRoot, absoluteIncludedPath),
       );
 
       let potentialTargetRoot = dirname(workspaceFilePath);
@@ -184,7 +186,7 @@ export function inlineNxTokens(value: string, project: ProjectConfiguration) {
   }
   if (value.includes('{workspaceRoot}')) {
     throw new Error(
-      `${NX_PREFIX} The {workspaceRoot} token is only valid at the beginning of an output.`,
+      `[nx-dotnet] The {workspaceRoot} token is only valid at the beginning of an output.`,
     );
   }
   value = value.replace('{projectRoot}', project.root);

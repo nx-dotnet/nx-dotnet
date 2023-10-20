@@ -76,6 +76,12 @@
       "schema": "./src/generators/preset/schema.json",
       "description": "preset generator",
       "hidden": true
+    },
+    "nxjson-config": {
+      "factory": "./src/generators/nxjson-config/generator",
+      "schema": "./src/generators/nxjson-config/schema.json",
+      "description": "Moves configuration from .nx-dotnet.rc to nx.json",
+      "hidden": true
     }
   }
 }

@@ -1,16 +1,46 @@
 import {
   CreateDependencies,
+  CreateDependenciesContext,
+  NxPluginV1,
   ProjectGraphBuilder,
   RawProjectGraphDependency,
   workspaceRoot,
-  NxPluginV1,
 } from '@nx/devkit';
-
-import { getDependenciesFromXmlFile } from '@nx-dotnet/utils';
-
 import { parse } from 'node:path';
 
-export const createDependencies: CreateDependencies = (ctx) => {
+import {
+  getDependenciesFromXmlFile,
+  NxDotnetConfig,
+  readConfig,
+} from '@nx-dotnet/utils';
+
+// Between Nx versions 16.8 and 17, the signature of `CreateDependencies` changed.
+// It used to only consist of the context, but now it also includes the options.
+// The options were inserted as the first parameter, and the context was moved to the second.
+// The following types are used to support both signatures.
+type CreateDependenciesV16 = (
+  ctx: Parameters<CreateDependencies>[1],
+  _: undefined,
+) => ReturnType<CreateDependencies>;
+
+type CreateDependenciesCompat<T> = (
+  p0:
+    | Parameters<CreateDependencies<T>>[0]
+    | Parameters<CreateDependenciesV16>[0],
+  p1:
+    | Parameters<CreateDependencies<T>>[1]
+    | Parameters<CreateDependenciesV16>[1],
+) => ReturnType<CreateDependencies<T>>;
+
+export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
+  ctxOrOpts: CreateDependenciesContext | NxDotnetConfig | undefined,
+  maybeCtx: CreateDependenciesContext | undefined,
+) => {
+  // In Nx version 16.8 - 16.10, CreateDependencies had a single option - the context.
+  // In v17, the signature was updated to pass options first, and context second.
+  const ctx: CreateDependenciesContext =
+    maybeCtx ?? (ctxOrOpts as CreateDependenciesContext);
+
   let dependencies: RawProjectGraphDependency[] = [];
   const rootMap = Object.fromEntries(
     Object.entries(ctx.projects).map(([name, project]) => [project.root, name]),
@@ -32,7 +62,7 @@ export const createDependencies: CreateDependencies = (ctx) => {
 export const processProjectGraph: Required<NxPluginV1>['processProjectGraph'] =
   async (g, ctx) => {
     const builder = new ProjectGraphBuilder(g);
-    const deps = await createDependencies({
+    const deps = await createDependencies(readConfig(), {
       ...ctx,
       fileMap: {
         nonProjectFiles: [],

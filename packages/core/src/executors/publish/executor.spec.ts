@@ -45,7 +45,6 @@ describe('Publish Executor', () => {
             },
           },
         },
-        npmScope: 'unit-tests',
       },
       isVerbose: false,
     };

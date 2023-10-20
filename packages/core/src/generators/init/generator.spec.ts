@@ -13,45 +13,45 @@ jest.mock('@nx-dotnet/utils', () => ({
 }));
 
 describe('init generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
   let dotnetClient: DotNetClient;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
     const packageJson = { scripts: {} };
-    writeJson(appTree, 'package.json', packageJson);
+    writeJson(tree, 'package.json', packageJson);
   });
 
   it('should create config', async () => {
-    await generator(appTree, null, dotnetClient);
-    const config = appTree.isFile(CONFIG_FILE_PATH);
+    await generator(tree, null, dotnetClient);
+    const config = tree.isFile(CONFIG_FILE_PATH);
     expect(config).toBeTruthy();
   });
 
   it('should put dependency array inside config', async () => {
-    await generator(appTree, null, dotnetClient);
-    const config: NxDotnetConfig = readJson(appTree, CONFIG_FILE_PATH);
+    await generator(tree, null, dotnetClient);
+    const config: NxDotnetConfig = readJson(tree, CONFIG_FILE_PATH);
     expect(config.nugetPackages).toBeDefined();
   });
 
   it('should create tool manifest', async () => {
     const spy = jest.spyOn(dotnetClient, 'new');
-    await generator(appTree, null, dotnetClient);
+    await generator(tree, null, dotnetClient);
     expect(spy).toHaveBeenCalledWith('tool-manifest');
   });
 
   it('should not create tool manifest if it exists', async () => {
-    appTree.write('.config/dotnet-tools.json', '');
+    tree.write('.config/dotnet-tools.json', '');
     const spy = jest.spyOn(dotnetClient, 'new');
-    await generator(appTree, null, dotnetClient);
+    await generator(tree, null, dotnetClient);
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('should add restore to prepare script', async () => {
-    await generator(appTree, null, dotnetClient);
-    const updated = readJson(appTree, 'package.json');
+    await generator(tree, null, dotnetClient);
+    const updated = readJson(tree, 'package.json');
     expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
   });
 
@@ -59,9 +59,9 @@ describe('init generator', () => {
     const packageJson = {
       scripts: { prepare: 'nx g @nx-dotnet/core:restore' },
     };
-    writeJson(appTree, 'package.json', packageJson);
-    await generator(appTree, null, dotnetClient);
-    const updated = readJson(appTree, 'package.json');
+    writeJson(tree, 'package.json', packageJson);
+    await generator(tree, null, dotnetClient);
+    const updated = readJson(tree, 'package.json');
     expect(updated.scripts.prepare).toBe('nx g @nx-dotnet/core:restore');
   });
 
@@ -69,34 +69,34 @@ describe('init generator', () => {
     const packageJson = {
       scripts: { prepare: 'npm run clean && npm run build' },
     };
-    writeJson(appTree, 'package.json', packageJson);
-    await generator(appTree, null, dotnetClient);
-    const updated = readJson(appTree, 'package.json');
+    writeJson(tree, 'package.json', packageJson);
+    await generator(tree, null, dotnetClient);
+    const updated = readJson(tree, 'package.json');
     expect(updated.scripts.prepare).toBe(
       'npm run clean && npm run build && nx g @nx-dotnet/core:restore',
     );
   });
 
   it('should add directory build props and targets files', async () => {
-    await generator(appTree, null, dotnetClient);
-    const hasPropsFile = appTree.isFile('Directory.Build.props');
+    await generator(tree, null, dotnetClient);
+    const hasPropsFile = tree.isFile('Directory.Build.props');
     expect(hasPropsFile).toBeTruthy();
 
-    const hasTargetsFile = appTree.isFile('Directory.Build.targets');
+    const hasTargetsFile = tree.isFile('Directory.Build.targets');
     expect(hasTargetsFile).toBeTruthy();
-    const hasPreBuildTask = appTree
+    const hasPreBuildTask = tree
       .read('Directory.Build.targets', 'utf-8')
       ?.includes('check-module-boundaries.js');
     expect(hasPreBuildTask).toBeTruthy();
   });
 
   it('should not add directory build props and targets files if props file exists', async () => {
-    appTree.write('Directory.Build.props', '');
+    tree.write('Directory.Build.props', '');
     const spy = jest.spyOn(devkit, 'generateFiles');
-    await generator(appTree, null, dotnetClient);
+    await generator(tree, null, dotnetClient);
 
     expect(spy).not.toHaveBeenCalled();
-    const hasTargetsFile = appTree.isFile('Directory.Build.targets');
+    const hasTargetsFile = tree.isFile('Directory.Build.targets');
     expect(hasTargetsFile).toBeFalsy();
   });
 });

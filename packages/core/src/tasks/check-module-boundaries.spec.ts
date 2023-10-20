@@ -60,10 +60,10 @@ const MOCK_BOUNDARIES: ModuleBoundaries = [
 ];
 
 describe('load-module-boundaries', () => {
-  let appTree: Tree;
+  let tree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
   });
 
   afterEach(() => {
@@ -72,11 +72,11 @@ describe('load-module-boundaries', () => {
 
   it('should not load eslint if boundaries in config', async () => {
     const eslintConstructorSpy = jest.spyOn(ESLintNamespace, 'ESLint');
-    writeJson<NxDotnetConfig>(appTree, CONFIG_FILE_PATH, {
+    writeJson<NxDotnetConfig>(tree, CONFIG_FILE_PATH, {
       moduleBoundaries: MOCK_BOUNDARIES,
       nugetPackages: {},
     });
-    const boundaries = await loadModuleBoundaries('', appTree);
+    const boundaries = await loadModuleBoundaries('', tree);
     expect(eslintConstructorSpy).not.toHaveBeenCalled();
     expect(boundaries).toEqual(MOCK_BOUNDARIES);
   });
@@ -96,10 +96,10 @@ describe('load-module-boundaries', () => {
             },
           }),
         } as unknown as ESLintNamespace.ESLint);
-      writeJson<NxDotnetConfig>(appTree, CONFIG_FILE_PATH, {
+      writeJson<NxDotnetConfig>(tree, CONFIG_FILE_PATH, {
         nugetPackages: {},
       });
-      const boundaries = await loadModuleBoundaries('', appTree);
+      const boundaries = await loadModuleBoundaries('', tree);
       expect(eslintConfigSpy).toHaveBeenCalledTimes(1);
       expect(boundaries).toEqual(MOCK_BOUNDARIES);
     },
@@ -111,7 +111,6 @@ jest.mock('fs', () => require('memfs').fs);
 
 describe('enforce-module-boundaries', () => {
   beforeEach(() => {
-    const appTree = createTreeWithEmptyWorkspace();
     jest.spyOn(ESLintNamespace, 'ESLint').mockReturnValue({
       calculateConfigForFile: jest.fn().mockResolvedValue({
         rules: {
@@ -122,9 +121,6 @@ describe('enforce-module-boundaries', () => {
         },
       }),
     } as unknown as ESLintNamespace.ESLint);
-    writeJson<NxDotnetConfig>(appTree, CONFIG_FILE_PATH, {
-      nugetPackages: {},
-    });
   });
 
   afterEach(() => {

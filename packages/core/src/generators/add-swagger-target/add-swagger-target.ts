@@ -11,6 +11,7 @@ import {
   updateProjectConfiguration,
   updateNxJson,
   addDependenciesToPackageJson,
+  NX_VERSION,
 } from '@nx/devkit';
 
 import type NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
@@ -18,6 +19,7 @@ import type NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi
 
 import { getSwaggerExecutorConfiguration } from '../../models/swagger-executor-configuration';
 import { AddSwaggerJsonExecutorSchema } from './schema';
+import { major } from 'semver';
 
 export default async function generateSwaggerSetup(
   host: Tree,
@@ -231,7 +233,16 @@ function updateNxJsonForCodegenTargets(
   wc.targetDefaults ??= {};
   wc.targetDefaults['build'] ??= {};
   wc.targetDefaults['build'].dependsOn ??= [];
-  wc.targetDefaults['build'].dependsOn.push(...newBuildDeps);
+  wc.targetDefaults['build'].dependsOn = Array.from(
+    new Set(wc.targetDefaults['build'].dependsOn.concat(newBuildDeps)),
+  );
+
+  if (major(NX_VERSION) >= 17) {
+    wc.targetDefaults['codegen'] ??= {};
+    wc.targetDefaults['codegen'].cache ??= true;
+    wc.targetDefaults[options.target ?? 'swagger'] ??= {};
+    wc.targetDefaults[options.target ?? 'swagger'].cache ??= true;
+  }
 
   updateNxJson(host, wc);
 }

@@ -20,7 +20,6 @@ export async function PatchPackageVersions(
 ) {
   console.log('Patching package versions', newVersion, pkg);
   const workspace: ProjectsConfigurations = await readProjectsConfigurations();
-  console.log('Got workspace');
   const rootPkg = readJson('package.json');
   if (newVersion && prebuild) {
     rootPkg.version = newVersion;
@@ -56,11 +55,11 @@ export async function PatchPackageVersions(
     const pkg = readJson(pkgPath);
     pkg.version = newVersion;
     await patchDependenciesSection('dependencies', pkg, newVersion);
-    console.log('Patched dependencies');
     await patchDependenciesSection('devDependencies', pkg, newVersion);
-    console.log('Patched devDependencies');
 
     writeJson(pkgPath, pkg);
+    execSync(`yarn prettier --write ${pkgPath}`);
+    console.log('Updated', pkgPath, 'for', newVersion);
 
     if (updateGit) {
       execSync(`git add ${pkgPath}`, {

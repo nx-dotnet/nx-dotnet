@@ -39,7 +39,6 @@ describe('Test Executor', () => {
             },
           },
         },
-        npmScope: 'unit-tests',
       },
       isVerbose: false,
     };

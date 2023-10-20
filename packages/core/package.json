@@ -8,9 +8,9 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
+    "@nx/devkit": "17.0.0",
     "@nx-dotnet/dotnet": "1.23.0",
     "@nx-dotnet/utils": "1.23.0",
-    "@nx/devkit": "16.9.1",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "semver": "7.5.4",
@@ -22,7 +22,6 @@
     "@nx/js": ">=16.0.0-beta.1",
     "@trumbitta/nx-plugin-openapi": "^1.12.1",
     "eslint": ">8.0.0",
-    "nx": ">=16.0.0-beta.1",
     "prettier": ">=2.0.0"
   },
   "peerDependenciesMeta": {

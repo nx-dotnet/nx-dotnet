@@ -18,13 +18,11 @@ jobs:
     with:
       main-branch-name: 'master'
       parallel-commands: |
-        npx nx-cloud record yarn nx workspace-lint
         npx nx-cloud record yarn nx format:check
         npx nx-cloud record yarn documentation:check --verbose
         npx nx-cloud record yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
-        yarn nx affected --target build --exclude='*,!demo/**/*'
       parallel-commands-on-agents: |
-        yarn nx affected --target lint build test --exclude 'demo/**/*'
+        yarn nx affected --target lint build test
       final-commands: |
         yarn e2e
 

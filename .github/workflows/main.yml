@@ -16,12 +16,10 @@ jobs:
     with:
       main-branch-name: 'master'
       parallel-commands: |
-        npx nx-cloud record npx nx workspace-lint
         npx nx-cloud record npx nx format:check
         npx nx-cloud record yarn documentation:check --verbose
-        yarn nx affected --target build --exclude='*,!demo/**/*'
       parallel-commands-on-agents: |
-        yarn nx affected --target lint build test --exclude='demo/**/*'
+        yarn nx affected --target lint build test
       final-commands: |
         yarn e2e
 

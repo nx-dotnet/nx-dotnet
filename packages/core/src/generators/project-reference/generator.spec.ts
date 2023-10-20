@@ -11,7 +11,7 @@ import generator from './generator';
 import { NxDotnetGeneratorSchema } from './schema';
 
 describe('nx-dotnet project reference', () => {
-  let appTree: Tree;
+  let tree: Tree;
   const appId = 'TEST_APP';
   const libId = 'TEST_LIB';
   let client: DotNetClient;
@@ -33,17 +33,17 @@ describe('nx-dotnet project reference', () => {
   });
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     // setup fake projects to test linking.
-    addProjectConfiguration(appTree, appId, {
+    addProjectConfiguration(tree, appId, {
       root: `apps/${appId}`,
       sourceRoot: `apps/${appId}`,
       targets: {},
       tags: [],
     });
 
-    addProjectConfiguration(appTree, libId, {
+    addProjectConfiguration(tree, libId, {
       root: `libs/${libId}`,
       sourceRoot: `libs/${libId}`,
       targets: {},
@@ -53,7 +53,7 @@ describe('nx-dotnet project reference', () => {
 
   it('should call dotnet cli', async () => {
     const spy = jest.spyOn(client, 'addProjectReference');
-    await generator(appTree, options, client);
+    await generator(tree, options, client);
 
     expect(spy).toHaveBeenCalled();
   });

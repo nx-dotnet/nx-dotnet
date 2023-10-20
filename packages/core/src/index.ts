@@ -9,8 +9,9 @@ import {
   createDependencies,
   processProjectGraph,
 } from './graph/create-dependencies';
+import { NxDotnetConfig } from '@nx-dotnet/utils';
 
-const nxPlugin: NxPluginV2 & Required<NxPluginV1> = {
+const nxPlugin: NxPluginV2<NxDotnetConfig> & Required<NxPluginV1> = {
   name: '@nx-dotnet/core',
   createDependencies,
   createNodes,

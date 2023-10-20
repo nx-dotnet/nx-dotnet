@@ -70,7 +70,6 @@ describe('Update-Swagger Executor', () => {
             },
           },
         },
-        npmScope: 'unit-tests',
       },
       isVerbose: false,
     };

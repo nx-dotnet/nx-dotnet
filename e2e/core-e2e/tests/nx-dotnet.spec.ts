@@ -22,6 +22,7 @@ import { unlinkSync, writeFileSync } from 'fs';
 import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
+import * as logger from 'console';
 
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 
@@ -516,7 +517,9 @@ function runNxCommandAsync(
 }
 
 function setupWorkspace() {
+  logger.log('Creating a sandbox project in ', e2eDir);
   ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+  logger.log('✅');
   // TODO: Update e2e tests and plugin generators to use the new workspace layout semantics.
   updateFile('nx.json', (contents) => {
     const nxJson: NxJsonConfiguration = JSON.parse(contents);
@@ -525,5 +528,7 @@ function setupWorkspace() {
     nxJson.workspaceLayout.libsDir = 'libs';
     return JSON.stringify(nxJson, null, 2);
   });
+  logger.log('Initializing git repo');
   initializeGitRepo(e2eDir);
+  logger.log('✅');
 }
