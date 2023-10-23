@@ -118,6 +118,7 @@ async function checkIfTestProject(host: Tree, path: string): Promise<boolean> {
   });
   return isTestProject;
 }
+
 function getDirectoriesWithProjectJson(host: Tree) {
   const nxProjects = getProjects(host);
   const collected: string[] = [];

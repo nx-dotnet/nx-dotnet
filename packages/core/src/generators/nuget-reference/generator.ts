@@ -27,6 +27,7 @@ export default async function (
   const projectFilePath = await getProjectFileForNxProject(project);
 
   const config = readConfig(host);
+  config.nugetPackages ??= {};
   const configuredPkgVersion = config.nugetPackages[packageName];
   const resolvedVersion = await resolveVersionMismatch(
     options.version,
