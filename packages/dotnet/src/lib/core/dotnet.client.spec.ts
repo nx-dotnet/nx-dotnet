@@ -285,6 +285,38 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       `);
     });
 
+    it('should call subcommands properly when on .NET 6 and passing --fixWhitespace and --check', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
+      const spy = jest
+        .spyOn(dotnetClient, 'logAndExecute')
+        .mockImplementation(() => ({}));
+      dotnetClient.format('my-project', {
+        fixWhitespace: false,
+        check: true,
+      });
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(spy.mock.calls).toMatchInlineSnapshot(`
+        [
+          [
+            [
+              "format",
+              "style",
+              "my-project",
+              "--verify-no-changes",
+            ],
+          ],
+          [
+            [
+              "format",
+              "analyzers",
+              "my-project",
+              "--verify-no-changes",
+            ],
+          ],
+        ]
+      `);
+    });
+
     it('should call subcommands properly when on .NET 6 and passing --fixAnalyzers severity', () => {
       const dotnetClient = new DotNetClient(mockDotnetFactory('6.0.0'));
       const spy = jest
