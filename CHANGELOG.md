@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.1...v2.0.2) (2023-10-24)
+
+### Bug Fixes
+
+- **core:** options should be read correctly for project inference ([#785](https://github.com/nx-dotnet/nx-dotnet/issues/785)) ([0e5b73d](https://github.com/nx-dotnet/nx-dotnet/commit/0e5b73dd385751b171b6ee6aa5f27f1961a347c9))
+- **dotnet:** correct flag passed to client to verify no changes ([#786](https://github.com/nx-dotnet/nx-dotnet/issues/786)) ([eab2d48](https://github.com/nx-dotnet/nx-dotnet/commit/eab2d487718d98d6289e3882ff01dd8d1ef3eee2))
+
 ## [2.0.1](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.0...v2.0.1) (2023-10-20)
 
 ### Bug Fixes

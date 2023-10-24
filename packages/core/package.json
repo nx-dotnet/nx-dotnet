@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@nx/devkit": "17.0.0",
-    "@nx-dotnet/dotnet": "2.0.1",
-    "@nx-dotnet/utils": "2.0.1",
+    "@nx-dotnet/dotnet": "2.0.2",
+    "@nx-dotnet/utils": "2.0.2",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "semver": "7.5.4",
@@ -69,5 +69,5 @@
       "@nx-dotnet/dotnet"
     ]
   },
-  "version": "2.0.1"
+  "version": "2.0.2"
 }
