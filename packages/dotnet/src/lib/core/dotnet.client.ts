@@ -215,9 +215,10 @@ export class DotNetClient {
         const subcommandParameterObject = {
           ...parameters,
         };
-        delete subcommandParameterObject.fixWhitespace;
         subcommandParams.push(
-          ...getSpawnParameterArray(subcommandParameterObject),
+          ...getSpawnParameterArray(
+            swapKeysUsingMap(subcommandParameterObject, formatKeyMap),
+          ),
         );
         this.logAndExecute(subcommandParams);
       }
@@ -231,9 +232,10 @@ export class DotNetClient {
         if (typeof style === 'string') {
           subcommandParameterObject.severity = style;
         }
-        delete subcommandParameterObject.fixStyle;
         subcommandParams.push(
-          ...getSpawnParameterArray(subcommandParameterObject),
+          ...getSpawnParameterArray(
+            swapKeysUsingMap(subcommandParameterObject, formatKeyMap),
+          ),
         );
         this.logAndExecute(subcommandParams);
       }
@@ -247,17 +249,19 @@ export class DotNetClient {
         if (typeof analyzers === 'string') {
           subcommandParameterObject.severity = analyzers;
         }
-        delete subcommandParameterObject.fixAnalyzers;
         subcommandParams.push(
-          ...getSpawnParameterArray(subcommandParameterObject),
+          ...getSpawnParameterArray(
+            swapKeysUsingMap(subcommandParameterObject, formatKeyMap),
+          ),
         );
         this.logAndExecute(subcommandParams);
       }
     } else {
       params.push(project);
       if (parameters) {
-        parameters = swapKeysUsingMap(parameters, formatKeyMap);
-        params.push(...getSpawnParameterArray(parameters));
+        params.push(
+          ...getSpawnParameterArray(swapKeysUsingMap(parameters, formatKeyMap)),
+        );
       }
       return this.logAndExecute(params);
     }
