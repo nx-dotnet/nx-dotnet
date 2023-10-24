@@ -23,11 +23,11 @@ export const DefaultConfigValues: NxDotnetConfig = {
 export function readConfig(host?: Tree): NxDotnetConfig {
   const configFromFile = readConfigFromRCFile(host);
   const configFromNxJson = readConfigFromNxJson(host);
-  return {
-    ...DefaultConfigValues,
-    ...configFromFile,
-    ...configFromNxJson,
-  };
+  return mergeConfigValues(
+    DefaultConfigValues,
+    configFromFile,
+    configFromNxJson,
+  );
 }
 
 export function updateConfig(host: Tree, value: NxDotnetConfig) {
@@ -111,4 +111,16 @@ export function readConfigFromNxJson(host?: Tree): NxDotnetConfig | null {
   } catch {
     return null;
   }
+}
+
+export function mergeConfigValues(
+  ...configs: (Partial<NxDotnetConfig> | null)[]
+): NxDotnetConfig {
+  return configs.reduce(
+    (acc, config) => ({
+      ...acc,
+      ...config,
+    }),
+    DefaultConfigValues,
+  ) as NxDotnetConfig;
 }

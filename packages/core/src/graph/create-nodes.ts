@@ -8,11 +8,7 @@ import {
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 
-import {
-  DefaultConfigValues,
-  NxDotnetConfig,
-  readConfig,
-} from '@nx-dotnet/utils';
+import { NxDotnetConfig, readConfig } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -76,9 +72,7 @@ export const createNodes: CreateNodesCompat<NxDotnetConfig> = [
     ctxOrOpts: CreateNodesContext | NxDotnetConfig | undefined,
     maybeCtx: CreateNodesContext | undefined,
   ) => {
-    const options: NxDotnetConfig =
-      ((maybeCtx ? ctxOrOpts : readConfig()) as NxDotnetConfig) ??
-      DefaultConfigValues;
+    const options: NxDotnetConfig = readConfig();
 
     if (!options.inferProjects) {
       return {};

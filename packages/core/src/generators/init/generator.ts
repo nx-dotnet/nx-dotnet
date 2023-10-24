@@ -9,6 +9,7 @@ import {
   Tree,
   writeJson,
   NX_VERSION,
+  readNxJson,
 } from '@nx/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
@@ -19,37 +20,46 @@ import {
   resolve,
 } from '@nx-dotnet/utils';
 import * as path from 'path';
+import { major } from 'semver';
 
 const noop = () => void 0;
 
 export async function initGenerator(
   host: Tree,
-  _: null, // Nx will populate this with options, which are currently unused.
+  _: unknown, // Nx will populate this with options, which are currently unused.
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
   const tasks: GeneratorCallback[] = [];
-  const initialized = host.isFile(CONFIG_FILE_PATH);
 
-  const configObject: NxDotnetConfig = initialized
-    ? readJson(host, CONFIG_FILE_PATH)
-    : {
-        nugetPackages: {},
-      };
+  // Prior to Nx 17, nx-dotnet had a custom config file.
+  if (major(NX_VERSION) < 17) {
+    const configObject: NxDotnetConfig = host.isFile(CONFIG_FILE_PATH)
+      ? readJson(host, CONFIG_FILE_PATH)
+      : {
+          nugetPackages: {},
+        };
 
-  configObject.nugetPackages = configObject.nugetPackages || {};
+    configObject.nugetPackages = configObject.nugetPackages || {};
 
-  host.write(CONFIG_FILE_PATH, JSON.stringify(configObject, null, 2));
-
-  updateNxJson(host);
-
-  if (!initialized) {
-    addPrepareScript(host);
-    tasks.push(installNpmPackages(host));
+    host.write(CONFIG_FILE_PATH, JSON.stringify(configObject, null, 2));
   }
 
+  const nxJson = readNxJson(host);
+
+  // Adds a `dotnet restore` operation to the prepare script.
+  addPrepareScript(host);
+
+  // Adds @nx-dotnet/core to nxJson
+  updateNxJson(host, nxJson);
+
+  // Setups up the .config/dotnet-tools.json for managing local .NET tools.
   initToolManifest(host, dotnetClient);
 
+  // Creates Directory.Build.* to customize default C# builds.
   initBuildCustomization(host);
+
+  // Adds @nx/js to package.json
+  tasks.push(installNpmPackages(host));
 
   return async () => {
     for (const task of tasks) {
@@ -74,13 +84,19 @@ function installNpmPackages(host: Tree): GeneratorCallback {
   }
 }
 
-function updateNxJson(host: Tree) {
-  const nxJson: NxJsonConfiguration = readJson(host, 'nx.json');
-  nxJson.plugins = nxJson.plugins || [];
-  if (!nxJson.plugins.some((x) => x === '@nx-dotnet/core')) {
+function hasPluginInNxJson(nxJson: NxJsonConfiguration | null): boolean {
+  return !!nxJson?.plugins?.some((x) => {
+    const plugin = typeof x === 'string' ? x : x.plugin;
+    return plugin === '@nx-dotnet/core';
+  });
+}
+
+function updateNxJson(host: Tree, nxJson: NxJsonConfiguration | null) {
+  if (nxJson && !hasPluginInNxJson(nxJson)) {
+    nxJson.plugins = nxJson.plugins || [];
     nxJson.plugins.push('@nx-dotnet/core');
+    writeJson(host, 'nx.json', nxJson);
   }
-  writeJson(host, 'nx.json', nxJson);
 }
 
 function initToolManifest(host: Tree, dotnetClient: DotNetClient) {

@@ -1,9 +1,8 @@
 import * as devkit from '@nx/devkit';
-import { readJson, Tree, writeJson } from '@nx/devkit';
+import { readJson, readNxJson, Tree, writeJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
-import { CONFIG_FILE_PATH, NxDotnetConfig } from '@nx-dotnet/utils';
 
 import generator from './generator';
 
@@ -24,16 +23,42 @@ describe('init generator', () => {
     writeJson(tree, 'package.json', packageJson);
   });
 
-  it('should create config', async () => {
+  it('should add @nx-dotnet/core to plugins array', async () => {
+    writeJson(tree, 'nx.json', {});
     await generator(tree, null, dotnetClient);
-    const config = tree.isFile(CONFIG_FILE_PATH);
-    expect(config).toBeTruthy();
+    expect(readNxJson(tree)?.plugins).toMatchInlineSnapshot(`
+      [
+        "@nx-dotnet/core",
+      ]
+    `);
   });
 
-  it('should put dependency array inside config', async () => {
+  it('should add duplicate @nx-dotnet/core entries to plugins array', async () => {
+    writeJson(tree, 'nx.json', { plugins: ['@nx-dotnet/core'] });
     await generator(tree, null, dotnetClient);
-    const config: NxDotnetConfig = readJson(tree, CONFIG_FILE_PATH);
-    expect(config.nugetPackages).toBeDefined();
+    expect(readNxJson(tree)?.plugins).toMatchInlineSnapshot(`
+      [
+        "@nx-dotnet/core",
+      ]
+    `);
+  });
+
+  it('should add duplicate @nx-dotnet/core entries to plugins array (object)', async () => {
+    writeJson(tree, 'nx.json', {
+      plugins: [
+        {
+          plugin: '@nx-dotnet/core',
+        },
+      ],
+    });
+    await generator(tree, null, dotnetClient);
+    expect(readNxJson(tree)?.plugins).toMatchInlineSnapshot(`
+      [
+        {
+          "plugin": "@nx-dotnet/core",
+        },
+      ]
+    `);
   });
 
   it('should create tool manifest', async () => {
