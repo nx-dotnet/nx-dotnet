@@ -3,25 +3,12 @@ name: Release
 on: workflow_dispatch
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Building affected apps
-    steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.8.25
-      - run: yarn nx affected --target=build --base=origin/master~1 --parallel
-      - uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: dist
-
   e2e:
     runs-on: ubuntu-latest
     name: E2E testing affected apps
-    needs: [build]
     steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1.8.25
+      - uses: actions/checkout@v4
+      - uses: bahmutov/npm-install@v1
       - name: Download a single artifact
         continue-on-error: true
         uses: actions/download-artifact@v2
@@ -37,13 +24,13 @@ jobs:
     needs: [e2e]
     if: ${{github.event_name == 'workflow_dispatch'}}
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
           registry-url: 'https://registry.npmjs.org'
           always-auth: true,
           node-version: 16
-      - uses: bahmutov/npm-install@v1.8.25
+      - uses: bahmutov/npm-install@v1
       - name: Git Config
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

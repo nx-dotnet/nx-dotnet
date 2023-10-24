@@ -20,10 +20,10 @@ jobs:
     env:
       NX_RUN_GROUP: ${{ github.run_id }}-v${{matrix.dotnet_version}}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{matrix.dotnet_version}}
           include-prerelease: true
-      - uses: bahmutov/npm-install@v1.8.25
+      - uses: bahmutov/npm-install@v1
       - run: yarn nx run-many --all --target=smoke
