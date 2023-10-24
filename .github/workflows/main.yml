@@ -19,7 +19,7 @@ jobs:
         npx nx-cloud record npx nx format:check
         npx nx-cloud record yarn documentation:check --verbose
       parallel-commands-on-agents: |
-        echo hello
+        yarn nx affected --target lint build test
       final-commands: |
         yarn e2e
 
