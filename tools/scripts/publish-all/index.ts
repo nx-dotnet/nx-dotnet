@@ -41,10 +41,13 @@ export async function publishAll(version: string, tag?: string) {
         name: string;
       }>(`${outputPath}/package.json`);
       if (!isPrivate) {
-        execSync(`npm publish ${outputPath} --tag=${tag} --access=public`, {
-          stdio: 'inherit',
-          env: environment,
-        });
+        execSync(
+          `npm publish ${outputPath} --tag=${tag} --access=public --provenance`,
+          {
+            stdio: 'inherit',
+            env: environment,
+          },
+        );
 
         if (channelTag && channelTag !== tag) {
           execSync(`npm dist-tag add ${name}@${version} ${channelTag}`, {
