@@ -1,3 +1,13 @@
+# [2.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.2...v2.1.0) (2023-10-25)
+
+### Bug Fixes
+
+- **core:** should be able to pass extra args to generated libraries ([#788](https://github.com/nx-dotnet/nx-dotnet/issues/788)) ([2d2cb5b](https://github.com/nx-dotnet/nx-dotnet/commit/2d2cb5bb5b1d2f3ea9398c89a1be119133516333)), closes [#783](https://github.com/nx-dotnet/nx-dotnet/issues/783)
+
+### Features
+
+- **core:** better configuration options for target inference ([#787](https://github.com/nx-dotnet/nx-dotnet/issues/787)) ([8a7b9a1](https://github.com/nx-dotnet/nx-dotnet/commit/8a7b9a171c120320c04895320148e3b13635c029))
+
 ## [2.0.2](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.1...v2.0.2) (2023-10-24)
 
 ### Bug Fixes
