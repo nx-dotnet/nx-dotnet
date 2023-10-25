@@ -51,7 +51,3 @@ Generate a dotnet project under the application directory.
 ### args
 
 - (array): Additional arguments to pass to the dotnet command. For example: &#34;nx g @nx-dotnet/core:app myapp --args=&#39;--no-restore&#39;&#34; Arguments can also be appended to the end of the command using &#39;--&#39;. For example, &#39;nx g @nx-dotnet/core:app myapp -- --no-restore&#39;.
-
-### **unparsed**
-
-- (array):

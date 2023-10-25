@@ -103,6 +103,25 @@
           }
         ]
       }
+    },
+    "args": {
+      "type": "array",
+      "description": "Additional arguments to pass to the dotnet command. For example: \"nx g @nx-dotnet/core:app myapp --args='--no-restore'\" Arguments can also be appended to the end of the command using '--'. For example, 'nx g @nx-dotnet/core:app myapp -- --no-restore'.",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "__unparsed__": {
+      "hidden": true,
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "$default": {
+        "$source": "unparsed"
+      },
+      "x-priority": "internal"
     }
   },
   "required": ["name", "language", "testTemplate"]
