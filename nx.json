@@ -11,10 +11,10 @@
     {
       "plugin": "@nx-dotnet/core",
       "options": {
+        "inferProjects": false,
         "nugetPackages": {
           "Swashbuckle.AspNetCore": "6.5.0"
-        },
-        "inferProjects": false
+        }
       }
     }
   ],

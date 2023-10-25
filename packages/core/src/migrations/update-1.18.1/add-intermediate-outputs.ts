@@ -14,7 +14,7 @@ import {
 import { gt } from 'semver';
 import { XmlDocument } from 'xmldoc';
 
-export default function update(host: Tree) {
+export default async function update(host: Tree) {
   const projects = getProjects(host);
   const directoryBuildPropsExists = host.exists('Directory.Build.props');
   const directoryBuildPropsUpdated =
@@ -32,7 +32,7 @@ export default function update(host: Tree) {
 
   updateTargetDefaults(host, directoryBuildPropsUpdated);
 
-  formatFiles(host);
+  await formatFiles(host);
 }
 
 function updateDirectoryBuildProps(host: Tree): boolean {

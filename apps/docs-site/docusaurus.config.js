@@ -101,6 +101,7 @@ module.exports = {
           // Please change this to your repo.
           editUrl: 'https://github.com/nx-dotnet/nx-dotnet/edit/master/docs/',
           path: '../../docs',
+          sidebarItemsGenerator: sidebarItemsSorter,
         },
         blog: {
           showReadingTime: true,
@@ -114,4 +115,50 @@ module.exports = {
       },
     ],
   ],
+  // plugins: [
+  //   [
+  //     '@docusaurus/plugin-content-docs',
+  //     {
+
+  //       path: '../../docs',
+  //     },
+  //   ],
+  // ],
 };
+
+async function sidebarItemsSorter({
+  defaultSidebarItemsGenerator,
+  docs,
+  ...args
+}) {
+  function sortCategoriesFirst(items, docsMap) {
+    const categories = [];
+    const docs = [];
+
+    for (const item of items) {
+      if (item.type === 'category') {
+        categories.push(item);
+      } else {
+        docs.push(item);
+      }
+    }
+
+    const index = docs.findIndex((item) => item.id === 'index');
+    if (index !== -1) {
+      const [doc] = docs.splice(index, 1);
+      categories.unshift(doc);
+    }
+    const sorted = [...categories, ...docs];
+
+    for (const item of sorted) {
+      if (item.items) {
+        item.items = sortCategoriesFirst(item.items, docsMap);
+      }
+    }
+
+    return sorted;
+  }
+  const docsMap = new Map(docs.map((doc) => [doc.id, doc]));
+  const sidebarItems = await defaultSidebarItemsGenerator({ docs, ...args });
+  return sortCategoriesFirst(sidebarItems, docsMap);
+}

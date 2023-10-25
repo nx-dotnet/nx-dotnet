@@ -45,6 +45,6 @@ npx nx g @nx-dotnet/nxdoc:generate-docs --outputPath docs
 
 ## Generators
 
-### [generate-docs](./generators/generate-docs.md)
+### [generate-docs](./Generators/generate-docs.md)
 
 Automatic documentation generator for Nx Plugins

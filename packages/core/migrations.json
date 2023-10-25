@@ -28,6 +28,11 @@
       "version": "1.24.0",
       "description": "Migration for v1.24.0",
       "implementation": "./src/migrations/update-1.24.0/update-1.24.0"
+    },
+    "update-2.1.0": {
+      "version": "2.1.0",
+      "description": "Migration for v2.1.0",
+      "implementation": "./src/migrations/update-2.1.0/update-2.1.0"
     }
   }
 }

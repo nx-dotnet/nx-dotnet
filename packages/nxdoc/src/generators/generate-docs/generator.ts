@@ -133,7 +133,7 @@ function generateDocsForProject(
     generateFiles(
       host,
       path.join(__dirname, 'templates/detail'),
-      `${options.outputDirectory}/${projectFileName}/generators`,
+      `${options.outputDirectory}/${projectFileName}/Generators`,
       {
         projectFileName,
         project,
@@ -154,7 +154,7 @@ function generateDocsForProject(
     generateFiles(
       host,
       path.join(__dirname, 'templates/detail'),
-      `${options.outputDirectory}/${projectFileName}/executors`,
+      `${options.outputDirectory}/${projectFileName}/Executors`,
       {
         projectFileName,
         project,
