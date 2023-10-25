@@ -65,7 +65,7 @@ An array of paths to ignore projects within. This is useful for workspaces which
 
 Defaults to ['nx-dotnet']. Can be used to add tags to all projects with information inferred by `@nx-dotnet/core`.
 
-### Deprecated Options
+## Deprecated Options
 
 :::danger
 
@@ -73,8 +73,8 @@ Properties below this line are from previous versions and support for them may v
 
 :::
 
-#### `inferProjectTargets`
+### `inferProjectTargets`
 
 A boolean value which determines whether or not `@nx-dotnet/core` should attempt to infer targets from projects. If false, `@nx-dotnet/core` will not register any new targets to the workspace. It will only add dependencies to existing targets.
 
-Existing usages should be updated to use the [`inferTargets`](#infertargets) configuration option.
+Existing usages should be updated to use the [`inferredTargets`](#inferredtargets) configuration option.
