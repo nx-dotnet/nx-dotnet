@@ -11,5 +11,5 @@ export default async function update(host: Tree) {
     project.targets.lint ??= GetLintExecutorConfiguration();
     updateProjectConfiguration(host, name, project);
   }
-  formatFiles(host);
+  await formatFiles(host);
 }

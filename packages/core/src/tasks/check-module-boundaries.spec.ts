@@ -1,14 +1,10 @@
-import { Tree, writeJson } from '@nx/devkit';
+import { Tree, updateNxJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import * as ESLintNamespace from 'eslint';
 import * as fastGlob from 'fast-glob';
 import { vol } from 'memfs';
 
-import {
-  CONFIG_FILE_PATH,
-  ModuleBoundaries,
-  NxDotnetConfig,
-} from '@nx-dotnet/utils';
+import { ModuleBoundaries } from '@nx-dotnet/utils';
 
 import * as checkModule from './check-module-boundaries';
 import {
@@ -72,9 +68,16 @@ describe('load-module-boundaries', () => {
 
   it('should not load eslint if boundaries in config', async () => {
     const eslintConstructorSpy = jest.spyOn(ESLintNamespace, 'ESLint');
-    writeJson<NxDotnetConfig>(tree, CONFIG_FILE_PATH, {
-      moduleBoundaries: MOCK_BOUNDARIES,
-      nugetPackages: {},
+    updateNxJson(tree, {
+      plugins: [
+        {
+          plugin: '@nx-dotnet/core',
+          options: {
+            moduleBoundaries: MOCK_BOUNDARIES,
+            nugetPackages: {},
+          },
+        },
+      ],
     });
     const boundaries = await loadModuleBoundaries('', tree);
     expect(eslintConstructorSpy).not.toHaveBeenCalled();
@@ -96,9 +99,6 @@ describe('load-module-boundaries', () => {
             },
           }),
         } as unknown as ESLintNamespace.ESLint);
-      writeJson<NxDotnetConfig>(tree, CONFIG_FILE_PATH, {
-        nugetPackages: {},
-      });
       const boundaries = await loadModuleBoundaries('', tree);
       expect(eslintConfigSpy).toHaveBeenCalledTimes(1);
       expect(boundaries).toEqual(MOCK_BOUNDARIES);

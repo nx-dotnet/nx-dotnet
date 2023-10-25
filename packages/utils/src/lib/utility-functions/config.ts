@@ -10,27 +10,43 @@ import {
 } from '@nx/devkit';
 
 import { CONFIG_FILE_PATH } from '../constants';
-import { NxDotnetConfig } from '../models';
+import {
+  NxDotnetConfig,
+  NxDotnetConfigV1,
+  NxDotnetConfigV2,
+  ResolvedConfig,
+} from '../models';
 import { major } from 'semver';
 
-export const DefaultConfigValues: NxDotnetConfig = {
+export const DefaultConfigValues: ResolvedConfig = {
   solutionFile: '{npmScope}.nx-dotnet.sln',
   inferProjects: true,
-  inferProjectTargets: true,
   nugetPackages: {},
+  inferredTargets: {
+    build: 'build',
+    lint: 'lint',
+    serve: 'serve',
+    test: 'test',
+  },
+  ignorePaths: [],
+  tags: ['nx-dotnet'],
 };
 
-export function readConfig(host?: Tree): NxDotnetConfig {
+export function readConfig(host?: Tree): ResolvedConfig {
   const configFromFile = readConfigFromRCFile(host);
   const configFromNxJson = readConfigFromNxJson(host);
-  return mergeConfigValues(
+  return deepMerge(
     DefaultConfigValues,
-    configFromFile,
-    configFromNxJson,
+    isNxDotnetConfigV1(configFromFile)
+      ? upgradeConfigToV2(configFromFile)
+      : configFromFile,
+    isNxDotnetConfigV1(configFromNxJson)
+      ? upgradeConfigToV2(configFromNxJson)
+      : configFromNxJson,
   );
 }
 
-export function updateConfig(host: Tree, value: NxDotnetConfig) {
+export function updateConfig(host: Tree, value: NxDotnetConfigV2) {
   if (major(NX_VERSION) < 17) {
     writeJson(host, CONFIG_FILE_PATH, value);
   } else {
@@ -38,7 +54,7 @@ export function updateConfig(host: Tree, value: NxDotnetConfig) {
   }
 }
 
-export function updateConfigInNxJson(host: Tree, value: NxDotnetConfig) {
+export function updateConfigInNxJson(host: Tree, value: NxDotnetConfigV2) {
   const nxJson = readNxJson(host);
   if (!nxJson) {
     throw new Error(
@@ -65,10 +81,10 @@ export function updateConfigInNxJson(host: Tree, value: NxDotnetConfig) {
   writeJson(host, 'nx.json', nxJson);
 }
 
-export function readConfigSection<T extends keyof NxDotnetConfig>(
+export function readConfigSection<T extends keyof NxDotnetConfigV2>(
   host: Tree,
   section: T,
-): Partial<NxDotnetConfig>[T] {
+): Partial<NxDotnetConfigV2>[T] {
   const config = readConfig(host);
   return config[section] || DefaultConfigValues[section];
 }
@@ -106,21 +122,67 @@ export function readConfigFromNxJson(host?: Tree): NxDotnetConfig | null {
     if (!plugin || typeof plugin === 'string') {
       return null;
     } else {
-      return plugin.options as unknown as NxDotnetConfig;
+      return plugin.options as NxDotnetConfig;
     }
   } catch {
     return null;
   }
 }
 
-export function mergeConfigValues(
-  ...configs: (Partial<NxDotnetConfig> | null)[]
-): NxDotnetConfig {
-  return configs.reduce(
-    (acc, config) => ({
-      ...acc,
-      ...config,
-    }),
-    DefaultConfigValues,
-  ) as NxDotnetConfig;
+export function deepMerge<T extends object>(
+  base: T,
+  ...objects: (Partial<T> | null)[]
+): T {
+  function isObject(obj: unknown): obj is object {
+    return !!obj && typeof obj === 'object';
+  }
+
+  return objects.reduce((agg, obj) => {
+    if (obj === null || obj === undefined) {
+      return agg;
+    }
+
+    Object.keys(obj).forEach((key) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const aggVal = agg[key];
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const nextVal = obj[key];
+
+      if (Array.isArray(aggVal) && Array.isArray(nextVal)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        agg[key] = aggVal.concat(...nextVal);
+      } else if (isObject(aggVal) && isObject(nextVal)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        agg[key] = deepMerge(aggVal, nextVal);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        agg[key] = nextVal;
+      }
+    });
+
+    return agg;
+  }, JSON.parse(JSON.stringify(base))) as T;
+}
+
+export function isNxDotnetConfigV1(
+  config: Partial<NxDotnetConfig | null>,
+): config is NxDotnetConfigV1 {
+  return !!config && 'inferProjectTargets' in config;
+}
+
+export function upgradeConfigToV2(config: NxDotnetConfigV1): NxDotnetConfigV2 {
+  const { inferProjectTargets, ...v2compatible } = config;
+
+  return {
+    ...v2compatible,
+    inferredTargets:
+      inferProjectTargets !== false
+        ? DefaultConfigValues.inferredTargets
+        : false,
+  };
 }

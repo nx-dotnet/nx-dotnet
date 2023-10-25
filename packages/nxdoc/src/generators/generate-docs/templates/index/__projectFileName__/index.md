@@ -17,7 +17,7 @@ slug: /<%=projectFileName%>/
 
 <% Object.entries(generators).forEach(([key, config]) => { %>
 
-### [<%= key %>](./generators/<%=key%>.md)
+### [<%= key %>](./Generators/<%=key%>.md)
 
 <%= config.description %>
 <% })} %><% if(Object.values(executors).length > 0) {%>
@@ -26,7 +26,7 @@ slug: /<%=projectFileName%>/
 
 <% Object.entries(executors).forEach(([key, config]) => { %>
 
-### [<%= key %>](./executors/<%=key%>.md)
+### [<%= key %>](./Executors/<%=key%>.md)
 
 <%= config.description %>
 <% })} %>

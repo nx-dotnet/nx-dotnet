@@ -8,7 +8,8 @@ import {
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 
-import { NxDotnetConfig, readConfig } from '@nx-dotnet/utils';
+import { NxDotnetConfigV2, readConfig } from '@nx-dotnet/utils';
+import minimatch = require('minimatch');
 
 import {
   GetBuildExecutorConfiguration,
@@ -21,20 +22,34 @@ export const projectFilePatterns = readConfig().inferProjects
   ? ['*.csproj', '*.fsproj', '*.vbproj']
   : [];
 
-export const registerProjectTargets = (projectFile: string) => {
+export const registerProjectTargets = (
+  projectFile: string,
+  opts = readConfig(),
+) => {
   const targets: Record<string, TargetConfiguration> = {};
-  const { inferProjectTargets } = readConfig();
-  if (inferProjectTargets ?? true) {
+  const { inferredTargets } = opts;
+  if (inferredTargets !== false) {
     const projectFileContents = readFileSync(
       resolve(workspaceRoot, projectFile),
       'utf8',
     );
-    if (projectFileContents.includes('Microsoft.NET.Test.Sdk')) {
-      targets['test'] = GetTestExecutorConfig();
+    if (
+      projectFileContents.includes('Microsoft.NET.Test.Sdk') &&
+      inferredTargets.test
+    ) {
+      targets[inferredTargets.test] = GetTestExecutorConfig();
     }
-    targets['build'] = GetBuildExecutorConfiguration(dirname(projectFile));
-    targets['lint'] = GetLintExecutorConfiguration();
-    targets['serve'] = GetServeExecutorConfig();
+    if (inferredTargets.build) {
+      targets[inferredTargets.build] = GetBuildExecutorConfiguration(
+        dirname(projectFile),
+      );
+    }
+    if (inferredTargets.lint) {
+      targets[inferredTargets.lint] = GetLintExecutorConfiguration();
+    }
+    if (inferredTargets.serve) {
+      targets[inferredTargets.serve] = GetServeExecutorConfig();
+    }
   }
   return targets;
 };
@@ -65,16 +80,23 @@ type CreateNodesFunctionCompat<T> = (
 type CreateNodesCompat<T> = [string, CreateNodesFunctionCompat<T>];
 
 // Used in Nx 16.8+
-export const createNodes: CreateNodesCompat<NxDotnetConfig> = [
+export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
   `**/{${projectFilePatterns.join(',')}}`,
   (
     file: string,
-    ctxOrOpts: CreateNodesContext | NxDotnetConfig | undefined,
+    ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
     maybeCtx: CreateNodesContext | undefined,
   ) => {
-    const options: NxDotnetConfig = readConfig();
+    const options = readConfig();
 
-    if (!options.inferProjects) {
+    if (
+      !options.inferProjects ||
+      options.ignorePaths.some((p) =>
+        minimatch(file, p, {
+          dot: true,
+        }),
+      )
+    ) {
       return {};
     }
 
@@ -84,16 +106,14 @@ export const createNodes: CreateNodesCompat<NxDotnetConfig> = [
     const parts = root.split(/[\/\\]/g);
     const name = parts[parts.length - 1].toLowerCase();
 
-    const targets = registerProjectTargets(file);
-
     return {
       projects: {
         [name]: {
           name,
           root,
           type: 'lib',
-          targets: options.inferProjectTargets ? targets : undefined,
-          tags: ['nx-dotnet'],
+          targets: registerProjectTargets(file, options),
+          tags: options.tags,
         },
       },
     };

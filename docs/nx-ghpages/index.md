@@ -19,6 +19,6 @@ Run `nx test nx-ghpages` to execute the unit tests via [Jest](https://jestjs.io)
 
 ## Executors
 
-### [deploy](./executors/deploy.md)
+### [deploy](./Executors/deploy.md)
 
 Deploy a site to the gh-pages branch of a specified repository.

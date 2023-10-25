@@ -81,76 +81,76 @@ If your workspace does not currently contain eslint, do not worry! You do not ha
 
 ## Generators
 
-### [library](./generators/library.md)
+### [library](./Generators/library.md)
 
 Generate a new C# project as an Nx library
 
-### [application](./generators/application.md)
+### [application](./Generators/application.md)
 
 Generate a new C# project as an Nx application
 
-### [project-reference](./generators/project-reference.md)
+### [project-reference](./Generators/project-reference.md)
 
 Add a reference from one project to another
 
-### [sync](./generators/sync.md)
+### [sync](./Generators/sync.md)
 
 Synchronizes NuGet references for the workspace
 
-### [nuget-reference](./generators/nuget-reference.md)
+### [nuget-reference](./Generators/nuget-reference.md)
 
 Add a NuGet reference to a project
 
-### [restore](./generators/restore.md)
+### [restore](./Generators/restore.md)
 
 Restores NuGet packages and .NET tools used by the workspace
 
-### [test](./generators/test.md)
+### [test](./Generators/test.md)
 
 Generate a .NET test project for an existing application or library
 
-### [import-projects](./generators/import-projects.md)
+### [import-projects](./Generators/import-projects.md)
 
 Import existing projects into your Nx workspace
 
-### [add-swagger-target](./generators/add-swagger-target.md)
+### [add-swagger-target](./Generators/add-swagger-target.md)
 
 Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project
 
-### [swagger-typescript](./generators/swagger-typescript.md)
+### [swagger-typescript](./Generators/swagger-typescript.md)
 
 Generate a typescript library project based on an openapi/swagger specification file
 
-### [move](./generators/move.md)
+### [move](./Generators/move.md)
 
 Moves a .NET project (including updating references)
 
 ## Executors
 
-### [build](./executors/build.md)
+### [build](./Executors/build.md)
 
 Invokes `dotnet build` to build a project with .NET Core CLI
 
-### [serve](./executors/serve.md)
+### [serve](./Executors/serve.md)
 
 Invokes `dotnet watch` in combination with `dotnet build` to run a dev-server
 
-### [test](./executors/test.md)
+### [test](./Executors/test.md)
 
 Invokes `dotnet test` to execute unit tests via .NET Core CLI
 
-### [publish](./executors/publish.md)
+### [publish](./Executors/publish.md)
 
 Invokes `dotnet publish`
 
-### [format](./executors/format.md)
+### [format](./Executors/format.md)
 
 Formats and lints a project using the dotnet-format tool
 
-### [update-swagger](./executors/update-swagger.md)
+### [update-swagger](./Executors/update-swagger.md)
 
 Generates a swagger document for an API project
 
-### [openapi-codegen](./executors/openapi-codegen.md)
+### [openapi-codegen](./Executors/openapi-codegen.md)
 
 Invokes `nx g @nx-dotnet/core:swagger-typescript` with the proper parameters to update a codegen based library
