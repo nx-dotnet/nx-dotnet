@@ -2,7 +2,7 @@
 
 ## @nx-dotnet/core:move
 
-Moves {projectName} to {destination}. Renames the Nx project to match the new folder location. Additionally, updates any .csproj, .vbproj, .fsproj, or .sln files which pointed to the project.
+Moves {projectName} to {destination}. Renames the Nx and .NET project to match the destination. Additionally, updates all code references to the moved project.
 
 ## Options
 

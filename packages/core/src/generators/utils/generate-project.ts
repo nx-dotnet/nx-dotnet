@@ -71,7 +71,7 @@ export async function normalizeOptions(
   );
   const parsedTags = getProjectTagsFromSchema(options);
   const template = await getTemplate(options, client);
-  const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
+  const namespaceName = getNamespaceFromSchema(host, projectDirectory);
   const nxProjectName = names(options.name).fileName;
   const __unparsed__ = options.__unparsed__ ?? [];
   const args = options.args ?? [];
@@ -100,9 +100,8 @@ function getNameFromSchema(options: NxDotnetProjectGeneratorSchema): string {
     : options.name;
 }
 
-function getNamespaceFromSchema(
+export function getNamespaceFromSchema(
   host: Tree,
-  options: NxDotnetProjectGeneratorSchema,
   projectDirectory: string,
 ): string {
   const scope = getWorkspaceScope(host);
