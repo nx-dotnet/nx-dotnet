@@ -18,8 +18,8 @@ export function readJson(path: string) {
   return JSON.parse(readFileSync(path).toString());
 }
 
-export function writeJson(path: string, object: any) {
-  const contents = format(JSON.stringify(object, null, 2), {
+export async function writeJson(path: string, object: any) {
+  const contents = await format(JSON.stringify(object, null, 2), {
     parser: 'json',
   });
   return writeFileSync(path, contents);
