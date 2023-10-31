@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.0...v2.1.1) (2023-10-31)
+
+### Bug Fixes
+
+- **core:** update localization files ([#795](https://github.com/nx-dotnet/nx-dotnet/issues/795)) ([7213b67](https://github.com/nx-dotnet/nx-dotnet/commit/7213b67ff01eb2a8e1ca1b98d3fee564e25c9f42))
+
 # [2.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.2...v2.1.0) (2023-10-25)
 
 ### Bug Fixes
