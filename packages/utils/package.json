@@ -3,7 +3,7 @@
   "main": "src/index.js",
   "private": false,
   "dependencies": {
-    "@nx/devkit": "17.0.0",
+    "@nx/devkit": "17.0.2",
     "fast-glob": "3.2.12",
     "rimraf": "^3.0.2",
     "xmldoc": "^1.1.2",

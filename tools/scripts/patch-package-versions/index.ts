@@ -23,7 +23,7 @@ export async function PatchPackageVersions(
   const rootPkg = readJson('package.json');
   if (newVersion && prebuild) {
     rootPkg.version = newVersion;
-    writeJson('package.json', rootPkg);
+    await writeJson('package.json', rootPkg);
   } else if (!newVersion) {
     newVersion = rootPkg.version;
   }
@@ -57,7 +57,7 @@ export async function PatchPackageVersions(
     await patchDependenciesSection('dependencies', pkg, newVersion);
     await patchDependenciesSection('devDependencies', pkg, newVersion);
 
-    writeJson(pkgPath, pkg);
+    await writeJson(pkgPath, pkg);
     execSync(`yarn prettier --write ${pkgPath}`);
     console.log('Updated', pkgPath, 'for', newVersion);
 

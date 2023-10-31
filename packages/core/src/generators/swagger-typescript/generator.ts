@@ -16,6 +16,7 @@ import { SwaggerTypescriptGeneratorSchema } from './schema';
 import { NormalizedOptions, normalizeOptions } from './utils/normalize-options';
 
 import type { OpenAPIV2, OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+
 function generateInterfaceFiles(
   tree: Tree,
   interfaces: TypeScriptRepresentation[],

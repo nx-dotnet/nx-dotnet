@@ -8,7 +8,6 @@ import {
   names,
 } from '@nx/devkit';
 import { XmlDocument } from 'xmldoc';
-import fetch from 'node-fetch';
 import { join } from 'path';
 
 const KeyPropertyMap: Record<string, string> = {
@@ -29,12 +28,27 @@ type Translation = {
 };
 
 export default async function (tree: Tree) {
+  const { default: fetch } =
+    await dynamicImport<typeof import('node-fetch')>('node-fetch');
   const enXml = await fetch(
-    `https://raw.githubusercontent.com/dotnet/templating/master/src/Microsoft.TemplateEngine.Cli/LocalizableStrings.resx`,
-  ).then((x) => x.text());
+    `https://api.github.com/repos/dotnet/sdk/contents/src/Cli/Microsoft.TemplateEngine.Cli/LocalizableStrings.resx?ref=main`,
+  )
+    .then((x) => x.json())
+    .then((x: unknown) =>
+      typeof x === 'object' &&
+      x &&
+      'content' in x &&
+      typeof x.content === 'string'
+        ? Buffer.from(x.content, 'base64').toString()
+        : null,
+    );
+
+  if (!enXml) {
+    throw new Error('Unable to fetch English translation file');
+  }
 
   const translationDirectoryContents = (await fetch(
-    `https://api.github.com/repos/dotnet/templating/contents/src/Microsoft.TemplateEngine.Cli/xlf`,
+    `https://api.github.com/repos/dotnet/sdk/contents/src/Cli/Microsoft.TemplateEngine.Cli/xlf`,
   ).then((x) => x.json())) as { path: string; download_url: string }[];
   const translations: { lang: string; pairs: Translation[] }[] = [
     {
@@ -64,6 +78,7 @@ export default async function (tree: Tree) {
 
   const languages: (ReturnType<typeof names> & { raw: string })[] = [];
   for (const translation of translations) {
+    console.log('Updated language mappings for', translation.lang);
     generateFiles(tree, join(__dirname, 'files'), outputDirectory, {
       tmpl: '',
       language: translation.lang,
@@ -72,7 +87,7 @@ export default async function (tree: Tree) {
     });
     languages.push({ ...names(translation.lang), raw: translation.lang });
   }
-  generateFiles(tree, join(__dirname, 'index_tmpl_'), outputDirectory, {
+  generateFiles(tree, join(__dirname, 'index-template'), outputDirectory, {
     tmpl: '',
     languages,
   });
@@ -110,4 +125,8 @@ function getTranslationsFromXlf(xml: XmlDocument): Translation[] {
         return translations;
       }, [] as Translation[]) ?? []
   );
+}
+
+function dynamicImport<T = unknown>(mod: string): Promise<T> {
+  return new Function('p0', 'return import(p0)')(mod);
 }
