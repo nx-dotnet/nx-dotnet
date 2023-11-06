@@ -114,7 +114,7 @@
     "prettier": "^3.0.3",
     "react-refresh": "^0.10.0",
     "run-p": "*",
-    "semantic-release": "^19.0.5",
+    "semantic-release": "^22.0.7",
     "style-loader": "^3.3.0",
     "stylus": "0.59.0",
     "stylus-loader": "^7.1.0",
