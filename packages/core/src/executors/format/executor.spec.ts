@@ -123,4 +123,20 @@ describe('Format Executor', () => {
     const verifyNoChangesFlag = formatOptions?.verifyNoChanges;
     expect(verifyNoChangesFlag).toBeTruthy();
   });
+
+  it('does not pass the --verify-no-changes when fix option is used', async () => {
+    (dotnetClient as jest.Mocked<DotNetClient>).getSdkVersion.mockReturnValue(
+      '6.0.101',
+    );
+
+    const fixOptions = { ...options, fix: true };
+    const res = await executor(fixOptions, context, dotnetClient);
+    expect(res.success).toBeTruthy();
+
+    const formatOptions = (dotnetClient as jest.Mocked<DotNetClient>).format
+      .mock.calls[0][1];
+    const verifyNoChangesFlag = formatOptions?.verifyNoChanges;
+
+    expect(verifyNoChangesFlag).toBeUndefined();
+  });
 });
