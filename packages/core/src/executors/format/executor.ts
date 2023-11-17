@@ -16,6 +16,7 @@ function normalizeOptions(
   isNet6OrHigher: boolean,
 ): Record<string, string | boolean | undefined> {
   const { diagnostics, include, exclude, check, fix, ...flags } = options;
+
   const result = {
     ...flags,
     diagnostics: Array.isArray(diagnostics)
@@ -23,12 +24,14 @@ function normalizeOptions(
       : diagnostics,
     include: Array.isArray(include) ? include.join(' ') : include,
     exclude: Array.isArray(exclude) ? exclude.join(' ') : exclude,
-    check: fix ? false : check && !isNet6OrHigher, // The --check flag is for .NET 5 and older
   };
 
   // Specifying --verify-no-changes false does not work, so we only add the switch when we want to run the check only
-  if (!fix && check && isNet6OrHigher) {
-    return { ...result, verifyNoChanges: true };
+  if (!fix && check) {
+    if (isNet6OrHigher) {
+      return { ...result, verifyNoChanges: true };
+    }
+    return { ...result, check: true }; // The --check flag is for .NET 5 and older
   }
 
   return result;
