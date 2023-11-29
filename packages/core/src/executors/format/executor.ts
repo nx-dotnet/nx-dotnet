@@ -16,16 +16,25 @@ function normalizeOptions(
   isNet6OrHigher: boolean,
 ): Record<string, string | boolean | undefined> {
   const { diagnostics, include, exclude, check, fix, ...flags } = options;
-  return {
+
+  const result = {
     ...flags,
     diagnostics: Array.isArray(diagnostics)
       ? diagnostics.join(' ')
       : diagnostics,
     include: Array.isArray(include) ? include.join(' ') : include,
     exclude: Array.isArray(exclude) ? exclude.join(' ') : exclude,
-    check: fix ? false : check && !isNet6OrHigher, // The --check flag is for .NET 5 and older
-    verifyNoChanges: fix ? false : check && isNet6OrHigher, // The --verify-no-changes flag is for .NET 6 and newer
   };
+
+  // Specifying --verify-no-changes false does not work, so we only add the switch when we want to run the check only
+  if (!fix && check) {
+    if (isNet6OrHigher) {
+      return { ...result, verifyNoChanges: true };
+    }
+    return { ...result, check: true }; // The --check flag is for .NET 5 and older
+  }
+
+  return result;
 }
 
 export default async function runExecutor(
