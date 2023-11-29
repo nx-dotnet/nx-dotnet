@@ -1,3 +1,9 @@
+## [2.1.2](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.1...v2.1.2) (2023-11-29)
+
+### Bug Fixes
+
+- **core:** do not use --verify-no-changes false for linting ([#802](https://github.com/nx-dotnet/nx-dotnet/issues/802)) ([9026fcf](https://github.com/nx-dotnet/nx-dotnet/commit/9026fcff4b6b5630a04d209275e422ce9d777263))
+
 ## [2.1.1](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.0...v2.1.1) (2023-10-31)
 
 ### Bug Fixes
