@@ -3,4 +3,7 @@ export interface BuildExecutorSchema {
   directory: string;
   remoteName: string;
   commitMessage: string;
+  baseBranch: string;
+  syncWithBaseBranch: boolean;
+  syncStrategy: 'rebase' | 'merge';
 }

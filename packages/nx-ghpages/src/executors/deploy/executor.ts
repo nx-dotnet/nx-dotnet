@@ -6,6 +6,7 @@ import { join } from 'path';
 import { promisify } from 'util';
 
 import { BuildExecutorSchema } from './schema';
+import { readNxJson } from 'nx/src/config/nx-json';
 
 const exec = promisify(execCallback);
 
@@ -60,6 +61,15 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     logger.warn('Resetting gh-pages branch, as it already exists.');
     await exec(`git checkout -B gh-pages`, { cwd: directory });
   }
+  if (options.syncWithBaseBranch) {
+    const baseBranch =
+      options.baseBranch || readNxJson()?.affected?.defaultBase || 'master';
+    const syncStrategy = options.syncStrategy;
+    await exec(`git ${syncStrategy} ${options.remoteName}/${baseBranch}`, {
+      cwd: directory,
+    });
+  }
+
   await exec(`git push -f --set-upstream ${options.remoteName} gh-pages`, {
     cwd: directory,
   });

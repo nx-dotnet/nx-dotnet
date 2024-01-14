@@ -22,6 +22,22 @@
       "type": "string",
       "description": "Message of the git commit to gh-pages branch",
       "default": "chore: :rocket: deploy new version to Github Pages"
+    },
+    "baseBranch": {
+      "type": "string",
+      "description": "Base branch to sync the gh-pages branch with",
+      "default": "master"
+    },
+    "syncWithBaseBranch": {
+      "type": "string",
+      "description": "Indicate if the gh-pages branch should be synced with the base branch",
+      "default": "false"
+    },
+    "syncStrategy": {
+      "type": "string",
+      "description": "Git command to use to sync the gh-pages branch with the base branch",
+      "enum": ["rebase", "merge"],
+      "default": "rebase"
     }
   },
   "required": ["remote", "directory"]
