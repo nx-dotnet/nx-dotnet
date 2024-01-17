@@ -1,7 +1,11 @@
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 import * as semver from 'semver';
 
-import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
+import {
+  getSpawnParameterArray,
+  swapExplicitFalseKeys,
+  swapKeysUsingMap,
+} from '@nx-dotnet/utils';
 
 import {
   addPackageKeyMap,
@@ -14,6 +18,7 @@ import {
   dotnetRunOptions,
   DotnetTemplate,
   dotnetTestOptions,
+  formatExplicitFalseFlags,
   formatKeyMap,
   KnownDotnetTemplates,
   newKeyMap,
@@ -260,7 +265,12 @@ export class DotNetClient {
       params.push(project);
       if (parameters) {
         params.push(
-          ...getSpawnParameterArray(swapKeysUsingMap(parameters, formatKeyMap)),
+          ...getSpawnParameterArray(
+            swapKeysUsingMap(
+              swapExplicitFalseKeys(parameters, formatExplicitFalseFlags),
+              formatKeyMap,
+            ),
+          ),
         );
       }
       return this.logAndExecute(params);

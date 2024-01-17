@@ -21,3 +21,9 @@ export const formatKeyMap: Partial<{ [key in dotnetFormatFlags]: string }> = {
   fixAnalyzers: 'fix-analyzers',
   verifyNoChanges: 'verify-no-changes',
 };
+
+export const formatExplicitFalseFlags: readonly dotnetFormatFlags[] = [
+  'fixAnalyzers',
+  'fixStyle',
+  'fixWhitespace',
+];

@@ -29,9 +29,10 @@ export function getSpawnParameterArray(
 ): string[] {
   const spawnArray: string[] = [];
   for (const [key, value] of Object.entries(parameters)) {
-    // true booleans are flags, explicit false booleans follow regular key-value pattern
-    if (typeof value === 'boolean' && value) {
-      spawnArray.push(`--${key}`);
+    if (typeof value === 'boolean') {
+      if (value) {
+        spawnArray.push(`--${key}`);
+      }
     } else if (value !== undefined && value !== null) {
       spawnArray.push(`--${key}`, value.toString());
     }

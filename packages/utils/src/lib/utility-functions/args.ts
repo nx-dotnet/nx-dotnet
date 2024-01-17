@@ -13,3 +13,17 @@ export function swapKeysUsingMap(
     ]),
   );
 }
+
+export function swapExplicitFalseKeys<
+  TRecord extends Record<string, string | boolean>,
+>(
+  object: TRecord,
+  explicitFalseKeys: readonly (keyof TRecord)[],
+): Record<string, string | boolean> {
+  return Object.fromEntries(
+    Object.entries(object).map(([key, value]) => [
+      key,
+      explicitFalseKeys.includes(key) && value === false ? 'false' : value,
+    ]),
+  ) as Record<string, string | boolean>;
+}
