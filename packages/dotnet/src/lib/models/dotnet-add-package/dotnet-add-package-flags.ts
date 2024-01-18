@@ -1,3 +1,5 @@
+import { CommandLineParamFixes } from '@nx-dotnet/utils';
+
 export type dotnetAddPackageFlags =
   | 'version'
   | 'framework'
@@ -6,9 +8,11 @@ export type dotnetAddPackageFlags =
   | 'noRestore'
   | 'source';
 
-export const addPackageKeyMap: Partial<{
-  [key in dotnetAddPackageFlags]: string;
-}> = {
-  packageDirectory: 'package-directory',
-  noRestore: 'no-restore',
-};
+export const addPackageCommandLineParamFixes: CommandLineParamFixes<dotnetAddPackageFlags> =
+  {
+    keyMap: {
+      packageDirectory: 'package-directory',
+      noRestore: 'no-restore',
+    },
+    explicitFalseKeys: [],
+  };

@@ -1,3 +1,5 @@
+import { CommandLineParamFixes } from '@nx-dotnet/utils';
+
 export type dotnetRunFlags =
   | 'configuration'
   | 'framework'
@@ -12,9 +14,12 @@ export type dotnetRunFlags =
   | 'versionSuffix'
   | 'runtime';
 
-export const runKeyMap: Partial<{ [key in dotnetRunFlags]: string }> = {
-  noDependencies: 'no-dependencies',
-  noRestore: 'no-restore',
-  versionSuffix: 'version-suffix',
-  noIncremental: 'no-incremental',
+export const runCommandLineParamFixes: CommandLineParamFixes<dotnetRunFlags> = {
+  keyMap: {
+    noDependencies: 'no-dependencies',
+    noRestore: 'no-restore',
+    versionSuffix: 'version-suffix',
+    noIncremental: 'no-incremental',
+  },
+  explicitFalseKeys: [],
 };

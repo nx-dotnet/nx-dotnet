@@ -1,3 +1,5 @@
+import { CommandLineParamFixes } from '@nx-dotnet/utils';
+
 export type dotnetBuildFlags =
   | 'configuration'
   | 'framework'
@@ -12,9 +14,13 @@ export type dotnetBuildFlags =
   | 'versionSuffix'
   | 'runtime';
 
-export const buildKeyMap: Partial<{ [key in dotnetBuildFlags]: string }> = {
-  noRestore: 'no-restore',
-  noIncremental: 'no-incremental',
-  noDependencies: 'no-dependencies',
-  versionSuffix: 'version-suffix',
-};
+export const buildCommandLineParamFixes: CommandLineParamFixes<dotnetBuildFlags> =
+  {
+    keyMap: {
+      noRestore: 'no-restore',
+      noIncremental: 'no-incremental',
+      noDependencies: 'no-dependencies',
+      versionSuffix: 'version-suffix',
+    },
+    explicitFalseKeys: [],
+  };
