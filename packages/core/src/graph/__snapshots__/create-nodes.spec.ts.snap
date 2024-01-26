@@ -2,11 +2,15 @@
 
 exports[`infer-project should generate build, lint, serve targets for projects 1`] = `
 {
+  "cache": true,
   "configurations": {
     "production": {
       "configuration": "Release",
     },
   },
+  "dependsOn": [
+    "^build",
+  ],
   "executor": "@nx-dotnet/core:build",
   "options": {
     "configuration": "Debug",
@@ -15,13 +19,19 @@ exports[`infer-project should generate build, lint, serve targets for projects 1
   "outputs": [
     "{workspaceRoot}/dist/libs/api",
     "{workspaceRoot}/dist/intermediates/libs/api",
+    "{projectRoot}/bin",
+    "{projectRoot}/obj",
   ],
 }
 `;
 
 exports[`infer-project should generate build, lint, serve targets for projects 2`] = `
 {
+  "cache": true,
   "executor": "@nx-dotnet/core:format",
+  "inputs": [
+    "{projectRoot}/**/*.{cs,fs,vb}",
+  ],
 }
 `;
 
@@ -41,8 +51,13 @@ exports[`infer-project should generate build, lint, serve targets for projects 3
 
 exports[`infer-project should generate test target for test projects 1`] = `
 {
+  "cache": true,
+  "dependsOn": [
+    "build",
+  ],
   "executor": "@nx-dotnet/core:test",
   "options": {
+    "noBuild": true,
     "testProject": undefined,
   },
 }

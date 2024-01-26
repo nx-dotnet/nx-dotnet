@@ -13,7 +13,8 @@
     "documentation:check": "ts-node ./tools/scripts/hooks/documentation.check.ts",
     "documentation": "nx g @nx-dotnet/nxdoc:generate-docs",
     "publish-dev": "ts-node tools/scripts/publish-dev",
-    "sandbox": "ts-node ./tools/scripts/sandbox.ts"
+    "sandbox": "ts-node ./tools/scripts/sandbox.ts",
+    "local-registry": "ts-node ./tools/scripts/local-registry/setup.ts"
   },
   "private": false,
   "dependencies": {

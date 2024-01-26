@@ -28,28 +28,57 @@ export const registerProjectTargets = (
 ) => {
   const targets: Record<string, TargetConfiguration> = {};
   const { inferredTargets } = opts;
-  if (inferredTargets !== false) {
-    const projectFileContents = readFileSync(
-      resolve(workspaceRoot, projectFile),
-      'utf8',
-    );
-    if (
-      projectFileContents.includes('Microsoft.NET.Test.Sdk') &&
-      inferredTargets.test
-    ) {
-      targets[inferredTargets.test] = GetTestExecutorConfig();
-    }
-    if (inferredTargets.build) {
-      targets[inferredTargets.build] = GetBuildExecutorConfiguration(
-        dirname(projectFile),
-      );
-    }
-    if (inferredTargets.lint) {
-      targets[inferredTargets.lint] = GetLintExecutorConfiguration();
-    }
-    if (inferredTargets.serve) {
-      targets[inferredTargets.serve] = GetServeExecutorConfig();
-    }
+  if (inferredTargets === false) {
+    return {};
+  }
+
+  const projectFileContents = readFileSync(
+    resolve(workspaceRoot, projectFile),
+    'utf8',
+  );
+
+  if (
+    projectFileContents.includes('Microsoft.NET.Test.Sdk') &&
+    inferredTargets.test
+  ) {
+    const { targetName, ...extraOptions } =
+      typeof inferredTargets.test === 'string'
+        ? { targetName: inferredTargets.test }
+        : inferredTargets.test;
+    targets[targetName] = {
+      ...GetTestExecutorConfig(),
+      ...extraOptions,
+    };
+  }
+  if (inferredTargets.build) {
+    const { targetName, ...extraOptions } =
+      typeof inferredTargets.build === 'string'
+        ? { targetName: inferredTargets.build }
+        : inferredTargets.build;
+    targets[targetName] = {
+      ...GetBuildExecutorConfiguration(dirname(projectFile)),
+      ...extraOptions,
+    };
+  }
+  if (inferredTargets.lint) {
+    const { targetName, ...extraOptions } =
+      typeof inferredTargets.lint === 'string'
+        ? { targetName: inferredTargets.lint }
+        : inferredTargets.lint;
+    targets[targetName] = {
+      ...GetLintExecutorConfiguration(),
+      ...extraOptions,
+    };
+  }
+  if (inferredTargets.serve) {
+    const { targetName, ...extraOptions } =
+      typeof inferredTargets.serve === 'string'
+        ? { targetName: inferredTargets.serve }
+        : inferredTargets.serve;
+    targets[targetName] = {
+      ...GetServeExecutorConfig(),
+      ...extraOptions,
+    };
   }
   return targets;
 };
@@ -84,8 +113,9 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
   `**/{${projectFilePatterns.join(',')}}`,
   (
     file: string,
-    ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
-    maybeCtx: CreateNodesContext | undefined,
+    // We read the config in the function to ensure it's always up to date / compatible.
+    // ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
+    // maybeCtx: CreateNodesContext | undefined,
   ) => {
     const options = readConfig();
 

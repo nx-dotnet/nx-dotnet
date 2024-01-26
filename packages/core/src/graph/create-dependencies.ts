@@ -18,19 +18,16 @@ import {
 // It used to only consist of the context, but now it also includes the options.
 // The options were inserted as the first parameter, and the context was moved to the second.
 // The following types are used to support both signatures.
-type CreateDependenciesV16 = (
-  ctx: Parameters<CreateDependencies>[1],
-  _: undefined,
-) => ReturnType<CreateDependencies>;
-
-type CreateDependenciesCompat<T> = (
-  p0:
-    | Parameters<CreateDependencies<T>>[0]
-    | Parameters<CreateDependenciesV16>[0],
-  p1:
-    | Parameters<CreateDependencies<T>>[1]
-    | Parameters<CreateDependenciesV16>[1],
-) => ReturnType<CreateDependencies<T>>;
+type CreateDependenciesCompat<T> = {
+  (
+    ctx: CreateDependenciesContext,
+    _: undefined,
+  ): ReturnType<CreateDependencies<T>>;
+  (
+    opts: Parameters<CreateDependencies<T>>[0],
+    ctx: CreateDependenciesContext,
+  ): ReturnType<CreateDependencies<T>>;
+};
 
 export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
   ctxOrOpts: CreateDependenciesContext | NxDotnetConfig | undefined,

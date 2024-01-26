@@ -3,7 +3,7 @@ import { publishAll } from '../publish-all';
 
 import * as parser from 'yargs-parser';
 
-export function main(version: string) {
+export async function main(version: string) {
   const rootPkg = readJson('package.json');
   const [next, tagSpec]: [string, string | null] = rootPkg.version.startsWith(
     version,
@@ -15,7 +15,7 @@ export function main(version: string) {
   rev = rev === 'NaN' ? '0' : rev;
   const newVersion = `${next}-${tag}.${rev}`;
 
-  publishAll(newVersion, tag);
+  return publishAll(newVersion, tag);
 }
 
 if (require.main === module) {
@@ -27,5 +27,7 @@ if (require.main === module) {
   if (!version) {
     throw new Error('Version is required');
   }
-  main(version);
+  main(version)
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
 }

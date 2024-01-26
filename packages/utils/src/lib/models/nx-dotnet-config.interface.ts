@@ -1,3 +1,4 @@
+import { TargetConfiguration } from '@nx/devkit';
 import { ModuleBoundaries } from './nx';
 
 export interface NxDotnetConfigV1 {
@@ -31,11 +32,15 @@ export interface NxDotnetConfigV1 {
   inferProjects?: boolean;
 }
 
+type PluginTargetConfiguration = TargetConfiguration & {
+  targetName: string;
+};
+
 type ConfiguredTargets = {
-  build: string | false;
-  lint: string | false;
-  serve: string | false;
-  test: string | false;
+  build: PluginTargetConfiguration | string | false;
+  lint: PluginTargetConfiguration | string | false;
+  serve: PluginTargetConfiguration | string | false;
+  test: PluginTargetConfiguration | string | false;
 };
 
 export type NxDotnetConfigV2 = Omit<NxDotnetConfigV1, 'inferProjectTargets'> & {

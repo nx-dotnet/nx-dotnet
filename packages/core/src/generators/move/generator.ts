@@ -1,5 +1,6 @@
 import {
   addProjectConfiguration,
+  createProjectGraphAsync,
   formatFiles,
   getWorkspaceLayout,
   joinPathFragments,
@@ -22,12 +23,22 @@ type NormalizedSchema = {
   destinationProject: string;
 };
 
-function normalizeOptions(
+async function getCurrentProjectConfiguration(
+  projectName: string,
+): Promise<ProjectConfiguration> {
+  return await (
+    await createProjectGraphAsync()
+  ).nodes[projectName].data;
+}
+
+async function normalizeOptions(
   tree: Tree,
   options: MoveGeneratorSchema,
-): NormalizedSchema {
+): Promise<NormalizedSchema> {
   const { appsDir, libsDir } = getWorkspaceLayout(tree);
-  const currentRoot = readProjectConfiguration(tree, options.projectName).root;
+  const { root: currentRoot } = await getCurrentProjectConfiguration(
+    options.projectName,
+  );
   let destinationRoot = options.destination;
   if (!options.relativeToRoot) {
     if (currentRoot.startsWith(appsDir)) {
@@ -55,26 +66,43 @@ function normalizeOptions(
 }
 
 export default async function (tree: Tree, options: MoveGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(tree, options);
-  const config = readProjectConfiguration(
-    tree,
-    normalizedOptions.currentProject,
-  );
-  config.root = normalizedOptions.destinationRoot;
-  config.name = normalizedOptions.destinationProject;
-  removeProjectConfiguration(tree, normalizedOptions.currentProject);
+  const normalizedOptions = await normalizeOptions(tree, options);
+  const writeNewProjectJson = updateProjectJson(tree, normalizedOptions);
+
   renameDirectory(
     tree,
     normalizedOptions.currentRoot,
     normalizedOptions.destinationRoot,
   );
-  addProjectConfiguration(
-    tree,
-    options.projectName,
-    transformConfiguration(tree, config, normalizedOptions),
-  );
+
+  writeNewProjectJson();
+
   updateXmlReferences(tree, normalizedOptions);
   await formatFiles(tree);
+}
+
+function updateProjectJson(tree: Tree, normalizedOptions: NormalizedSchema) {
+  try {
+    const config = readProjectConfiguration(
+      tree,
+      normalizedOptions.currentProject,
+    );
+    config.root = normalizedOptions.destinationRoot;
+    config.name = normalizedOptions.destinationProject;
+    removeProjectConfiguration(tree, normalizedOptions.currentProject);
+    return () => {
+      addProjectConfiguration(
+        tree,
+        normalizedOptions.destinationProject,
+        transformConfiguration(tree, config, normalizedOptions),
+      );
+    };
+  } catch {
+    // There was no project.json, so dont add one.
+    return () => {
+      /* its fine */
+    };
+  }
 }
 
 function transformConfiguration(

@@ -7,11 +7,22 @@ import {
   names,
   offsetFromRoot,
   ProjectConfiguration,
+  ProjectGraph,
 } from '@nx/devkit';
 import { uniq } from '@nx/plugin/testing';
 
 import generator from './generator';
 import { basename } from 'path';
+
+let graph: ProjectGraph = {
+  dependencies: {},
+  nodes: {},
+};
+
+jest
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  .spyOn(require('@nx/devkit'), 'createProjectGraphAsync')
+  .mockImplementation(() => Promise.resolve(graph));
 
 describe('move generator', () => {
   let tree: Tree;
@@ -20,6 +31,10 @@ describe('move generator', () => {
     tree = createTreeWithEmptyWorkspace({
       layout: 'apps-libs',
     });
+    graph = {
+      dependencies: {},
+      nodes: {},
+    };
   });
 
   it('should move simple projects successfully', async () => {
@@ -107,12 +122,22 @@ describe('move generator', () => {
       new RegExp(`^${joinPathFragments(relativeToRoot, 'node_modules')}.*`),
     );
   });
+
+  it('should work for inferred projects', async () => {
+    const { project, root: source } = makeSimpleProject(tree, 'app', 'a/b');
+    tree.delete(joinPathFragments(source, 'project.json'));
+    const destination = joinPathFragments('a', 'b', 'c', uniq('app'));
+    await generator(tree, { projectName: project, destination });
+    expect(
+      tree.exists(joinPathFragments(destination, 'project.json')),
+    ).toBeFalsy();
+  });
 });
 
 function makeSimpleProject(tree: Tree, type: 'app' | 'lib', path?: string) {
   const project = uniq(type);
   const root = joinPathFragments(`${type}s`, path ?? '', project);
-  addProjectConfiguration(tree, project, {
+  const configuration: ProjectConfiguration = {
     root,
     sourceRoot: joinPathFragments(root, 'src'),
     projectType: type === 'app' ? 'application' : 'library',
@@ -122,7 +147,14 @@ function makeSimpleProject(tree: Tree, type: 'app' | 'lib', path?: string) {
         outputs: [`{workspaceRoot}/dist/${root}`],
       },
     },
-  });
+  };
+  addProjectConfiguration(tree, project, configuration);
+  graph.nodes[project] = {
+    data: configuration,
+    name: project,
+    type,
+  };
+
   tree.write(joinPathFragments(root, 'readme.md'), 'contents');
   return { project, root };
 }

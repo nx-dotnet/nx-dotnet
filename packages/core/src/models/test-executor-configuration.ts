@@ -1,23 +1,21 @@
 import { TargetConfiguration } from '@nx/devkit';
+import { TestExecutorSchema } from '../executors/test/schema';
 
 export function GetTestExecutorConfig(
   projectName?: string,
 ): TestTargetConfiguration {
   return {
     executor: '@nx-dotnet/core:test',
+    cache: true,
+    dependsOn: ['build'],
     options: {
       testProject: projectName,
+      noBuild: true,
     },
   };
 }
 
-export interface TestTargetConfiguration extends TargetConfiguration {
-  options: {
-    /**
-     * If null, implicitly this must be the test project.
-     * Else, run this target on the testProject instead of
-     * the executor's target.
-     */
-    testProject?: string;
-  };
-}
+export type TestTargetConfiguration = TargetConfiguration & {
+  executor: '@nx-dotnet/core:test';
+  options: TestExecutorSchema;
+};

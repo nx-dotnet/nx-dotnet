@@ -1,7 +1,11 @@
 import { addProjectConfiguration, names, Tree } from '@nx/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
-import { findProjectFileInPath, isDryRun } from '@nx-dotnet/utils';
+import {
+  findProjectFileInPath,
+  isDryRun,
+  isNxCrystalEnabled,
+} from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -42,17 +46,19 @@ export async function GenerateTestProject(
   const testRoot = schema.projectRoot + separator + suffix;
   const testProjectName = schema.projectName + separator + suffix;
 
-  addProjectConfiguration(host, testProjectName, {
-    root: testRoot,
-    projectType: schema.projectType,
-    sourceRoot: `${testRoot}`,
-    targets: {
-      build: GetBuildExecutorConfiguration(testRoot),
-      test: GetTestExecutorConfig(),
-      lint: GetLintExecutorConfiguration(),
-    },
-    tags: schema.parsedTags,
-  });
+  if (!isNxCrystalEnabled()) {
+    addProjectConfiguration(host, testProjectName, {
+      root: testRoot,
+      projectType: schema.projectType,
+      sourceRoot: `${testRoot}`,
+      targets: {
+        build: GetBuildExecutorConfiguration(testRoot),
+        test: GetTestExecutorConfig(),
+        lint: GetLintExecutorConfiguration(),
+      },
+      tags: schema.parsedTags,
+    });
+  }
 
   const newParams: dotnetNewOptions = {
     language: schema.language,

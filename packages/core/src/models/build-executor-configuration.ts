@@ -15,11 +15,15 @@ export function GetBuildExecutorConfiguration(
     : [
         `{workspaceRoot}/dist/${projectRoot}`,
         `{workspaceRoot}/dist/intermediates/${projectRoot}`,
+        `{projectRoot}/bin`,
+        `{projectRoot}/obj`,
       ];
 
   return {
     executor: '@nx-dotnet/core:build',
     outputs,
+    cache: true,
+    dependsOn: ['^build'],
     options: {
       configuration: 'Debug',
       noDependencies: true,
