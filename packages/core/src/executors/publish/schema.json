@@ -7,7 +7,6 @@
   "properties": {
     "configuration": {
       "type": "string",
-      "enum": ["Debug", "Release"],
       "default": "Debug",
       "description": "Defines the build configuration The default for most projects is Debug, but you can override the build configuration settings in your project."
     },
