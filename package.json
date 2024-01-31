@@ -139,5 +139,5 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "2.1.2"
+  "version": "2.2.0"
 }

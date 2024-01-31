@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.2...v2.2.0) (2024-01-31)
+
+### Bug Fixes
+
+- **core:** remove restriction of configuration ([#823](https://github.com/nx-dotnet/nx-dotnet/issues/823)) ([49b341f](https://github.com/nx-dotnet/nx-dotnet/commit/49b341ff81fde6f815f4a75f06d552907a79b8ae))
+- **dotnet:** prevent "false" being incorrectly passed to dotnet command ([#818](https://github.com/nx-dotnet/nx-dotnet/issues/818)) ([0945571](https://github.com/nx-dotnet/nx-dotnet/commit/0945571169dac0df375d1381daa36bee46e14647))
+
+### Features
+
+- add options to sync the `gh-pages` branch with the base branch … ([#815](https://github.com/nx-dotnet/nx-dotnet/issues/815)) ([d9fff67](https://github.com/nx-dotnet/nx-dotnet/commit/d9fff6795b26df42bde5198d2d5cb2f8a1e527bf))
+- **core:** update inference configuration ([#822](https://github.com/nx-dotnet/nx-dotnet/issues/822)) ([6085c50](https://github.com/nx-dotnet/nx-dotnet/commit/6085c500dd17612217334d20a6b53786d8896396))
+
 ## [2.1.2](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.1...v2.1.2) (2023-11-29)
 
 ### Bug Fixes
