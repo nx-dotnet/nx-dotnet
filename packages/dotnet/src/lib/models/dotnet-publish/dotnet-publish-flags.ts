@@ -1,3 +1,5 @@
+import { CommandLineParamFixes } from '@nx-dotnet/utils';
+
 export type dotnetPublishFlags =
   | 'configuration'
   | 'framework'
@@ -13,10 +15,14 @@ export type dotnetPublishFlags =
   | 'verbosity'
   | 'versionSuffix';
 
-export const publishKeyMap: Partial<{ [key in dotnetPublishFlags]: string }> = {
-  noBuild: 'no-build',
-  noDependencies: 'no-dependencies',
-  noRestore: 'no-restore',
-  selfContained: 'self-contained',
-  versionSuffix: 'version-suffix',
-};
+export const publishCommandLineParamFixes: CommandLineParamFixes<dotnetPublishFlags> =
+  {
+    keyMap: {
+      noBuild: 'no-build',
+      noDependencies: 'no-dependencies',
+      noRestore: 'no-restore',
+      selfContained: 'self-contained',
+      versionSuffix: 'version-suffix',
+    },
+    explicitFalseKeys: [],
+  };

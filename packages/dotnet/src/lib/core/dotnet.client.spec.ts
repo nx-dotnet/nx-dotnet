@@ -4,6 +4,10 @@ import { DotNetClient } from './dotnet.client';
 import { dotnetFactory, mockDotnetFactory } from './dotnet.factory';
 
 describe('dotnet client', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('publish', () => {
     describe('extra parameters', () => {
       const dotnetClient = new DotNetClient(mockDotnetFactory());
@@ -13,13 +17,7 @@ describe('dotnet client', () => {
       beforeEach(() => {
         spawnSyncSpy = jest
           .spyOn(cp, 'spawnSync')
-          .mockReturnValue({ status: 0 } as Partial<
-            cp.SpawnSyncReturns<Buffer>
-          > as cp.SpawnSyncReturns<Buffer>);
-      });
-
-      afterEach(() => {
-        jest.resetAllMocks();
+          .mockReturnValue({ status: 0 } as cp.SpawnSyncReturns<Buffer>);
       });
 
       it('should handle multiple parameters', () => {
@@ -77,6 +75,27 @@ describe('dotnet client', () => {
         );
         expect(spawnSyncSpy.mock.calls[0][1]).toContain('-p:Name=bar');
       });
+    });
+    it('should convert options to flags', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSyncSpy = jest
+        .spyOn(cp, 'spawnSync')
+        .mockReturnValue({ status: 0 } as cp.SpawnSyncReturns<Buffer>);
+      dotnetClient.publish('my-project', {
+        noBuild: false,
+        noRestore: true,
+        configuration: 'Release',
+      });
+      expect(spawnSyncSpy).toBeCalledTimes(1);
+      expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "publish",
+          ""my-project"",
+          "--no-restore",
+          "--configuration",
+          "Release",
+        ]
+      `);
     });
   });
 
@@ -480,6 +499,130 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
               "false",
             ],
           ],
+        ]
+      `);
+    });
+  });
+
+  describe('test', () => {
+    it('should convert options to flags', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSyncSpy = jest
+        .spyOn(cp, 'spawnSync')
+        .mockReturnValue({ status: 0 } as cp.SpawnSyncReturns<Buffer>);
+      dotnetClient.test('my-project', false, {
+        blame: false,
+        noRestore: true,
+        blameHang: true,
+        blameHangDump: 'dump.file',
+      });
+      expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
+      expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "test",
+          "my-project",
+          "--no-restore",
+          "--blame-hang",
+          "--blame-hang-dump",
+          "dump.file",
+        ]
+      `);
+    });
+  });
+
+  describe('build', () => {
+    it('should convert options to flags', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSyncSpy = jest
+        .spyOn(cp, 'spawnSync')
+        .mockReturnValue({ status: 0 } as cp.SpawnSyncReturns<Buffer>);
+      dotnetClient.build('my-project', {
+        noDependencies: false,
+        noRestore: true,
+        configuration: 'Release',
+      });
+      expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
+      expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "build",
+          "my-project",
+          "--no-restore",
+          "--configuration",
+          "Release",
+        ]
+      `);
+    });
+  });
+
+  describe('addPackageReference', () => {
+    it('should convert options to flags', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSyncSpy = jest
+        .spyOn(cp, 'spawnSync')
+        .mockReturnValue({ status: 0 } as cp.SpawnSyncReturns<Buffer>);
+      dotnetClient.addPackageReference('my-project', 'other-package', {
+        noRestore: true,
+        version: '1.2.3',
+      });
+      expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
+      expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "add",
+          "my-project",
+          "package",
+          "other-package",
+          "--no-restore",
+          "--version",
+          "1.2.3",
+        ]
+      `);
+    });
+  });
+
+  describe('new', () => {
+    it('should convert options to flags', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSyncSpy = jest
+        .spyOn(cp, 'spawnSync')
+        .mockReturnValue({ status: 0 } as cp.SpawnSyncReturns<Buffer>);
+      dotnetClient.new('my-template', {
+        dryRun: true,
+        force: false,
+        name: 'my-project',
+      });
+      expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
+      expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "new",
+          "my-template",
+          "--dry-run",
+          "--name",
+          "my-project",
+        ]
+      `);
+    });
+  });
+
+  describe('run', () => {
+    it('should convert options to flags', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSpy = jest
+        .spyOn(cp, 'spawn')
+        .mockReturnValue({ exitCode: 0 } as cp.ChildProcess);
+      dotnetClient.run('my-project', false, {
+        noRestore: true,
+        noDependencies: false,
+        configuration: 'Release',
+      });
+      expect(spawnSpy).toHaveBeenCalledTimes(1);
+      expect(spawnSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "run",
+          "--project",
+          "my-project",
+          "--no-restore",
+          "--configuration",
+          "Release",
         ]
       `);
     });

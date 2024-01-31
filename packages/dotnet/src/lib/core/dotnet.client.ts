@@ -1,11 +1,14 @@
 import { ChildProcess, spawn, spawnSync } from 'child_process';
 import * as semver from 'semver';
 
-import { getSpawnParameterArray, swapKeysUsingMap } from '@nx-dotnet/utils';
+import {
+  convertOptionsToParams,
+  getSpawnParameterArray,
+} from '@nx-dotnet/utils';
 
 import {
-  addPackageKeyMap,
-  buildKeyMap,
+  addPackageCommandLineParamFixes,
+  buildCommandLineParamFixes,
   dotnetAddPackageOptions,
   dotnetBuildOptions,
   dotnetFormatOptions,
@@ -14,18 +17,21 @@ import {
   dotnetRunOptions,
   DotnetTemplate,
   dotnetTestOptions,
-  formatKeyMap,
+  formatCommandLineParamFixes,
   KnownDotnetTemplates,
-  newKeyMap,
-  publishKeyMap,
-  runKeyMap,
-  testKeyMap,
+  newCommandLineParamFixes,
+  publishCommandLineParamFixes,
+  runCommandLineParamFixes,
+  testCommandLineParamFixes,
 } from '../models';
 import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
 import { LoadedCLI } from './dotnet.factory';
 
 export class DotNetClient {
-  constructor(private cliCommand: LoadedCLI, public cwd?: string) {}
+  constructor(
+    private cliCommand: LoadedCLI,
+    public cwd?: string,
+  ) {}
 
   new(
     template: KnownDotnetTemplates,
@@ -34,8 +40,9 @@ export class DotNetClient {
   ): void {
     const params = [`new`, template];
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, newKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      params.push(
+        ...convertOptionsToParams(parameters, newCommandLineParamFixes),
+      );
     }
     params.push(...(additionalArguments ?? []));
     return this.logAndExecute(params);
@@ -72,8 +79,9 @@ export class DotNetClient {
   ): void {
     const params = [`build`, project];
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, buildKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      params.push(
+        ...convertOptionsToParams(parameters, buildCommandLineParamFixes),
+      );
     }
     if (extraParameters) {
       const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
@@ -91,8 +99,9 @@ export class DotNetClient {
       ? [`watch`, `--project`, project, `run`]
       : [`run`, `--project`, project];
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, runKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      params.push(
+        ...convertOptionsToParams(parameters, runCommandLineParamFixes),
+      );
     }
 
     return this.logAndSpawn(params);
@@ -109,8 +118,9 @@ export class DotNetClient {
       : [`test`, project];
 
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, testKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      params.push(
+        ...convertOptionsToParams(parameters, testCommandLineParamFixes),
+      );
     }
     if (extraParameters) {
       const matches = extraParameters.match(EXTRA_PARAMS_REGEX);
@@ -130,8 +140,9 @@ export class DotNetClient {
   ): void {
     const params = [`add`, project, `package`, pkg];
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, addPackageKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      params.push(
+        ...convertOptionsToParams(parameters, addPackageCommandLineParamFixes),
+      );
     }
     return this.logAndExecute(params);
   }
@@ -148,8 +159,9 @@ export class DotNetClient {
   ): void {
     const params = [`publish`, `"${project}"`];
     if (parameters) {
-      parameters = swapKeysUsingMap(parameters, publishKeyMap);
-      params.push(...getSpawnParameterArray(parameters));
+      params.push(
+        ...convertOptionsToParams(parameters, publishCommandLineParamFixes),
+      );
     }
     if (publishProfile) {
       params.push(`-p:PublishProfile=${publishProfile}`);
@@ -216,8 +228,9 @@ export class DotNetClient {
           ...parameters,
         };
         subcommandParams.push(
-          ...getSpawnParameterArray(
-            swapKeysUsingMap(subcommandParameterObject, formatKeyMap),
+          ...convertOptionsToParams(
+            subcommandParameterObject,
+            formatCommandLineParamFixes,
           ),
         );
         this.logAndExecute(subcommandParams);
@@ -233,8 +246,9 @@ export class DotNetClient {
           subcommandParameterObject.severity = style;
         }
         subcommandParams.push(
-          ...getSpawnParameterArray(
-            swapKeysUsingMap(subcommandParameterObject, formatKeyMap),
+          ...convertOptionsToParams(
+            subcommandParameterObject,
+            formatCommandLineParamFixes,
           ),
         );
         this.logAndExecute(subcommandParams);
@@ -250,8 +264,9 @@ export class DotNetClient {
           subcommandParameterObject.severity = analyzers;
         }
         subcommandParams.push(
-          ...getSpawnParameterArray(
-            swapKeysUsingMap(subcommandParameterObject, formatKeyMap),
+          ...convertOptionsToParams(
+            subcommandParameterObject,
+            formatCommandLineParamFixes,
           ),
         );
         this.logAndExecute(subcommandParams);
@@ -260,7 +275,7 @@ export class DotNetClient {
       params.push(project);
       if (parameters) {
         params.push(
-          ...getSpawnParameterArray(swapKeysUsingMap(parameters, formatKeyMap)),
+          ...convertOptionsToParams(parameters, formatCommandLineParamFixes),
         );
       }
       return this.logAndExecute(params);

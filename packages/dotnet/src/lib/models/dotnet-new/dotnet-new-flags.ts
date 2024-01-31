@@ -1,3 +1,5 @@
+import { CommandLineParamFixes } from '@nx-dotnet/utils';
+
 export type dotnetNewFlags =
   | 'dryRun'
   | 'force'
@@ -10,9 +12,12 @@ export type dotnetNewFlags =
   | 'updateApply'
   | 'updateCheck';
 
-export const newKeyMap: Partial<{ [key in dotnetNewFlags]: string }> = {
-  dryRun: 'dry-run',
-  updateApply: 'update-apply',
-  updateCheck: 'update-check',
-  nugetSource: 'nuget-source',
+export const newCommandLineParamFixes: CommandLineParamFixes<dotnetNewFlags> = {
+  keyMap: {
+    dryRun: 'dry-run',
+    updateApply: 'update-apply',
+    updateCheck: 'update-check',
+    nugetSource: 'nuget-source',
+  },
+  explicitFalseKeys: [],
 };
