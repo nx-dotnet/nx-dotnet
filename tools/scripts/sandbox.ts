@@ -12,11 +12,13 @@ import { startCleanVerdaccioInstance } from './local-registry/setup';
 
 const sandboxDirectory = join(__dirname, '../../tmp/sandbox');
 
-export function setup() {
+export async function setup() {
   copySync('.npmrc.local', '.npmrc');
   try {
-    startCleanVerdaccioInstance();
-  } catch {
+    await startCleanVerdaccioInstance();
+  } catch (E) {
+    throw E;
+
     // Its ok.
   }
   execSync('ts-node ./tools/scripts/publish-all 99.99.99 local', {
@@ -29,28 +31,29 @@ export function setup() {
 }
 
 if (require.main === module) {
-  setup();
-  if (existsSync(sandboxDirectory)) {
-    removeSync(sandboxDirectory);
-  }
-  ensureDirSync(dirname(sandboxDirectory));
-  execSync(
-    `npx create-nx-workspace@latest ${basename(
-      sandboxDirectory,
-    )} --preset empty --no-nxCloud --packageManager yarn`,
-    {
-      cwd: dirname(sandboxDirectory),
-      stdio: 'inherit',
-    },
-  );
-  copySync('.npmrc.local', join(sandboxDirectory, '.npmrc'));
-  getWorkspacePackages()
-    .then((pkgs) => {
-      execSync(`yarn add --dev ${pkgs}`, {
-        cwd: sandboxDirectory,
-        stdio: 'inherit',
+  setup()
+    .then(() => {
+      if (existsSync(sandboxDirectory)) {
+        removeSync(sandboxDirectory);
+      }
+      ensureDirSync(dirname(sandboxDirectory));
+      execSync(
+        `npx create-nx-workspace@latest ${basename(
+          sandboxDirectory,
+        )} --preset empty --no-nxCloud --packageManager yarn`,
+        {
+          cwd: dirname(sandboxDirectory),
+          stdio: 'inherit',
+        },
+      );
+      copySync('.npmrc.local', join(sandboxDirectory, '.npmrc'));
+      getWorkspacePackages().then((pkgs) => {
+        execSync(`yarn add --dev ${pkgs}`, {
+          cwd: sandboxDirectory,
+          stdio: 'inherit',
+        });
+        console.log('Sandbox created at', resolve(sandboxDirectory));
       });
-      console.log('Sandbox created at', resolve(sandboxDirectory));
     })
     .catch((err) => {
       console.error(err);

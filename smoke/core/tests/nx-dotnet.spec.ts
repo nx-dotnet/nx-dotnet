@@ -41,26 +41,29 @@ function execAsync(command: string, opts: ExecOptions): Promise<void> {
 }
 
 describe('nx-dotnet smoke', () => {
-  beforeAll(async () => {
-    ({ name: smokeDirectory, removeCallback: cleanup } = dirSync({
-      unsafeCleanup: true,
-    }));
+  beforeAll(
+    async () => {
+      ({ name: smokeDirectory, removeCallback: cleanup } = dirSync({
+        unsafeCleanup: true,
+      }));
 
-    await execAsync(
-      'npx create-nx-workspace@latest test --preset ts --nxCloud false',
-      {
-        cwd: smokeDirectory,
-        env: process.env,
-      },
-    );
+      await execAsync(
+        'npx create-nx-workspace@latest test --preset ts --nxCloud skip',
+        {
+          cwd: smokeDirectory,
+          env: process.env,
+        },
+      );
 
-    await execAsync('git init', await execAsyncOptions());
+      await execAsync('git init', await execAsyncOptions());
 
-    await execAsync(
-      'npm i --save-dev @nx-dotnet/core',
-      await execAsyncOptions(),
-    );
-  }, 20 * 60 * 1000); // 20 minutes
+      await execAsync(
+        'npm i --save-dev @nx-dotnet/core',
+        await execAsyncOptions(),
+      );
+    },
+    20 * 60 * 1000,
+  ); // 20 minutes
 
   afterAll(async () => {
     cleanup();

@@ -49,3 +49,7 @@ export function killVerdaccioInstance() {
 process.on('SIGINT', () => {
   killVerdaccioInstance();
 });
+
+if (require.main === module) {
+  startCleanVerdaccioInstance();
+}

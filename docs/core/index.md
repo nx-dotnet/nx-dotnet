@@ -109,10 +109,6 @@ Restores NuGet packages and .NET tools used by the workspace
 
 Generate a .NET test project for an existing application or library
 
-### [import-projects](./Generators/import-projects.md)
-
-Import existing projects into your Nx workspace
-
 ### [add-swagger-target](./Generators/add-swagger-target.md)
 
 Add a swagger target to a webapi based project to extract swagger.json into a newly generated library project

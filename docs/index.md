@@ -8,7 +8,7 @@ slug: /
 ## [@nx-dotnet/core](./core)
 
 - 7 Executors
-- 11 Generators
+- 10 Generators
 
 ## [@nx-dotnet/nx-ghpages](./nx-ghpages)
 

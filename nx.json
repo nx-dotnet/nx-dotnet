@@ -3,10 +3,6 @@
   "affected": {
     "defaultBase": "master"
   },
-  "workspaceLayout": {
-    "appsDir": "",
-    "libsDir": ""
-  },
   "plugins": [
     {
       "plugin": "@nx-dotnet/core",

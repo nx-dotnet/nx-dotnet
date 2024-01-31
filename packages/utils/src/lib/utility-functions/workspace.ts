@@ -2,6 +2,7 @@ import {
   DependencyType,
   getProjects,
   normalizePath as nxNormalizePath,
+  NX_VERSION,
   ProjectConfiguration,
   ProjectsConfigurations,
   RawProjectGraphDependency,
@@ -11,6 +12,7 @@ import {
 
 import { readFileSync } from 'fs';
 import { dirname, relative, resolve } from 'path';
+import { lt } from 'semver';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 import { findProjectFileInPath, findProjectFileInPathSync, glob } from './glob';
@@ -190,6 +192,17 @@ export function inlineNxTokens(value: string, project: ProjectConfiguration) {
   }
   value = value.replace('{projectRoot}', project.root);
   return value.replace('{projectName}', project.name as string);
+}
+
+export function isNxCrystalEnabled() {
+  // not the default
+  if (lt(NX_VERSION, '18.0.0')) {
+    return process.env.NX_PCV3 === 'true' || process.env.NX_CRYSTAL === 'true';
+  }
+  // should be on by default
+  return !(
+    process.env.NX_PCV3 === 'false' || process.env.NX_CRYSTAL === 'false'
+  );
 }
 
 function tryGetXmlDocument(file: string): XmlDocument | null {

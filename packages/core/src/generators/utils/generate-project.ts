@@ -6,7 +6,6 @@ import {
   joinPathFragments,
   names,
   normalizePath,
-  ProjectConfiguration,
   ProjectType,
   Tree,
 } from '@nx/devkit';
@@ -20,7 +19,7 @@ import {
   dotnetNewOptions,
   KnownDotnetTemplates,
 } from '@nx-dotnet/dotnet';
-import { isDryRun, resolve } from '@nx-dotnet/utils';
+import { isDryRun, isNxCrystalEnabled, resolve } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -190,25 +189,21 @@ export async function GenerateProject(
     projectType,
   );
 
-  const projectConfiguration: ProjectConfiguration = {
-    root: normalizedOptions.projectRoot,
-    projectType: projectType,
-    sourceRoot: `${normalizedOptions.projectRoot}`,
-    targets: {
-      build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
-      ...(projectType === 'application'
-        ? { serve: GetServeExecutorConfig() }
-        : {}),
-      lint: GetLintExecutorConfiguration(),
-    },
-    tags: normalizedOptions.parsedTags,
-  };
-
-  addProjectConfiguration(
-    host,
-    normalizedOptions.projectName,
-    projectConfiguration,
-  );
+  if (!isNxCrystalEnabled()) {
+    addProjectConfiguration(host, normalizedOptions.projectName, {
+      root: normalizedOptions.projectRoot,
+      projectType: projectType,
+      sourceRoot: `${normalizedOptions.projectRoot}`,
+      targets: {
+        build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
+        ...(projectType === 'application'
+          ? { serve: GetServeExecutorConfig() }
+          : {}),
+        lint: GetLintExecutorConfiguration(),
+      },
+      tags: normalizedOptions.parsedTags,
+    });
+  }
 
   const newParams: dotnetNewOptions = {
     language: normalizedOptions.language,
@@ -232,7 +227,7 @@ export async function GenerateProject(
   if (!isDryRun()) {
     addToSolutionFile(
       host,
-      projectConfiguration.root,
+      normalizedOptions.projectRoot,
       dotnetClient,
       normalizedOptions.solutionFile,
     );
