@@ -22,6 +22,9 @@ const options: BuildExecutorSchema = {
   remote: '',
   remoteName: '',
   commitMessage: '',
+  baseBranch: '',
+  syncWithBaseBranch: false,
+  syncStrategy: 'rebase',
 };
 
 describe('Build Executor', () => {

@@ -21,3 +21,15 @@ Deploy a page to a specified repository&#39;s gh-pages branch.
 ### commitMessage
 
 - (string): Message of the git commit to gh-pages branch
+
+### baseBranch
+
+- (string): Base branch to sync the gh-pages branch with
+
+### syncWithBaseBranch
+
+- (string): Indicate if the gh-pages branch should be synced with the base branch
+
+### syncStrategy
+
+- (string): Git command to use to sync the gh-pages branch with the base branch
