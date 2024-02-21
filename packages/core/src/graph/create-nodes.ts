@@ -134,7 +134,7 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
 
     // eslint-disable-next-line no-useless-escape -- eslint's wrong
     const parts = root.split(/[\/\\]/g);
-    const name = parts[parts.length - 1].toLowerCase();
+    const name = parts[parts.length - 1].toLowerCase().replace('.', '-');
 
     return {
       projects: {
