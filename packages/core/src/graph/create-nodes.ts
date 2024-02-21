@@ -141,7 +141,7 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
         [name]: {
           name,
           root,
-          type: 'lib',
+          projectType: 'library',
           targets: registerProjectTargets(file, options),
           tags: options.tags,
         },
