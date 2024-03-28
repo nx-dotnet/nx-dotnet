@@ -1,4 +1,9 @@
-import { addProjectConfiguration, names, Tree } from '@nx/devkit';
+import {
+  addProjectConfiguration,
+  names,
+  ProjectConfiguration,
+  Tree,
+} from '@nx/devkit';
 
 import { DotNetClient, dotnetNewOptions } from '@nx-dotnet/dotnet';
 import {
@@ -46,20 +51,20 @@ export async function GenerateTestProject(
   const testRoot = schema.projectRoot + separator + suffix;
   const testProjectName = schema.projectName + separator + suffix;
 
+  const projectConfiguration: ProjectConfiguration = {
+    root: testRoot,
+    projectType: schema.projectType,
+    sourceRoot: `${testRoot}`,
+    tags: schema.parsedTags,
+  };
   if (!isNxCrystalEnabled()) {
-    addProjectConfiguration(host, testProjectName, {
-      root: testRoot,
-      projectType: schema.projectType,
-      sourceRoot: `${testRoot}`,
-      targets: {
-        build: GetBuildExecutorConfiguration(testRoot),
-        test: GetTestExecutorConfig(),
-        lint: GetLintExecutorConfiguration(),
-      },
-      tags: schema.parsedTags,
-    });
+    projectConfiguration.targets = {
+      build: GetBuildExecutorConfiguration(testRoot),
+      test: GetTestExecutorConfig(),
+      lint: GetLintExecutorConfiguration(),
+    };
   }
-
+  addProjectConfiguration(host, testProjectName, projectConfiguration);
   const newParams: dotnetNewOptions = {
     language: schema.language,
     name: schema.namespaceName + '.' + names(suffix).className,
