@@ -6,6 +6,7 @@ import {
   joinPathFragments,
   names,
   normalizePath,
+  ProjectConfiguration,
   ProjectType,
   Tree,
 } from '@nx/devkit';
@@ -189,21 +190,26 @@ export async function GenerateProject(
     projectType,
   );
 
+  const projectConfiguration: ProjectConfiguration = {
+    root: normalizedOptions.projectRoot,
+    projectType: projectType,
+    sourceRoot: `${normalizedOptions.projectRoot}`,
+    tags: normalizedOptions.parsedTags,
+  };
   if (!isNxCrystalEnabled()) {
-    addProjectConfiguration(host, normalizedOptions.projectName, {
-      root: normalizedOptions.projectRoot,
-      projectType: projectType,
-      sourceRoot: `${normalizedOptions.projectRoot}`,
-      targets: {
-        build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
-        ...(projectType === 'application'
-          ? { serve: GetServeExecutorConfig() }
-          : {}),
-        lint: GetLintExecutorConfiguration(),
-      },
-      tags: normalizedOptions.parsedTags,
-    });
+    projectConfiguration.targets = {
+      build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
+      ...(projectType === 'application'
+        ? { serve: GetServeExecutorConfig() }
+        : {}),
+      lint: GetLintExecutorConfiguration(),
+    };
   }
+  addProjectConfiguration(
+    host,
+    normalizedOptions.projectName,
+    projectConfiguration,
+  );
 
   const newParams: dotnetNewOptions = {
     language: normalizedOptions.language,
