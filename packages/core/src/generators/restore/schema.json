@@ -4,5 +4,21 @@
   "title": "Restore Generator",
   "type": "object",
   "description": "Restores NuGet packages and .NET tools used by the workspace.",
-  "properties": {}
+  "properties": {
+    "solutionFile": {
+      "description": "Uses solution file to help improve restore speed.",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "The name of the solution file to use when restoring"
+        },
+        {
+          "type": "boolean",
+          "description": "Should the restore use the default solution file?"
+        }
+      ],
+      "aliases": ["solution", "s"],
+      "default": true
+    }
+  }
 }

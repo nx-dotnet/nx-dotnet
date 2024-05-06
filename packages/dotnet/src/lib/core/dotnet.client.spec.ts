@@ -627,4 +627,52 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
       `);
     });
   });
+
+  describe('getProjectsInSolution', () => {
+    it('should call command', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      const spawnSpy = jest.spyOn(cp, 'spawnSync').mockReturnValue({
+        status: 0,
+        stdout: '',
+      } as cp.SpawnSyncReturns<string>);
+      dotnetClient.getProjectsInSolution('MySolution.sln');
+      expect(spawnSpy).toHaveBeenCalledTimes(1);
+      expect(spawnSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
+        [
+          "sln",
+          "MySolution.sln",
+          "list",
+        ]
+      `);
+    });
+    it('ignore preamble of command output', () => {
+      const dotnetClient = new DotNetClient(mockDotnetFactory());
+      jest.spyOn(cp, 'spawnSync').mockReturnValue({
+        status: 0,
+        stdout: `Welcome to .NET Core!
+          ---------------------
+          Learn more about .NET Core: https://aka.ms/dotnet-docs
+          Use 'dotnet --help' to see available commands or visit: https://aka.ms/dotnet-cli-docs
+          
+          Telemetry
+          ---------
+          The .NET Core tools collect usage data in order to help us improve your experience. The data is anonymous. It is collected by Microsoft and shared with the community. You can opt-out of telemetry by setting the DOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
+          
+          Read more about .NET Core CLI Tools telemetry: https://aka.ms/dotnet-cli-telemetry
+          Project(s)
+          ----------
+          apps/project/src/Project.csproj
+          apps/project-test/Project.Test.fsproj
+          lib/project2/src/Project2.vbproj`,
+      } as cp.SpawnSyncReturns<string>);
+      const result = dotnetClient.getProjectsInSolution('MySolution.sln');
+      expect(result).toMatchInlineSnapshot(`
+        [
+          "apps/project/src/Project.csproj",
+          "apps/project-test/Project.Test.fsproj",
+          "lib/project2/src/Project2.vbproj",
+        ]
+      `);
+    });
+  });
 });

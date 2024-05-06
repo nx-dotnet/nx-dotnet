@@ -29,7 +29,7 @@ import {
 } from '../../models';
 import generateSwaggerSetup from '../add-swagger-target/add-swagger-target';
 import { initGenerator } from '../init/generator';
-import { addToSolutionFile } from './add-to-sln';
+import { addToSolutionFile } from './solution-file';
 import { GenerateTestProject } from './generate-test-project';
 import { promptForTemplate } from './prompt-for-template';
 import { getWorkspaceScope } from './get-scope';
