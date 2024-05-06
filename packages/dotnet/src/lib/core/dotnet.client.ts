@@ -311,6 +311,17 @@ export class DotNetClient {
     this.logAndExecute(params);
   }
 
+  getProjectsInSolution(solutionFile: string): string[] {
+    return this.spawnAndGetOutput(['sln', solutionFile, 'list'])
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) =>
+        ['.csproj', '.fsproj', '.vbproj'].some((extension) =>
+          line.endsWith(extension),
+        ),
+      );
+  }
+
   getSdkVersion(): string {
     return this.cliCommand.info.version.toString();
   }
@@ -344,6 +355,7 @@ export class DotNetClient {
     const res = spawnSync(this.cliCommand.command, params, {
       cwd: this.cwd ?? process.cwd(),
       stdio: 'pipe',
+      encoding: 'utf-8',
     });
     if (res.status !== 0) {
       throw new Error(
