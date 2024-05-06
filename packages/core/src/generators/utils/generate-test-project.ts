@@ -12,7 +12,7 @@ import {
   GetLintExecutorConfiguration,
   GetTestExecutorConfig,
 } from '../../models';
-import { addToSolutionFile } from './add-to-sln';
+import { addToSolutionFile } from './solution-file';
 import { NormalizedSchema, normalizeOptions } from './generate-project';
 export interface PathParts {
   suffix: string;

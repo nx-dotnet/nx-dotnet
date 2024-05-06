@@ -5,17 +5,31 @@ import {
   getNxDotnetProjects,
   getProjectFilesForProject,
 } from '@nx-dotnet/utils';
+import { getSolutionFile } from '../utils/solution-file';
+import { NxDotnetRestoreGeneratorSchema } from './schema';
 
 export default async function (
   host: Tree,
-  _: null, // Nx will populate this with options, which are currently unused.
+  options: NxDotnetRestoreGeneratorSchema,
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
+  const solutionFile = getSolutionFile(host, options.solutionFile);
+  const projectsInSolution = new Set<string>();
+  if (solutionFile && host.exists(solutionFile)) {
+    dotnetClient.restorePackages(solutionFile);
+
+    for (const project of dotnetClient.getProjectsInSolution(solutionFile)) {
+      projectsInSolution.add(project);
+    }
+  }
+
   const projects = await getNxDotnetProjects(host);
   for (const [projectName, project] of projects.entries()) {
     const projectFiles = getProjectFilesForProject(host, project, projectName);
     for (const file of projectFiles) {
-      dotnetClient.restorePackages(file);
+      if (!projectsInSolution.has(file)) {
+        dotnetClient.restorePackages(file);
+      }
     }
   }
 
