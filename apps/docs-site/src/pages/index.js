@@ -34,7 +34,7 @@ const features = [
     description: (
       <>
         Built using the .NET SDK + CLI, nx-dotnet is easy to update and should
-        never break due to a new relase of .NET. Using a preview version? No
+        never break due to a new release of .NET. Using a preview version? No
         worry, since nx-dotnet uses your installed CLI you can choose exactly
         what to run.
       </>
