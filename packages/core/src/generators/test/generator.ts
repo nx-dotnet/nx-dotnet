@@ -29,6 +29,7 @@ export default async function (
     template: '',
     projectType: project.projectType ?? 'library',
     skipSwaggerLib: true,
+    skipFormat: false,
   };
 
   const normalizedOptions = await normalizeOptions(

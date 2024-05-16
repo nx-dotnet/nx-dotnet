@@ -8,7 +8,7 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
-    "@nx/devkit": "17.0.2",
+    "@nx/devkit": "19.0.4",
     "@nx-dotnet/dotnet": "2.2.0",
     "@nx-dotnet/utils": "2.2.0",
     "fast-glob": "3.2.12",
@@ -21,7 +21,7 @@
   },
   "peerDependencies": {
     "@nx/js": ">=16.0.0-beta.1",
-    "@trumbitta/nx-plugin-openapi": "^1.12.1",
+    "@openapitools/openapi-generator-cli": "2.13.4",
     "eslint": ">8.0.0",
     "prettier": ">=2.0.0"
   },
@@ -29,13 +29,13 @@
     "eslint": {
       "optional": true
     },
-    "@trumbitta/nx-plugin-openapi": {
-      "optional": true
-    },
     "@nx/js": {
       "optional": true
     },
     "prettier": {
+      "optional": true
+    },
+    "@openapitools/openapi-generator-cli": {
       "optional": true
     }
   },

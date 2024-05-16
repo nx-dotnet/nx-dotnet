@@ -1,6 +1,5 @@
 import {
   addProjectConfiguration,
-  ensurePackage,
   GeneratorCallback,
   getWorkspaceLayout,
   joinPathFragments,
@@ -12,21 +11,26 @@ import {
   updateNxJson,
   addDependenciesToPackageJson,
   NX_VERSION,
+  TargetConfiguration,
+  getProjects,
+  createProjectGraphAsync,
 } from '@nx/devkit';
-
-import type NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
-import type NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
 
 import { getSwaggerExecutorConfiguration } from '../../models/swagger-executor-configuration';
 import { AddSwaggerJsonExecutorSchema } from './schema';
 import { major } from 'semver';
+import { OpenapiCodegenExecutorSchema } from '../../executors/openapi-codegen/schema';
 
 export default async function generateSwaggerSetup(
   host: Tree,
   options: AddSwaggerJsonExecutorSchema,
 ) {
   const tasks: GeneratorCallback[] = [];
-  const project = readProjectConfiguration(host, options.project);
+  const project = await findCsProjProject(
+    host,
+    options.project,
+    options.projectRoot,
+  );
   project.targets ??= {};
   if (!options.output) {
     if (options.swaggerProject) {
@@ -34,32 +38,23 @@ export default async function generateSwaggerSetup(
         swaggerProjectRoot(host, options.swaggerProject),
         'swagger.json',
       );
-      generateShellProject(host, {
+      const shellTasks = await generateShellProject(host, {
         ...options,
         swaggerProject: options.swaggerProject,
         project: options.project,
         codegenProject: options.codegenProject,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        output: options.output!,
       });
+      tasks.push(...shellTasks);
     } else {
       throw new Error('Either specify --output or --swagger-project');
     }
-  } else if (options.codegenProject && !options.useNxPluginOpenAPI) {
-    project.targets.codegen = {
-      executor: '@nx-dotnet/core:openapi-codegen',
-      options: {
-        openapiJsonPath: options.output,
-        outputProject: options.codegenProject,
-      },
-      dependsOn: ['swagger'],
-    };
   }
+
   project.targets[options.target ?? 'swagger'] = {
     ...getSwaggerExecutorConfiguration(options.output),
   };
-
-  if (options.codegenProject) {
-    tasks.push(...(await generateCodegenProject(host, options)));
-  }
 
   updateProjectConfiguration(host, options.project, project);
 
@@ -70,6 +65,28 @@ export default async function generateSwaggerSetup(
   };
 }
 
+async function findCsProjProject(
+  host: Tree,
+  projectName: string,
+  projectRoot?: string,
+): Promise<ProjectConfiguration> {
+  const allProjects = getProjects(host);
+  const project = allProjects.get(projectName);
+  // Project is already present in the tree, awesome.
+  if (project) {
+    return project;
+  }
+  const graph = await createProjectGraphAsync();
+  if (graph.nodes[projectName]) {
+    return graph.nodes[projectName].data;
+  }
+  if (projectRoot) {
+    addProjectConfiguration(host, projectName, { root: projectRoot });
+    return { root: projectRoot };
+  }
+  throw new Error(`Project ${projectName} not found`);
+}
+
 function swaggerProjectRoot(host: Tree, swaggerProject: string) {
   return joinPathFragments(
     getWorkspaceLayout(host).libsDir,
@@ -78,12 +95,23 @@ function swaggerProjectRoot(host: Tree, swaggerProject: string) {
   );
 }
 
-function generateShellProject(
+async function generateShellProject(
   host: Tree,
-  options: AddSwaggerJsonExecutorSchema & { swaggerProject: string },
+  options: AddSwaggerJsonExecutorSchema & {
+    swaggerProject: string;
+    output: string;
+  },
 ) {
   const root = swaggerProjectRoot(host, options.swaggerProject);
   const targets: ProjectConfiguration['targets'] = {};
+  const tasks: GeneratorCallback[] = [];
+
+  const project: ProjectConfiguration = {
+    root,
+    targets,
+    implicitDependencies: [options.project],
+  };
+
   if (options.codegenProject) {
     // If typescript lib is buildable,
     // then this lib must be too. It seems
@@ -92,100 +120,54 @@ function generateShellProject(
       executor: 'nx:noop',
       outputs: [root],
     };
-    if (!options.useNxPluginOpenAPI) {
-      targets.codegen = {
-        executor: '@nx-dotnet/core:openapi-codegen',
-        options: {
-          openapiJsonPath: `${swaggerProjectRoot(
-            host,
-            options.swaggerProject,
-          )}/swagger.json`,
-          outputProject: `generated-${options.codegenProject}`,
-        },
-        dependsOn: ['^swagger'],
-      };
+
+    const { tasks: codegenTasks, name: codegenProjectName } =
+      await generateCodegenProject(host, options);
+
+    tasks.push(...codegenTasks);
+
+    if (options.useOpenApiGenerator) {
+      tasks.push(
+        addDependenciesToPackageJson(
+          host,
+          {},
+          { '@openapitools/openapi-generator-cli': '^2.13.4' },
+        ),
+      );
     }
+
+    project.targets ??= {};
+    project.targets.codegen = {
+      executor: '@nx-dotnet/core:openapi-codegen',
+      options: options.useOpenApiGenerator
+        ? {
+            useOpenApiGenerator: true,
+            openApiGenerator: 'typescript',
+            openapiJsonPath: options.output,
+            outputProject: codegenProjectName,
+          }
+        : {
+            openapiJsonPath: options.output,
+            outputProject: codegenProjectName,
+          },
+      dependsOn: ['swagger'],
+      inputs: [joinPathFragments('{projectRoot}', options.output)],
+      outputs: [joinPathFragments('{workspaceRoot}')],
+    } as TargetConfiguration<OpenapiCodegenExecutorSchema>;
   }
-  addProjectConfiguration(host, options.swaggerProject, {
-    root,
-    targets,
-    implicitDependencies: [options.project],
-  });
+
+  addProjectConfiguration(host, options.swaggerProject, project);
+
+  return tasks;
 }
 
 async function generateCodegenProject(
   host: Tree,
   options: AddSwaggerJsonExecutorSchema,
-): Promise<GeneratorCallback[]> {
+): Promise<{ name: string; tasks: GeneratorCallback[] }> {
   const tasks: GeneratorCallback[] = [];
   const nameWithDirectory = `generated-${options.codegenProject}`;
-  if (options.useNxPluginOpenAPI) {
-    await setupOpenAPICodegen(host, tasks, options, nameWithDirectory);
-  } else {
-    await setupNxNETCodegen(tasks, host, options, nameWithDirectory);
-  }
 
-  updateNxJsonForCodegenTargets(host, options);
-
-  return tasks;
-}
-
-async function setupOpenAPICodegen(
-  host: Tree,
-  tasks: GeneratorCallback[],
-  options: AddSwaggerJsonExecutorSchema,
-  nameWithDirectory: string,
-) {
-  ensurePackage(host, '@trumbitta/nx-plugin-openapi', '^1.12.1');
-  tasks.push(
-    addDependenciesToPackageJson(
-      host,
-      {},
-      { '@trumbitta/nx-plugin-openapi': '^1.12.1' },
-    ),
-  );
-  const {
-    default: nxPluginOpenAPIGenerator,
-  }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-  typeof NxPluginOpenAPILibGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/api-lib/generator');
-  const {
-    default: nxPluginOpenAPIInitGenerator,
-  }: // eslint-disable-next-line @typescript-eslint/no-var-requires
-  typeof NxPluginOpenAPIInitGenerator = require('@trumbitta/nx-plugin-openapi/src/generators/init/generator');
-
-  tasks.push(await nxPluginOpenAPIInitGenerator(host));
-
-  tasks.push(
-    await nxPluginOpenAPIGenerator(host, {
-      isRemoteSpec: false,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      name: options.codegenProject!,
-      directory: 'generated',
-      generator: 'typescript-fetch',
-      sourceSpecLib: options.swaggerProject,
-    }),
-  );
-
-  const configuration = readProjectConfiguration(host, nameWithDirectory);
-  configuration.targets ??= {};
-  const targetConfiguration = configuration.targets?.['generate-sources'];
-  targetConfiguration.options['sourceSpecPathOrUrl'] = joinPathFragments(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    readProjectConfiguration(host, options.swaggerProject!).root,
-    'swagger.json',
-  );
-  targetConfiguration.dependsOn = ['^swagger'];
-  configuration.targets['codegen'] = targetConfiguration;
-  delete configuration.targets['generate-sources'];
-  updateProjectConfiguration(host, nameWithDirectory, configuration);
-}
-
-async function setupNxNETCodegen(
-  tasks: GeneratorCallback[],
-  host: Tree,
-  options: AddSwaggerJsonExecutorSchema,
-  nameWithDirectory: string,
-) {
   const {
     libraryGenerator,
   }: // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -211,6 +193,10 @@ async function setupNxNETCodegen(
     nameWithDirectory,
     codegenProjectConfiguration,
   );
+
+  updateNxJsonForCodegenTargets(host, options);
+
+  return { name: nameWithDirectory, tasks };
 }
 
 function updateNxJsonForCodegenTargets(

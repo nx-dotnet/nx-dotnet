@@ -189,7 +189,7 @@ export async function GenerateProject(
     projectType,
   );
 
-  if (!isNxCrystalEnabled()) {
+  if (!isNxCrystalEnabled(host)) {
     addProjectConfiguration(host, normalizedOptions.projectName, {
       root: normalizedOptions.projectRoot,
       projectType: projectType,
@@ -245,16 +245,20 @@ export async function GenerateProject(
     tasks.push(
       await generateSwaggerSetup(host, {
         project: normalizedOptions.projectName,
+        projectRoot: normalizedOptions.projectRoot,
         swaggerProject: `${normalizedOptions.nxProjectName}-swagger`,
         codegenProject: `${normalizedOptions.nxProjectName}-types`,
-        useNxPluginOpenAPI: normalizedOptions.useNxPluginOpenAPI,
+        useOpenApiGenerator: normalizedOptions.useOpenApiGenerator,
+        skipFormat: normalizedOptions.skipFormat,
       }),
     );
   }
 
   createGitIgnore(host, normalizedOptions.projectRoot);
 
-  await formatFiles(host);
+  if (!normalizedOptions.skipFormat) {
+    await formatFiles(host);
+  }
 
   return async () => {
     for (const task of tasks) {

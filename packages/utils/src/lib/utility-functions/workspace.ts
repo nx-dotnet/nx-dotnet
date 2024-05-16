@@ -8,6 +8,9 @@ import {
   RawProjectGraphDependency,
   Tree,
   workspaceRoot,
+  readNxJson,
+  readJsonFile,
+  NxJsonConfiguration,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
@@ -194,7 +197,15 @@ export function inlineNxTokens(value: string, project: ProjectConfiguration) {
   return value.replace('{projectName}', project.name as string);
 }
 
-export function isNxCrystalEnabled() {
+export function isNxCrystalEnabled(tree?: Tree) {
+  const nxJson: NxJsonConfiguration = tree
+    ? readNxJson(tree) ?? {}
+    : readJsonFile('nx.json');
+
+  if (nxJson.useInferencePlugins === false) {
+    return false;
+  }
+
   // not the default
   if (lt(NX_VERSION, '18.0.0')) {
     return process.env.NX_PCV3 === 'true' || process.env.NX_CRYSTAL === 'true';

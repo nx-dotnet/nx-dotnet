@@ -3,23 +3,16 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/dotnet/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/dotnet/**/*.ts",
-          "packages/dotnet/package.json"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/dotnet"],
       "options": {
-        "jestConfig": "packages/dotnet/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/dotnet/jest.config.ts"
       }
     },
     "prebuild": {
@@ -59,6 +52,5 @@
         "command": "echo"
       }
     }
-  },
-  "tags": []
+  }
 }

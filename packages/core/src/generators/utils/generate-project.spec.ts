@@ -2,6 +2,7 @@ import {
   readNxJson,
   readProjectConfiguration,
   Tree,
+  updateNxJson,
   writeJson,
 } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
@@ -15,7 +16,17 @@ import * as mockedGenerateTestProject from './generate-test-project';
 import path = require('path');
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.spyOn(console, 'log').mockImplementation(() => {});
+// jest.spyOn(console, 'log').mockImplementation(() => {});
+
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
+  createProjectGraphAsync: jest.fn((() =>
+    Promise.resolve({
+      nodes: {},
+      externalNodes: {},
+      dependencies: {},
+    })) as typeof import('@nx/devkit').createProjectGraphAsync),
+}));
 
 jest.mock('@nx-dotnet/utils', () => ({
   ...jest.requireActual('@nx-dotnet/utils'),
@@ -24,13 +35,18 @@ jest.mock('@nx-dotnet/utils', () => ({
 
 jest.mock('./generate-test-project');
 
-describe('nx-dotnet project generator', () => {
+describe('nx-dotnet generate-project', () => {
   let tree: Tree;
   let dotnetClient: DotNetClient;
   let options: NxDotnetProjectGeneratorSchema;
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+
+    updateNxJson(tree, {
+      useInferencePlugins: false,
+    });
+
     dotnetClient = new DotNetClient(mockDotnetFactory());
 
     const packageJson = {
@@ -50,6 +66,7 @@ describe('nx-dotnet project generator', () => {
       pathScheme: 'nx',
       __unparsed__: [],
       args: [],
+      skipFormat: true,
     };
 
     jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([

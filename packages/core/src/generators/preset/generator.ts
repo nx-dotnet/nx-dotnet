@@ -15,7 +15,7 @@ export default async function (tree: Tree) {
       testTemplate: 'xunit',
       pathScheme: 'nx',
       skipSwaggerLib: false,
-      useNxPluginOpenAPI: true,
+      useOpenApiGenerator: true,
     },
     new DotNetClient(dotnetFactory()),
   );

@@ -104,9 +104,11 @@
         ]
       }
     },
-    "useNxPluginOpenAPI": {
+    "useOpenApiGenerator": {
       "type": "boolean",
-      "description": "If using a codegen project, use openapi-generator"
+      "description": "If using a codegen project, use openapi-generator",
+      "default": true,
+      "aliases": ["useNxPluginOpenAPI"]
     },
     "args": {
       "type": "array",

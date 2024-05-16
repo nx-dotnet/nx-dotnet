@@ -3,16 +3,17 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "e2e/nx-ghpages-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["nx-ghpages"],
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "e2e/nx-ghpages-e2e/jest.config.js",
-        "runInBand": true
+        "runInBand": true,
+        "passWithNoTests": false
       },
       "dependsOn": ["nx-ghpages:noop"]
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["nx-ghpages"]
+  }
 }

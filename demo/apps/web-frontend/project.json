@@ -3,6 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "demo/apps/web-frontend/src",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
@@ -66,20 +67,14 @@
       "defaultConfiguration": "development"
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["demo/apps/web-frontend/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coveragedemo/apps/web-frontend"],
       "options": {
-        "jestConfig": "demo/apps/web-frontend/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "demo/apps/web-frontend/jest.config.ts"
       }
     }
-  },
-  "tags": []
+  }
 }

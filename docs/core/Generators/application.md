@@ -44,7 +44,7 @@ Generate a dotnet project under the application directory.
 
 - (string): Determines if the project should follow NX or dotnet path naming conventions
 
-### useNxPluginOpenAPI
+### useOpenApiGenerator
 
 - (boolean): If using a codegen project, use openapi-generator
 

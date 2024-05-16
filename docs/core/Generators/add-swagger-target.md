@@ -18,6 +18,10 @@ Add a swagger target to a webapi based project to extract swagger.json into a ne
 
 - (string): Which project should the target be added to?
 
+### projectRoot
+
+- (string): Path from workspace root to the project&amp;#39;s root directory. Used in case the given project is not on the generator tree to create a new project.json.
+
 ### target
 
 - (string): What should the swagger target be called?
@@ -30,6 +34,6 @@ Add a swagger target to a webapi based project to extract swagger.json into a ne
 
 - (string): What should the codegen project be called? If null, the project will not be created.
 
-### useNxPluginOpenAPI
+### useOpenApiGenerator
 
-- (boolean): If the codegen project is to be created, should the codegen target use nx-plugin-openapi instead? Choose false if only type interfaces are needed.
+- (boolean): If the codegen project is to be created, should the codegen target use openapi-generator-cli?
