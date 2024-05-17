@@ -22,19 +22,14 @@ async function runTest() {
   }
 
   if (process.argv[3] === 'affected') {
-    const affected = execSync(
-      `npx nx print-affected --base=origin/master --select=projects`,
-      {
+    const affected = JSON.parse(
+      execSync(`npx nx show projects --affected --json`, {
         env: {
           ...process.env,
           NX_DAEMON: 'false',
         },
-      },
-    )
-      .toString()
-      .split(',')
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+      }).toString(),
+    );
     selectedProjects =
       affected.length === 0
         ? selectedProjects
@@ -64,6 +59,9 @@ async function runTest() {
             ...process.env,
             NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
             NX_TERMINAL_CAPTURE_STDERR: 'true',
+            NX_DAEMON: 'false',
+            NX_PREFER_TS_NODE: 'true',
+            NX_VERBOSE_LOGGING: 'true',
             NPM_CONFIG_REGISTRY: 'http://localhost:4872',
             YARN_REGISTRY: 'http://localhost:4872',
           },

@@ -85,7 +85,6 @@ export async function loadModuleBoundaries(
   host?: Tree,
 ): Promise<ModuleBoundaries> {
   const configured = readConfig(host).moduleBoundaries;
-  console.log('CONFIGURED', configured);
   if (!configured) {
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires

@@ -1,4 +1,4 @@
-import { readProjectConfiguration, Tree } from '@nx/devkit';
+import { Tree, readProjectConfiguration } from '@nx/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { getProjectFileForNxProject } from '@nx-dotnet/utils';

@@ -4,87 +4,80 @@ import {
   getWorkspaceLayout,
   joinPathFragments,
   ProjectConfiguration,
-  readProjectConfiguration,
   readNxJson,
   Tree,
-  updateProjectConfiguration,
   updateNxJson,
   addDependenciesToPackageJson,
   NX_VERSION,
   TargetConfiguration,
-  getProjects,
-  createProjectGraphAsync,
 } from '@nx/devkit';
 
 import { getSwaggerExecutorConfiguration } from '../../models/swagger-executor-configuration';
 import { AddSwaggerJsonExecutorSchema } from './schema';
 import { major } from 'semver';
 import { OpenapiCodegenExecutorSchema } from '../../executors/openapi-codegen/schema';
+import { updateProjectConfiguration } from '../utils/project-configuration';
+
+type NormalizedOptions = AddSwaggerJsonExecutorSchema & {
+  output: string;
+};
+
+async function normalizeOptions(
+  host: Tree,
+  options: AddSwaggerJsonExecutorSchema,
+): Promise<NormalizedOptions> {
+  if (!options.output && !options.swaggerProject) {
+    throw new Error('Either specify --output or --swagger-project');
+  }
+
+  const output =
+    //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    options.output ?? swaggerProjectRoot(host, options.swaggerProject!);
+
+  return {
+    ...options,
+    output,
+  };
+}
 
 export default async function generateSwaggerSetup(
   host: Tree,
   options: AddSwaggerJsonExecutorSchema,
 ) {
   const tasks: GeneratorCallback[] = [];
-  const project = await findCsProjProject(
+  const normalizedOptions = await normalizeOptions(host, options);
+  const { name: project } = await updateProjectConfiguration(
     host,
-    options.project,
-    options.projectRoot,
+    normalizedOptions.project,
+    normalizedOptions.projectRoot,
+    (projectJson) => ({
+      ...projectJson,
+      targets: {
+        ...projectJson?.targets,
+        [normalizedOptions.target ?? 'swagger']:
+          getSwaggerExecutorConfiguration(normalizedOptions.output),
+      },
+    }),
   );
-  project.targets ??= {};
-  if (!options.output) {
-    if (options.swaggerProject) {
-      options.output = joinPathFragments(
-        swaggerProjectRoot(host, options.swaggerProject),
-        'swagger.json',
-      );
-      const shellTasks = await generateShellProject(host, {
-        ...options,
-        swaggerProject: options.swaggerProject,
-        project: options.project,
-        codegenProject: options.codegenProject,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        output: options.output!,
-      });
-      tasks.push(...shellTasks);
-    } else {
-      throw new Error('Either specify --output or --swagger-project');
-    }
+
+  if (normalizedOptions.swaggerProject) {
+    const shellTasks = await generateShellProject(host, {
+      ...options,
+      swaggerProject: normalizedOptions.swaggerProject,
+      project,
+      codegenProject: normalizedOptions.codegenProject,
+      output: normalizedOptions.output,
+    });
+    tasks.push(...shellTasks);
+  } else {
+    throw new Error('Either specify --output or --swagger-project');
   }
-
-  project.targets[options.target ?? 'swagger'] = {
-    ...getSwaggerExecutorConfiguration(options.output),
-  };
-
-  updateProjectConfiguration(host, options.project, project);
 
   return async () => {
     for (const task of tasks) {
       await task();
     }
   };
-}
-
-async function findCsProjProject(
-  host: Tree,
-  projectName: string,
-  projectRoot?: string,
-): Promise<ProjectConfiguration> {
-  const allProjects = getProjects(host);
-  const project = allProjects.get(projectName);
-  // Project is already present in the tree, awesome.
-  if (project) {
-    return project;
-  }
-  const graph = await createProjectGraphAsync();
-  if (graph.nodes[projectName]) {
-    return graph.nodes[projectName].data;
-  }
-  if (projectRoot) {
-    addProjectConfiguration(host, projectName, { root: projectRoot });
-    return { root: projectRoot };
-  }
-  throw new Error(`Project ${projectName} not found`);
 }
 
 function swaggerProjectRoot(host: Tree, swaggerProject: string) {
@@ -97,9 +90,8 @@ function swaggerProjectRoot(host: Tree, swaggerProject: string) {
 
 async function generateShellProject(
   host: Tree,
-  options: AddSwaggerJsonExecutorSchema & {
+  options: NormalizedOptions & {
     swaggerProject: string;
-    output: string;
   },
 ) {
   const root = swaggerProjectRoot(host, options.swaggerProject);
@@ -180,18 +172,21 @@ async function generateCodegenProject(
       buildable: true,
     }),
   );
-  const codegenProjectConfiguration = readProjectConfiguration(
+  await updateProjectConfiguration(
     host,
     nameWithDirectory,
-  );
-  codegenProjectConfiguration.implicitDependencies ??= [];
-  codegenProjectConfiguration.implicitDependencies.push(
-    options.swaggerProject ? options.swaggerProject : options.project,
-  );
-  updateProjectConfiguration(
-    host,
-    nameWithDirectory,
-    codegenProjectConfiguration,
+    'unknown',
+    (projectJson) => ({
+      ...projectJson,
+      targets: {
+        ...projectJson?.targets,
+        build: {
+          executor: 'nx:noop',
+          outputs: [joinPathFragments('{projectRoot}')],
+        },
+      },
+      implicitDependencies: [options.swaggerProject ?? options.project],
+    }),
   );
 
   updateNxJsonForCodegenTargets(host, options);

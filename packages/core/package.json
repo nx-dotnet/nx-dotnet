@@ -20,6 +20,7 @@
     "minimatch": "3.1.2"
   },
   "peerDependencies": {
+    "nx": ">=18.0.0 <20.0.0",
     "@nx/js": ">=16.0.0-beta.1",
     "@openapitools/openapi-generator-cli": "2.13.4",
     "eslint": ">8.0.0",

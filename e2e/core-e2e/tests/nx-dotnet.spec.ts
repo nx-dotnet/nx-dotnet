@@ -519,6 +519,9 @@ function runNxCommandAsync(
 function setupWorkspace() {
   logger.log('Creating a sandbox project in ', e2eDir);
   ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
+  runCommand(`${getPackageManagerCommand().add} @nx-dotnet/core@latest`, {
+    cwd: e2eDir,
+  });
   logger.log('✅');
   // TODO: Update e2e tests and plugin generators to use the new workspace layout semantics.
   updateFile('nx.json', (contents) => {
