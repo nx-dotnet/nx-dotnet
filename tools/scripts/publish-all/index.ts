@@ -6,12 +6,12 @@ import * as yargs from 'yargs';
 
 import { readJson, readProjectsConfigurations } from '../../utils';
 import { parse } from 'semver';
+import { dirname } from 'path';
 
 export async function publishAll(version: string, tag?: string) {
   const workspace: ProjectsConfigurations = await readProjectsConfigurations();
 
   process.env.NX_DOTNET_NEXT_VERSION = version;
-  process.env.NX_DOTNET_RELEASE_TAG = tag;
 
   execSync(
     'npx nx run-many --all --target="build" --exclude="docs-site,tools/**,demo/**"',
@@ -33,15 +33,25 @@ export async function publishAll(version: string, tag?: string) {
     if (projectConfiguration.root.includes('demo')) {
       continue;
     }
-    const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
-    if (existsSync(`${outputPath}/package.json`)) {
+    const packageJsonPath = `dist/${projectConfiguration.root}/package.json`;
+    if (existsSync(packageJsonPath)) {
       const { private: isPrivate, name } = readJsonFile<{
         private?: boolean;
         name: string;
-      }>(`${outputPath}/package.json`);
+      }>(packageJsonPath);
       if (!isPrivate) {
+        console.log(
+          'Publishing',
+          projectConfiguration.name,
+          '@',
+          packageJsonPath,
+        );
         execSync(
-          `npm publish ${outputPath} --tag=${tag} --access=public --provenance`,
+          `npm publish ${dirname(
+            packageJsonPath,
+          )} --tag=${tag} --access=public ${
+            process.env.GH_TOKEN ? '--provenance' : ''
+          }`,
           {
             stdio: 'inherit',
             env: environment,

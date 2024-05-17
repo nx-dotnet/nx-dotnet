@@ -1,10 +1,11 @@
 {
   "name": "@nx-dotnet/source",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "e2e": "ts-node -P ./tools/scripts/tsconfig.e2e.json ./tools/scripts/e2e.ts",
+    "e2e": "nx affected --parallel 1 -t e2e",
     "semantic-release": "semantic-release",
     "ts-node": "ts-node",
     "rimraf": "rimraf",
@@ -16,7 +17,6 @@
     "sandbox": "ts-node ./tools/scripts/sandbox.ts",
     "local-registry": "ts-node ./tools/scripts/local-registry/setup.ts"
   },
-  "private": false,
   "dependencies": {
     "@algolia/client-search": "^4.17.0",
     "@docusaurus/core": "^2.4.0",
@@ -110,6 +110,7 @@
     "nx": "19.0.4",
     "openapi-types": "^12.1.0",
     "prettier": "^3.0.3",
+    "prettier-2": "npm:prettier@^2",
     "react-refresh": "^0.10.0",
     "run-p": "*",
     "semantic-release": "^19.0.5",
@@ -136,5 +137,8 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "2.2.0"
+  "version": "2.2.0",
+  "nx": {
+    "includedScripts": []
+  }
 }
