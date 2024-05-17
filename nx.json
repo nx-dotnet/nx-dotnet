@@ -21,7 +21,11 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build", "prebuild", "^codegen", "codegen"],
-      "inputs": ["production", "^production"],
+      "inputs": [
+        "production",
+        "^production",
+        { "env": "NX_DOTNET_NEXT_VERSION" }
+      ],
       "cache": true
     },
     "@nx-dotnet/core:build": {

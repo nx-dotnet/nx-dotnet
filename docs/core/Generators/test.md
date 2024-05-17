@@ -6,7 +6,7 @@ Generate a .NET test project for an existing application or library
 
 ## Options
 
-### <span className="required">name</span>
+### <span className="required">targetProject</span>
 
 - (string): The existing project to generate tests for
 
@@ -21,6 +21,10 @@ Generate a .NET test project for an existing application or library
 ### suffix
 
 - (string): What suffix should be used for the tests project name?
+
+### testProjectName
+
+- (string): What name should be used for the tests project?
 
 ### solutionFile
 

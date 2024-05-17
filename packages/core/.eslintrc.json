@@ -29,7 +29,8 @@
           {
             "ignoredDependencies": [
               "openapi-types",
-              "@openapitools/openapi-generator-cli"
+              "@openapitools/openapi-generator-cli",
+              "tslib"
             ]
           }
         ]

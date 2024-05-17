@@ -30,7 +30,7 @@ import {
 import generateSwaggerSetup from '../add-swagger-target/add-swagger-target';
 import { initGenerator } from '../init/generator';
 import { addToSolutionFile } from './add-to-sln';
-import { GenerateTestProject } from './generate-test-project';
+import GenerateTestProject from '../test/generator';
 import { promptForTemplate } from './prompt-for-template';
 import { getWorkspaceScope } from './get-scope';
 
@@ -70,7 +70,7 @@ export async function normalizeOptions(
   );
   const parsedTags = getProjectTagsFromSchema(options);
   const template = await getTemplate(options, client);
-  const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
+  const namespaceName = getNamespaceFromRoot(host, projectDirectory);
   const nxProjectName = names(options.name).fileName;
   const __unparsed__ = options.__unparsed__ ?? [];
   const args = options.args ?? [];
@@ -99,9 +99,8 @@ function getNameFromSchema(options: NxDotnetProjectGeneratorSchema): string {
     : options.name;
 }
 
-function getNamespaceFromSchema(
+export function getNamespaceFromRoot(
   host: Tree,
-  options: NxDotnetProjectGeneratorSchema,
   projectDirectory: string,
 ): string {
   const scope = getWorkspaceScope(host);
@@ -135,9 +134,7 @@ async function getTemplate(
   return template;
 }
 
-function getProjectTagsFromSchema(
-  options: NxDotnetProjectGeneratorSchema,
-): string[] {
+export function getProjectTagsFromSchema(options: { tags?: string }): string[] {
   return options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 }
 
@@ -233,8 +230,21 @@ export async function GenerateProject(
     );
   }
 
-  if (options['testTemplate'] !== 'none') {
-    await GenerateTestProject(host, normalizedOptions, dotnetClient);
+  const testTemplate = normalizedOptions.testTemplate;
+  if (testTemplate !== 'none') {
+    await GenerateTestProject(
+      host,
+      {
+        language: normalizedOptions.language,
+        targetProject: normalizedOptions.name,
+        pathScheme: normalizedOptions.pathScheme,
+        tags: normalizedOptions.tags,
+        suffix: normalizedOptions.testProjectNameSuffix,
+        testTemplate,
+        solutionFile: normalizedOptions.solutionFile,
+      },
+      dotnetClient,
+    );
   }
 
   if (

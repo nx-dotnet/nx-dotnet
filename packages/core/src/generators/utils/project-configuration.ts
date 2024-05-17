@@ -6,11 +6,19 @@ import {
   updateProjectConfiguration as updateProjectConfigurationFromDevkit,
   addProjectConfiguration as addProjectConfigurationFromDevkit,
 } from '@nx/devkit';
-import { createNodes } from '../../graph/create-nodes';
+
+import { setupWorkspaceContext } from 'nx/src/utils/workspace-context';
+
+import {
+  createNodes,
+  createProjectDefinition,
+  isFileIgnored,
+} from '../../graph/create-nodes';
 import {
   mergeProjectConfigurationIntoRootMap,
   readProjectConfigurationsFromRootMap,
 } from 'nx/src/project-graph/utils/project-configuration-utils';
+import { readConfig } from '@nx-dotnet/utils';
 
 export async function readProjectConfiguration(
   tree: Tree,
@@ -110,23 +118,39 @@ export async function readInferredProjectConfiguration(
 }
 
 async function getNxDotnetProjects(tree: Tree) {
-  const projectFiles = glob(tree, [createNodes[0]]);
   const rootMap: Record<string, ProjectConfiguration> = {};
+  const config = readConfig(tree);
+
+  if (config.inferProjects === false) {
+    return { rootMap, projects: {} };
+  }
+
+  // During a generator run the workspace context has not
+  // been updated with new files created by the generator.
+  // Setting it back up will ensure its up to date, and allow
+  // the files created by dotnet new to be picked up by the glob.
+  setupWorkspaceContext(tree.root);
+  const projectFiles = glob(tree, [createNodes[0]]);
 
   for (const file of projectFiles) {
-    const result = await createNodes[1](file, undefined, undefined);
-    for (const root in result.projects) {
-      mergeProjectConfigurationIntoRootMap(
-        rootMap,
-        {
-          ...result.projects[root],
-          root,
-        },
-        undefined,
-        undefined,
-        true,
-      );
+    if (isFileIgnored(file, config)) {
+      continue;
     }
+    const fileContents = tree.read(file, 'utf-8');
+    if (!fileContents) {
+      continue;
+    }
+    const project = createProjectDefinition(file, fileContents, config);
+    if (!project) {
+      continue;
+    }
+    mergeProjectConfigurationIntoRootMap(
+      rootMap,
+      project,
+      undefined,
+      undefined,
+      true,
+    );
   }
 
   return { rootMap, projects: readProjectConfigurationsFromRootMap(rootMap) };

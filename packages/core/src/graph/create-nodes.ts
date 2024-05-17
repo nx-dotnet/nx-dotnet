@@ -1,13 +1,13 @@
 import {
   CreateNodesFunction,
+  ProjectConfiguration,
   TargetConfiguration,
-  workspaceRoot,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { dirname, resolve } from 'path';
+import { dirname } from 'path';
 
-import { NxDotnetConfigV2, readConfig } from '@nx-dotnet/utils';
+import { NxDotnetConfigV2, ResolvedConfig, readConfig } from '@nx-dotnet/utils';
 import minimatch = require('minimatch');
 
 import {
@@ -21,20 +21,22 @@ export const projectFilePatterns = readConfig().inferProjects
   ? ['*.csproj', '*.fsproj', '*.vbproj']
   : [];
 
-export const registerProjectTargets = (
+export function createProjectDefinition(
   projectFile: string,
-  opts = readConfig(),
-) => {
-  const targets: Record<string, TargetConfiguration> = {};
-  const { inferredTargets } = opts;
-  if (inferredTargets === false) {
-    return {};
-  }
+  projectFileContents: string,
+  nxDotnetConfig: ResolvedConfig,
+):
+  | (ProjectConfiguration & Required<Pick<ProjectConfiguration, 'root'>>)
+  | null {
+  const root = dirname(projectFile);
+  const parts = root.split(/[\/\\]/g);
+  const name = parts[parts.length - 1].toLowerCase();
 
-  const projectFileContents = readFileSync(
-    resolve(workspaceRoot, projectFile),
-    'utf8',
-  );
+  const targets: Record<string, TargetConfiguration> = {};
+  const { inferredTargets } = nxDotnetConfig;
+  if (inferredTargets === false) {
+    return null;
+  }
 
   if (
     projectFileContents.includes('Microsoft.NET.Test.Sdk') &&
@@ -79,7 +81,25 @@ export const registerProjectTargets = (
       ...extraOptions,
     };
   }
-  return targets;
+
+  return {
+    name,
+    root,
+    targets,
+    tags: nxDotnetConfig.tags,
+  };
+}
+
+export const registerProjectTargets = (
+  projectFile: string,
+  opts = readConfig(),
+) => {
+  const project = createProjectDefinition(
+    projectFile,
+    readFileSync(projectFile, 'utf-8'),
+    opts,
+  );
+  return project?.targets ?? {};
 };
 
 // Between Nx versions 16.8 and 17, the signature of `CreateNodesFunction` changed.
@@ -107,6 +127,21 @@ type CreateNodesFunctionCompat<T> = (
 
 type CreateNodesCompat<T> = [string, CreateNodesFunctionCompat<T>];
 
+export function isFileIgnored(
+  file: string,
+  options: NxDotnetConfigV2,
+): boolean {
+  return (
+    !options.inferProjects ||
+    (options.ignorePaths?.some((p) =>
+      minimatch(file, p, {
+        dot: true,
+      }),
+    ) ??
+      false)
+  );
+}
+
 // Used in Nx 16.8+
 export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
   `**/{${projectFilePatterns.join(',')}}`,
@@ -118,32 +153,23 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
   ) => {
     const options = readConfig();
 
-    if (
-      !options.inferProjects ||
-      options.ignorePaths.some((p) =>
-        minimatch(file, p, {
-          dot: true,
-        }),
-      )
-    ) {
+    if (isFileIgnored(file, options)) {
       return {};
     }
 
-    const root = dirname(file);
+    const project = createProjectDefinition(
+      file,
+      readFileSync(file, 'utf-8'),
+      options,
+    );
 
-    // eslint-disable-next-line no-useless-escape -- eslint's wrong
-    const parts = root.split(/[\/\\]/g);
-    const name = parts[parts.length - 1].toLowerCase();
+    if (!project) {
+      return {};
+    }
 
     return {
       projects: {
-        [name]: {
-          name,
-          root,
-          projectType: 'library',
-          targets: registerProjectTargets(file, options),
-          tags: options.tags,
-        },
+        [project.root]: project,
       },
     };
   },

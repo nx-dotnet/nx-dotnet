@@ -11,7 +11,7 @@ import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
-import * as mockedGenerateTestProject from './generate-test-project';
+import * as mockedGenerateTestProject from '../test/generator';
 
 import path = require('path');
 
@@ -33,7 +33,7 @@ jest.mock('@nx-dotnet/utils', () => ({
   resolve: jest.fn(() => 'check-module-boundaries.js'),
 }));
 
-jest.mock('./generate-test-project');
+jest.mock('../test/generator');
 
 describe('nx-dotnet generate-project', () => {
   let tree: Tree;
@@ -127,7 +127,7 @@ describe('nx-dotnet generate-project', () => {
   it('should generate test project', async () => {
     const generateTestProject = (
       mockedGenerateTestProject as jest.Mocked<typeof mockedGenerateTestProject>
-    ).GenerateTestProject;
+    ).default;
 
     options.testTemplate = 'nunit';
     await GenerateProject(tree, options, dotnetClient, 'application');
@@ -135,7 +135,15 @@ describe('nx-dotnet generate-project', () => {
     expect(config.targets?.serve).toBeDefined();
     expect(generateTestProject).toHaveBeenCalledWith(
       tree,
-      expect.objectContaining(options),
+      expect.objectContaining({
+        language: options.language,
+        pathScheme: options.pathScheme,
+        solutionFile: options.solutionFile,
+        suffix: options.testProjectNameSuffix,
+        tags: options.tags,
+        targetProject: options.name,
+        testTemplate: options.testTemplate,
+      }),
       dotnetClient,
     );
   });
