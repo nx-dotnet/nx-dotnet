@@ -15,7 +15,7 @@
         "jestConfig": "packages/dotnet/jest.config.ts"
       }
     },
-    "prebuild": {
+    "build": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
@@ -23,7 +23,7 @@
         ]
       }
     },
-    "build": {
+    "prebuild": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {

@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/workspace-plugin",
-  "version": "0.0.1",
+  "version": "99.99.99",
   "dependencies": {
     "tslib": "^2.3.0",
     "@nx/devkit": "19.0.4",

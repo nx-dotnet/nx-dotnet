@@ -20,7 +20,7 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
+      "dependsOn": ["^build", "prebuild", "^codegen", "codegen"],
       "inputs": ["production", "^production"],
       "cache": true
     },
@@ -46,7 +46,9 @@
       "cache": true
     },
     "prebuild": {
-      "cache": true
+      "inputs": ["production", "^production"],
+      "cache": true,
+      "dependsOn": ["^prebuild"]
     },
     "build:test": {
       "cache": true

@@ -8,6 +8,7 @@ import { publishAll } from './publish-all';
 const kill = require('tree-kill');
 
 export async function setup() {
+  process.env.NX_DOTNET_E2E = 'true';
   await startCleanVerdaccioInstance();
   copySync('.npmrc.local', '.npmrc');
   await publishAll('99.99.99', 'local');

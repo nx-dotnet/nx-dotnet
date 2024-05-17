@@ -1,6 +1,6 @@
 {
   "name": "@nx-dotnet/demo-libs-generated-webapi-types",
-  "version": "2.2.0",
+  "version": "*",
   "type": "commonjs",
   "private": true
 }

@@ -5,14 +5,13 @@ import { existsSync } from 'fs';
 import * as yargs from 'yargs';
 
 import { readJson, readProjectsConfigurations } from '../../utils';
-import { PatchPackageVersions } from '../patch-package-versions';
 import { parse } from 'semver';
 
 export async function publishAll(version: string, tag?: string) {
   const workspace: ProjectsConfigurations = await readProjectsConfigurations();
-  const rootPkg = readJson('package.json');
 
-  await PatchPackageVersions(version, 'all', false, true);
+  process.env.NX_DOTNET_NEXT_VERSION = version;
+  process.env.NX_DOTNET_RELEASE_TAG = tag;
 
   execSync(
     'npx nx run-many --all --target="build" --exclude="docs-site,tools/**,demo/**"',
