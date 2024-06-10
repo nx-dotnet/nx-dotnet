@@ -21,6 +21,7 @@ import {
 } from '@nx-dotnet/utils';
 import * as path from 'path';
 import { major } from 'semver';
+import { runDotnetNew } from '../utils/dotnet-new';
 
 const noop = () => void 0;
 
@@ -101,9 +102,9 @@ function updateNxJson(host: Tree, nxJson: NxJsonConfiguration | null) {
 
 function initToolManifest(host: Tree, dotnetClient: DotNetClient) {
   const initialized = host.exists('.config/dotnet-tools.json');
-  if (!initialized && !isDryRun()) {
+  if (!initialized) {
     logger.log('Tool Manifest created for managing local .NET tools');
-    dotnetClient.new('tool-manifest');
+    runDotnetNew(host, dotnetClient, 'tool-manifest', {});
   }
 }
 

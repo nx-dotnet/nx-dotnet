@@ -57,6 +57,10 @@
       "type": "string",
       "description": "What name should be used for the tests project?"
     },
+    "namespaceName": {
+      "type": "string",
+      "description": "The namespace for the project. If not provided, will be generated based on test project name / suffix."
+    },
     "solutionFile": {
       "description": "Determines if the project should be added to a solution file.",
       "oneOf": [

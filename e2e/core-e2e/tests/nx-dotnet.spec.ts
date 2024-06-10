@@ -337,6 +337,19 @@ describe('nx-dotnet e2e', () => {
       expect(slnFile).toContain(app);
       expect(slnFile).toContain(app + '-test');
     });
+
+    it('should work with --dry-run', async () => {
+      runCommand('npx -y rimraf *.sln', {});
+
+      const app = uniq('app');
+      const output = await runNxCommandAsync(
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib --solutionFile --dry-run`,
+      );
+
+      expect(output.stdout).toContain('CREATE proj.nx-dotnet.sln');
+      expect(() => checkFilesExist(`apps/${app}`)).toThrow();
+      expect(listFiles('.').filter((x) => x.endsWith('.sln'))).toHaveLength(0);
+    });
   });
 
   describe('inferred targets', () => {
@@ -503,6 +516,7 @@ function runCommandAsync(
       },
       (err, stdout, stderr) => {
         if (!opts.silenceError && err) {
+          console.log(err, stdout + stderr);
           reject(err);
         }
         resolve({ stdout, stderr });

@@ -8,4 +8,5 @@ export interface NxDotnetTestGeneratorSchema {
   tags?: string | string[];
   solutionFile?: string | boolean;
   skipFormat?: boolean;
+  namespaceName?: string;
 }

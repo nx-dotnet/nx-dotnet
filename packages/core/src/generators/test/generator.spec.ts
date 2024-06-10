@@ -1,6 +1,6 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 import generator, { calculateTestTargetNameAndRoot } from './generator';
 
@@ -26,22 +26,6 @@ jest.mock('@nx-dotnet/utils', () => ({
   resolve: (m: string) => m,
 }));
 
-jest.mock('fs', () => ({
-  ...jest.requireActual('fs'),
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  readFileSync: (p: fs.PathOrFileDescriptor, ...args) => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    if (typeof p === 'string' && require('path').extname(p) === '.csproj')
-      return `<Project>
-      <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-      </PropertyGroup>
-      </Project>`;
-    return jest.requireActual('fs').readFileSync(p, ...args);
-  },
-}));
-
 describe('nx-dotnet test project generator', () => {
   let tree: Tree;
   let dotnetClient: DotNetClient;
@@ -51,7 +35,7 @@ describe('nx-dotnet test project generator', () => {
   beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     tree.write('package.json', '{}');
-    await initGenerator(tree, null, new DotNetClient(mockDotnetFactory()));
+    await initGenerator(tree, null, new DotNetClient(dotnetFactory()));
     addProjectConfiguration(tree, 'domain-existing-app', {
       root: 'apps/domain/existing-app',
       projectType: 'application',
@@ -75,7 +59,7 @@ describe('nx-dotnet test project generator', () => {
         'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
       );
 
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
 
     const packageJson = { scripts: {} };
     writeJson(tree, 'package.json', packageJson);

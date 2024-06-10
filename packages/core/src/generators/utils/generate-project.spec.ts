@@ -7,7 +7,11 @@ import {
 } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import {
+  DotNetClient,
+  dotnetFactory,
+  mockDotnetFactory,
+} from '@nx-dotnet/dotnet';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
 import { GenerateProject } from './generate-project';
@@ -47,7 +51,7 @@ describe('nx-dotnet generate-project', () => {
       useInferencePlugins: false,
     });
 
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
 
     const packageJson = {
       name: '@proj/source',
@@ -91,6 +95,7 @@ describe('nx-dotnet generate-project', () => {
 
   it('should run successfully for libraries', async () => {
     await GenerateProject(tree, options, dotnetClient, 'library');
+    console.log('After generator');
     const config = readProjectConfiguration(tree, 'test');
     expect(config).toBeDefined();
   });
@@ -166,6 +171,21 @@ describe('nx-dotnet generate-project', () => {
   it('should forward args to dotnet new', async () => {
     options.__unparsed__ = ['--foo', 'bar'];
     options.args = ['--help'];
+    const dotnetClient = new DotNetClient(mockDotnetFactory());
+    jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([
+      {
+        shortNames: ['classlib'],
+        templateName: 'Class Library',
+        languages: ['C#'],
+        tags: [],
+      },
+      {
+        shortNames: ['webapi'],
+        templateName: 'Web API',
+        languages: ['C#'],
+        tags: [],
+      },
+    ]);
     const spy = jest.spyOn(dotnetClient, 'new');
     await GenerateProject(tree, options, dotnetClient, 'library');
     const [, , additionalArguments] = spy.mock.calls[spy.mock.calls.length - 1];

@@ -5,6 +5,7 @@ import {
   readProjectConfiguration as readProjectConfigurationFromDevkit,
   updateProjectConfiguration as updateProjectConfigurationFromDevkit,
   addProjectConfiguration as addProjectConfigurationFromDevkit,
+  readNxJson,
 } from '@nx/devkit';
 
 import { setupWorkspaceContext } from 'nx/src/utils/workspace-context';
@@ -19,6 +20,7 @@ import {
   readProjectConfigurationsFromRootMap,
 } from 'nx/src/project-graph/utils/project-configuration-utils';
 import { readConfig } from '@nx-dotnet/utils';
+import { tryReadJson } from './try-read-json';
 
 export async function readProjectConfiguration(
   tree: Tree,
@@ -54,7 +56,11 @@ export async function readProjectConfiguration(
   if (projectJson) return projectJson;
   if (inferredProject) return inferredProject;
 
-  throw new Error(`Project ${name} not found`);
+  throw new Error(
+    `Project ${name} not found. Found projects: ${Object.keys(
+      (await getNxDotnetProjects(tree)).projects,
+    )}`,
+  );
 }
 
 export async function updateProjectConfiguration(
@@ -140,7 +146,13 @@ async function getNxDotnetProjects(tree: Tree) {
     if (!fileContents) {
       continue;
     }
-    const project = createProjectDefinition(file, fileContents, config);
+    const project = createProjectDefinition(
+      file,
+      fileContents,
+      config,
+      readNxJson(tree),
+      tryReadJson(tree, 'package.json'),
+    );
     if (!project) {
       continue;
     }

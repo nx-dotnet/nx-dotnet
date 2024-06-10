@@ -23,9 +23,10 @@ import { getAbsolutePath } from './path';
 
 export async function getProjectFileForNxProject(
   project: ProjectConfiguration,
+  tree?: Tree,
 ) {
   const srcDirectory = project.root;
-  return findProjectFileInPath(srcDirectory);
+  return findProjectFileInPath(srcDirectory, tree);
 }
 
 export function getProjectFileForNxProjectSync(project: ProjectConfiguration) {

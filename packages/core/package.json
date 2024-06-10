@@ -8,16 +8,17 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
-    "@nx/devkit": "19.0.4",
     "@nx-dotnet/dotnet": "*",
     "@nx-dotnet/utils": "*",
+    "@nx/devkit": "19.0.4",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
+    "minimatch": "3.1.2",
     "semver": "7.5.4",
+    "tmp": "0.2.3",
     "tslib": "^2.5.0",
     "xmldoc": "^1.1.2",
-    "yargs-parser": "^21.0.0",
-    "minimatch": "3.1.2"
+    "yargs-parser": "^21.0.0"
   },
   "peerDependencies": {
     "nx": ">=18.0.0 <20.0.0",

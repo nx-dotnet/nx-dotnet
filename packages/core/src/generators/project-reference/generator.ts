@@ -5,6 +5,7 @@ import { getProjectFileForNxProject } from '@nx-dotnet/utils';
 
 import { NxDotnetGeneratorSchema } from './schema';
 import { readProjectConfiguration } from '../utils/project-configuration';
+import { runDotnetAddProjectReference } from '../utils/dotnet-add';
 
 export default async function (
   host: Tree,
@@ -17,12 +18,17 @@ export default async function (
 
   try {
     [hostProjectFile, sourceProjectFile] = await Promise.all([
-      getProjectFileForNxProject(hostProject),
-      getProjectFileForNxProject(sourceProject),
+      getProjectFileForNxProject(hostProject, host),
+      getProjectFileForNxProject(sourceProject, host),
     ]);
   } catch {
     throw new Error('Unable to find project files to add dependency!');
   }
 
-  client.addProjectReference(hostProjectFile, sourceProjectFile);
+  runDotnetAddProjectReference(
+    host,
+    hostProjectFile,
+    sourceProjectFile,
+    client,
+  );
 }

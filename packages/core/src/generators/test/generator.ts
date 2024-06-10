@@ -5,17 +5,14 @@ import {
   names,
   Tree,
 } from '@nx/devkit';
+import { basename } from 'path';
 
 import {
   DotNetClient,
   dotnetFactory,
-  dotnetNewOptions,
+  DotnetNewOptions,
 } from '@nx-dotnet/dotnet';
-import {
-  findProjectFileInPath,
-  isDryRun,
-  isNxCrystalEnabled,
-} from '@nx-dotnet/utils';
+import { findProjectFileInPath, isNxCrystalEnabled } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -23,15 +20,26 @@ import {
   GetTestExecutorConfig,
 } from '../../models';
 import { addToSolutionFile } from '../utils/add-to-sln';
-import { getNamespaceFromRoot } from '../utils/generate-project';
+import { runDotnetAddProjectReference } from '../utils/dotnet-add';
+import { runDotnetNew } from '../utils/dotnet-new';
 import { readProjectConfiguration } from '../utils/project-configuration';
 import { NxDotnetGeneratorSchema } from './schema';
 
+export function normalizeOptions(
+  schema: NxDotnetGeneratorSchema,
+): NxDotnetGeneratorSchema & Required<Pick<NxDotnetGeneratorSchema, 'suffix'>> {
+  return {
+    ...schema,
+    suffix: schema.suffix ?? (schema.pathScheme === 'nx' ? 'test' : 'Test'),
+  };
+}
+
 export default async function (
   host: Tree,
-  schema: NxDotnetGeneratorSchema,
+  rawSchema: NxDotnetGeneratorSchema,
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
+  const schema = normalizeOptions(rawSchema);
   const targetProject = await readProjectConfiguration(
     host,
     schema.targetProject,
@@ -66,28 +74,29 @@ export default async function (
     });
   }
 
-  const namespaceName = getNamespaceFromRoot(host, targetProjectRoot);
+  const baseCsProj = await findProjectFileInPath(targetProjectRoot, host);
+  const baseNamespace = basename(baseCsProj).replace(
+    /\.(csproj|vbproj|fsproj)$/,
+    '',
+  );
 
-  const newParams: dotnetNewOptions = {
+  const name =
+    schema.namespaceName ??
+    [baseNamespace, names(schema.suffix).className].filter(Boolean).join('.');
+
+  const newParams: DotnetNewOptions = {
     language: schema.language,
-    name:
-      namespaceName +
-      (schema.suffix ? '.' + names(schema.suffix).className : ''),
+    name,
     output: testRoot,
   };
 
-  if (isDryRun()) {
-    newParams['dryRun'] = true;
-  }
+  runDotnetNew(host, dotnetClient, schema.testTemplate, newParams);
 
-  dotnetClient.new(schema.testTemplate, newParams);
-  if (!isDryRun()) {
-    addToSolutionFile(host, testRoot, dotnetClient, schema.solutionFile);
+  addToSolutionFile(host, testRoot, dotnetClient, schema.solutionFile);
 
-    const testCsProj = await findProjectFileInPath(testRoot);
-    const baseCsProj = await findProjectFileInPath(targetProjectRoot);
-    dotnetClient.addProjectReference(testCsProj, baseCsProj);
-  }
+  const testCsProj = await findProjectFileInPath(testRoot, host);
+
+  runDotnetAddProjectReference(host, testCsProj, baseCsProj, dotnetClient);
 
   if (!schema.skipFormat) {
     await formatFiles(host);

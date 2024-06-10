@@ -146,12 +146,6 @@ describe('swagger-typescript generator', () => {
       outputProject: 'generated-ts',
     });
 
-    // tree
-    //   .listChanges()
-    //   .forEach((change) =>
-    //     console.log(change.path, change.content?.toString()),
-    //   );
-
     expectFileToMatchSnapshot(
       'libs/generated-ts/src/interfaces/weather-forecast.ts',
       tree,

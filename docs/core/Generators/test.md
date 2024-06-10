@@ -26,6 +26,10 @@ Generate a .NET test project for an existing application or library
 
 - (string): What name should be used for the tests project?
 
+### namespaceName
+
+- (string): The namespace for the project. If not provided, will be generated based on test project name / suffix.
+
 ### solutionFile
 
 - (string): The name of the solution file to add the project to

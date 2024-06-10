@@ -7,6 +7,7 @@ import {
   names,
   normalizePath,
   ProjectType,
+  readNxJson,
   Tree,
 } from '@nx/devkit';
 
@@ -16,10 +17,10 @@ import { XmlDocument } from 'xmldoc';
 
 import {
   DotNetClient,
-  dotnetNewOptions,
+  DotnetNewOptions,
   KnownDotnetTemplates,
 } from '@nx-dotnet/dotnet';
-import { isDryRun, isNxCrystalEnabled, resolve } from '@nx-dotnet/utils';
+import { isNxCrystalEnabled, resolve } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -33,6 +34,8 @@ import { addToSolutionFile } from './add-to-sln';
 import GenerateTestProject from '../test/generator';
 import { promptForTemplate } from './prompt-for-template';
 import { getWorkspaceScope } from './get-scope';
+import { runDotnetNew } from './dotnet-new';
+import { tryReadJson } from './try-read-json';
 
 export interface NormalizedSchema
   extends Omit<NxDotnetProjectGeneratorSchema, 'template'> {
@@ -70,7 +73,8 @@ export async function normalizeOptions(
   );
   const parsedTags = getProjectTagsFromSchema(options);
   const template = await getTemplate(options, client);
-  const namespaceName = getNamespaceFromRoot(host, projectDirectory);
+  const namespaceName =
+    options.namespaceName ?? getNamespaceFromRoot(host, projectDirectory);
   const nxProjectName = names(options.name).fileName;
   const __unparsed__ = options.__unparsed__ ?? [];
   const args = options.args ?? [];
@@ -99,17 +103,34 @@ function getNameFromSchema(options: NxDotnetProjectGeneratorSchema): string {
     : options.name;
 }
 
+/**
+ * Filter out common directory names that are not typically part of the namespace.
+ */
+export const FILTERED_PATH_PARTS = new Set([
+  'src',
+  'apps',
+  'libs',
+  'packages',
+  'projects',
+]);
+
 export function getNamespaceFromRoot(
   host: Tree,
   projectDirectory: string,
 ): string {
-  const scope = getWorkspaceScope(host);
+  const scope = getWorkspaceScope(
+    readNxJson(host),
+    tryReadJson(host, 'package.json'),
+  );
 
   const namespaceParts = projectDirectory
     // not sure why eslint complains here, testing in devtools shows different results without the escape character.
     // eslint-disable-next-line no-useless-escape
     .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
-    .map((part: string) => names(part).className);
+    .filter((part) => !FILTERED_PATH_PARTS.has(part))
+    .flatMap((part) =>
+      part.split('.').map((subpart) => names(subpart).className),
+    );
 
   if (scope) {
     namespaceParts.unshift(names(scope).className);
@@ -186,23 +207,23 @@ export async function GenerateProject(
     projectType,
   );
 
-  if (!isNxCrystalEnabled(host)) {
-    addProjectConfiguration(host, normalizedOptions.projectName, {
-      root: normalizedOptions.projectRoot,
-      projectType: projectType,
-      sourceRoot: `${normalizedOptions.projectRoot}`,
-      targets: {
-        build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
-        ...(projectType === 'application'
-          ? { serve: GetServeExecutorConfig() }
-          : {}),
-        lint: GetLintExecutorConfiguration(),
-      },
-      tags: normalizedOptions.parsedTags,
-    });
-  }
+  addProjectConfiguration(host, normalizedOptions.projectName, {
+    root: normalizedOptions.projectRoot,
+    projectType: projectType,
+    sourceRoot: `${normalizedOptions.projectRoot}`,
+    targets: isNxCrystalEnabled(host)
+      ? {}
+      : {
+          build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
+          ...(projectType === 'application'
+            ? { serve: GetServeExecutorConfig() }
+            : {}),
+          lint: GetLintExecutorConfiguration(),
+        },
+    tags: normalizedOptions.parsedTags,
+  });
 
-  const newParams: dotnetNewOptions = {
+  const newParams: DotnetNewOptions = {
     language: normalizedOptions.language,
     name: normalizedOptions.namespaceName,
     output: normalizedOptions.projectRoot,
@@ -212,23 +233,20 @@ export async function GenerateProject(
     normalizedOptions.__unparsed__,
   );
 
-  if (isDryRun()) {
-    newParams['dryRun'] = true;
-  }
-
-  dotnetClient.new(
+  runDotnetNew(
+    host,
+    dotnetClient,
     normalizedOptions.projectTemplate,
     newParams,
     additionalArguments,
   );
-  if (!isDryRun()) {
-    addToSolutionFile(
-      host,
-      normalizedOptions.projectRoot,
-      dotnetClient,
-      normalizedOptions.solutionFile,
-    );
-  }
+
+  addToSolutionFile(
+    host,
+    normalizedOptions.projectRoot,
+    dotnetClient,
+    normalizedOptions.solutionFile,
+  );
 
   const testTemplate = normalizedOptions.testTemplate;
   if (testTemplate !== 'none') {

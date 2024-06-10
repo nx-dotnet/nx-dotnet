@@ -14,6 +14,10 @@
       },
       "x-prompt": "What name would you like to use?"
     },
+    "namespaceName": {
+      "type": "string",
+      "description": "The namespace for the project. If not provided, will be generated based on project name and directory."
+    },
     "tags": {
       "type": "string",
       "description": "Add tags to the project (used for linting)",

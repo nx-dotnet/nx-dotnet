@@ -1,10 +1,13 @@
-import { joinPathFragments, Tree } from '@nx/devkit';
+import { joinPathFragments, readNxJson, Tree } from '@nx/devkit';
 
 import { parse, relative, resolve } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { readConfigSection } from '@nx-dotnet/utils';
 import { getWorkspaceScope } from './get-scope';
+import { runDotnetNew } from './dotnet-new';
+import { runDotnetAddProjectToSolution } from './dotnet-add';
+import { tryReadJson } from './try-read-json';
 
 export function addToSolutionFile(
   host: Tree,
@@ -12,7 +15,10 @@ export function addToSolutionFile(
   dotnetClient = new DotNetClient(dotnetFactory()),
   solutionFile?: string | boolean,
 ) {
-  const scope = getWorkspaceScope(host);
+  const scope = getWorkspaceScope(
+    readNxJson(host),
+    tryReadJson(host, 'package.json'),
+  );
   const defaultFilePath = readConfigSection(host, 'solutionFile')?.replace(
     /(\{npmScope\}|\{scope\})/g,
     scope || '',
@@ -28,15 +34,16 @@ export function addToSolutionFile(
   if (solutionFile) {
     if (!host.exists(solutionFile)) {
       const { name, dir } = parse(solutionFile);
-      dotnetClient.new('sln', {
+      runDotnetNew(host, dotnetClient, 'sln', {
         name,
-        output: joinPathFragments(host.root, dir),
+        output: dir,
       });
     }
-    const relativePath = relative(dotnetClient.cwd ?? host.root, host.root);
-    dotnetClient.addProjectToSolution(
-      joinPathFragments(relativePath, solutionFile),
-      resolve(relativePath, projectRoot),
+    runDotnetAddProjectToSolution(
+      host,
+      dotnetClient,
+      projectRoot,
+      solutionFile,
     );
   }
 }

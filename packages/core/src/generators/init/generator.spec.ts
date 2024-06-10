@@ -2,7 +2,7 @@ import * as devkit from '@nx/devkit';
 import { readJson, readNxJson, Tree, writeJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 import generator from './generator';
 
@@ -17,7 +17,7 @@ describe('init generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
 
     const packageJson = { scripts: {} };
     writeJson(tree, 'package.json', packageJson);
@@ -64,7 +64,13 @@ describe('init generator', () => {
   it('should create tool manifest', async () => {
     const spy = jest.spyOn(dotnetClient, 'new');
     await generator(tree, null, dotnetClient);
-    expect(spy).toHaveBeenCalledWith('tool-manifest');
+    expect(spy).toHaveBeenCalledWith(
+      'tool-manifest',
+      {
+        output: expect.any(String),
+      },
+      undefined,
+    );
   });
 
   it('should not create tool manifest if it exists', async () => {

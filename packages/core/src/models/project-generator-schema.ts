@@ -17,6 +17,7 @@ export interface NxDotnetProjectGeneratorSchema {
   skipFormat?: boolean;
   pathScheme: 'nx' | 'dotnet';
   useOpenApiGenerator?: boolean;
+  namespaceName?: string;
   args?: string[];
   __unparsed__?: string[];
 }

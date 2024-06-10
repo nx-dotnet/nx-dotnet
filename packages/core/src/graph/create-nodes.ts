@@ -1,11 +1,14 @@
 import {
+  CreateNodesContext,
   CreateNodesFunction,
+  NxJsonConfiguration,
   ProjectConfiguration,
   TargetConfiguration,
+  readJsonFile,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { dirname } from 'path';
+import { basename, dirname, extname } from 'path';
 
 import { NxDotnetConfigV2, ResolvedConfig, readConfig } from '@nx-dotnet/utils';
 import minimatch = require('minimatch');
@@ -16,21 +19,79 @@ import {
   GetServeExecutorConfig,
   GetTestExecutorConfig,
 } from '../models';
+import { FILTERED_PATH_PARTS } from '../generators/utils/generate-project';
+import { getWorkspaceScope } from '../generators/utils/get-scope';
+import type { PackageJson } from 'nx/src/utils/package-json';
+import {
+  tryReadJson,
+  tryReadJsonFile,
+} from '../generators/utils/try-read-json';
 
 export const projectFilePatterns = readConfig().inferProjects
   ? ['*.csproj', '*.fsproj', '*.vbproj']
   : [];
 
+export function parseName(
+  projectFile: string,
+  nxJson: NxJsonConfiguration | null,
+  rootPackageJson: PackageJson,
+) {
+  const workspaceScope = getWorkspaceScope(nxJson, rootPackageJson);
+  const namespaceName = basename(projectFile, extname(projectFile)).replace(
+    new RegExp(`^${workspaceScope}.`, 'i'),
+    '',
+  );
+
+  const parentDirectories = dirname(projectFile)
+    // eslint-disable-next-line no-useless-escape
+    .split(/[\/\\]/g)
+    .reverse();
+
+  const maybeProjectNameParts = [];
+  for (const part of parentDirectories) {
+    maybeProjectNameParts.unshift(part);
+
+    const maybeProjectName = maybeProjectNameParts.join('.');
+
+    if (maybeProjectName === namespaceName) {
+      return {
+        name: namespaceName,
+        scheme: 'dotnet',
+      };
+    }
+
+    if (FILTERED_PATH_PARTS.has(part) || part === workspaceScope) {
+      maybeProjectNameParts.shift();
+      if (maybeProjectNameParts.some((part) => part.includes('.'))) {
+        return {
+          name: maybeProjectNameParts.map(titlecase).join('.'),
+          scheme: 'dotnet',
+        };
+      }
+      return {
+        name: maybeProjectNameParts.map((s) => s.toLocaleLowerCase()).join('-'),
+        scheme: 'nx',
+      };
+    }
+  }
+
+  return {
+    name: maybeProjectNameParts.map((s) => s.toLocaleLowerCase()).join('-'),
+    scheme: 'nx',
+  };
+}
+
 export function createProjectDefinition(
   projectFile: string,
   projectFileContents: string,
   nxDotnetConfig: ResolvedConfig,
+  nxJson: NxJsonConfiguration | null,
+  rootPackageJson: PackageJson,
 ):
   | (ProjectConfiguration & Required<Pick<ProjectConfiguration, 'root'>>)
   | null {
   const root = dirname(projectFile);
-  const parts = root.split(/[\/\\]/g);
-  const name = parts[parts.length - 1].toLowerCase();
+  const name = parseName(projectFile, nxJson, rootPackageJson).name;
 
   const targets: Record<string, TargetConfiguration> = {};
   const { inferredTargets } = nxDotnetConfig;
@@ -98,6 +159,8 @@ export const registerProjectTargets = (
     projectFile,
     readFileSync(projectFile, 'utf-8'),
     opts,
+    tryReadJsonFile('nx.json') ?? {},
+    tryReadJsonFile('package.json'),
   );
   return project?.targets ?? {};
 };
@@ -148,10 +211,11 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
   (
     file: string,
     // We read the config in the function to ensure it's always up to date / compatible.
-    // ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
-    // maybeCtx: CreateNodesContext | undefined,
+    ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
+    maybeCtx: CreateNodesContext | undefined,
   ) => {
     const options = readConfig();
+    const context = maybeCtx ?? (ctxOrOpts as CreateNodesContext);
 
     if (isFileIgnored(file, options)) {
       return {};
@@ -161,6 +225,8 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
       file,
       readFileSync(file, 'utf-8'),
       options,
+      context.nxJsonConfiguration,
+      tryReadJsonFile('package.json'),
     );
 
     if (!project) {
@@ -174,3 +240,7 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
     };
   },
 ];
+
+function titlecase(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
