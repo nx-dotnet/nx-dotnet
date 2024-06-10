@@ -1,5 +1,5 @@
-import { dotnetNewFlags } from './dotnet-new-flags';
+import { DotnetNewFlags } from './dotnet-new-flags';
 
-export type dotnetNewOptions = {
-  [key in dotnetNewFlags]?: string | boolean;
+export type DotnetNewOptions = {
+  [key in DotnetNewFlags]?: string | boolean;
 };

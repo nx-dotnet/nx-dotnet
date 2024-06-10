@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { Answers, prompt } from 'inquirer';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { updateConfig, getProjectFileForNxProject } from '@nx-dotnet/utils';
 
 import generator from './generator';
@@ -42,7 +42,7 @@ describe('nuget-reference generator', () => {
         return {};
       }) as () => Promise<Answers> & { ui: PromptUI });
 
-    dotnetClient = new DotNetClient(mockDotnetFactory());
+    dotnetClient = new DotNetClient(dotnetFactory());
   });
 
   it('runs calls dotnet add package reference', async () => {

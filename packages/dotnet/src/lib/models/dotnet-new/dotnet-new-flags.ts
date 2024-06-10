@@ -1,6 +1,6 @@
 import { CommandLineParamFixes } from '@nx-dotnet/utils';
 
-export type dotnetNewFlags =
+export type DotnetNewFlags =
   | 'dryRun'
   | 'force'
   | 'language'
@@ -12,7 +12,7 @@ export type dotnetNewFlags =
   | 'updateApply'
   | 'updateCheck';
 
-export const newCommandLineParamFixes: CommandLineParamFixes<dotnetNewFlags> = {
+export const newCommandLineParamFixes: CommandLineParamFixes<DotnetNewFlags> = {
   keyMap: {
     dryRun: 'dry-run',
     updateApply: 'update-apply',

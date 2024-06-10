@@ -53,6 +53,8 @@ export type NxDotnetConfigV2 = Omit<NxDotnetConfigV1, 'inferProjectTargets'> & {
 
   /**
    * Ignores the specified paths when inferring projects
+   *
+   * @deprecated Use { "plugin": "@nx-dotnet/core", "exclude": ["path/to/ignore"]} instead.
    */
   ignorePaths?: string[];
 

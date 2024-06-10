@@ -23,7 +23,6 @@ export async function moveConfigToNxJson(tree: Tree) {
 
   const configFileConfig = readConfigFromRCFile(tree);
   if (!configFileConfig) {
-    console.log('Already done');
     return;
   }
 

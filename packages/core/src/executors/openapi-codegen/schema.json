@@ -5,6 +5,23 @@
   "description": "Invokes `nx g @nx-dotnet/core:swagger-typescript` with the proper parameters to update a codegen based library",
   "type": "object",
   "properties": {
+    "useOpenApiGenerator": {
+      "type": "boolean",
+      "description": "Use the OpenAPI generator to generate the code"
+    },
+    "openApiGeneratorTemplate": {
+      "type": "string",
+      "description": "The template to use for the OpenAPI generator",
+      "default": "typescript-fetch"
+    },
+    "openApiGeneratorArgs": {
+      "type": "array",
+      "description": "Additional arguments to pass to the OpenAPI generator",
+      "items": {
+        "type": "string"
+      },
+      "default": ["--global-property=models,apis"]
+    },
     "openapiJsonPath": {
       "type": "string",
       "description": "Path to OpenAPI spec file"

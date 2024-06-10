@@ -12,7 +12,7 @@ import {
   dotnetAddPackageOptions,
   dotnetBuildOptions,
   dotnetFormatOptions,
-  dotnetNewOptions,
+  DotnetNewOptions,
   dotnetPublishOptions,
   dotnetRunOptions,
   DotnetTemplate,
@@ -35,7 +35,7 @@ export class DotNetClient {
 
   new(
     template: KnownDotnetTemplates,
-    parameters?: dotnetNewOptions,
+    parameters?: DotnetNewOptions,
     additionalArguments?: string[],
   ): void {
     const params = [`new`, template];

@@ -3,26 +3,19 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nxdoc/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/nxdoc/**/*.ts",
-          "packages/nxdoc/package.json"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/nxdoc"],
       "options": {
-        "jestConfig": "packages/nxdoc/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/nxdoc/jest.config.ts"
       }
     },
-    "prebuild": {
+    "build": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
@@ -30,7 +23,7 @@
         ]
       }
     },
-    "build": {
+    "prebuild": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -79,6 +72,5 @@
         "command": "echo"
       }
     }
-  },
-  "tags": []
+  }
 }

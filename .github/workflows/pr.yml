@@ -22,9 +22,7 @@ jobs:
         npx nx-cloud record yarn documentation:check --verbose
         npx nx-cloud record yarn commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
       parallel-commands-on-agents: |
-        yarn nx affected --target lint build test
-      final-commands: |
-        yarn e2e
+        yarn nx affected --target lint build test e2e
 
   agents:
     name: Nx Cloud - Agents

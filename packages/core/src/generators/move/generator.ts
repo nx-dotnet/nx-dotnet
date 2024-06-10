@@ -169,8 +169,6 @@ function updateXmlReferences(tree: Tree, options: NormalizedSchema) {
         relative(directory, options.destinationRoot),
       );
 
-      console.log({ pathToUpdate, newPath });
-
       tree.write(
         path,
         contents

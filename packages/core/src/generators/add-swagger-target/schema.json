@@ -18,6 +18,10 @@
       "type": "string",
       "description": "Which project should the target be added to?"
     },
+    "projectRoot": {
+      "type": "string",
+      "description": "Path from workspace root to the project&#39;s root directory. Used in case the given project is not on the generator tree to create a new project.json."
+    },
     "target": {
       "type": "string",
       "description": "What should the swagger target be called?",
@@ -31,10 +35,11 @@
       "type": "string",
       "description": "What should the codegen project be called? If null, the project will not be created."
     },
-    "useNxPluginOpenAPI": {
+    "useOpenApiGenerator": {
       "type": "boolean",
-      "description": "If the codegen project is to be created, should the codegen target use nx-plugin-openapi instead?  Choose false if only type interfaces are needed.",
-      "default": "false"
+      "description": "If the codegen project is to be created, should the codegen target use openapi-generator-cli?",
+      "default": "true",
+      "aliases": ["useNxPluginOpenAPI"]
     }
   },
   "required": ["project"]

@@ -2,6 +2,8 @@
   "name": "demo-libs-generated-webapi-types",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "demo/libs/generated/webapi-types/src",
+  "tags": [],
+  "implicitDependencies": ["demo-libs-generated-webapi-swagger"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -14,21 +16,14 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["demo/libs/generated/webapi-types/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/demo/libs/generated/webapi-types"],
       "options": {
-        "jestConfig": "demo/libs/generated/webapi-types/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "demo/libs/generated/webapi-types/jest.config.ts"
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["demo-libs-generated-webapi-swagger"]
+  }
 }
