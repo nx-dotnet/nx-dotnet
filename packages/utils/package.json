@@ -3,12 +3,11 @@
   "main": "src/index.js",
   "private": false,
   "dependencies": {
-    "@nx/devkit": "19.0.4",
-    "fast-glob": "3.2.12",
-    "rimraf": "^3.0.2",
-    "xmldoc": "^1.1.2",
-    "tslib": "^2.5.0",
-    "semver": "7.5.4"
+    "@nx/devkit": "19.5.1",
+    "fast-glob": "3.3.2",
+    "xmldoc": "^1.3.0",
+    "tslib": "^2.6.3",
+    "semver": "7.6.3"
   },
   "peerDependencies": {},
   "license": "MIT",

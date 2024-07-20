@@ -200,7 +200,7 @@ export function inlineNxTokens(value: string, project: ProjectConfiguration) {
 
 export function isNxCrystalEnabled(tree?: Tree) {
   const nxJson: NxJsonConfiguration = tree
-    ? readNxJson(tree) ?? {}
+    ? (readNxJson(tree) ?? {})
     : readJsonFile('nx.json');
 
   if (nxJson.useInferencePlugins === false) {

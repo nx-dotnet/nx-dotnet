@@ -25,7 +25,7 @@
     "url": "https://github.com/nx-dotnet/nx-dotnet"
   },
   "dependencies": {
-    "@nx/devkit": "19.0.4",
+    "@nx/devkit": "19.5.1",
     "tslib": "^2.5.0"
   },
   "peerDependencies": {},

@@ -2,10 +2,10 @@
   "name": "@nx-dotnet/workspace-plugin",
   "version": "99.99.99",
   "dependencies": {
-    "tslib": "^2.3.0",
-    "@nx/devkit": "19.0.4",
-    "xmldoc": "^1.1.2",
-    "node-fetch": "3.3.0"
+    "tslib": "^2.6.3",
+    "@nx/devkit": "19.5.1",
+    "xmldoc": "^1.3.0",
+    "node-fetch": "3.3.2"
   },
   "type": "commonjs",
   "main": "./src/index.js",

@@ -55,7 +55,7 @@ export async function PatchPackageVersions(
     await patchDependenciesSection('devDependencies', pkg, newVersion);
 
     await writeJson(pkgPath, pkg);
-    execSync(`yarn prettier --write ${pkgPath}`);
+    execSync(`bunx prettier --write ${pkgPath}`);
     console.log('Updated', pkgPath, 'for', newVersion);
 
     if (updateGit) {

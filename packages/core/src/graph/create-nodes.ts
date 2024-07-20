@@ -11,7 +11,7 @@ import { readFileSync } from 'fs';
 import { basename, dirname, extname } from 'path';
 
 import { NxDotnetConfigV2, ResolvedConfig, readConfig } from '@nx-dotnet/utils';
-import minimatch = require('minimatch');
+import { minimatch } from 'minimatch';
 
 import {
   GetBuildExecutorConfiguration,

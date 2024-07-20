@@ -1,5 +1,5 @@
-const { execSync } = require('child_process');
-const { join } = require('path');
+const { execSync } = require('node:child_process');
+const { join } = require('node:path');
 const parser = require('yargs-parser');
 
 const cwd = join(__dirname, '../../../');
@@ -31,7 +31,7 @@ export function getChangedFiles(
   return { changedFiles, newFiles };
 }
 
-console.log(`📖 Checking for documentation changes`);
+console.log('📖 Checking for documentation changes');
 let generateCmd = `nx g @nx-dotnet/nxdoc:generate-docs --exclude=${excluded}`;
 if (verbose) {
   generateCmd += ' --verbose-logging';
@@ -41,21 +41,21 @@ execSync(generateCmd, {
 });
 const { changedFiles, newFiles } = getChangedFiles('HEAD', 'docs');
 if (changedFiles.length) {
-  console.log(`❌ Found changes in docs files`);
-  changedFiles.forEach((file) => {
+  console.log('❌ Found changes in docs files');
+  for (const file of changedFiles) {
     console.log(`    - ${file}`);
     if (verbose || process.env.VERBOSE_LOGGING) {
       execSync(`git --no-pager diff --minimal HEAD -- ${file}`, {
         stdio: ['inherit', 'inherit', 'inherit'],
       });
     }
-  });
+  }
 }
 if (newFiles.length) {
-  console.log(`❌ Found new docs files`);
-  newFiles.forEach((file) => {
+  console.log('❌ Found new docs files');
+  for (const file of newFiles) {
     console.log(`    - ${file}`);
-  });
+  }
 }
 if (changedFiles.length || newFiles.length) {
   console.log('➡ Please commit these changes.');

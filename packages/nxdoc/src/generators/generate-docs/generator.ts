@@ -10,7 +10,7 @@ import {
   Tree,
 } from '@nx/devkit';
 
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 import * as path from 'node:path';
 
 import { Schema } from './schema';
@@ -145,11 +145,11 @@ function generateDocsForProject(
     );
   }
 
-  Object.entries(executors).forEach(([generatorName, config]) => {
+  for (const [generatorName, config] of Object.entries(executors)) {
     const generatorFileName = names(generatorName).fileName;
     const schema = readJson<SchemaJSON>(
       host,
-      path.relative(process.cwd(), path.resolve(project.root, config.schema)),
+      path.relative(process.cwd(), path.resolve(project.root)),
     );
     generateFiles(
       host,
@@ -164,7 +164,7 @@ function generateDocsForProject(
         packageName,
       },
     );
-  });
+  }
 
   return {
     packageName,
