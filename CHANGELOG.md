@@ -1,3 +1,19 @@
+# [2.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.2.0...v2.3.0) (2024-07-27)
+
+
+### Bug Fixes
+
+* **core:** remove warning "Project 'xxx' contains extension with invalid name (type)." ([#831](https://github.com/nx-dotnet/nx-dotnet/issues/831)) ([4c19278](https://github.com/nx-dotnet/nx-dotnet/commit/4c19278ce430cfc6409fb736ab50ccd41de31bfa))
+* **nx-ghpages:** syncWithBaseBranch should be a boolean option ([1306ceb](https://github.com/nx-dotnet/nx-dotnet/commit/1306ceb47ee3811c32f905a9a4864ea7fb2212c4))
+
+
+### Features
+
+* **core:** update to nx 19 ([#857](https://github.com/nx-dotnet/nx-dotnet/issues/857)) ([d349830](https://github.com/nx-dotnet/nx-dotnet/commit/d349830c274243ebd703807e1e0c4abdc4c3e590))
+* **nx-ghpages:** add support for passing GH_TOKEN or GITHUB_TOKEN via env to auth with remote ([0fe2d02](https://github.com/nx-dotnet/nx-dotnet/commit/0fe2d02acf043f70d369a7d230a29e7b8154aa85))
+* **nx-ghpages:** add support for writing CNAME file ([3a098f0](https://github.com/nx-dotnet/nx-dotnet/commit/3a098f08dc0987d0ccbc637fd385ed3dad499f10))
+* **nx-ghpages:** add syncGitOptions to provide extra flags to the command when syncing changes ([e015a98](https://github.com/nx-dotnet/nx-dotnet/commit/e015a985724bcf7c0fcfe1c37868b4098883f189))
+
 # [2.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.2...v2.2.0) (2024-01-31)
 
 ### Bug Fixes
