@@ -26,6 +26,11 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     };
   }
 
+  if (options.CNAME) {
+    logger.info(`Creating CNAME file for ${options.CNAME} in ${directory}`);
+    writeFileSync(join(directory, 'CNAME'), options.CNAME);
+  }
+
   logger.info('Setting up git remote');
 
   if (!(await exists(join(directory, '.git')))) {
