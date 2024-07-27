@@ -25,6 +25,7 @@ const options: BuildExecutorSchema = {
   baseBranch: '',
   syncWithBaseBranch: false,
   syncStrategy: 'rebase',
+  syncGitOptions: [],
 };
 
 describe('Build Executor', () => {
