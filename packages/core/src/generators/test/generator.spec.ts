@@ -17,6 +17,8 @@ import * as utils from '@nx-dotnet/utils';
 
 import { initGenerator } from '../init/generator';
 import { NxDotnetTestGeneratorSchema } from '../../models';
+import { join } from 'path';
+import { tmpdir } from 'os';
 
 jest.mock('@nx-dotnet/utils', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +28,8 @@ jest.mock('@nx-dotnet/utils', () => ({
   resolve: (m: string) => m,
 }));
 
+const testRoot = join(tmpdir(), 'nx-dotnet-test');
+
 describe('nx-dotnet test project generator', () => {
   let tree: Tree;
   let dotnetClient: DotNetClient;
@@ -34,8 +38,19 @@ describe('nx-dotnet test project generator', () => {
 
   beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    tree.root = testRoot;
+
+    try {
+      fs.mkdirSync(tree.root, { recursive: true });
+    } catch {
+      // ignore
+    }
+    fs.writeFileSync(join(tree.root, 'nx.json'), JSON.stringify({}));
+
     tree.write('package.json', '{}');
-    await initGenerator(tree, null, new DotNetClient(dotnetFactory()));
+    dotnetClient = new DotNetClient(dotnetFactory(), tree.root);
+
+    await initGenerator(tree, null, dotnetClient);
     addProjectConfiguration(tree, 'domain-existing-app', {
       root: 'apps/domain/existing-app',
       projectType: 'application',
@@ -46,6 +61,13 @@ describe('nx-dotnet test project generator', () => {
       projectType: 'library',
       targets: {},
     });
+
+    tree.write(
+      'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
+      `<Project Sdk="Microsoft.NET.Sdk">
+  
+</Project>`,
+    );
 
     fs.mkdirSync('apps/domain/existing-app', { recursive: true });
     jest
@@ -59,8 +81,6 @@ describe('nx-dotnet test project generator', () => {
         'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
       );
 
-    dotnetClient = new DotNetClient(dotnetFactory());
-
     const packageJson = { scripts: {} };
     writeJson(tree, 'package.json', packageJson);
 
@@ -72,6 +92,10 @@ describe('nx-dotnet test project generator', () => {
       skipFormat: true,
     };
     testProjectName = options.targetProject + '-test';
+  });
+
+  afterEach(() => {
+    fs.rmSync(testRoot, { recursive: true });
   });
 
   it('should include test target', async () => {

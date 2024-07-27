@@ -69,13 +69,16 @@ function writeFileFromTree(tree: Tree, path: string): () => void {
   // Restore original contents of the file if it existed when
   // calling cleanup functions.
   const onDiskContents = tryReadDiskOrNull(diskPath);
-  const cleanupFns: Array<() => void> = [];
+  const cleanupFns: Array<[string, () => void]> = [];
   if (treeContents) {
     if (!existsSync(tree.root)) {
       mkdirSync(tree.root);
-      cleanupFns.push(() => {
-        rmdirSync(tree.root);
-      });
+      cleanupFns.push([
+        'remove ' + tree.root,
+        () => {
+          rmdirSync(tree.root);
+        },
+      ]);
     }
     const pathSegments = path.split('/').slice(0, -1);
     let dirPath = tree.root;
@@ -84,32 +87,43 @@ function writeFileFromTree(tree: Tree, path: string): () => void {
       dirPath = join(dirPath, pathSegments.shift()!);
       if (!existsSync(dirPath)) {
         mkdirSync(dirPath);
-        cleanupFns.push(() => {
-          try {
-            rmdirSync(dirPath);
-          } catch (e) {
-            // If the directory is not empty, this will fail.
-            // This is especially likely if two files from different subdirectories
-            // are written into the same directory. e.g. (apps/my-app and apps/other-app).
-            // In this case, if `apps` didn't exist before the first file was written,
-            // we'll try to remove it when running the cleanup functions for the first file.
-            // It'll fail, because the `apps/other-app` directory will still exist. This is fine.
-          }
-        });
+        cleanupFns.push([
+          'remove ' + dirPath,
+          () => {
+            try {
+              rmdirSync(dirPath);
+            } catch (e) {
+              // If the directory is not empty, this will fail.
+              // This is especially likely if two files from different subdirectories
+              // are written into the same directory. e.g. (apps/my-app and apps/other-app).
+              // In this case, if `apps` didn't exist before the first file was written,
+              // we'll try to remove it when running the cleanup functions for the first file.
+              // It'll fail, because the `apps/other-app` directory will still exist. This is fine.
+            }
+          },
+        ]);
       }
     }
     writeFileSync(diskPath, treeContents);
+  } else {
+    console.log('No contents found in tree for', path, tree.root);
   }
-  cleanupFns.push(() => {
-    if (onDiskContents) {
-      writeFileSync(diskPath, onDiskContents);
-    } else {
-      rmSync(diskPath);
-    }
-  });
+  cleanupFns.push([
+    onDiskContents ? 'restore ' + diskPath : 'remove ' + diskPath,
+    () => {
+      if (onDiskContents) {
+        writeFileSync(diskPath, onDiskContents);
+      } else {
+        rmSync(diskPath);
+      }
+    },
+  ]);
   return () => {
-    cleanupFns.reverse();
-    for (const cleanup of cleanupFns) {
+    // cleanupFns.reverse();
+    for (const [label, cleanup] of cleanupFns) {
+      if (process.env.NX_VERBOSE_LOGGING === 'true') {
+        console.log('nx-dotnet cleanup:', label);
+      }
       cleanup();
     }
   };
