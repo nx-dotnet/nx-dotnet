@@ -1,5 +1,5 @@
 import { DotNetClient } from '@nx-dotnet/dotnet';
-import { findProjectFileInPathSync, isDryRun } from '@nx-dotnet/utils';
+import { findProjectFileInPathSync } from '@nx-dotnet/utils';
 import { Tree } from '@nx/devkit';
 import {
   existsSync,
@@ -37,7 +37,6 @@ export function runDotnetAddProjectToSolution(
   // ensures that the tree changes think its a file creation rather
   // than a file update.
   tree.write(solutionFile, updatedContents);
-  return;
 }
 
 export function runDotnetAddProjectReference(
@@ -46,10 +45,13 @@ export function runDotnetAddProjectReference(
   targetCsProj: string,
   dotnetClient: DotNetClient,
 ) {
-  const cleanupFns = [
-    writeFileFromTree(tree, hostCsProj),
-    writeFileFromTree(tree, targetCsProj),
-  ];
+  const cleanupFns =
+    hostCsProj === targetCsProj
+      ? [writeFileFromTree(tree, hostCsProj)]
+      : [
+          writeFileFromTree(tree, hostCsProj),
+          writeFileFromTree(tree, targetCsProj),
+        ];
   dotnetClient.addProjectReference(hostCsProj, targetCsProj);
   const updatedContents = readFileSync(join(tree.root, hostCsProj)).toString();
 
@@ -60,7 +62,6 @@ export function runDotnetAddProjectReference(
   // ensures that the tree changes think its a file creation rather
   // than a file update.
   tree.write(hostCsProj, updatedContents);
-  return;
 }
 
 function writeFileFromTree(tree: Tree, path: string): () => void {
@@ -119,7 +120,7 @@ function writeFileFromTree(tree: Tree, path: string): () => void {
     },
   ]);
   return () => {
-    // cleanupFns.reverse();
+    cleanupFns.reverse();
     for (const [label, cleanup] of cleanupFns) {
       if (process.env.NX_VERBOSE_LOGGING === 'true') {
         console.log('nx-dotnet cleanup:', label);

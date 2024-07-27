@@ -1,10 +1,11 @@
 import {
   CreateNodesContext,
   CreateNodesFunction,
+  CreateNodesV2,
   NxJsonConfiguration,
   ProjectConfiguration,
   TargetConfiguration,
-  readJsonFile,
+  createNodesFromFiles,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
@@ -22,10 +23,7 @@ import {
 import { FILTERED_PATH_PARTS } from '../generators/utils/generate-project';
 import { getWorkspaceScope } from '../generators/utils/get-scope';
 import type { PackageJson } from 'nx/src/utils/package-json';
-import {
-  tryReadJson,
-  tryReadJsonFile,
-} from '../generators/utils/try-read-json';
+import { tryReadJsonFile } from '../generators/utils/try-read-json';
 
 export const projectFilePatterns = readConfig().inferProjects
   ? ['*.csproj', '*.fsproj', '*.vbproj']
@@ -204,6 +202,23 @@ export function isFileIgnored(
       false)
   );
 }
+
+export const createNodesV2: CreateNodesV2<NxDotnetConfigV2> = [
+  `**/{${projectFilePatterns.join(',')}}`,
+  (
+    files,
+    // We read the config in the function to ensure it's always up to date / compatible.
+    opts,
+    maybeCtx,
+  ) => {
+    return createNodesFromFiles<NxDotnetConfigV2 | undefined>(
+      createNodes[1],
+      files,
+      opts,
+      maybeCtx,
+    );
+  },
+];
 
 // Used in Nx 16.8+
 export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [

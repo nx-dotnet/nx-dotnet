@@ -95,7 +95,6 @@ describe('nx-dotnet generate-project', () => {
 
   it('should run successfully for libraries', async () => {
     await GenerateProject(tree, options, dotnetClient, 'library');
-    console.log('After generator');
     const config = readProjectConfiguration(tree, 'test');
     expect(config).toBeDefined();
   });

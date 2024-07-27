@@ -10,7 +10,7 @@
   "dependencies": {
     "@nx-dotnet/dotnet": "*",
     "@nx-dotnet/utils": "*",
-    "@nx/devkit": "19.0.4",
+    "@nx/devkit": "19.5.3",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "minimatch": "3.1.2",

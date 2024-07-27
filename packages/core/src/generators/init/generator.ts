@@ -13,12 +13,7 @@ import {
 } from '@nx/devkit';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
-import {
-  CONFIG_FILE_PATH,
-  isDryRun,
-  NxDotnetConfig,
-  resolve,
-} from '@nx-dotnet/utils';
+import { CONFIG_FILE_PATH, NxDotnetConfig, resolve } from '@nx-dotnet/utils';
 import * as path from 'path';
 import { major } from 'semver';
 import { runDotnetNew } from '../utils/dotnet-new';

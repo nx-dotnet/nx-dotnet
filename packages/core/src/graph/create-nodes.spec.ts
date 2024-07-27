@@ -12,10 +12,10 @@ jest.mock(
   () =>
     ({
       readConfig: () => configValues,
-    } as typeof configUtils),
+    }) as typeof configUtils,
 );
 
-import { registerProjectTargets } from './create-nodes';
+import { parseName, registerProjectTargets } from './create-nodes';
 
 describe('infer-project', () => {
   beforeEach(() => {

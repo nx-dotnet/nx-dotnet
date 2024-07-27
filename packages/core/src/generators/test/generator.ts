@@ -1,10 +1,4 @@
-import {
-  addProjectConfiguration,
-  formatFiles,
-  joinPathFragments,
-  names,
-  Tree,
-} from '@nx/devkit';
+import { addProjectConfiguration, formatFiles, names, Tree } from '@nx/devkit';
 import { basename } from 'path';
 
 import {
@@ -117,52 +111,11 @@ export function calculateTestTargetNameAndRoot(
 
   suffix = suffix ?? (pathScheme === 'nx' ? 'test' : 'Test');
 
-  testProjectName =
-    testProjectName ?? nameParts.concat([suffix]).join(nameSeperator);
+  const name = (testProjectName =
+    testProjectName ?? nameParts.concat([suffix]).join(nameSeperator));
 
-  const testProjectRootBasenameParts = testProjectName.split(nameSeperator);
-
-  rootloop: for (let i = 0; i < rootPathSegments.length; i++) {
-    const segment = rootPathSegments[i];
-    // If we run into a path segment that matches the first part of the project name
-    // its possible that the project root's basename shouldn't contain that segment of the
-    // name. E.g. if the project name is `domain-existing-app` and the project root
-    // is `apps/domain/existing-app`, the basename is "existing-app", not "domain-existing-app".
-    //
-    // If we detect that the current path segment is the first part of the project name
-    // and the following segments match more of the project name, we remove these segments
-    // from the new test project's name parts.
-    if (segment === nameParts[0]) {
-      let matchingSegments = 1;
-      for (; matchingSegments < nameParts.length; matchingSegments++) {
-        // If we run out of path segments, we break the loop - the rest
-        // of the nameparts should be in the new project's root basename.
-        if (i + matchingSegments >= rootPathSegments.length) {
-          break;
-        }
-
-        // We found a segment later in the path which doesn't match the project name.
-        if (
-          rootPathSegments[i + matchingSegments] !== nameParts[matchingSegments]
-        ) {
-          continue rootloop;
-        }
-      }
-
-      // If we reach this point, we found a match for the project name in the path.
-      // We need to remove these segments from the new project's root basename.
-      for (let j = 0; j < matchingSegments; j++) {
-        testProjectRootBasenameParts.shift();
-      }
-    }
-  }
-
-  const testProjectRoot = joinPathFragments(
-    ...rootPathSegments,
-    testProjectRootBasenameParts.join(nameSeperator),
-  );
   return {
-    root: testProjectRoot,
-    name: testProjectName,
+    root: [targetProjectRoot, suffix].join(nameSeperator),
+    name,
   };
 }

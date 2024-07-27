@@ -254,7 +254,7 @@ export async function GenerateProject(
       host,
       {
         language: normalizedOptions.language,
-        targetProject: normalizedOptions.name,
+        targetProject: normalizedOptions.projectName,
         pathScheme: normalizedOptions.pathScheme,
         tags: normalizedOptions.tags,
         suffix: normalizedOptions.testProjectNameSuffix,

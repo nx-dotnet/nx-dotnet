@@ -147,10 +147,16 @@ function generateDocsForProject(
 
   Object.entries(executors).forEach(([generatorName, config]) => {
     const generatorFileName = names(generatorName).fileName;
-    const schema = readJson<SchemaJSON>(
-      host,
-      path.relative(process.cwd(), path.resolve(project.root, config.schema)),
-    );
+    const schema =
+      typeof config === 'string'
+        ? {}
+        : readJson<SchemaJSON>(
+            host,
+            path.relative(
+              process.cwd(),
+              path.resolve(project.root, config.schema),
+            ),
+          );
     generateFiles(
       host,
       path.join(__dirname, 'templates/detail'),

@@ -1,13 +1,5 @@
-import {
-  NxJsonConfiguration,
-  Tree,
-  getWorkspaceLayout,
-  readJson,
-  readJsonFile,
-  workspaceRoot,
-} from '@nx/devkit';
+import { NxJsonConfiguration } from '@nx/devkit';
 import type { PackageJson } from 'nx/src/utils/package-json';
-import { join } from 'path';
 
 export function getWorkspaceScope(
   nxJson: NxJsonConfiguration | null,

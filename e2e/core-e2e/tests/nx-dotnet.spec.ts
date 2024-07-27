@@ -3,6 +3,7 @@ import {
   getPackageManagerCommand,
   joinPathFragments,
   names,
+  normalizePath,
 } from '@nx/devkit';
 import {
   checkFilesExist,
@@ -22,6 +23,7 @@ import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
 import { XmlDocument } from 'xmldoc';
 import * as logger from 'console';
+import stripAnsi = require('strip-ansi');
 
 import { readDependenciesFromNxDepGraph } from '@nx-dotnet/utils/e2e';
 
@@ -199,11 +201,18 @@ describe('nx-dotnet e2e', () => {
         ),
       );
       const projectXml = new XmlDocument(config);
-      const projectReference = projectXml
-        .childrenNamed('ItemGroup')[1]
-        ?.childNamed('ProjectReference');
 
-      expect(projectReference).toBeDefined();
+      const projectReferences = projectXml
+        .childrenNamed('ItemGroup')
+        .flatMap((x) => x.childrenNamed('ProjectReference'));
+
+      expect(
+        projectReferences.some(
+          (ref) =>
+            normalizePath(ref.attr['Include']) ===
+            `../${app}/Proj.${names(app).className}.csproj`,
+        ),
+      ).toBe(true);
     });
 
     it('should create test project using suffix', async () => {
@@ -346,7 +355,7 @@ describe('nx-dotnet e2e', () => {
         `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --skip-swagger-lib --solutionFile --dry-run`,
       );
 
-      expect(output.stdout).toContain('CREATE proj.nx-dotnet.sln');
+      expect(stripAnsi(output.stdout)).toContain('CREATE proj.nx-dotnet.sln');
       expect(() => checkFilesExist(`apps/${app}`)).toThrow();
       expect(listFiles('.').filter((x) => x.endsWith('.sln'))).toHaveLength(0);
     });

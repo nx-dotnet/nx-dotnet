@@ -193,5 +193,20 @@ describe('nx-dotnet test project generator', () => {
         }
       `);
     });
+
+    it('should handle dotnet pathschemes with directory', () => {
+      expect(
+        calculateTestTargetNameAndRoot(
+          'dotnet',
+          'Domain.Existing.App',
+          'apps/domain/Existing.App',
+        ),
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "Domain.Existing.App.Test",
+          "root": "apps/domain/Existing.App.Test",
+        }
+      `);
+    });
   });
 });

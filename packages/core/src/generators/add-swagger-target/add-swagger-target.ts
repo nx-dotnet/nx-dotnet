@@ -213,7 +213,7 @@ function updateNxJsonForCodegenTargets(
   const newBuildDeps = ['codegen', '^codegen'];
   wc.targetDefaults ??= {};
   wc.targetDefaults['build'] ??= {};
-  wc.targetDefaults['build'].dependsOn ??= [];
+  wc.targetDefaults['build'].dependsOn ??= ['^build'];
   wc.targetDefaults['build'].dependsOn = Array.from(
     new Set(wc.targetDefaults['build'].dependsOn.concat(newBuildDeps)),
   );

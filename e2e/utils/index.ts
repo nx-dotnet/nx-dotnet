@@ -297,6 +297,13 @@ export function getPackageManagerCommand({
       addDev: `pnpm add -D`,
       list: 'npm ls --depth 10',
     },
+    bun: {
+      createWorkspace: `bunx create-nx-workspace@${process.env.PUBLISHED_VERSION}`,
+      runNx: `bunx nx`,
+      runNxSilent: `bunx nx`,
+      addDev: 'bun install -D',
+      list: 'bun pm ls',
+    },
   }[packageManager];
 }
 

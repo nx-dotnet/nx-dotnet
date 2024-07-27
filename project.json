@@ -8,5 +8,6 @@
         "storage": "build/local-registry/storage"
       }
     }
-  }
+  },
+  "name": "."
 }

@@ -1,6 +1,6 @@
-import { joinPathFragments, readNxJson, Tree } from '@nx/devkit';
+import { readNxJson, Tree } from '@nx/devkit';
 
-import { parse, relative, resolve } from 'path';
+import { parse } from 'path';
 
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 import { readConfigSection } from '@nx-dotnet/utils';
