@@ -28,8 +28,16 @@ Deploy a page to a specified repository&#39;s gh-pages branch.
 
 ### syncWithBaseBranch
 
-- (string): Indicate if the gh-pages branch should be synced with the base branch
+- (boolean): Indicate if the gh-pages branch should be synced with the base branch
 
 ### syncStrategy
 
 - (string): Git command to use to sync the gh-pages branch with the base branch
+
+### syncGitOptions
+
+- (array): Additional git options to use when syncing the gh-pages branch with the base branch
+
+### CNAME
+
+- (string): Custom domain to use for the gh-pages branch. Applied by creating a CNAME file in the root of the gh-pages branch

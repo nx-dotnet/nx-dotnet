@@ -1,14 +1,30 @@
 import { logger, workspaceRoot } from '@nx/devkit';
 
-import { exec as execCallback } from 'child_process';
-import { stat } from 'fs';
+import { ExecOptions, exec as execCallback } from 'child_process';
+import { stat, writeFileSync } from 'fs';
 import { join } from 'path';
-import { promisify } from 'util';
 
 import { BuildExecutorSchema } from './schema';
 import { readNxJson } from 'nx/src/config/nx-json';
 
-const exec = promisify(execCallback);
+function exec(command: string, options: ExecOptions) {
+  return new Promise((resolve, reject) => {
+    const childProcess = execCallback(
+      command,
+      options,
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(stdout);
+        }
+      },
+    );
+
+    childProcess.stdout?.pipe(process.stdout);
+    childProcess.stderr?.pipe(process.stderr);
+  });
+}
 
 async function exists(path: string) {
   return new Promise((resolve) => {
@@ -30,6 +46,7 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     logger.info(`Creating CNAME file for ${options.CNAME} in ${directory}`);
     writeFileSync(join(directory, 'CNAME'), options.CNAME);
   }
+
   const envToken = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;
   if (envToken) {
     options.remote = options.remote.replace(
@@ -66,7 +83,6 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
   });
 
   logger.info('Authoring Commit -- COMPLETE');
-  logger.info('Pushing to GH Pages');
   try {
     await exec(`git checkout -b gh-pages`, { cwd: directory });
   } catch {
@@ -75,17 +91,31 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
   }
   if (options.syncWithBaseBranch) {
     const baseBranch =
-      options.baseBranch || readNxJson()?.affected?.defaultBase || 'master';
+      options.baseBranch || readNxJson()?.affected?.defaultBase || 'main';
     const syncStrategy = options.syncStrategy;
-    await exec(`git ${syncStrategy} ${options.remoteName}/${baseBranch}`, {
+    const command = `git ${syncStrategy} ${
+      options.remoteName
+    }/${baseBranch} ${options.syncGitOptions.join(' ')}`;
+    logger.info('Syncing with base branch: ' + command);
+    await exec(command, {
       cwd: directory,
     });
   }
-
-  await exec(`git push -f --set-upstream ${options.remoteName} gh-pages`, {
-    cwd: directory,
-  });
-  logger.info('Pushing to GH Pages -- COMPLETE');
+  logger.info('Pushing to GH Pages');
+  try {
+    await exec(`git push -f --set-upstream ${options.remoteName} gh-pages`, {
+      cwd: directory,
+    });
+    logger.info('Pushing to GH Pages -- COMPLETE');
+  } catch (error: unknown) {
+    logger.info(
+      '[hint]: You may need to set GH_TOKEN or GITHUB_TOKEN to have write access to the repository',
+    );
+    logger.error('Pushing to GH Pages -- FAILED');
+    return {
+      success: false,
+    };
+  }
 
   return {
     success: true,
