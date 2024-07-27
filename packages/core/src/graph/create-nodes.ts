@@ -1,14 +1,17 @@
 import {
   CreateNodesContext,
   CreateNodesFunction,
+  CreateNodesV2,
+  NxJsonConfiguration,
+  ProjectConfiguration,
   TargetConfiguration,
-  workspaceRoot,
+  createNodesFromFiles,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { dirname, resolve } from 'path';
+import { basename, dirname, extname } from 'path';
 
-import { NxDotnetConfigV2, readConfig } from '@nx-dotnet/utils';
+import { NxDotnetConfigV2, ResolvedConfig, readConfig } from '@nx-dotnet/utils';
 import minimatch = require('minimatch');
 
 import {
@@ -17,25 +20,82 @@ import {
   GetServeExecutorConfig,
   GetTestExecutorConfig,
 } from '../models';
+import { FILTERED_PATH_PARTS } from '../generators/utils/generate-project';
+import { getWorkspaceScope } from '../generators/utils/get-scope';
+import type { PackageJson } from 'nx/src/utils/package-json';
+import { tryReadJsonFile } from '../generators/utils/try-read-json';
 
 export const projectFilePatterns = readConfig().inferProjects
   ? ['*.csproj', '*.fsproj', '*.vbproj']
   : [];
 
-export const registerProjectTargets = (
+export function parseName(
   projectFile: string,
-  opts = readConfig(),
-) => {
-  const targets: Record<string, TargetConfiguration> = {};
-  const { inferredTargets } = opts;
-  if (inferredTargets === false) {
-    return {};
+  nxJson: NxJsonConfiguration | null,
+  rootPackageJson: PackageJson,
+) {
+  const workspaceScope = getWorkspaceScope(nxJson, rootPackageJson);
+  const namespaceName = basename(projectFile, extname(projectFile)).replace(
+    new RegExp(`^${workspaceScope}.`, 'i'),
+    '',
+  );
+
+  const parentDirectories = dirname(projectFile)
+    // eslint-disable-next-line no-useless-escape
+    .split(/[\/\\]/g)
+    .reverse();
+
+  const maybeProjectNameParts = [];
+  for (const part of parentDirectories) {
+    maybeProjectNameParts.unshift(part);
+
+    const maybeProjectName = maybeProjectNameParts.join('.');
+
+    if (maybeProjectName === namespaceName) {
+      return {
+        name: namespaceName,
+        scheme: 'dotnet',
+      };
+    }
+
+    if (FILTERED_PATH_PARTS.has(part) || part === workspaceScope) {
+      maybeProjectNameParts.shift();
+      if (maybeProjectNameParts.some((part) => part.includes('.'))) {
+        return {
+          name: maybeProjectNameParts.map(titlecase).join('.'),
+          scheme: 'dotnet',
+        };
+      }
+      return {
+        name: maybeProjectNameParts.map((s) => s.toLocaleLowerCase()).join('-'),
+        scheme: 'nx',
+      };
+    }
   }
 
-  const projectFileContents = readFileSync(
-    resolve(workspaceRoot, projectFile),
-    'utf8',
-  );
+  return {
+    name: maybeProjectNameParts.map((s) => s.toLocaleLowerCase()).join('-'),
+    scheme: 'nx',
+  };
+}
+
+export function createProjectDefinition(
+  projectFile: string,
+  projectFileContents: string,
+  nxDotnetConfig: ResolvedConfig,
+  nxJson: NxJsonConfiguration | null,
+  rootPackageJson: PackageJson,
+):
+  | (ProjectConfiguration & Required<Pick<ProjectConfiguration, 'root'>>)
+  | null {
+  const root = dirname(projectFile);
+  const name = parseName(projectFile, nxJson, rootPackageJson).name;
+
+  const targets: Record<string, TargetConfiguration> = {};
+  const { inferredTargets } = nxDotnetConfig;
+  if (inferredTargets === false) {
+    return null;
+  }
 
   if (
     projectFileContents.includes('Microsoft.NET.Test.Sdk') &&
@@ -80,7 +140,27 @@ export const registerProjectTargets = (
       ...extraOptions,
     };
   }
-  return targets;
+
+  return {
+    name,
+    root,
+    targets,
+    tags: nxDotnetConfig.tags,
+  };
+}
+
+export const registerProjectTargets = (
+  projectFile: string,
+  opts = readConfig(),
+) => {
+  const project = createProjectDefinition(
+    projectFile,
+    readFileSync(projectFile, 'utf-8'),
+    opts,
+    tryReadJsonFile('nx.json') ?? {},
+    tryReadJsonFile('package.json'),
+  );
+  return project?.targets ?? {};
 };
 
 // Between Nx versions 16.8 and 17, the signature of `CreateNodesFunction` changed.
@@ -108,44 +188,74 @@ type CreateNodesFunctionCompat<T> = (
 
 type CreateNodesCompat<T> = [string, CreateNodesFunctionCompat<T>];
 
+export function isFileIgnored(
+  file: string,
+  options: NxDotnetConfigV2,
+): boolean {
+  return (
+    !options.inferProjects ||
+    (options.ignorePaths?.some((p) =>
+      minimatch(file, p, {
+        dot: true,
+      }),
+    ) ??
+      false)
+  );
+}
+
+export const createNodesV2: CreateNodesV2<NxDotnetConfigV2> = [
+  `**/{${projectFilePatterns.join(',')}}`,
+  (
+    files,
+    // We read the config in the function to ensure it's always up to date / compatible.
+    opts,
+    maybeCtx,
+  ) => {
+    return createNodesFromFiles<NxDotnetConfigV2 | undefined>(
+      createNodes[1],
+      files,
+      opts,
+      maybeCtx,
+    );
+  },
+];
+
 // Used in Nx 16.8+
 export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
   `**/{${projectFilePatterns.join(',')}}`,
   (
     file: string,
     // We read the config in the function to ensure it's always up to date / compatible.
-    // ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
-    // maybeCtx: CreateNodesContext | undefined,
+    ctxOrOpts: CreateNodesContext | NxDotnetConfigV2 | undefined,
+    maybeCtx: CreateNodesContext | undefined,
   ) => {
     const options = readConfig();
+    const context = maybeCtx ?? (ctxOrOpts as CreateNodesContext);
 
-    if (
-      !options.inferProjects ||
-      options.ignorePaths.some((p) =>
-        minimatch(file, p, {
-          dot: true,
-        }),
-      )
-    ) {
+    if (isFileIgnored(file, options)) {
       return {};
     }
 
-    const root = dirname(file);
+    const project = createProjectDefinition(
+      file,
+      readFileSync(file, 'utf-8'),
+      options,
+      context.nxJsonConfiguration,
+      tryReadJsonFile('package.json'),
+    );
 
-    // eslint-disable-next-line no-useless-escape -- eslint's wrong
-    const parts = root.split(/[\/\\]/g);
-    const name = parts[parts.length - 1].toLowerCase();
+    if (!project) {
+      return {};
+    }
 
     return {
       projects: {
-        [name]: {
-          name,
-          root,
-          projectType: 'library',
-          targets: registerProjectTargets(file, options),
-          tags: options.tags,
-        },
+        [project.root]: project,
       },
     };
   },
 ];
+
+function titlecase(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}

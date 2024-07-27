@@ -27,7 +27,11 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["openapi-types"]
+            "ignoredDependencies": [
+              "openapi-types",
+              "@openapitools/openapi-generator-cli",
+              "tslib"
+            ]
           }
         ]
       }

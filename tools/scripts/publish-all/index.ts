@@ -5,14 +5,13 @@ import { existsSync } from 'fs';
 import * as yargs from 'yargs';
 
 import { readJson, readProjectsConfigurations } from '../../utils';
-import { PatchPackageVersions } from '../patch-package-versions';
 import { parse } from 'semver';
+import { dirname } from 'path';
 
 export async function publishAll(version: string, tag?: string) {
   const workspace: ProjectsConfigurations = await readProjectsConfigurations();
-  const rootPkg = readJson('package.json');
 
-  await PatchPackageVersions(version, 'all', false, true);
+  process.env.NX_DOTNET_NEXT_VERSION = version;
 
   execSync(
     'npx nx run-many --all --target="build" --exclude="docs-site,tools/**,demo/**"',
@@ -34,15 +33,25 @@ export async function publishAll(version: string, tag?: string) {
     if (projectConfiguration.root.includes('demo')) {
       continue;
     }
-    const outputPath = projectConfiguration.targets?.build?.options?.outputPath;
-    if (existsSync(`${outputPath}/package.json`)) {
+    const packageJsonPath = `dist/${projectConfiguration.root}/package.json`;
+    if (existsSync(packageJsonPath)) {
       const { private: isPrivate, name } = readJsonFile<{
         private?: boolean;
         name: string;
-      }>(`${outputPath}/package.json`);
+      }>(packageJsonPath);
       if (!isPrivate) {
+        console.log(
+          'Publishing',
+          projectConfiguration.name,
+          '@',
+          packageJsonPath,
+        );
         execSync(
-          `npm publish ${outputPath} --tag=${tag} --access=public --provenance`,
+          `npm publish ${dirname(
+            packageJsonPath,
+          )} --tag=${tag} --access=public ${
+            process.env.GH_TOKEN ? '--provenance' : ''
+          }`,
           {
             stdio: 'inherit',
             env: environment,

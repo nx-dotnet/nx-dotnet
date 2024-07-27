@@ -31,6 +31,7 @@
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
+.yarn/install-state.gz
 testem.log
 .npmrc
 /typings
@@ -48,3 +49,4 @@ Thumbs.db
 
 .vs
 .nx/cache
+.nx/workspace-data

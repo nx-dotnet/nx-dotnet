@@ -3,7 +3,7 @@
   "main": "src/index.js",
   "private": false,
   "dependencies": {
-    "@nx/devkit": "17.0.2",
+    "@nx/devkit": "19.5.3",
     "fast-glob": "3.2.12",
     "rimraf": "^3.0.2",
     "xmldoc": "^1.1.2",
@@ -32,5 +32,5 @@
     "url": "https://github.com/nx-dotnet/nx-dotnet"
   },
   "homepage": "https://nx-dotnet.com/",
-  "version": "2.2.0"
+  "version": "*"
 }

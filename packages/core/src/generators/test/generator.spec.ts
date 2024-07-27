@@ -1,48 +1,212 @@
-import { addProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
-import * as mockedProjectGenerator from '../utils/generate-test-project';
-import generator from './generator';
-import { NxDotnetGeneratorSchema } from './schema';
+import generator, { calculateTestTargetNameAndRoot } from './generator';
 
-jest.mock('../utils/generate-test-project');
+import {
+  addProjectConfiguration,
+  readProjectConfiguration,
+  Tree,
+  writeJson,
+} from '@nx/devkit';
 
-describe('nx-dotnet test generator', () => {
+import * as fs from 'fs';
+
+import * as utils from '@nx-dotnet/utils';
+
+import { initGenerator } from '../init/generator';
+import { NxDotnetTestGeneratorSchema } from '../../models';
+import { join } from 'path';
+import { tmpdir } from 'os';
+
+jest.mock('@nx-dotnet/utils', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ...(jest.requireActual('@nx-dotnet/utils') as any),
+  glob: jest.fn(),
+  findProjectFileInPath: jest.fn(),
+  resolve: (m: string) => m,
+}));
+
+const testRoot = join(tmpdir(), 'nx-dotnet-test');
+
+describe('nx-dotnet test project generator', () => {
   let tree: Tree;
   let dotnetClient: DotNetClient;
+  let options: NxDotnetTestGeneratorSchema;
+  let testProjectName: string;
 
-  const options: NxDotnetGeneratorSchema = {
-    name: 'existing',
-    testTemplate: 'xunit',
-    language: 'C#',
-    pathScheme: 'nx',
-  };
-
-  beforeEach(() => {
+  beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    addProjectConfiguration(tree, 'existing', {
-      root: 'apps/existing',
-      targets: {},
+    tree.root = testRoot;
+
+    try {
+      fs.mkdirSync(tree.root, { recursive: true });
+    } catch {
+      // ignore
+    }
+    fs.writeFileSync(join(tree.root, 'nx.json'), JSON.stringify({}));
+
+    tree.write('package.json', '{}');
+    dotnetClient = new DotNetClient(dotnetFactory(), tree.root);
+
+    await initGenerator(tree, null, dotnetClient);
+    addProjectConfiguration(tree, 'domain-existing-app', {
+      root: 'apps/domain/existing-app',
       projectType: 'application',
+      targets: {},
     });
-    dotnetClient = new DotNetClient(mockDotnetFactory());
-  });
+    addProjectConfiguration(tree, 'domain-existing-lib', {
+      root: 'libs/domain/existing-lib',
+      projectType: 'library',
+      targets: {},
+    });
 
-  it('should run successfully', async () => {
-    await generator(tree, options, dotnetClient);
-  });
-
-  it('should call project generator with application project type', async () => {
-    const projectGenerator = (
-      mockedProjectGenerator as jest.Mocked<typeof mockedProjectGenerator>
-    ).GenerateTestProject;
-
-    await generator(tree, options, dotnetClient);
-    expect(projectGenerator).toHaveBeenCalled();
-    expect(projectGenerator.mock.calls[0][1].projectType).toEqual(
-      'application',
+    tree.write(
+      'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
+      `<Project Sdk="Microsoft.NET.Sdk">
+  
+</Project>`,
     );
+
+    fs.mkdirSync('apps/domain/existing-app', { recursive: true });
+    jest
+      .spyOn(utils, 'glob')
+      .mockResolvedValue([
+        'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
+      ]);
+    jest
+      .spyOn(utils, 'findProjectFileInPath')
+      .mockResolvedValue(
+        'apps/domain/existing-app/Proj.Domain.ExistingApp.csproj',
+      );
+
+    const packageJson = { scripts: {} };
+    writeJson(tree, 'package.json', packageJson);
+
+    options = {
+      targetProject: 'domain-existing-app',
+      testTemplate: 'xunit',
+      language: 'C#',
+      pathScheme: 'nx',
+      skipFormat: true,
+    };
+    testProjectName = options.targetProject + '-test';
+  });
+
+  afterEach(() => {
+    fs.rmSync(testRoot, { recursive: true });
+  });
+
+  it('should include test target', async () => {
+    await generator(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
+    expect(config.targets?.test).toBeDefined();
+  });
+
+  it('should set outputs for build target', async () => {
+    await generator(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
+    const outputPath = config.targets?.build.outputs?.[0];
+    expect(outputPath).toEqual(
+      '{workspaceRoot}/dist/apps/domain/existing-app-test',
+    );
+  });
+
+  it('should include lint target', async () => {
+    await generator(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
+    expect(config.targets?.lint).toBeDefined();
+  });
+
+  it('should determine directory from existing project', async () => {
+    await generator(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
+    expect(config.root).toBe('apps/domain/existing-app-test');
+  });
+
+  it('should determine directory from existing project and suffix', async () => {
+    options.suffix = 'integration-tests';
+    testProjectName = options.targetProject + '-' + options.suffix;
+    await generator(tree, options, dotnetClient);
+    const config = readProjectConfiguration(tree, testProjectName);
+    expect(config.root).toBe('apps/domain/existing-app-integration-tests');
+  });
+
+  describe('calculateTestTargetNameAndRoot', () => {
+    it('should handle names that dont contain path segments', () => {
+      expect(
+        calculateTestTargetNameAndRoot(
+          'nx',
+          'existing-app',
+          'apps/domain/existing-app',
+        ),
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "existing-app-test",
+          "root": "apps/domain/existing-app-test",
+        }
+      `);
+    });
+
+    it('should handle names that contain path segments', () => {
+      expect(
+        calculateTestTargetNameAndRoot(
+          'nx',
+          'domain-existing-app',
+          'apps/domain/existing-app',
+        ),
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "domain-existing-app-test",
+          "root": "apps/domain/existing-app-test",
+        }
+      `);
+    });
+
+    it('should handle names with multiple path segments', () => {
+      expect(
+        calculateTestTargetNameAndRoot(
+          'nx',
+          'shared-domain-existing-app',
+          'apps/shared/domain/existing-app',
+        ),
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "shared-domain-existing-app-test",
+          "root": "apps/shared/domain/existing-app-test",
+        }
+      `);
+    });
+
+    it('should handle roots that contain a portion of the project name', () => {
+      expect(
+        calculateTestTargetNameAndRoot(
+          'nx',
+          'shared-existing-app',
+          'apps/shared/domain/shared-existing-app',
+        ),
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "shared-existing-app-test",
+          "root": "apps/shared/domain/shared-existing-app-test",
+        }
+      `);
+    });
+
+    it('should handle dotnet pathschemes with directory', () => {
+      expect(
+        calculateTestTargetNameAndRoot(
+          'dotnet',
+          'Domain.Existing.App',
+          'apps/domain/Existing.App',
+        ),
+      ).toMatchInlineSnapshot(`
+        {
+          "name": "Domain.Existing.App.Test",
+          "root": "apps/domain/Existing.App.Test",
+        }
+      `);
+    });
   });
 });

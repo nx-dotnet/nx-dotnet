@@ -1,40 +1,121 @@
-import { readProjectConfiguration, Tree } from '@nx/devkit';
+import { addProjectConfiguration, formatFiles, names, Tree } from '@nx/devkit';
+import { basename } from 'path';
 
-import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
+import {
+  DotNetClient,
+  dotnetFactory,
+  DotnetNewOptions,
+} from '@nx-dotnet/dotnet';
+import { findProjectFileInPath, isNxCrystalEnabled } from '@nx-dotnet/utils';
 
-import { NxDotnetProjectGeneratorSchema } from '../../models';
-import { normalizeOptions } from '../utils/generate-project';
-import { GenerateTestProject } from '../utils/generate-test-project';
+import {
+  GetBuildExecutorConfiguration,
+  GetLintExecutorConfiguration,
+  GetTestExecutorConfig,
+} from '../../models';
+import { addToSolutionFile } from '../utils/add-to-sln';
+import { runDotnetAddProjectReference } from '../utils/dotnet-add';
+import { runDotnetNew } from '../utils/dotnet-new';
+import { readProjectConfiguration } from '../utils/project-configuration';
 import { NxDotnetGeneratorSchema } from './schema';
+
+export function normalizeOptions(
+  schema: NxDotnetGeneratorSchema,
+): NxDotnetGeneratorSchema & Required<Pick<NxDotnetGeneratorSchema, 'suffix'>> {
+  return {
+    ...schema,
+    suffix: schema.suffix ?? (schema.pathScheme === 'nx' ? 'test' : 'Test'),
+  };
+}
 
 export default async function (
   host: Tree,
-  options: NxDotnetGeneratorSchema,
+  rawSchema: NxDotnetGeneratorSchema,
   dotnetClient = new DotNetClient(dotnetFactory()),
 ) {
-  // Reconstruct the original parameters as if the test project were generated at the same time as the target project.
-  const project = readProjectConfiguration(host, options.name);
-  const projectPaths = project.root.split('/');
-  const directory = projectPaths.slice(1, -1).join('/'); // The middle portions contain the original path.
-  const [name] = projectPaths.slice(-1); // The final folder contains the original name.
-
-  const projectGeneratorOptions: NxDotnetProjectGeneratorSchema = {
-    ...options,
-    testProjectNameSuffix: options.suffix,
-    name,
-    language: options.language,
-    testTemplate: options.testTemplate,
-    directory,
-    tags: project.tags?.join(','),
-    template: '',
-    projectType: project.projectType ?? 'library',
-    skipSwaggerLib: true,
-  };
-
-  const normalizedOptions = await normalizeOptions(
+  const schema = normalizeOptions(rawSchema);
+  const targetProject = await readProjectConfiguration(
     host,
-    projectGeneratorOptions,
+    schema.targetProject,
+  );
+  const targetProjectRoot = targetProject.root;
+  const targetProjectName = schema.targetProject;
+
+  const { name: testProjectName, root: testRoot } =
+    calculateTestTargetNameAndRoot(
+      schema.pathScheme,
+      targetProjectName,
+      targetProjectRoot,
+      schema.testProjectName,
+      schema.suffix,
+    );
+
+  if (!isNxCrystalEnabled()) {
+    addProjectConfiguration(host, testProjectName, {
+      root: testRoot,
+      projectType: 'library',
+      sourceRoot: `${testRoot}`,
+      targets: {
+        build: GetBuildExecutorConfiguration(testRoot),
+        test: GetTestExecutorConfig(),
+        lint: GetLintExecutorConfiguration(),
+      },
+      tags: schema.tags
+        ? Array.isArray(schema.tags)
+          ? schema.tags
+          : schema.tags.split(',').map((tag) => tag.trim())
+        : [],
+    });
+  }
+
+  const baseCsProj = await findProjectFileInPath(targetProjectRoot, host);
+  const baseNamespace = basename(baseCsProj).replace(
+    /\.(csproj|vbproj|fsproj)$/,
+    '',
   );
 
-  return GenerateTestProject(host, normalizedOptions, dotnetClient);
+  const name =
+    schema.namespaceName ??
+    [baseNamespace, names(schema.suffix).className].filter(Boolean).join('.');
+
+  const newParams: DotnetNewOptions = {
+    language: schema.language,
+    name,
+    output: testRoot,
+  };
+
+  runDotnetNew(host, dotnetClient, schema.testTemplate, newParams);
+
+  addToSolutionFile(host, testRoot, dotnetClient, schema.solutionFile);
+
+  const testCsProj = await findProjectFileInPath(testRoot, host);
+
+  runDotnetAddProjectReference(host, testCsProj, baseCsProj, dotnetClient);
+
+  if (!schema.skipFormat) {
+    await formatFiles(host);
+  }
+}
+
+export function calculateTestTargetNameAndRoot(
+  pathScheme: 'nx' | 'dotnet',
+  targetProjectName: string,
+  targetProjectRoot: string,
+  testProjectName?: string,
+  suffix?: string,
+): { root: string; name: string } {
+  const nameSeperator = pathScheme === 'nx' ? '-' : '.';
+  const nameParts = targetProjectName.split(nameSeperator);
+  const rootPathSegments = targetProjectRoot.split('/');
+  rootPathSegments.pop(); // Remove the last segment, which is the target project name.
+
+  suffix = suffix ?? (pathScheme === 'nx' ? 'test' : 'Test');
+
+  const name = (testProjectName =
+    testProjectName ?? nameParts.concat([suffix]).join(nameSeperator));
+
+  return {
+    root: [targetProjectRoot, suffix].join(nameSeperator),
+    name,
+  };
 }

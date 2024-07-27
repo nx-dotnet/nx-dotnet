@@ -3,16 +3,16 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "e2e/nxdoc-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["nxdoc"],
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "e2e/nxdoc-e2e/jest.config.js",
-        "runInBand": true
-      },
-      "dependsOn": ["nxdoc:noop"]
+        "jestConfig": "e2e/nxdoc-e2e/jest.config.ts",
+        "runInBand": true,
+        "passWithNoTests": false
+      }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["nxdoc"]
+  }
 }

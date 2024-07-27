@@ -91,7 +91,6 @@ describe('move generator', () => {
   `,
     );
     const destination = joinPathFragments(uniq('app'));
-    console.log(tree.read(csProjPath)?.toString());
     await generator(tree, { projectName: project, destination });
     const config = readProjectConfiguration(
       tree,

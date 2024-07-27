@@ -21,7 +21,7 @@ export async function PatchPackageVersions(
   console.log('Patching package versions', newVersion, pkg);
   const workspace: ProjectsConfigurations = await readProjectsConfigurations();
   const rootPkg = readJson('package.json');
-  if (newVersion && prebuild) {
+  if (newVersion && !process.env.NX_DOTNET_E2E) {
     rootPkg.version = newVersion;
     await writeJson('package.json', rootPkg);
   } else if (!newVersion) {
@@ -45,10 +45,7 @@ export async function PatchPackageVersions(
       continue;
     }
 
-    const p = prebuild
-      ? projectConfiguration.root
-      : projectConfiguration.targets?.build.options?.outputPath;
-    const pkgPath = p ? `${p}/package.json` : null;
+    const pkgPath = `dist/${projectConfiguration.root}/package.json`;
     if (!pkgPath || !existsSync(pkgPath)) {
       continue;
     }
@@ -96,7 +93,12 @@ async function patchDependenciesSection(
 
 if (require.main === module) {
   const args = yargsParser(process.argv);
-  PatchPackageVersions(args.version, args.project, false, true).then(() => {
+  PatchPackageVersions(
+    args.version ?? process.env.NX_DOTNET_NEXT_VERSION,
+    args.project,
+    false,
+    true,
+  ).then(() => {
     console.log('Done');
     process.exit(0);
   });

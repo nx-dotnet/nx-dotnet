@@ -10,6 +10,10 @@ Generate a dotnet project under the application directory.
 
 - (string): The name assigned to the app
 
+### namespaceName
+
+- (string): The namespace for the project. If not provided, will be generated based on project name and directory.
+
 ### tags
 
 - (string): Add tags to the project (used for linting)
@@ -44,7 +48,7 @@ Generate a dotnet project under the application directory.
 
 - (string): Determines if the project should follow NX or dotnet path naming conventions
 
-### useNxPluginOpenAPI
+### useOpenApiGenerator
 
 - (boolean): If using a codegen project, use openapi-generator
 

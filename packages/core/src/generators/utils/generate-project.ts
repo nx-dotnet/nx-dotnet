@@ -7,6 +7,7 @@ import {
   names,
   normalizePath,
   ProjectType,
+  readNxJson,
   Tree,
 } from '@nx/devkit';
 
@@ -16,10 +17,10 @@ import { XmlDocument } from 'xmldoc';
 
 import {
   DotNetClient,
-  dotnetNewOptions,
+  DotnetNewOptions,
   KnownDotnetTemplates,
 } from '@nx-dotnet/dotnet';
-import { isDryRun, isNxCrystalEnabled, resolve } from '@nx-dotnet/utils';
+import { isNxCrystalEnabled, resolve } from '@nx-dotnet/utils';
 
 import {
   GetBuildExecutorConfiguration,
@@ -30,9 +31,11 @@ import {
 import generateSwaggerSetup from '../add-swagger-target/add-swagger-target';
 import { initGenerator } from '../init/generator';
 import { addToSolutionFile } from './add-to-sln';
-import { GenerateTestProject } from './generate-test-project';
+import GenerateTestProject from '../test/generator';
 import { promptForTemplate } from './prompt-for-template';
 import { getWorkspaceScope } from './get-scope';
+import { runDotnetNew } from './dotnet-new';
+import { tryReadJson } from './try-read-json';
 
 export interface NormalizedSchema
   extends Omit<NxDotnetProjectGeneratorSchema, 'template'> {
@@ -70,7 +73,8 @@ export async function normalizeOptions(
   );
   const parsedTags = getProjectTagsFromSchema(options);
   const template = await getTemplate(options, client);
-  const namespaceName = getNamespaceFromSchema(host, options, projectDirectory);
+  const namespaceName =
+    options.namespaceName ?? getNamespaceFromRoot(host, projectDirectory);
   const nxProjectName = names(options.name).fileName;
   const __unparsed__ = options.__unparsed__ ?? [];
   const args = options.args ?? [];
@@ -99,18 +103,34 @@ function getNameFromSchema(options: NxDotnetProjectGeneratorSchema): string {
     : options.name;
 }
 
-function getNamespaceFromSchema(
+/**
+ * Filter out common directory names that are not typically part of the namespace.
+ */
+export const FILTERED_PATH_PARTS = new Set([
+  'src',
+  'apps',
+  'libs',
+  'packages',
+  'projects',
+]);
+
+export function getNamespaceFromRoot(
   host: Tree,
-  options: NxDotnetProjectGeneratorSchema,
   projectDirectory: string,
 ): string {
-  const scope = getWorkspaceScope(host);
+  const scope = getWorkspaceScope(
+    readNxJson(host),
+    tryReadJson(host, 'package.json'),
+  );
 
   const namespaceParts = projectDirectory
     // not sure why eslint complains here, testing in devtools shows different results without the escape character.
     // eslint-disable-next-line no-useless-escape
     .split(/[\/\\]/gm) // Without the unnecessary parentheses, the separator is excluded from the result array.
-    .map((part: string) => names(part).className);
+    .filter((part) => !FILTERED_PATH_PARTS.has(part))
+    .flatMap((part) =>
+      part.split('.').map((subpart) => names(subpart).className),
+    );
 
   if (scope) {
     namespaceParts.unshift(names(scope).className);
@@ -135,9 +155,7 @@ async function getTemplate(
   return template;
 }
 
-function getProjectTagsFromSchema(
-  options: NxDotnetProjectGeneratorSchema,
-): string[] {
+export function getProjectTagsFromSchema(options: { tags?: string }): string[] {
   return options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 }
 
@@ -189,23 +207,23 @@ export async function GenerateProject(
     projectType,
   );
 
-  if (!isNxCrystalEnabled()) {
-    addProjectConfiguration(host, normalizedOptions.projectName, {
-      root: normalizedOptions.projectRoot,
-      projectType: projectType,
-      sourceRoot: `${normalizedOptions.projectRoot}`,
-      targets: {
-        build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
-        ...(projectType === 'application'
-          ? { serve: GetServeExecutorConfig() }
-          : {}),
-        lint: GetLintExecutorConfiguration(),
-      },
-      tags: normalizedOptions.parsedTags,
-    });
-  }
+  addProjectConfiguration(host, normalizedOptions.projectName, {
+    root: normalizedOptions.projectRoot,
+    projectType: projectType,
+    sourceRoot: `${normalizedOptions.projectRoot}`,
+    targets: isNxCrystalEnabled(host)
+      ? {}
+      : {
+          build: GetBuildExecutorConfiguration(normalizedOptions.projectRoot),
+          ...(projectType === 'application'
+            ? { serve: GetServeExecutorConfig() }
+            : {}),
+          lint: GetLintExecutorConfiguration(),
+        },
+    tags: normalizedOptions.parsedTags,
+  });
 
-  const newParams: dotnetNewOptions = {
+  const newParams: DotnetNewOptions = {
     language: normalizedOptions.language,
     name: normalizedOptions.namespaceName,
     output: normalizedOptions.projectRoot,
@@ -215,26 +233,36 @@ export async function GenerateProject(
     normalizedOptions.__unparsed__,
   );
 
-  if (isDryRun()) {
-    newParams['dryRun'] = true;
-  }
-
-  dotnetClient.new(
+  runDotnetNew(
+    host,
+    dotnetClient,
     normalizedOptions.projectTemplate,
     newParams,
     additionalArguments,
   );
-  if (!isDryRun()) {
-    addToSolutionFile(
-      host,
-      normalizedOptions.projectRoot,
-      dotnetClient,
-      normalizedOptions.solutionFile,
-    );
-  }
 
-  if (options['testTemplate'] !== 'none') {
-    await GenerateTestProject(host, normalizedOptions, dotnetClient);
+  addToSolutionFile(
+    host,
+    normalizedOptions.projectRoot,
+    dotnetClient,
+    normalizedOptions.solutionFile,
+  );
+
+  const testTemplate = normalizedOptions.testTemplate;
+  if (testTemplate !== 'none') {
+    await GenerateTestProject(
+      host,
+      {
+        language: normalizedOptions.language,
+        targetProject: normalizedOptions.projectName,
+        pathScheme: normalizedOptions.pathScheme,
+        tags: normalizedOptions.tags,
+        suffix: normalizedOptions.testProjectNameSuffix,
+        testTemplate,
+        solutionFile: normalizedOptions.solutionFile,
+      },
+      dotnetClient,
+    );
   }
 
   if (
@@ -245,16 +273,20 @@ export async function GenerateProject(
     tasks.push(
       await generateSwaggerSetup(host, {
         project: normalizedOptions.projectName,
+        projectRoot: normalizedOptions.projectRoot,
         swaggerProject: `${normalizedOptions.nxProjectName}-swagger`,
         codegenProject: `${normalizedOptions.nxProjectName}-types`,
-        useNxPluginOpenAPI: normalizedOptions.useNxPluginOpenAPI,
+        useOpenApiGenerator: normalizedOptions.useOpenApiGenerator,
+        skipFormat: normalizedOptions.skipFormat,
       }),
     );
   }
 
   createGitIgnore(host, normalizedOptions.projectRoot);
 
-  await formatFiles(host);
+  if (!normalizedOptions.skipFormat) {
+    await formatFiles(host);
+  }
 
   return async () => {
     for (const task of tasks) {

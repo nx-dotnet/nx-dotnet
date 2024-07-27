@@ -5,14 +5,14 @@
   "description": "Generate a .NET test project for an existing application or library",
   "type": "object",
   "properties": {
-    "name": {
+    "targetProject": {
       "type": "string",
       "description": "The existing project to generate tests for",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "alias": ["project"]
+      "alias": ["project", "name"]
     },
     "testTemplate": {
       "type": "string",
@@ -51,12 +51,15 @@
     },
     "suffix": {
       "type": "string",
-      "description": "What suffix should be used for the tests project name?",
-      "default": "test",
-      "x-prompt": {
-        "message": "What suffix should be used for the tests project name?",
-        "type": "string"
-      }
+      "description": "What suffix should be used for the tests project name?"
+    },
+    "testProjectName": {
+      "type": "string",
+      "description": "What name should be used for the tests project?"
+    },
+    "namespaceName": {
+      "type": "string",
+      "description": "The namespace for the project. If not provided, will be generated based on test project name / suffix."
     },
     "solutionFile": {
       "description": "Determines if the project should be added to a solution file.",
@@ -93,5 +96,8 @@
       }
     }
   },
-  "required": ["name", "testTemplate"]
+  "not": {
+    "required": ["suffix", "testProjectName"]
+  },
+  "required": ["targetProject", "testTemplate"]
 }

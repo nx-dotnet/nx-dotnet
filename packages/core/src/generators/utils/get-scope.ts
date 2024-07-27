@@ -1,13 +1,19 @@
-import { Tree, getWorkspaceLayout, readJson } from '@nx/devkit';
+import { NxJsonConfiguration } from '@nx/devkit';
+import type { PackageJson } from 'nx/src/utils/package-json';
 
-export function getWorkspaceScope(host: Tree) {
+export function getWorkspaceScope(
+  nxJson: NxJsonConfiguration | null,
+  rootPackageJson?: PackageJson,
+) {
+  const { workspaceLayout } = (nxJson ?? {}) as any;
+
   // Prior to Nx 17 npm scope was included here.
-  const { npmScope } = getWorkspaceLayout(host) as { npmScope?: string };
+  const { npmScope } = workspaceLayout ?? {};
   if (npmScope) {
     return npmScope;
   }
 
-  const fromPackageJson = getScopeFromPackageJson(host);
+  const fromPackageJson = getScopeFromPackageJson(rootPackageJson);
   if (fromPackageJson) {
     return fromPackageJson;
   }
@@ -18,12 +24,12 @@ export function getWorkspaceScope(host: Tree) {
 /**
  * Get the org scope from the package.json file
  */
-function getScopeFromPackageJson(host: Tree) {
+function getScopeFromPackageJson(packageJson?: PackageJson) {
   try {
-    const { name } = readJson<{ name: string }>(host, 'package.json');
+    const { name } = packageJson ?? {};
     const parts = name?.split('/');
 
-    if (!name || parts.length < 2) {
+    if (!name || !parts || parts.length < 2) {
       return null;
     }
 

@@ -1,0 +1,13 @@
+{
+  "targets": {
+    "local-registry": {
+      "executor": "@nx/js:verdaccio",
+      "options": {
+        "port": 4872,
+        "config": ".verdaccio/config.yml",
+        "storage": "build/local-registry/storage"
+      }
+    }
+  },
+  "name": "."
+}

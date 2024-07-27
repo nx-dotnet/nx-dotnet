@@ -8,20 +8,22 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
-    "@nx/devkit": "17.0.2",
-    "@nx-dotnet/dotnet": "2.2.0",
-    "@nx-dotnet/utils": "2.2.0",
+    "@nx-dotnet/dotnet": "*",
+    "@nx-dotnet/utils": "*",
+    "@nx/devkit": "19.5.3",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
+    "minimatch": "3.1.2",
     "semver": "7.5.4",
+    "tmp": "0.2.3",
     "tslib": "^2.5.0",
     "xmldoc": "^1.1.2",
-    "yargs-parser": "^21.0.0",
-    "minimatch": "3.1.2"
+    "yargs-parser": "^21.0.0"
   },
   "peerDependencies": {
+    "nx": ">=18.0.0 <20.0.0",
     "@nx/js": ">=16.0.0-beta.1",
-    "@trumbitta/nx-plugin-openapi": "^1.12.1",
+    "@openapitools/openapi-generator-cli": "2.13.4",
     "eslint": ">8.0.0",
     "prettier": ">=2.0.0"
   },
@@ -29,13 +31,13 @@
     "eslint": {
       "optional": true
     },
-    "@trumbitta/nx-plugin-openapi": {
-      "optional": true
-    },
     "@nx/js": {
       "optional": true
     },
     "prettier": {
+      "optional": true
+    },
+    "@openapitools/openapi-generator-cli": {
       "optional": true
     }
   },
@@ -70,5 +72,5 @@
       "@nx-dotnet/dotnet"
     ]
   },
-  "version": "2.2.0"
+  "version": "99.99.99"
 }
