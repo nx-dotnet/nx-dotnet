@@ -6,4 +6,5 @@ export interface BuildExecutorSchema {
   baseBranch: string;
   syncWithBaseBranch: boolean;
   syncStrategy: 'rebase' | 'merge';
+  CNAME: string;
 }
