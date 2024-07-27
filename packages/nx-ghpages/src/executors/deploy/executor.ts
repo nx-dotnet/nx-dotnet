@@ -30,6 +30,13 @@ export default async function deployExecutor(options: BuildExecutorSchema) {
     logger.info(`Creating CNAME file for ${options.CNAME} in ${directory}`);
     writeFileSync(join(directory, 'CNAME'), options.CNAME);
   }
+  const envToken = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;
+  if (envToken) {
+    options.remote = options.remote.replace(
+      'https://',
+      `https://github-actions:${envToken}@`,
+    );
+  }
 
   logger.info('Setting up git remote');
 
