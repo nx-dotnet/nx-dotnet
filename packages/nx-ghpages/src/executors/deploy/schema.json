@@ -29,9 +29,9 @@
       "default": "master"
     },
     "syncWithBaseBranch": {
-      "type": "string",
+      "type": "boolean",
       "description": "Indicate if the gh-pages branch should be synced with the base branch",
-      "default": "false"
+      "default": false
     },
     "syncStrategy": {
       "type": "string",
