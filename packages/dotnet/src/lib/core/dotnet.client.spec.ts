@@ -92,8 +92,7 @@ describe('dotnet client', () => {
           "publish",
           ""my-project"",
           "--no-restore",
-          "--configuration",
-          "Release",
+          "--configuration=Release",
         ]
       `);
     });
@@ -267,8 +266,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
               "format",
               "analyzers",
               "my-project",
-              "--severity",
-              "warn",
+              "--severity=warn",
             ],
           ],
         ]
@@ -359,8 +357,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
               "format",
               "style",
               "my-project",
-              "--severity",
-              "warn",
+              "--severity=warn",
             ],
           ],
           [
@@ -449,8 +446,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
             [
               "format",
               "my-project",
-              "--fix-whitespace",
-              "false",
+              "--fix-whitespace=false",
             ],
           ],
         ]
@@ -472,8 +468,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
             [
               "format",
               "my-project",
-              "--fix-style",
-              "false",
+              "--fix-style=false",
             ],
           ],
         ]
@@ -495,8 +490,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
             [
               "format",
               "my-project",
-              "--fix-analyzers",
-              "false",
+              "--fix-analyzers=false",
             ],
           ],
         ]
@@ -523,8 +517,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
           "my-project",
           "--no-restore",
           "--blame-hang",
-          "--blame-hang-dump",
-          "dump.file",
+          "--blame-hang-dump=dump.file",
         ]
       `);
     });
@@ -547,8 +540,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
           "build",
           "my-project",
           "--no-restore",
-          "--configuration",
-          "Release",
+          "--configuration=Release",
         ]
       `);
     });
@@ -572,8 +564,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
           "package",
           "other-package",
           "--no-restore",
-          "--version",
-          "1.2.3",
+          "--version=1.2.3",
         ]
       `);
     });
@@ -596,8 +587,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
           "new",
           "my-template",
           "--dry-run",
-          "--name",
-          "my-project",
+          "--name=my-project",
         ]
       `);
     });
@@ -621,8 +611,7 @@ ASP.NET Core gRPC Service                         grpc            [C#]          
           "--project",
           "my-project",
           "--no-restore",
-          "--configuration",
-          "Release",
+          "--property:Configuration=Release",
         ]
       `);
     });

@@ -39,7 +39,5 @@ const runDotnetRun = async (
 
   childProcess = dotnetClient.run(project, watch, commandLineOptions);
   await handleChildProcessPassthrough(childProcess);
-  await rimraf(projectDirectory + '/bin');
-  await rimraf(projectDirectory + '/obj');
   return { success: true };
 };
