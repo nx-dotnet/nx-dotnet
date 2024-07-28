@@ -8,8 +8,7 @@
         "nugetPackages": {
           "Swashbuckle.AspNetCore": "6.5.0"
         }
-      },
-      "include": ["demo/**/*"]
+      }
     }
   ],
   "generators": {
@@ -74,6 +73,11 @@
     "@nx/eslint:lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
       "cache": true
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
     }
   },
   "namedInputs": {
@@ -97,5 +101,24 @@
   "nxCloudAccessToken": "ZTMwZjcyY2ItZWRjYS00NzZjLTg3ZmQtYzdjM2Y3OGIzNDdhfHJlYWQtd3JpdGU=",
   "parallel": 3,
   "useInferencePlugins": false,
-  "defaultBase": "master"
+  "defaultBase": "master",
+  "release": {
+    "projects": ["packages/*"],
+    "projectsRelationship": "fixed",
+    "version": {
+      "preVersionCommand": "node ./node_modules/.bin/nx run-many -t build --exclude demo-*",
+      "conventionalCommits": true,
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": {
+        "createRelease": "github"
+      }
+    },
+    "git": {
+      "commitMessage": "chore(repo): release {version} [skip ci]"
+    }
+  }
 }

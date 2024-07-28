@@ -6,7 +6,6 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "e2e": "nx affected --parallel 1 -t e2e",
-    "semantic-release": "semantic-release",
     "ts-node": "ts-node",
     "rimraf": "rimraf",
     "preinstall": "node ./tools/scripts/hooks/preinstall.js",
@@ -15,7 +14,7 @@
     "documentation": "nx g @nx-dotnet/nxdoc:generate-docs",
     "publish-dev": "ts-node tools/scripts/publish-dev",
     "sandbox": "ts-node ./tools/scripts/sandbox.ts",
-    "local-registry": "ts-node ./tools/scripts/local-registry/setup.ts"
+    "local-registry": "nx local-registry"
   },
   "dependencies": {
     "@algolia/client-search": "^4.17.0",
@@ -65,11 +64,6 @@
     "@nx/webpack": "19.5.3",
     "@nx/workspace": "19.5.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^9.0.2",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/release-notes-generator": "^10.0.3",
     "@svgr/webpack": "^6.1.2",
     "@testing-library/react": "15.0.6",
     "@testing-library/react-hooks": "7.0.2",
@@ -114,7 +108,6 @@
     "prettier-2": "npm:prettier@^2",
     "react-refresh": "^0.10.0",
     "run-p": "*",
-    "semantic-release": "^19.0.5",
     "strip-ansi": "^6.0.1",
     "style-loader": "^3.3.0",
     "stylus": "0.59.0",

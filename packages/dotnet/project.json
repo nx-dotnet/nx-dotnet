@@ -16,14 +16,6 @@
       }
     },
     "build": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "npx ts-node tools/scripts/patch-package-versions --project dotnet"
-        ]
-      }
-    },
-    "prebuild": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {

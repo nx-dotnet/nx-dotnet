@@ -1,58 +1,68 @@
 name: Release
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      docs_only:
+        description: 'If true, only deploy the docs site'
+        type: choice
+        required: true
+        default: 'false'
+        options:
+          - true
+          - false
+  workflow_call:
+    inputs:
+      docs_only:
+        description: 'If true, only deploy the docs site'
+        type: string
+        required: true
+        default: 'false'
 
 jobs:
-  e2e:
+  deploy:
     runs-on: ubuntu-latest
-    name: E2E testing affected apps
-    steps:
-      - uses: actions/checkout@v4
-      - uses: bahmutov/npm-install@v1
-      - name: Download a single artifact
-        continue-on-error: true
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
-      - run: yarn e2e
-      - run: git reset --hard
-
-  semantic-release:
-    runs-on: ubuntu-latest
-    name: Publish packages via semantic release
-    needs: [e2e]
-    if: ${{github.event_name == 'workflow_dispatch'}}
     permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          registry-url: 'https://registry.npmjs.org'
-          always-auth: true,
-          node-version: 20
-      - uses: bahmutov/npm-install@v1
-      - name: Git Config
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-      - name: Setup NPM Auth
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-          npm whoami
-      - name: Release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: 'true'
-          VERBOSE_LOGGING: 'true'
+      contents: write
+      id-token: write
+      pages: write
 
-  post-release-smoke-tests:
-    uses: nx-dotnet/nx-dotnet/.github/workflows/smoke.yml@master
-    name: Run smoke tests post-release
-    needs: [semantic-release]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          repository: nx-dotnet/nx-dotnet
+          fetch-depth: 0
+
+      - name: Setup Git User
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and release
+        run: |
+          node ./node_modules/.bin/nx release --yes
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.ref == 'refs/heads/main' && github.event.inputs.docs_only == 'false'
+
+      - name: Deploy
+        run: |
+          npx nx deploy docs-site
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.ref == 'refs/heads/main'
