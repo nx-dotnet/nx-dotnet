@@ -4,22 +4,19 @@ import {
   normalizePath as nxNormalizePath,
   NX_VERSION,
   ProjectConfiguration,
-  ProjectsConfigurations,
-  RawProjectGraphDependency,
   Tree,
-  workspaceRoot,
   readNxJson,
   readJsonFile,
   NxJsonConfiguration,
+  ProjectGraph,
+  reverse,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { dirname, relative, resolve } from 'path';
 import { lt } from 'semver';
-import { XmlDocument, XmlElement } from 'xmldoc';
+import { XmlDocument } from 'xmldoc';
 
 import { findProjectFileInPath, findProjectFileInPathSync, glob } from './glob';
-import { getAbsolutePath } from './path';
 
 export async function getProjectFileForNxProject(
   project: ProjectConfiguration,
@@ -34,111 +31,24 @@ export function getProjectFileForNxProjectSync(project: ProjectConfiguration) {
   return findProjectFileInPathSync(srcDirectory);
 }
 
-export function getDependantProjectsForNxProject(
+export function forEachDependantProject(
   targetProject: string,
-  projectsConfiguration: ProjectsConfigurations,
+  graph: ProjectGraph,
   forEachCallback?: (
     project: ProjectConfiguration,
     projectName: string,
     implicit: boolean,
   ) => void,
-): {
-  [projectName: string]: ProjectConfiguration;
-} {
-  const projectRoots: { [key: string]: string } = {};
-  const dependantProjects: { [key: string]: ProjectConfiguration } = {};
-
-  Object.entries(projectsConfiguration.projects).forEach(([name, project]) => {
-    projectRoots[project.root] = name;
-  });
-
-  const absoluteNetProjectFilePath = resolve(
-    workspaceRoot,
-    getProjectFileForNxProjectSync(
-      projectsConfiguration.projects[targetProject],
-    ),
-  );
-
-  const dependencies = getDependenciesFromXmlFile(
-    absoluteNetProjectFilePath,
-    targetProject,
-    projectRoots,
-  );
-
-  for (const dependency of dependencies) {
-    const project = projectsConfiguration.projects[dependency.target];
-    if (!project) {
-      throw new Error(
-        `Unable to find project ${dependency.target} in workspace`,
-      );
-    }
+) {
+  for (const dependant of graph.dependencies[targetProject] ?? []) {
     if (forEachCallback) {
       forEachCallback(
-        project,
-        dependency.target,
-        dependency.type === DependencyType.implicit,
+        graph.nodes[dependant.target].data,
+        dependant.target,
+        dependant.type === DependencyType.implicit,
       );
     }
-    dependantProjects[dependency.target] = project;
   }
-
-  return dependantProjects;
-}
-
-export function getDependenciesFromXmlFile(
-  filePath: string,
-  source: string,
-  projectRootMap: Record<string, string>,
-): RawProjectGraphDependency[] {
-  const found: RawProjectGraphDependency[] = [];
-
-  const absoluteNetProjectFilePath = getAbsolutePath(filePath, workspaceRoot);
-  const netProjectFilePath = normalizePath(
-    relative(workspaceRoot, absoluteNetProjectFilePath),
-  );
-  const hostProjectDirectory = normalizePath(
-    dirname(absoluteNetProjectFilePath),
-  );
-
-  const xml: XmlDocument | null = tryGetXmlDocument(absoluteNetProjectFilePath);
-
-  if (!xml) {
-    return found;
-  }
-
-  xml.childrenNamed('ItemGroup').forEach((itemGroup) =>
-    itemGroup.childrenNamed('ProjectReference').forEach((x: XmlElement) => {
-      const includeFilePath = normalizePath(x.attr['Include']);
-      const implicit = x.attr['ReferenceOutputAssembly'] === 'false';
-      const absoluteIncludedPath = getAbsolutePath(
-        includeFilePath,
-        hostProjectDirectory,
-      );
-      const workspaceFilePath = normalizePath(
-        relative(workspaceRoot, absoluteIncludedPath),
-      );
-
-      let potentialTargetRoot = dirname(workspaceFilePath);
-      while (
-        potentialTargetRoot !== workspaceRoot &&
-        potentialTargetRoot !== '.'
-      ) {
-        if (projectRootMap[potentialTargetRoot]) {
-          found.push({
-            source,
-            target: projectRootMap[potentialTargetRoot],
-            type: implicit ? DependencyType.implicit : DependencyType.static,
-            sourceFile: netProjectFilePath,
-          });
-          break;
-        }
-
-        potentialTargetRoot = dirname(potentialTargetRoot);
-      }
-    }),
-  );
-
-  return found;
 }
 
 export async function getNxDotnetProjects(

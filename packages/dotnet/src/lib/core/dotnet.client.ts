@@ -311,6 +311,23 @@ export class DotNetClient {
     this.logAndExecute(params);
   }
 
+  getProjectReferences(projectFile: string): string[] {
+    const output = this.spawnAndGetOutput(['list', projectFile, 'reference']);
+    // Output looks like:
+    // ```
+    // HEADER
+    // -------------------
+    // A
+    // B
+    // C
+    // ```
+    return output
+      .split('\n')
+      .slice(2)
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+
   getSdkVersion(): string {
     return this.cliCommand.info.version.toString();
   }

@@ -1,8 +1,7 @@
 import {
   createProjectGraphAsync,
-  ProjectConfiguration,
-  ProjectsConfigurations,
-  readProjectsConfigurationFromProjectGraph,
+  ProjectGraph,
+  ProjectGraphProjectNode,
   Tree,
   workspaceRoot,
 } from '@nx/devkit';
@@ -10,7 +9,7 @@ import {
 import { relative } from 'path';
 
 import {
-  getDependantProjectsForNxProject,
+  forEachDependantProject,
   ModuleBoundaries,
   ModuleBoundary,
   readConfig,
@@ -18,10 +17,10 @@ import {
 
 export async function checkModuleBoundariesForProject(
   project: string,
-  projects: Record<string, ProjectConfiguration>,
+  graph: ProjectGraph,
 ): Promise<string[]> {
-  const projectRoot = projects[project].root;
-  const tags = projects[project].tags ?? [];
+  const projectRoot = graph.nodes[project].data.root;
+  const tags = graph.nodes[project].data.tags ?? [];
   if (!tags.length) {
     return [];
   }
@@ -31,23 +30,19 @@ export async function checkModuleBoundariesForProject(
   }
 
   const violations: string[] = [];
-  getDependantProjectsForNxProject(
-    project,
-    { version: 2, projects },
-    (configuration, name, implicit) => {
-      if (implicit) return;
-      const dependencyTags = configuration?.tags ?? [];
-      for (const constraint of constraints) {
-        if (hasConstraintViolation(constraint, dependencyTags)) {
-          violations.push(
-            `${project} cannot depend on ${name}. Project tag ${JSON.stringify(
-              constraint,
-            )} is not satisfied.`,
-          );
-        }
+  forEachDependantProject(project, graph, (configuration, name, implicit) => {
+    if (implicit) return;
+    const dependencyTags = configuration?.tags ?? [];
+    for (const constraint of constraints) {
+      if (hasConstraintViolation(constraint, dependencyTags)) {
+        violations.push(
+          `${project} cannot depend on ${name}. Project tag ${JSON.stringify(
+            constraint,
+          )} is not satisfied.`,
+        );
       }
-    },
-  );
+    }
+  });
   return violations;
 }
 
@@ -101,7 +96,7 @@ export async function loadModuleBoundaries(
         result.rules['@nrwl/nx/enforce-module-boundaries'] ||
         [];
       return moduleBoundaryConfig?.depConstraints ?? [];
-    } catch {
+    } catch (e) {
       return [];
     }
   } else {
@@ -109,18 +104,18 @@ export async function loadModuleBoundaries(
   }
 }
 
-function findProjectGivenRoot(
-  root: string,
-  projects: ProjectsConfigurations['projects'],
-): string {
+function findProjectGivenRoot(root: string, graph: ProjectGraph): string {
   // Note that this returns the first matching project and would succeed for multiple (cs|fs...)proj under an nx project path,
   // but getProjectFileForNxProject explicitly throws if it's not exactly one.
   const normalizedRoot = root.replace(/^["'](.+(?=["']$))["']$/, '$1');
-  const [projectName] =
-    Object.entries(projects).find(([, projectConfig]) => {
-      const relativePath = relative(projectConfig.root, normalizedRoot);
+  const projectNode = Object.values(graph.nodes).find(
+    (projectConfig: ProjectGraphProjectNode) => {
+      const relativePath = relative(projectConfig.data.root, normalizedRoot);
       return relativePath?.startsWith('..') === false;
-    }) ?? [];
+    },
+  );
+
+  const projectName = projectNode?.name;
 
   if (projectName) {
     return projectName;
@@ -176,15 +171,13 @@ async function main() {
     string: ['project', 'projectRoot'],
   }) as { project?: string; projectRoot?: string };
   const graph = await createProjectGraphAsync();
-  const { projects }: ProjectsConfigurations =
-    readProjectsConfigurationFromProjectGraph(graph);
 
   // Find the associated nx project for the msbuild project directory.
   const nxProject: string =
-    project ?? findProjectGivenRoot(projectRoot as string, projects);
+    project ?? findProjectGivenRoot(projectRoot as string, graph);
 
   console.log(`Checking module boundaries for ${nxProject}`);
-  const violations = await checkModuleBoundariesForProject(nxProject, projects);
+  const violations = await checkModuleBoundariesForProject(nxProject, graph);
   if (violations.length) {
     violations.forEach((error) => {
       console.error(error);
