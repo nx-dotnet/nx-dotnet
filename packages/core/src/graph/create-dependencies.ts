@@ -1,18 +1,18 @@
 import {
   CreateDependencies,
   CreateDependenciesContext,
+  DependencyType,
   NxPluginV1,
+  ProjectConfiguration,
   ProjectGraphBuilder,
   RawProjectGraphDependency,
+  normalizePath,
   workspaceRoot,
 } from '@nx/devkit';
-import { parse } from 'node:path';
+import { dirname, parse, relative, resolve } from 'node:path';
 
-import {
-  getDependenciesFromXmlFile,
-  NxDotnetConfig,
-  readConfig,
-} from '@nx-dotnet/utils';
+import { NxDotnetConfig, readConfig } from '@nx-dotnet/utils';
+import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 // Between Nx versions 16.8 and 17, the signature of `CreateDependencies` changed.
 // It used to only consist of the context, but now it also includes the options.
@@ -29,6 +29,8 @@ type CreateDependenciesCompat<T> = {
   ): ReturnType<CreateDependencies<T>>;
 };
 
+const dotnetClient = new DotNetClient(dotnetFactory());
+
 export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
   ctxOrOpts: CreateDependenciesContext | NxDotnetConfig | undefined,
   maybeCtx: CreateDependenciesContext | undefined,
@@ -39,17 +41,35 @@ export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
     maybeCtx ?? (ctxOrOpts as CreateDependenciesContext);
 
   let dependencies: RawProjectGraphDependency[] = [];
-  const rootMap = Object.fromEntries(
-    Object.entries(ctx.projects).map(([name, project]) => [project.root, name]),
-  );
+  const rootMap = createProjectRootMappings(ctx.projects);
   for (const source in ctx.filesToProcess.projectFileMap) {
     const changed = ctx.filesToProcess.projectFileMap[source];
     for (const file of changed) {
       const { ext } = parse(file.file);
       if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
-        dependencies = dependencies.concat(
-          getDependenciesFromXmlFile(file.file, source, rootMap),
-        );
+        const references = dotnetClient.getProjectReferences(file.file);
+        const newDeps: RawProjectGraphDependency[] = [];
+        for (const reference of references) {
+          const project = resolveReferenceToProject(
+            normalizePath(reference),
+            file.file,
+            rootMap,
+            ctx,
+          );
+          if (project) {
+            newDeps.push({
+              source,
+              target: project,
+              type: DependencyType.static,
+              sourceFile: file.file,
+            });
+          } else {
+            console.warn(
+              `Unable to resolve project for reference ${reference} in ${file.file}`,
+            );
+          }
+        }
+        dependencies = dependencies.concat(newDeps);
       }
     }
   }
@@ -78,3 +98,48 @@ export const processProjectGraph: Required<NxPluginV1>['processProjectGraph'] =
     }
     return builder.getUpdatedProjectGraph();
   };
+
+function createProjectRootMappings(
+  projects: Record<string, ProjectConfiguration>,
+) {
+  const rootMap: Record<string, string> = {};
+  for (const [, project] of Object.entries(projects)) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    rootMap[project.root!] = project.name!;
+  }
+  return rootMap;
+}
+
+function findProjectForPath(
+  filePath: string,
+  rootMap: Record<string, string>,
+): string | undefined {
+  /**
+   * Project Mappings are in UNIX-style file paths
+   * Windows may pass Win-style file paths
+   * Ensure filePath is in UNIX-style
+   */
+  let currentPath = normalizePath(filePath);
+  for (
+    ;
+    currentPath !== dirname(currentPath);
+    currentPath = dirname(currentPath)
+  ) {
+    const p = rootMap[currentPath];
+    if (p) {
+      return p;
+    }
+  }
+  return rootMap[currentPath];
+}
+
+export function resolveReferenceToProject(
+  reference: string,
+  source: string,
+  rootMap: Record<string, string>,
+  context: { workspaceRoot: string },
+) {
+  const resolved = resolve(context.workspaceRoot, dirname(source), reference);
+  console.log({ reference, source, resolved });
+  return findProjectForPath(relative(context.workspaceRoot, resolved), rootMap);
+}

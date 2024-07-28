@@ -131,11 +131,19 @@ describe('enforce-module-boundaries', () => {
   it('should exit early if no tags on project', async () => {
     const spy = jest.spyOn(checkModule, 'loadModuleBoundaries');
     const results = await checkModuleBoundariesForProject('a', {
-      a: {
-        tags: [],
-        targets: {},
-        root: '',
+      nodes: {
+        a: {
+          type: 'app',
+          name: 'a',
+          data: {
+            tags: [],
+            targets: {},
+            root: '',
+          },
+        },
       },
+      externalNodes: {},
+      dependencies: {},
     });
     expect(spy).not.toHaveBeenCalled();
     expect(results).toHaveLength(0);
@@ -151,15 +159,35 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('a', {
-      a: {
-        tags: ['a'],
-        targets: { ui: {} },
-        root: 'libs/a',
+      externalNodes: {},
+      dependencies: {
+        a: [
+          {
+            source: 'a',
+            target: 'ui',
+            type: 'static',
+          },
+        ],
       },
-      ui: {
-        tags: ['ui'],
-        targets: {},
-        root: 'libs/ui',
+      nodes: {
+        a: {
+          type: 'app',
+          name: 'a',
+          data: {
+            tags: ['a'],
+            targets: { ui: {} },
+            root: 'libs/a',
+          },
+        },
+        ui: {
+          type: 'lib',
+          name: 'ui',
+          data: {
+            tags: ['ui'],
+            targets: {},
+            root: 'libs/ui',
+          },
+        },
       },
     });
     expect(results).toHaveLength(1);
@@ -175,15 +203,35 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('b', {
-      a: {
-        tags: ['a'],
-        targets: {},
-        root: 'libs/a',
+      externalNodes: {},
+      dependencies: {
+        b: [
+          {
+            source: 'b',
+            target: 'a',
+            type: 'static',
+          },
+        ],
       },
-      b: {
-        tags: ['b'],
-        targets: { a: {} },
-        root: 'libs/b',
+      nodes: {
+        a: {
+          type: 'lib',
+          name: 'a',
+          data: {
+            tags: ['a'],
+            targets: {},
+            root: 'libs/a',
+          },
+        },
+        b: {
+          type: 'lib',
+          name: 'b',
+          data: {
+            tags: ['b'],
+            targets: { a: {} },
+            root: 'libs/b',
+          },
+        },
       },
     });
     expect(results).toHaveLength(1);
@@ -199,15 +247,27 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('a', {
-      a: {
-        tags: ['a'],
-        targets: { shared: {} },
-        root: 'libs/a',
-      },
-      shared: {
-        tags: ['shared'],
-        targets: {},
-        root: 'libs/shared',
+      externalNodes: {},
+      dependencies: {},
+      nodes: {
+        a: {
+          type: 'app',
+          name: 'a',
+          data: {
+            tags: ['a'],
+            targets: { shared: {} },
+            root: 'libs/a',
+          },
+        },
+        shared: {
+          type: 'lib',
+          name: 'shared',
+          data: {
+            tags: ['shared'],
+            targets: {},
+            root: 'libs/shared',
+          },
+        },
       },
     });
     expect(results).toHaveLength(0);
@@ -223,39 +283,75 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('x', {
-      x: {
-        tags: ['x', 'not-z'],
-        targets: { z: {} },
-        root: 'libs/x',
+      externalNodes: {},
+      dependencies: {
+        x: [
+          {
+            source: 'x',
+            target: 'z',
+            type: 'static',
+          },
+        ],
       },
-      z: {
-        tags: ['z'],
-        targets: {},
-        root: 'libs/z',
+      nodes: {
+        x: {
+          type: 'lib',
+          name: 'x',
+          data: {
+            tags: ['x', 'not-z'],
+            targets: { z: {} },
+            root: 'libs/x',
+          },
+        },
+        z: {
+          type: 'lib',
+          name: 'z',
+          data: {
+            tags: ['z'],
+            targets: {},
+            root: 'libs/z',
+          },
+        },
       },
     });
     expect(results).toHaveLength(1);
   });
 
   it('should find violations with allSourceTags/onlyDependOnLibsWithTags', async () => {
-    const globResults = ['libs/x/x.csproj'];
-    jest.spyOn(fastGlob, 'sync').mockImplementation(() => globResults);
-
     vol.fromJSON({
       'libs/x/x.csproj':
-        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\a\\a.csproj" /></ItemGroup></Project>',
+        '<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="..\\..\\libs\\z\\z.csproj" /></ItemGroup></Project>',
     });
-
     const results = await checkModuleBoundariesForProject('x', {
-      x: {
-        tags: ['x', 'only-z'],
-        targets: { a: {} },
-        root: 'libs/x',
+      externalNodes: {},
+      dependencies: {
+        x: [
+          {
+            source: 'x',
+            target: 'a',
+            type: 'static',
+          },
+        ],
       },
-      a: {
-        tags: ['a'],
-        targets: {},
-        root: 'libs/a',
+      nodes: {
+        x: {
+          type: 'lib',
+          name: 'x',
+          data: {
+            tags: ['x', 'only-z'],
+            targets: { a: {} },
+            root: 'libs/x',
+          },
+        },
+        a: {
+          type: 'lib',
+          name: 'a',
+          data: {
+            tags: ['a'],
+            targets: {},
+            root: 'libs/a',
+          },
+        },
       },
     });
     expect(results).toHaveLength(1);
@@ -271,15 +367,35 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('x', {
-      x: {
-        tags: ['x', 'only-z'],
-        targets: { z: {} },
-        root: 'libs/x',
+      externalNodes: {},
+      dependencies: {
+        x: [
+          {
+            source: 'x',
+            target: 'z',
+            type: 'static',
+          },
+        ],
       },
-      z: {
-        tags: ['z'],
-        targets: {},
-        root: 'libs/z',
+      nodes: {
+        x: {
+          type: 'lib',
+          name: 'x',
+          data: {
+            tags: ['x', 'only-z'],
+            targets: { z: {} },
+            root: 'libs/x',
+          },
+        },
+        z: {
+          type: 'lib',
+          name: 'z',
+          data: {
+            tags: ['z'],
+            targets: {},
+            root: 'libs/z',
+          },
+        },
       },
     });
     expect(results).toHaveLength(0);
@@ -295,15 +411,35 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('x', {
-      x: {
-        tags: ['no-deps'],
-        targets: { a: {} },
-        root: 'libs/x',
+      externalNodes: {},
+      dependencies: {
+        x: [
+          {
+            source: 'x',
+            target: 'a',
+            type: 'static',
+          },
+        ],
       },
-      a: {
-        tags: ['a'],
-        targets: {},
-        root: 'libs/a',
+      nodes: {
+        x: {
+          type: 'lib',
+          name: 'x',
+          data: {
+            tags: ['no-deps'],
+            targets: { a: {} },
+            root: 'libs/x',
+          },
+        },
+        a: {
+          type: 'lib',
+          name: 'a',
+          data: {
+            tags: ['a'],
+            targets: {},
+            root: 'libs/a',
+          },
+        },
       },
     });
     expect(results).toHaveLength(1);
@@ -319,15 +455,35 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('x', {
-      x: {
-        tags: ['--foo--'],
-        targets: { a: {} },
-        root: 'libs/x',
+      externalNodes: {},
+      dependencies: {
+        x: [
+          {
+            source: 'x',
+            target: 'a',
+            type: 'static',
+          },
+        ],
       },
-      a: {
-        tags: ['biz'],
-        targets: {},
-        root: 'libs/a',
+      nodes: {
+        x: {
+          type: 'lib',
+          name: 'x',
+          data: {
+            tags: ['--foo--'],
+            targets: { a: {} },
+            root: 'libs/x',
+          },
+        },
+        a: {
+          type: 'lib',
+          name: 'a',
+          data: {
+            tags: ['biz'],
+            targets: {},
+            root: 'libs/a',
+          },
+        },
       },
     });
     expect(results).toHaveLength(2);
@@ -343,15 +499,35 @@ describe('enforce-module-boundaries', () => {
     });
 
     const results = await checkModuleBoundariesForProject('x', {
-      x: {
-        tags: ['==foo=='],
-        targets: { a: {} },
-        root: 'libs/x',
+      externalNodes: {},
+      dependencies: {
+        x: [
+          {
+            source: 'x',
+            target: 'a',
+            type: 'static',
+          },
+        ],
       },
-      a: {
-        tags: ['biz'],
-        targets: {},
-        root: 'libs/a',
+      nodes: {
+        x: {
+          type: 'lib',
+          name: 'x',
+          data: {
+            tags: ['==foo=='],
+            targets: { a: {} },
+            root: 'libs/x',
+          },
+        },
+        a: {
+          type: 'lib',
+          name: 'a',
+          data: {
+            tags: ['biz'],
+            targets: {},
+            root: 'libs/a',
+          },
+        },
       },
     });
     expect(results).toHaveLength(2);

@@ -8,6 +8,5 @@
         "storage": "dist/local-registry/storage"
       }
     }
-  },
-  "name": "."
+  }
 }
