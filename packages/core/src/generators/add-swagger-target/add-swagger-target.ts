@@ -114,7 +114,10 @@ async function generateShellProject(
     };
 
     const { tasks: codegenTasks, name: codegenProjectName } =
-      await generateCodegenProject(host, options);
+      await generateCodegenProject(
+        host,
+        options as NormalizedOptions & { codegenProject: string },
+      );
 
     tasks.push(...codegenTasks);
 
@@ -155,21 +158,30 @@ async function generateShellProject(
 
 async function generateCodegenProject(
   host: Tree,
-  options: AddSwaggerJsonExecutorSchema,
+  options: AddSwaggerJsonExecutorSchema & {
+    codegenProject: string;
+  },
 ): Promise<{ name: string; tasks: GeneratorCallback[] }> {
   const tasks: GeneratorCallback[] = [];
   const nameWithDirectory = `generated-${options.codegenProject}`;
+
+  const nxJson = readNxJson(host);
 
   const {
     libraryGenerator,
   }: // eslint-disable-next-line @typescript-eslint/no-var-requires
   typeof import('@nx/js') = require('@nx/js');
+  const libraryGeneratorDefaults = {
+    ...nxJson?.generators?.['@nx/js:library'],
+    ...nxJson?.generators?.['@nx/js']?.library,
+  };
   tasks.push(
     await libraryGenerator(host, {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      name: options.codegenProject!,
+      ...libraryGeneratorDefaults,
+      name: options.codegenProject,
       directory: 'generated',
-      buildable: true,
+      unitTestRunner: 'none',
     }),
   );
   await updateProjectConfiguration(

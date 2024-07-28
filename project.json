@@ -5,7 +5,7 @@
       "options": {
         "port": 4872,
         "config": ".verdaccio/config.yml",
-        "storage": "build/local-registry/storage"
+        "storage": "dist/local-registry/storage"
       }
     }
   },
