@@ -15,11 +15,9 @@ describe('convertOptionsToParams', () => {
     });
     expect(result).toMatchInlineSnapshot(`
       [
-        "--fixWhitespace",
-        "false",
+        "--fixWhitespace=false",
         "--fixStyle",
-        "--fixAnalyzers",
-        "false",
+        "--fixAnalyzers=false",
         "--noDependencies",
       ]
     `);

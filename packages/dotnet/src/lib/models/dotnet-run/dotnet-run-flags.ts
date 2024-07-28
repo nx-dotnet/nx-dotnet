@@ -20,6 +20,7 @@ export const runCommandLineParamFixes: CommandLineParamFixes<dotnetRunFlags> = {
     noRestore: 'no-restore',
     versionSuffix: 'version-suffix',
     noIncremental: 'no-incremental',
+    configuration: 'property:Configuration',
   },
   explicitFalseKeys: [],
 };

@@ -34,7 +34,7 @@ export function getSpawnParameterArray(
         spawnArray.push(`--${key}`);
       }
     } else if (value !== undefined && value !== null) {
-      spawnArray.push(`--${key}`, value.toString());
+      spawnArray.push(`--${key}=${value.toString()}`);
     }
   }
   return spawnArray;
