@@ -7,7 +7,6 @@ import {
 } from '@nx/devkit';
 import {
   checkFilesExist,
-  ensureNxProject,
   listFiles,
   readFile,
   runCommand,
@@ -20,7 +19,7 @@ import {
 import { exec, execSync } from 'child_process';
 import { unlinkSync, writeFileSync } from 'fs';
 import { ensureDirSync } from 'fs-extra';
-import { join } from 'path';
+import { basename, dirname, join } from 'path';
 import { XmlDocument } from 'xmldoc';
 import * as logger from 'console';
 import stripAnsi = require('strip-ansi');
@@ -551,8 +550,16 @@ function runNxCommandAsync(
 
 function setupWorkspace() {
   logger.log('Creating a sandbox project in ', e2eDir);
-  ensureNxProject('@nx-dotnet/core', 'dist/packages/core');
-  runCommand(`${getPackageManagerCommand().add} @nx-dotnet/core@local`, {
+  const workspaceName = basename(e2eDir);
+  const workspaceParentDir = dirname(e2eDir);
+  ensureDirSync(workspaceParentDir);
+  runCommand(
+    `npx create-nx-workspace@latest ${workspaceName} --preset=apps --nxCloud=skip --no-interactive`,
+    {
+      cwd: workspaceParentDir,
+    },
+  );
+  runCommand(`${getPackageManagerCommand().add} @nx-dotnet/core@e2e`, {
     cwd: e2eDir,
   });
   logger.log('✅');
