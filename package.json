@@ -134,7 +134,7 @@
     "type": "git",
     "url": "https://github.com/nx-dotnet/nx-dotnet.git"
   },
-  "version": "2.3.0",
+  "version": "2.3.1",
   "nx": {
     "includedScripts": []
   },

@@ -1,3 +1,12 @@
+## [2.3.1](https://github.com/nx-dotnet/nx-dotnet/compare/v2.3.0...v2.3.1) (2024-07-28)
+
+
+### Bug Fixes
+
+* **core:** read dependencies via dotnet list reference ([071f557](https://github.com/nx-dotnet/nx-dotnet/commit/071f5576107952ecafbad5c0e50f01e00664ed38))
+* **core:** read js lib defaults when generating js lib ([c8bac90](https://github.com/nx-dotnet/nx-dotnet/commit/c8bac900f83204028b1e2e1ebd00108937074674))
+* **core:** version suffix is a string ([80bcb04](https://github.com/nx-dotnet/nx-dotnet/commit/80bcb04c342a9467be1de003115b53307fcfab73))
+
 # [2.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.2.0...v2.3.0) (2024-07-27)
 
 
