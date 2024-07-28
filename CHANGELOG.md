@@ -1,3 +1,15 @@
+## 2.3.2 (2024-07-28)
+
+
+### 🩹 Fixes
+
+- **dotnet:** serve should work with dotnet 8 ([#873](https://github.com/nx-dotnet/nx-dotnet/pull/873))
+- **repo:** use yarn in release workflow ([ebfae21](https://github.com/nx-dotnet/nx-dotnet/commit/ebfae21))
+
+### ❤️  Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## [2.3.1](https://github.com/nx-dotnet/nx-dotnet/compare/v2.3.0...v2.3.1) (2024-07-28)
 
 
