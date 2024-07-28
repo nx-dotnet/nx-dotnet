@@ -10,7 +10,7 @@
       "description": "Compiles for a specific framework. The framework must be defined in the project file"
     },
     "version-suffix": {
-      "type": "number",
+      "type": "string",
       "description": "Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn't set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash."
     },
     "configuration": {

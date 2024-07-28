@@ -12,7 +12,7 @@ Builds an app via the `dotnet` cli command.
 
 ### version-suffix
 
-- (number): Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn&#39;t set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash.
+- (string): Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn&#39;t set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash.
 
 ### <span className="required">configuration</span>
 
