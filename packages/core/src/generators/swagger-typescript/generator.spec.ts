@@ -134,9 +134,9 @@ const MOCK_SWAGGER_JSON = JSON.stringify(
 describe('swagger-typescript generator', () => {
   let tree: Tree;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    libraryGenerator(tree, { name: 'generated-ts' });
+    await libraryGenerator(tree, { name: 'generated-ts' });
     tree.write('swagger.json', MOCK_SWAGGER_JSON);
   });
 

@@ -6,13 +6,13 @@ Deploy a page to a specified repository&#39;s gh-pages branch.
 
 ## Options
 
-### <span className="required">remote</span>
+### remote
 
-- (string): URL for the git remote to deploy to.
+- (string): URL for the git remote to deploy to. If not specified, the remote will be determined based off of **this** repository&#39;s origin remote.
 
-### <span className="required">directory</span>
+### directory
 
-- (string): Directory to push to gh-pages
+- (string): Directory to push to gh-pages. If not specified, the output directory will be determined based off of this project&#39;s build target&#39;s output path.
 
 ### remoteName
 
