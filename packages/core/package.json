@@ -72,5 +72,5 @@
       "@nx-dotnet/dotnet"
     ]
   },
-  "version": "99.99.99"
+  "version": "*"
 }

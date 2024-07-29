@@ -24,7 +24,7 @@
     },
     "deploy": {
       "dependsOn": ["build"],
-      "executor": "@nx-dotnet/nx-ghpages:deploy"
+      "executor": "nx-github-pages:deploy"
     }
   },
   "tags": [],
