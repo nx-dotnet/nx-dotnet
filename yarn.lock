@@ -6684,7 +6684,7 @@ enhanced-resolve@^5.0.0, enhanced-resolve@^5.17.0, enhanced-resolve@^5.7.0:
     graceful-fs "^4.2.4"
     tapable "^2.2.0"
 
-enquirer@^2.3.6:
+enquirer@^2.3.6, enquirer@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/enquirer/-/enquirer-2.4.1.tgz#93334b3fbd74fc7097b224ab4a8fb7e40bf4ae56"
   integrity sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==
@@ -10859,6 +10859,15 @@ nwsapi@^2.2.2:
   version "2.2.12"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.12.tgz#fb6af5c0ec35b27b4581eb3bbad34ec9e5c696f8"
   integrity sha512-qXDmcVlZV4XRtKFzddidpfVP4oMSGhga+xdMc25mv8kaLUHtgzCDhUxkrN8exkGdTlLNaXj7CV3GtON7zuGZ+w==
+
+nx-github-pages@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nx-github-pages/-/nx-github-pages-1.0.0.tgz#cfb65172fe5f3e0360bfb7d4c171ad814d07521b"
+  integrity sha512-eJs4sN5zgcV7icWITuW9+mFF0YJ0d694jD/nA6RYfb1VV26MSMj/lLjzczC8wN4dE0AcnvzPkB7hRqE+BuuXRQ==
+  dependencies:
+    "@nx/devkit" "19.5.3"
+    enquirer "^2.4.1"
+    tslib "^2.3.0"
 
 nx@19.5.3:
   version "19.5.3"

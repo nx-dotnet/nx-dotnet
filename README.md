@@ -14,6 +14,9 @@
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=security_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=bugs)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=code_smells)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=ncloc)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet)
 
+> [!NOTE]  
+> Looking for @nx-dotnet/nx-ghpages? It has been moved to its own repository [here](https://github.com/agentender/nx-github-pages) and is now published as `nx-github-pages`.
+
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
 ## Prerequisites
