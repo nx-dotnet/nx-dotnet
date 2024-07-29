@@ -6,3 +6,6 @@
 .yarn/
 /.nx/cache
 /.nx/workspace-data
+
+# Auto-generated, don't want to fail --check
+CHANGELOG.md
