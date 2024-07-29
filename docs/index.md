@@ -10,10 +10,6 @@ slug: /
 - 7 Executors
 - 10 Generators
 
-## [@nx-dotnet/nx-ghpages](./nx-ghpages)
-
-- 1 Executor
-
 ## [@nx-dotnet/nxdoc](./nxdoc)
 
 - 1 Generator

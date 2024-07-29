@@ -9,7 +9,7 @@
     "ts-node": "ts-node",
     "rimraf": "rimraf",
     "preinstall": "node ./tools/scripts/hooks/preinstall.js",
-    "postinstall": "dotnet tool restore",
+    "postinstall": "pdotnet tool restore",
     "documentation:check": "ts-node ./tools/scripts/hooks/documentation.check.ts",
     "documentation": "nx g @nx-dotnet/nxdoc:generate-docs",
     "publish-dev": "ts-node tools/scripts/publish-dev",
