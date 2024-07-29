@@ -1,3 +1,14 @@
+## 2.4.0 (2024-07-29)
+
+
+### 🚀 Features
+
+- **nx-ghpages:** intuit directory and remote when possible ([#875](https://github.com/nx-dotnet/nx-dotnet/pull/875))
+
+### ❤️  Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## 2.3.2 (2024-07-28)
 
 
