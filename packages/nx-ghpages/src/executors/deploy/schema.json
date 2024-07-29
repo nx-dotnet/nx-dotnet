@@ -7,11 +7,11 @@
   "properties": {
     "remote": {
       "type": "string",
-      "description": "URL for the git remote to deploy to."
+      "description": "URL for the git remote to deploy to. If not specified, the remote will be determined based off of **this** repository's origin remote."
     },
     "directory": {
       "type": "string",
-      "description": "Directory to push to gh-pages"
+      "description": "Directory to push to gh-pages. If not specified, the output directory will be determined based off of this project's build target's output path."
     },
     "remoteName": {
       "type": "string",
@@ -52,5 +52,5 @@
       "description": "Custom domain to use for the gh-pages branch. Applied by creating a CNAME file in the root of the gh-pages branch"
     }
   },
-  "required": ["remote", "directory"]
+  "required": []
 }

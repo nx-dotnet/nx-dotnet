@@ -1,6 +1,6 @@
 export interface BuildExecutorSchema {
-  remote: string;
-  directory: string;
+  remote?: string;
+  directory?: string;
   remoteName: string;
   commitMessage: string;
   baseBranch: string;

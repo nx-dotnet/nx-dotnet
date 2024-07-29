@@ -129,7 +129,22 @@
   },
   "version": "2.3.1",
   "nx": {
-    "includedScripts": []
+    "includedScripts": [
+      "documentation"
+    ],
+    "targets": {
+      "documentation": {
+        "cache": true,
+        "inputs": [
+          "{workspaceRoot}/packages/{schema,executors,generators}.json",
+          "{workspaceRoot}/packages/README.md",
+          "!{workspaceRoot}/docs"
+        ],
+        "outputs": [
+          "{workspaceRoot}/docs"
+        ]
+      }
+    }
   },
   "packageManager": "yarn@1.22.22"
 }

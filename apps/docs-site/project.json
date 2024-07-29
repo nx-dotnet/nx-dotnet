@@ -5,6 +5,12 @@
   "sourceRoot": "apps/docs-site/src",
   "targets": {
     "build": {
+      "dependsOn": [
+        {
+          "target": "documentation",
+          "projects": "@nx-dotnet/source"
+        }
+      ],
       "executor": "@nx-plus/docusaurus:browser",
       "options": {
         "outputPath": "dist/apps/docs-site"
@@ -17,15 +23,8 @@
       }
     },
     "deploy": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "nx g @nx-dotnet/nxdoc:generate-docs",
-          "nx build docs-site",
-          "npx ts-node tools/scripts/publish-docs-site"
-        ],
-        "parallel": false
-      }
+      "dependsOn": ["build"],
+      "executor": "@nx-dotnet/nx-ghpages:deploy"
     }
   },
   "tags": [],

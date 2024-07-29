@@ -8,13 +8,11 @@ import {
   getExecutedProjectConfiguration,
   getProjectFileForNxProject,
   handleChildProcessPassthrough,
-  rimraf,
 } from '@nx-dotnet/utils';
 
 import { ServeExecutorSchema } from './schema';
 
 let childProcess: ChildProcess;
-let projectDirectory: string;
 
 export default function dotnetRunExecutor(
   options: ServeExecutorSchema,
