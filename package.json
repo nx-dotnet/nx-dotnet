@@ -108,7 +108,6 @@
     "prettier": "^3.0.3",
     "prettier-2": "npm:prettier@^2",
     "react-refresh": "^0.10.0",
-    "run-p": "*",
     "strip-ansi": "^6.0.1",
     "style-loader": "^3.3.0",
     "stylus": "0.59.0",

@@ -8,8 +8,8 @@
     "postinstall": "node ./src/tasks/post-install"
   },
   "dependencies": {
-    "@nx-dotnet/dotnet": "*",
-    "@nx-dotnet/utils": "*",
+    "@nx-dotnet/dotnet": "file:../dotnet",
+    "@nx-dotnet/utils": "file:../utils",
     "@nx/devkit": "19.5.3",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
