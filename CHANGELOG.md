@@ -1,3 +1,14 @@
+## 2.4.1 (2024-07-30)
+
+
+### 🩹 Fixes
+
+- **repo:** published packages should include resolved versions ([#879](https://github.com/nx-dotnet/nx-dotnet/pull/879))
+
+### ❤️  Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## 2.4.0 (2024-07-29)
 
 
