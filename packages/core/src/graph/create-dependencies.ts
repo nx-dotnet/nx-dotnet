@@ -29,7 +29,7 @@ type CreateDependenciesCompat<T> = {
   ): ReturnType<CreateDependencies<T>>;
 };
 
-const dotnetClient = new DotNetClient(dotnetFactory());
+const dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
 
 export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
   ctxOrOpts: CreateDependenciesContext | NxDotnetConfig | undefined,

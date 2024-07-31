@@ -6,10 +6,11 @@ import {
   ProjectConfiguration,
   TargetConfiguration,
   createNodesFromFiles,
+  workspaceRoot,
 } from '@nx/devkit';
 
 import { readFileSync } from 'fs';
-import { basename, dirname, extname } from 'path';
+import { basename, dirname, extname, join } from 'path';
 
 import { NxDotnetConfigV2, ResolvedConfig, readConfig } from '@nx-dotnet/utils';
 import minimatch = require('minimatch');
@@ -155,7 +156,7 @@ export const registerProjectTargets = (
 ) => {
   const project = createProjectDefinition(
     projectFile,
-    readFileSync(projectFile, 'utf-8'),
+    readFileSync(join(workspaceRoot, projectFile), 'utf-8'),
     opts,
     tryReadJsonFile('nx.json') ?? {},
     tryReadJsonFile('package.json'),
@@ -238,10 +239,10 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
 
     const project = createProjectDefinition(
       file,
-      readFileSync(file, 'utf-8'),
+      readFileSync(join(context.workspaceRoot, file), 'utf-8'),
       options,
       context.nxJsonConfiguration,
-      tryReadJsonFile('package.json'),
+      tryReadJsonFile(join(context.workspaceRoot, 'package.json')),
     );
 
     if (!project) {
