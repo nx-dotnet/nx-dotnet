@@ -86,7 +86,10 @@
       "{workspaceRoot}/tsconfig.base.json",
       "{workspaceRoot}/tslint.json",
       "{workspaceRoot}/nx.json",
-      "{workspaceRoot}/babel.config.json"
+      "{workspaceRoot}/babel.config.json",
+      {
+        "runtime": "node -p '`${process.platform} ${process.arch}`'"
+      }
     ],
     "production": [
       "default",
@@ -106,7 +109,7 @@
     "projects": ["packages/*"],
     "projectsRelationship": "fixed",
     "version": {
-      "preVersionCommand": "node ./node_modules/.bin/nx run-many -t build --exclude demo-*",
+      "preVersionCommand": "nx run-many -t build --exclude demo-*",
       "conventionalCommits": true,
       "generatorOptions": {
         "packageRoot": "dist/{projectRoot}"
