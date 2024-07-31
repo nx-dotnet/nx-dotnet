@@ -1,3 +1,14 @@
+## 2.4.2 (2024-07-31)
+
+
+### 🩹 Fixes
+
+- **core:** compose paths to fix some windows tests ([#881](https://github.com/nx-dotnet/nx-dotnet/pull/881))
+
+### ❤️  Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## 2.4.1 (2024-07-30)
 
 
