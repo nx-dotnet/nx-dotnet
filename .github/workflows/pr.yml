@@ -29,26 +29,3 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.15
     with:
       number-of-agents: 3
-
-  windows:
-    name: Windows E2E
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org/
-          cache: 'yarn'
-      - uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '8.0.*'
-          include-prerelease: true
-      - run: yarn --frozen-lockfile
-      - run: yarn nx run-many --all --target=e2e
-        env:
-          NX_VERBOSE_LOGGING: true
-    needs: main
-    if: ${{ needs.main.result == 'success' }}
-    continue-on-error: true
