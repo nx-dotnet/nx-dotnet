@@ -64,6 +64,7 @@
     "@nx/web": "19.5.3",
     "@nx/webpack": "19.5.3",
     "@nx/workspace": "19.5.3",
+    "@octokit/rest": "^21.0.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@svgr/webpack": "^6.1.2",
     "@testing-library/react": "15.0.6",

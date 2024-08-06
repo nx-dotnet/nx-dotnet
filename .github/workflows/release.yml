@@ -23,9 +23,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
+      # Used to commit changelog + tags + docs site
       contents: write
+      # Used for npm provenance
       id-token: write
+      # Used to update docs site
       pages: write
+      # Used for adding comments to released issues + PRs
+      issues: write
+      pull_requests: write
 
     steps:
       - name: Checkout code

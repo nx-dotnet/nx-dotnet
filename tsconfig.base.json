@@ -28,7 +28,10 @@
       "@nx-dotnet/utils/e2e": ["packages/utils/src/e2e.ts"],
       "@nx-dotnet/utils/src/*": ["packages/utils/src/*"],
       "@nx-dotnet/utils/testing": ["packages/utils/src/testing.ts"],
-      "@nx-dotnet/workspace-plugin": ["tools/workspace-plugin/src/index.ts"]
+      "@nx-dotnet/workspace-plugin": ["tools/workspace-plugin/src/index.ts"],
+      "@nx-dotnet/workspace-plugin/changelog-renderer": [
+        "tools/workspace-plugin/src/changelog-renderer.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
