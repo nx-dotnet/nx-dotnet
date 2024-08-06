@@ -159,7 +159,7 @@ export function getProjectTagsFromSchema(options: { tags?: string }): string[] {
   return options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 }
 
-function getProjectRootFromSchema(
+export function getProjectRootFromSchema(
   host: Tree,
   options: NxDotnetProjectGeneratorSchema,
   projectDirectory: string,
@@ -170,9 +170,13 @@ function getProjectRootFromSchema(
       ? getWorkspaceLayout(host).appsDir
       : getWorkspaceLayout(host).libsDir;
 
-  return workspaceLayoutRoot
-    ? joinPathFragments(workspaceLayoutRoot, projectDirectory)
-    : projectDirectory;
+  if (workspaceLayoutRoot) {
+    if (projectDirectory.startsWith(workspaceLayoutRoot)) {
+      return projectDirectory;
+    }
+    return joinPathFragments(workspaceLayoutRoot, projectDirectory);
+  }
+  return projectDirectory;
 }
 
 function getProjectNameFromSchema(
