@@ -117,7 +117,8 @@
     },
     "changelog": {
       "workspaceChangelog": {
-        "createRelease": "github"
+        "createRelease": "github",
+        "renderer": "@nx-dotnet/workspace-plugin/changelog-renderer"
       }
     },
     "git": {
