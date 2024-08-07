@@ -58,7 +58,7 @@ jobs:
 
       - name: Build and Release packages
         run: |
-          npx nx release --yes ${{ github.run_attempt == '1' && '' || '--verbose' }}
+          npx nx release ${{ github.run_attempt == '1' && '--yes' || '--yes --verbose' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
