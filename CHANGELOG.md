@@ -1,3 +1,18 @@
+## 2.4.3 (2024-08-07)
+
+
+### 🚀 Features
+
+- **repo:** comment on closed issues and prs during release ([#883](https://github.com/nx-dotnet/nx-dotnet/pull/883))
+
+### 🩹 Fixes
+
+- **core:** remove duplicate segments when appending workspace layout dirs ([#884](https://github.com/nx-dotnet/nx-dotnet/pull/884))
+
+### ❤️  Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## 2.4.2 (2024-07-31)
 
 
