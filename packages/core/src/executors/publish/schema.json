@@ -49,7 +49,8 @@
     "verbosity": {
       "type": "string",
       "enum": ["quiet", "minimal", "normal", "detailed", "diagnostic"],
-      "default": "minimal"
+      "default": "minimal",
+      "description": "Sets the verbosity level of the command."
     },
     "versionSuffix": {
       "type": "string",

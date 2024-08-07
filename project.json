@@ -7,6 +7,13 @@
         "config": ".verdaccio/config.yml",
         "storage": "tmp/local-registry/storage"
       }
+    },
+    "generate-index": {
+      "executor": "nxdoc:generate-index",
+      "options": {
+        "outputDirectory": "docs",
+        "projects": "packages/*"
+      }
     }
   }
 }

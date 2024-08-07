@@ -31,7 +31,7 @@ jobs:
       pages: write
       # Used for adding comments to released issues + PRs
       issues: write
-      pull_requests: write
+      pull-requests: write
 
     steps:
       - name: Checkout code
@@ -58,7 +58,7 @@ jobs:
 
       - name: Build and Release packages
         run: |
-          node ./node_modules/.bin/nx release --yes
+          npx nx release --yes ${{ github.run_attempt == '1' && '' || '--verbose' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

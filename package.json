@@ -10,8 +10,8 @@
     "rimraf": "rimraf",
     "preinstall": "node ./tools/scripts/hooks/preinstall.js",
     "postinstall": "dotnet tool restore",
-    "documentation:check": "ts-node ./tools/scripts/hooks/documentation.check.ts",
-    "documentation": "nx g @nx-dotnet/nxdoc:generate-docs",
+    "documentation:check": "nx run-many -t generate-docs,generate-index --check",
+    "documentation": "nx run-many -t generate-docs,generate-index",
     "publish-dev": "ts-node tools/scripts/publish-dev",
     "sandbox": "ts-node ./tools/scripts/sandbox.ts",
     "local-registry": "nx local-registry"
@@ -105,6 +105,7 @@
     "memfs": "3.4.13",
     "node-fetch": "3.3.0",
     "nx": "19.5.3",
+    "nxdoc": "^0.2.4",
     "openapi-types": "^12.1.0",
     "prettier": "^3.0.3",
     "prettier-2": "npm:prettier@^2",

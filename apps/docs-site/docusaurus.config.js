@@ -43,10 +43,6 @@ module.exports = {
               label: '@nx-dotnet/core',
               to: 'docs/core',
             },
-            {
-              label: '@nx-dotnet/nxdoc',
-              to: 'docs/nxdoc/',
-            },
           ],
         },
         {
@@ -54,7 +50,7 @@ module.exports = {
           items: [
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/nxdoc',
+              href: 'https://stackoverflow.com/questions/tagged/nx-dotnet',
             },
             {
               label: 'Gitter',

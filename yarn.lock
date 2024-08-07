@@ -10450,6 +10450,11 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
 
+markdown-factory@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/markdown-factory/-/markdown-factory-0.1.0.tgz#7cdea29e37e41cdc82675452a2a1230ed6985092"
+  integrity sha512-/Tjb7tNZZD08TzKx1pIwCUQ8bZxmWCjzMiofO2nDbBfErYPsr90V2WxuuGqkpHptx2SJHy74GLFOieg99SlB1Q==
+
 mdast-squeeze-paragraphs@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/mdast-squeeze-paragraphs/-/mdast-squeeze-paragraphs-4.0.0.tgz#7c4c114679c3bee27ef10b58e2e015be79f1ef97"
@@ -11018,6 +11023,15 @@ nx@19.5.3:
     "@nx/nx-linux-x64-musl" "19.5.3"
     "@nx/nx-win32-arm64-msvc" "19.5.3"
     "@nx/nx-win32-x64-msvc" "19.5.3"
+
+nxdoc@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/nxdoc/-/nxdoc-0.2.4.tgz#10e6b89191836a78a700ab5168ecbcbe3516fcaf"
+  integrity sha512-iVe79b31LkNlfNlMapKZuBKYfQkDQJSRW4mUo0jv5mbU7jt45m9QMQWoB3cvzLd1JvWFu7Sfz31wUA4Uo6VNIg==
+  dependencies:
+    "@nx/devkit" "19.5.3"
+    markdown-factory "^0.1.0"
+    tslib "^2.5.0"
 
 object-assign@^4, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"

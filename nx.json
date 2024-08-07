@@ -11,13 +11,6 @@
       }
     }
   ],
-  "generators": {
-    "@nx-dotnet/nxdoc:generate-docs": {
-      "outputDirectory": "docs",
-      "gettingStartedFile": "<src>/README.md",
-      "exclude": "workspace-plugin"
-    }
-  },
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build", "prebuild", "^codegen", "codegen"],

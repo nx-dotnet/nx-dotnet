@@ -7,9 +7,6 @@ slug: /
 
 ## [@nx-dotnet/core](./core)
 
-- 7 Executors
 - 10 Generators
 
-## [@nx-dotnet/nxdoc](./nxdoc)
-
-- 1 Generator
+- 7 Executors

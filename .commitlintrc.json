@@ -4,17 +4,7 @@
     "scope-enum": [
       1,
       "always",
-      [
-        "dotnet",
-        "core",
-        "utils",
-        "typescript",
-        "nxdoc",
-        "nx-ghpages",
-        "docs-site",
-        "ci",
-        "repo"
-      ]
+      ["dotnet", "core", "utils", "typescript", "docs-site", "ci", "repo"]
     ],
     "type-enum": [
       1,
