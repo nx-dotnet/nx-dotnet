@@ -38,6 +38,14 @@ async function handleIssueOrPr(
     issue_number: num,
   });
 
+  if (issue.data.body && issue.data.pull_request) {
+    const regex = /([Ff]ix(es)?|[Rr]esolves|[Cc]loses) #(?<issue>\d+)/gm;
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(issue.data.body)) !== null) {
+      await handleIssueOrPr(client, match.groups?.issue ?? '', nextVersion);
+    }
+  }
+
   const bodyLines = [];
 
   if (issue.data.pull_request) {
