@@ -106,8 +106,6 @@ export function calculateTestTargetNameAndRoot(
 ): { root: string; name: string } {
   const nameSeperator = pathScheme === 'nx' ? '-' : '.';
   const nameParts = targetProjectName.split(nameSeperator);
-  const rootPathSegments = targetProjectRoot.split('/');
-  rootPathSegments.pop(); // Remove the last segment, which is the target project name.
 
   suffix = suffix ?? (pathScheme === 'nx' ? 'test' : 'Test');
 

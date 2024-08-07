@@ -5,6 +5,7 @@ import {
   updateNxJson,
   writeJson,
 } from '@nx/devkit';
+import * as devkit from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import {
@@ -14,7 +15,7 @@ import {
 } from '@nx-dotnet/dotnet';
 
 import { NxDotnetProjectGeneratorSchema } from '../../models';
-import { GenerateProject } from './generate-project';
+import { GenerateProject, getProjectRootFromSchema } from './generate-project';
 import * as mockedGenerateTestProject from '../test/generator';
 
 import path = require('path');
@@ -219,5 +220,28 @@ describe('nx-dotnet generate-project', () => {
       .read(path.join(config.root, '.gitignore'))
       ?.toString();
     expect(gitignoreValue).toBeTruthy();
+  });
+
+  describe('getRootFromSchema', () => {
+    it('should append workspace layout if not in directory', () => {
+      const root = getProjectRootFromSchema(
+        tree,
+        options,
+        'test',
+        'application',
+      );
+      expect(root).toEqual('apps/test');
+    });
+
+    it('should not append workspace layout if in directory', () => {
+      options.directory = 'sub-dir';
+      const root = getProjectRootFromSchema(
+        tree,
+        options,
+        'apps/test',
+        'application',
+      );
+      expect(root).toEqual('apps/test');
+    });
   });
 });
