@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "files": ["**/*.ts"],
+  "compilerOptions": {
+    "types": ["vitest"]
+  }
+}

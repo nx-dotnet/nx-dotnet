@@ -1,18 +1,3 @@
-## 2.4.3 (2024-08-07)
-
-
-### 🚀 Features
-
-- **repo:** comment on closed issues and prs during release ([#883](https://github.com/nx-dotnet/nx-dotnet/pull/883))
-
-### 🩹 Fixes
-
-- **core:** remove duplicate segments when appending workspace layout dirs ([#884](https://github.com/nx-dotnet/nx-dotnet/pull/884))
-
-### ❤️  Thank You
-
-- Craigory Coppola @AgentEnder
-
 ## 2.4.2 (2024-07-31)
 
 
@@ -67,7 +52,7 @@
 * **core:** read js lib defaults when generating js lib ([c8bac90](https://github.com/nx-dotnet/nx-dotnet/commit/c8bac900f83204028b1e2e1ebd00108937074674))
 * **core:** version suffix is a string ([80bcb04](https://github.com/nx-dotnet/nx-dotnet/commit/80bcb04c342a9467be1de003115b53307fcfab73))
 
-# [2.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.2.0...v2.3.0) (2024-07-27)
+## [2.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.2.0...v2.3.0) (2024-07-27)
 
 
 ### Bug Fixes
@@ -83,7 +68,7 @@
 * **nx-ghpages:** add support for writing CNAME file ([3a098f0](https://github.com/nx-dotnet/nx-dotnet/commit/3a098f08dc0987d0ccbc637fd385ed3dad499f10))
 * **nx-ghpages:** add syncGitOptions to provide extra flags to the command when syncing changes ([e015a98](https://github.com/nx-dotnet/nx-dotnet/commit/e015a985724bcf7c0fcfe1c37868b4098883f189))
 
-# [2.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.2...v2.2.0) (2024-01-31)
+## [2.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.2...v2.2.0) (2024-01-31)
 
 ### Bug Fixes
 
@@ -107,7 +92,7 @@
 
 - **core:** update localization files ([#795](https://github.com/nx-dotnet/nx-dotnet/issues/795)) ([7213b67](https://github.com/nx-dotnet/nx-dotnet/commit/7213b67ff01eb2a8e1ca1b98d3fee564e25c9f42))
 
-# [2.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.2...v2.1.0) (2023-10-25)
+## [2.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.2...v2.1.0) (2023-10-25)
 
 ### Bug Fixes
 
@@ -130,7 +115,7 @@
 
 - **core:** createDependencies should work on windows ([#782](https://github.com/nx-dotnet/nx-dotnet/issues/782)) ([472fedc](https://github.com/nx-dotnet/nx-dotnet/commit/472fedca4b8d1a01ce97973fa94126b8f882ef50))
 
-# [2.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.23.0...v2.0.0) (2023-10-20)
+## [2.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.23.0...v2.0.0) (2023-10-20)
 
 ### Bug Fixes
 
@@ -146,7 +131,7 @@
 
 - **core:** Drops Nx v15 support
 
-# [1.23.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.22.0...v1.23.0) (2023-09-20)
+## [1.23.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.22.0...v1.23.0) (2023-09-20)
 
 ### Bug Fixes
 
@@ -162,7 +147,7 @@
 - **core:** add argument forwarding to dotnet new ([#722](https://github.com/nx-dotnet/nx-dotnet/issues/722)) ([cdc3654](https://github.com/nx-dotnet/nx-dotnet/commit/cdc36543c7f1c4551a69466619a0e0e8039b7e82))
 - **core:** make swagger tool run in project directory ([#758](https://github.com/nx-dotnet/nx-dotnet/issues/758)) ([12d89ac](https://github.com/nx-dotnet/nx-dotnet/commit/12d89ac38f62f64c43a303a9063b46e9e5ecfb6b))
 
-# [1.22.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.1...v1.22.0) (2023-04-12)
+## [1.22.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.1...v1.22.0) (2023-04-12)
 
 ### Bug Fixes
 
@@ -178,13 +163,13 @@
 
 - **core:** use for of on loop on project Map ([#661](https://github.com/nx-dotnet/nx-dotnet/issues/661)) ([c9d31d7](https://github.com/nx-dotnet/nx-dotnet/commit/c9d31d75baf28399810df8dccfbc34d07bd2b5e1))
 
-# [1.21.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.20.0...v1.21.0) (2023-03-18)
+## [1.21.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.20.0...v1.21.0) (2023-03-18)
 
 ### Features
 
 - **core:** extra parameters support for run tool ([#658](https://github.com/nx-dotnet/nx-dotnet/issues/658)) ([fe4bc14](https://github.com/nx-dotnet/nx-dotnet/commit/fe4bc147254f310f6404774d78dea9a86227a6ac))
 
-# [1.20.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.1...v1.20.0) (2023-03-10)
+## [1.20.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.1...v1.20.0) (2023-03-10)
 
 ### Bug Fixes
 
@@ -208,7 +193,7 @@
 - **core:** adjust gitignore to support generation with directory ([#599](https://github.com/nx-dotnet/nx-dotnet/issues/599)) ([b3856e0](https://github.com/nx-dotnet/nx-dotnet/commit/b3856e0f04811fa06bda6870fa4058a908d715a5))
 - **core:** remove orphaned publish-local ([#611](https://github.com/nx-dotnet/nx-dotnet/issues/611)) ([7985e14](https://github.com/nx-dotnet/nx-dotnet/commit/7985e1496f226e187eb9c58c5e8dc86e3250d29e))
 
-# [1.19.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.1...v1.19.0) (2023-02-01)
+## [1.19.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.1...v1.19.0) (2023-02-01)
 
 ### Bug Fixes
 
@@ -226,13 +211,13 @@
 - **core:** build intermediates need to be captured by cache for DTE / parallel builds ([#596](https://github.com/nx-dotnet/nx-dotnet/issues/596)) ([cdea76e](https://github.com/nx-dotnet/nx-dotnet/commit/cdea76e4b52e85071d7354bf3580bac742e68353))
 - **core:** resolve startupAssembly to ensure it is always an absolute path ([#595](https://github.com/nx-dotnet/nx-dotnet/issues/595)) ([2ea2570](https://github.com/nx-dotnet/nx-dotnet/commit/2ea25704b65c0079bfc363f3d470b35bccfbca68))
 
-# [1.18.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.17.0...v1.18.0) (2023-01-17)
+## [1.18.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.17.0...v1.18.0) (2023-01-17)
 
 ### Features
 
 - **core:** support nx-plugin-openapi for more advanced openapi generation ([#589](https://github.com/nx-dotnet/nx-dotnet/issues/589)) ([ee1c7b1](https://github.com/nx-dotnet/nx-dotnet/commit/ee1c7b1918c37be2880a6b5e252019972c2eaeff))
 
-# [1.17.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.3...v1.17.0) (2023-01-14)
+## [1.17.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.3...v1.17.0) (2023-01-14)
 
 ### Features
 
@@ -259,7 +244,7 @@
 - **core:** allow open solutions with Visual Studio ([#563](https://github.com/nx-dotnet/nx-dotnet/issues/563)) ([042a9db](https://github.com/nx-dotnet/nx-dotnet/commit/042a9db62ed57a7d16d684d4ef40a88cc58fba30)), closes [#548](https://github.com/nx-dotnet/nx-dotnet/issues/548)
 - **core:** usage of MSBuildProjectDirRelativePath should handle paths with white space ([a939c4b](https://github.com/nx-dotnet/nx-dotnet/commit/a939c4b3ced68c1c3234b624355b9b57d9706860))
 
-# [1.16.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.15.0...v1.16.0) (2022-11-03)
+## [1.16.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.15.0...v1.16.0) (2022-11-03)
 
 ### Bug Fixes
 
@@ -271,7 +256,7 @@
 
 - **core:** allow disabling project inference from config file ([2c8eeeb](https://github.com/nx-dotnet/nx-dotnet/commit/2c8eeebe927e548630b6fc4692a9969c6510ec8d))
 
-# [1.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.14.0...v1.15.0) (2022-10-18)
+## [1.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.14.0...v1.15.0) (2022-10-18)
 
 ### Bug Fixes
 
@@ -281,7 +266,7 @@
 
 - **nx-ghpages:** add option to customize commit message to `gh-pages` ([#542](https://github.com/nx-dotnet/nx-dotnet/issues/542)) ([cff00e0](https://github.com/nx-dotnet/nx-dotnet/commit/cff00e04be43581a323c3f6f0f0a6f1769d1f76e))
 
-# [1.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.4...v1.14.0) (2022-10-05)
+## [1.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.4...v1.14.0) (2022-10-05)
 
 ### Features
 
@@ -312,7 +297,7 @@
 - **core:** @nrwl/js is required for library generation ([#484](https://github.com/nx-dotnet/nx-dotnet/issues/484)) ([13e2c93](https://github.com/nx-dotnet/nx-dotnet/commit/13e2c93d17486c497b362e69959553223d0d7591))
 - **core:** use strict proj glob pattern ([#495](https://github.com/nx-dotnet/nx-dotnet/issues/495)) ([9720168](https://github.com/nx-dotnet/nx-dotnet/commit/97201684cdbd91578047c4aceaf6ac6078cc7db7))
 
-# [1.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.12.0...v1.13.0) (2022-07-29)
+## [1.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.12.0...v1.13.0) (2022-07-29)
 
 ### Bug Fixes
 
@@ -323,7 +308,7 @@
 - **core:** added pathScheme for project generators ([#464](https://github.com/nx-dotnet/nx-dotnet/issues/464)) ([ded5eb8](https://github.com/nx-dotnet/nx-dotnet/commit/ded5eb8ad789d1cc3e71b729507a50d6146a1ae9))
 - **core:** generate typescript models from swagger/openapi project ([#447](https://github.com/nx-dotnet/nx-dotnet/issues/447)) ([cd56d1c](https://github.com/nx-dotnet/nx-dotnet/commit/cd56d1c4e08a632462cc5354f0965ffe8684a9b4))
 
-# [1.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.11.0...v1.12.0) (2022-06-08)
+## [1.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.11.0...v1.12.0) (2022-06-08)
 
 ### Bug Fixes
 
@@ -333,7 +318,7 @@
 
 - **core:** allow tool installation to be skipped for update-swagger ([d1044f6](https://github.com/nx-dotnet/nx-dotnet/commit/d1044f6eb5080beec8d1b31eed2c8610d85c825d))
 
-# [1.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.1...v1.11.0) (2022-05-31)
+## [1.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.1...v1.11.0) (2022-05-31)
 
 ### Features
 
@@ -345,7 +330,7 @@
 
 - **core:** remove workaround for broken dotnet format builtin ([#443](https://github.com/nx-dotnet/nx-dotnet/issues/443)) ([e0f04eb](https://github.com/nx-dotnet/nx-dotnet/commit/e0f04ebfdd7addc4b5aac3a4662959f356a9562e))
 
-# [1.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.12...v1.10.0) (2022-05-18)
+## [1.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.12...v1.10.0) (2022-05-18)
 
 ### Features
 
@@ -437,7 +422,7 @@
 
 - **core:** support for Nx project inference
 
-# [1.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.1...v1.8.0) (2021-12-14)
+## [1.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.1...v1.8.0) (2021-12-14)
 
 ### Bug Fixes
 
@@ -454,13 +439,13 @@
 
 - **core:** prebuild script fails if no module boundaries rule is present ([bff34d0](https://github.com/nx-dotnet/nx-dotnet/commit/bff34d05ec577129ffd52017c6f6abd625a81ae2))
 
-# [1.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.6.0...v1.7.0) (2021-11-29)
+## [1.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.6.0...v1.7.0) (2021-11-29)
 
 ### Features
 
 - **core:** support for workspace solution files ([#254](https://github.com/nx-dotnet/nx-dotnet/issues/254)) ([ec342ae](https://github.com/nx-dotnet/nx-dotnet/commit/ec342ae2699b7ca5fad0aee717d67ded3c0a9524))
 
-# [1.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.2...v1.6.0) (2021-10-22)
+## [1.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.2...v1.6.0) (2021-10-22)
 
 ### Features
 
@@ -478,7 +463,7 @@
 
 - **core:** nx lint {project} should work when cwd !== appRootPath ([#216](https://github.com/nx-dotnet/nx-dotnet/issues/216)) ([9fac321](https://github.com/nx-dotnet/nx-dotnet/commit/9fac32125852d4e5c6d05056351e3a8065759968)), closes [#215](https://github.com/nx-dotnet/nx-dotnet/issues/215)
 
-# [1.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.3...v1.5.0) (2021-10-15)
+## [1.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.3...v1.5.0) (2021-10-15)
 
 ### Features
 
@@ -505,7 +490,7 @@
 - **core:** npm prepare script may be removed ([b8e88fa](https://github.com/nx-dotnet/nx-dotnet/commit/b8e88fa317c7b23f0cebaf301410dce708991fb7)), closes [#101](https://github.com/nx-dotnet/nx-dotnet/issues/101)
 - **core:** publish output config should be relative to workspace root ([30a7a26](https://github.com/nx-dotnet/nx-dotnet/commit/30a7a265d508df1dd50818dbd02d94b4ed871c6d)), closes [#100](https://github.com/nx-dotnet/nx-dotnet/issues/100)
 
-# [1.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.2...v1.4.0) (2021-09-10)
+## [1.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.2...v1.4.0) (2021-09-10)
 
 ### Features
 
@@ -523,7 +508,7 @@
 
 - use test project name in msbuild task ([cc29ea9](https://github.com/nx-dotnet/nx-dotnet/commit/cc29ea9a4b3b4b76a928b051e5badcf17cf2a2a4))
 
-# [1.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.2.0...v1.3.0) (2021-08-23)
+## [1.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.2.0...v1.3.0) (2021-08-23)
 
 ### Bug Fixes
 
@@ -534,7 +519,7 @@
 
 - **core:** pickup `global.json` overrides at the project level ([49ce6bc](https://github.com/nx-dotnet/nx-dotnet/commit/49ce6bc5727a9c9789b701784363f582f0ee09ab)), closes [#87](https://github.com/nx-dotnet/nx-dotnet/issues/87) [#86](https://github.com/nx-dotnet/nx-dotnet/issues/86)
 
-# [1.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.4...v1.2.0) (2021-08-20)
+## [1.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.4...v1.2.0) (2021-08-20)
 
 ### Features
 
@@ -565,7 +550,7 @@
 
 - **docs-site:** docs changes should be committed back into repo ([d773152](https://github.com/nx-dotnet/nx-dotnet/commit/d7731524ab9169c791fe28d18874d100b1e57904))
 
-# [1.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.2...v1.1.0) (2021-08-10)
+## [1.1.0](https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.2...v1.1.0) (2021-08-10)
 
 ### Features
 
@@ -583,7 +568,7 @@
 
 - **core:** dep-graph affected should work ([#76](https://github.com/nx-dotnet/nx-dotnet/issues/76)) ([2e56afc](https://github.com/nx-dotnet/nx-dotnet/commit/2e56afc9b46e11ad1fb1ef5ea7767e1923fac0a0))
 
-# [1.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.15.0...v1.0.0) (2021-07-30)
+## [1.0.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.15.0...v1.0.0) (2021-07-30)
 
 ### Bug Fixes
 
@@ -594,27 +579,28 @@
 - Minimum Nx version is 12.6, if using the dep-graph plugin.
 
 Co-authored-by: Leon Chi <leon.chi@serko.com>
+
 Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
-# [0.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.14.0...v0.15.0) (2021-07-12)
+## [0.15.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.14.0...v0.15.0) (2021-07-12)
 
 ### Features
 
 - **core:** Add generator option for standalone projects ([#71](https://github.com/nx-dotnet/nx-dotnet/issues/71)) ([8db11d4](https://github.com/nx-dotnet/nx-dotnet/commit/8db11d4f9fa799a90e6e27de1cc9cc6eec87451c))
 
-# [0.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.13.0...v0.14.0) (2021-07-05)
+## [0.14.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.13.0...v0.14.0) (2021-07-05)
 
 ### Features
 
 - **core:** add test project generator ([#69](https://github.com/nx-dotnet/nx-dotnet/issues/69)) ([7f7084f](https://github.com/nx-dotnet/nx-dotnet/commit/7f7084f1c4809acf9278a8dafbf255ba34c5ab0b))
 
-# [0.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.12.0...v0.13.0) (2021-06-23)
+## [0.13.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.12.0...v0.13.0) (2021-06-23)
 
 ### Features
 
 - **nxdoc:** support for docusaurus@2.0.0-beta.1 ([3be3d48](https://github.com/nx-dotnet/nx-dotnet/commit/3be3d4803aec74178433296667f70e68aa7a9646))
 
-# [0.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.11.0...v0.12.0) (2021-06-21)
+## [0.12.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.11.0...v0.12.0) (2021-06-21)
 
 ### Bug Fixes
 
@@ -624,7 +610,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **nx-ghpages:** initial work ([621627d](https://github.com/nx-dotnet/nx-dotnet/commit/621627df1c34a5520bb0d7dcaaa178368c54ecec))
 
-# [0.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.3...v0.11.0) (2021-05-27)
+## [0.11.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.3...v0.11.0) (2021-05-27)
 
 ### Bug Fixes
 
@@ -653,7 +639,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **docs-site:** correct docusaurus config ([c479567](https://github.com/nx-dotnet/nx-dotnet/commit/c47956766c354381a857cb29edc7c618d0d1fa2e))
 
-# [0.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.10.0) (2021-05-23)
+## [0.10.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.10.0) (2021-05-23)
 
 ### Bug Fixes
 
@@ -678,7 +664,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **docs-site:** deploy on commit to master ([e259a28](https://github.com/nx-dotnet/nx-dotnet/commit/e259a28c5df552a3c85fa7b154c47fe2fc19ed61))
 
-# [0.9.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.2...v0.9.0) (2021-05-23)
+## [0.9.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.2...v0.9.0) (2021-05-23)
 
 ### Features
 
@@ -696,7 +682,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **nxdoc:** invalid generators.json ([b3b03be](https://github.com/nx-dotnet/nx-dotnet/commit/b3b03be0134df68e603ee1cf6a3401662f67b6cb))
 
-# [0.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.1...v0.8.0) (2021-05-21)
+## [0.8.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.1...v0.8.0) (2021-05-21)
 
 ### Features
 
@@ -712,7 +698,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 - **core:** rename migrations key to nx-migrations ([c6993b9](https://github.com/nx-dotnet/nx-dotnet/commit/c6993b96207b06e7d0ec8a6b252d19a5670ed0fd))
 - **repo:** e2e tests run in CI again ([f7ed139](https://github.com/nx-dotnet/nx-dotnet/commit/f7ed139d499673848ddde0f4b8936f7652f9eaec))
 
-# [0.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.2...v0.7.0) (2021-05-20)
+## [0.7.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.2...v0.7.0) (2021-05-20)
 
 ### Features
 
@@ -732,7 +718,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **core:** add unused options parameter for restore ([c8b0334](https://github.com/nx-dotnet/nx-dotnet/commit/c8b033403b1ba7d1365526dc5306338912adcf4c))
 
-# [0.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.2...v0.6.0) (2021-05-19)
+## [0.6.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.2...v0.6.0) (2021-05-19)
 
 ### Bug Fixes
 
@@ -759,7 +745,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 - **core:** [#38](https://github.com/nx-dotnet/nx-dotnet/issues/38) - Misc fixes for .gitignore updates ([#40](https://github.com/nx-dotnet/nx-dotnet/issues/40)) ([5f2d5c9](https://github.com/nx-dotnet/nx-dotnet/commit/5f2d5c9407927992398df3d3827256da952ab3e5))
 - **core:** sync command should list package names ([#41](https://github.com/nx-dotnet/nx-dotnet/issues/41)) ([8bdc66a](https://github.com/nx-dotnet/nx-dotnet/commit/8bdc66aaf02e2c18c051a5ebf6da99e6438ae318)), closes [#39](https://github.com/nx-dotnet/nx-dotnet/issues/39)
 
-# [0.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.2...v0.5.0) (2021-05-06)
+## [0.5.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.2...v0.5.0) (2021-05-06)
 
 ### Features
 
@@ -778,7 +764,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **core:** test projects not generating ([28d3d1e](https://github.com/nx-dotnet/nx-dotnet/commit/28d3d1ef14ba41169cb33a73bb4de8fda2da13c0))
 
-# [0.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0...v0.4.0) (2021-05-01)
+## [0.4.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0...v0.4.0) (2021-05-01)
 
 ### Bug Fixes
 
@@ -789,7 +775,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 - **core:** schematic for adding npm package [#5](https://github.com/nx-dotnet/nx-dotnet/issues/5) ([4f37be7](https://github.com/nx-dotnet/nx-dotnet/commit/4f37be7065d351539fe22c30d94866382693ed3f)), closes [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6)
 - **core:** support for single version principle [#6](https://github.com/nx-dotnet/nx-dotnet/issues/6) ([#32](https://github.com/nx-dotnet/nx-dotnet/issues/32)) ([8e60a13](https://github.com/nx-dotnet/nx-dotnet/commit/8e60a131d2e6522c3ad01788ab06cdf234d99cf3))
 
-# [0.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.1...v0.3.0) (2021-04-28)
+## [0.3.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.1...v0.3.0) (2021-04-28)
 
 ### Bug Fixes
 
@@ -812,13 +798,13 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 
 - **repo:** enable semantic-release ([298c5af](https://github.com/nx-dotnet/nx-dotnet/commit/298c5afd6c8bf4e09af60a83dfb5bc97a302eaf4))
 
-# [0.3.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.1...v0.3.0-dev.2) (2021-04-27)
+## [0.3.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.1...v0.3.0-dev.2) (2021-04-27)
 
 ### Bug Fixes
 
 - **core:** include serve target only for applications ([#30](https://github.com/nx-dotnet/nx-dotnet/issues/30)) ([9e4438e](https://github.com/nx-dotnet/nx-dotnet/commit/9e4438e2ebe591ee93fa43d33f5adf0ca50685aa)), closes [#28](https://github.com/nx-dotnet/nx-dotnet/issues/28)
 
-# [0.3.0-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.3.0-dev.1) (2021-04-27)
+## [0.3.0-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.3.0-dev.1) (2021-04-27)
 
 ### Bug Fixes
 
@@ -841,13 +827,13 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 - **repo:** update gh actions for semantic release ([ed933e9](https://github.com/nx-dotnet/nx-dotnet/commit/ed933e977780c6680c6d99ce1a6097aaa1e1b7ea))
 - **utils:** update jsdocs ([83bec44](https://github.com/nx-dotnet/nx-dotnet/commit/83bec448776d01de4c4b38b63501a3f075f1f488))
 
-# [0.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0) (2021-04-27)
+## [0.2.0](https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0) (2021-04-27)
 
 ### Features
 
 - **core:** test sr deployment ([fbc5bbf](https://github.com/nx-dotnet/nx-dotnet/commit/fbc5bbf6665a91b44356a518452650596aad3292))
 
-# [0.2.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.1...v0.2.0-dev.2) (2021-04-26)
+## [0.2.0-dev.2](https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.1...v0.2.0-dev.2) (2021-04-26)
 
 ### Bug Fixes
 
@@ -859,7 +845,7 @@ Co-authored-by: Craigory Coppola <craigorycoppola@gmail.com>
 - **ci:** fix publish script ([4c6e91a](https://github.com/nx-dotnet/nx-dotnet/commit/4c6e91ab6e9450542f7bbce5c81a5ad482a5aea1))
 - **core:** tag nx-dotnet projects ([6442d94](https://github.com/nx-dotnet/nx-dotnet/commit/6442d94dd82e30d0b6537e97eddbcccedd799ef9))
 
-# [0.2.0-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0-dev.1) (2021-04-26)
+## [0.2.0-dev.1](https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0-dev.1) (2021-04-26)
 
 ### Features
 

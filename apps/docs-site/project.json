@@ -3,30 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/docs-site/src",
-  "targets": {
-    "build": {
-      "dependsOn": [
-        {
-          "target": "documentation",
-          "projects": "@nx-dotnet/source"
-        }
-      ],
-      "executor": "@nx-plus/docusaurus:browser",
-      "options": {
-        "outputPath": "dist/apps/docs-site"
-      }
-    },
-    "serve": {
-      "executor": "@nx-plus/docusaurus:dev-server",
-      "options": {
-        "port": 3000
-      }
-    },
-    "deploy": {
-      "dependsOn": ["build"],
-      "executor": "nx-github-pages:deploy"
-    }
-  },
   "tags": [],
   "namedInputs": {
     "projectSpecificFiles": ["{workspaceRoot}/docs/*"]

@@ -6,7 +6,8 @@
 /out-tsc
 
 # dependencies
-/node_modules
+node_modules
+build
 
 # IDEs and editors
 /.idea
@@ -43,6 +44,7 @@ Thumbs.db
 # Generated Docusaurus files
 .docusaurus/
 .cache-loader/
+/docs/CHANGELOG.md
 
 **/bin
 **/obj

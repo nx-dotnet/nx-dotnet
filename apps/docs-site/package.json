@@ -1,0 +1,83 @@
+{
+  "name": "docs-site",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "docusaurus build",
+    "serve": "docusaurus start",
+    "serve-static": "docusaurus serve",
+    "typecheck": "tsc",
+    "test": "vitest --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.4.0",
+    "@docusaurus/preset-classic": "3.4.0",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "remark-github": "^12.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.4.0",
+    "@docusaurus/tsconfig": "3.4.0",
+    "@docusaurus/types": "3.4.0",
+    "typescript": "~5.2.2",
+    "vitest": "2.0.5",
+    "rehype-stringify": "10.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/build"
+        ],
+        "inputs": [
+          "default",
+          "!{projectRoot}/.docusaurus"
+        ],
+        "dependsOn": [
+          {
+            "target": "documentation",
+            "projects": "@nx-dotnet/source"
+          }
+        ]
+      },
+      "serve": {
+        "dependsOn": [
+          {
+            "target": "documentation",
+            "projects": "@nx-dotnet/source"
+          }
+        ]
+      },
+      "deploy": {
+        "executor": "nx-github-pages:deploy",
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "serve-static": {
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
+  }
+}

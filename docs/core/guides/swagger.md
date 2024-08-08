@@ -6,9 +6,8 @@ As of v1.11.0, `nx-dotnet` supports generating code-generated projects from your
 
 Newly generated projects (`@nx-dotnet/core:application`/`@nx-dotnet/core:library`) can optionally create 2 swagger related libraries:
 
-- enabled when `skipSwaggerLib=false`
-- libs/generated/{project}-swagger
-- libs/generated/{project}-types
+- `libs/generated/{project}-swagger`
+- `libs/generated/{project}-types`
 
 1. A `swagger` target is added to the generated webapi project which leverages [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) to extract a `swagger.json` spec file.
    - The swagger.json file is output to the `-swagger` project.

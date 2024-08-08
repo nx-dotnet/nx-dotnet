@@ -2,6 +2,9 @@
   "name": "@nx-dotnet/source",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "apps/docs-site"
+  ],
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
@@ -18,9 +21,6 @@
   },
   "dependencies": {
     "@algolia/client-search": "^4.17.0",
-    "@docusaurus/core": "^2.4.0",
-    "@docusaurus/preset-classic": "^2.4.0",
-    "@docusaurus/theme-search-algolia": "^2.4.0",
     "@mdx-js/react": "^1.6.21",
     "@nx/devkit": "19.5.3",
     "@swc/helpers": "0.5.12",
@@ -52,7 +52,6 @@
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.1.0",
     "@commitlint/types": "^17.4.4",
-    "@nx-plus/docusaurus": "15.0.0-rc.0",
     "@nx/cypress": "19.5.3",
     "@nx/eslint": "19.5.3",
     "@nx/eslint-plugin": "19.5.3",
@@ -138,8 +137,8 @@
       "documentation": {
         "cache": true,
         "inputs": [
-          "{workspaceRoot}/packages/{schema,executors,generators}.json",
-          "{workspaceRoot}/packages/README.md",
+          "{workspaceRoot}/packages/**/{schema,executors,generators}.json",
+          "{workspaceRoot}/packages/**/README.md",
           "!{workspaceRoot}/docs"
         ],
         "outputs": [
