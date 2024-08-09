@@ -21,6 +21,9 @@
       ],
       "cache": true
     },
+    "test": {
+      "cache": true
+    },
     "@nx-dotnet/core:build": {
       "dependsOn": ["^build", "prebuild", "^prebuild", "^codegen", "codegen"],
       "inputs": [
