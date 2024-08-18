@@ -18,7 +18,8 @@
               }
             ]
           }
-        ]
+        ],
+        "@nx/workspace-no-terminal-popups": "error"
       }
     },
     {
