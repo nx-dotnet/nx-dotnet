@@ -26,6 +26,7 @@ import {
 } from '../models';
 import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
 import { LoadedCLI } from './dotnet.factory';
+import { once } from 'node:events';
 
 export class DotNetClient {
   constructor(
@@ -328,6 +329,19 @@ export class DotNetClient {
       .filter(Boolean);
   }
 
+  async getProjectReferencesAsync(projectFile: string): Promise<string[]> {
+    const output = await this.spawnAsyncAndGetOutput([
+      'list',
+      projectFile,
+      'reference',
+    ]);
+    return output
+      .split('\n')
+      .slice(2)
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+
   getSdkVersion(): string {
     return this.cliCommand.info.version.toString();
   }
@@ -368,6 +382,31 @@ export class DotNetClient {
       );
     }
     return res.stdout.toString();
+  }
+
+  async spawnAsyncAndGetOutput(params: string[]): Promise<string> {
+    params = params.map((param) =>
+      param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
+    );
+
+    const res = spawn(this.cliCommand.command, params, {
+      cwd: this.cwd ?? process.cwd(),
+    });
+    let stdout = '';
+    let stderr = '';
+    res.stdout.setEncoding('utf8').on('data', (data) => {
+      stdout += data.trim();
+    });
+    res.stderr.setEncoding('utf8').on('data', (data) => {
+      stderr += data.trim();
+    });
+    const [code] = await once(res, 'exit');
+    if (code !== 0) {
+      throw new Error(
+        `dotnet execution returned status code ${code} \n ${stderr}`,
+      );
+    }
+    return stdout;
   }
 
   private logAndSpawn(params: string[]): ChildProcess {
