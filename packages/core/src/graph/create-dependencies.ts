@@ -77,14 +77,14 @@ export const createDependencies: CreateDependenciesCompat<
       }
       return newDeps;
     };
-    return Promise.all(changed.map(getProjectReferences)).then((d) => d.flat());
+    const getAllProjectReferences = changed.map(getProjectReferences);
+    return Promise.all(getAllProjectReferences).then((d) => d.flat());
   };
 
-  const dependencies = await Promise.all(
-    Object.keys(ctx.filesToProcess.projectFileMap).map(parseProject),
-  ).then((d) => d.flat());
-
-  return dependencies;
+  const parseAllProjects = Object.keys(ctx.filesToProcess.projectFileMap).map(
+    parseProject,
+  );
+  return Promise.all(parseAllProjects).then((d) => d.flat());
 };
 
 export const processProjectGraph: Required<NxPluginV1>['processProjectGraph'] =

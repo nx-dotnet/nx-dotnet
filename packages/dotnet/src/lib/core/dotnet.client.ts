@@ -388,22 +388,30 @@ export class DotNetClient {
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
-
     const res = spawn(this.cliCommand.command, params, {
       cwd: this.cwd ?? process.cwd(),
     });
     let stdout = '';
     let stderr = '';
     res.stdout.setEncoding('utf8').on('data', (data) => {
+      if (data.includes('There are no Project to Project')) {
+        return;
+      }
       stdout += data.trim();
     });
     res.stderr.setEncoding('utf8').on('data', (data) => {
       stderr += data.trim();
     });
-    const [code] = await once(res, 'exit');
-    if (code !== 0) {
+    const [codeOrError] = await Promise.race([
+      once(res, 'close'),
+      once(res, 'error'),
+    ]);
+    if (codeOrError instanceof Error) {
+      throw codeOrError;
+    }
+    if (codeOrError !== 0) {
       throw new Error(
-        `dotnet execution returned status code ${code} \n ${stderr}`,
+        `dotnet execution returned status code ${codeOrError} \n ${stderr}`,
       );
     }
     return stdout;
