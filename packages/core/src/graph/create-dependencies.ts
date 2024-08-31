@@ -140,6 +140,5 @@ export function resolveReferenceToProject(
   context: { workspaceRoot: string },
 ) {
   const resolved = resolve(context.workspaceRoot, dirname(source), reference);
-  console.log({ reference, source, resolved });
   return findProjectForPath(relative(context.workspaceRoot, resolved), rootMap);
 }
