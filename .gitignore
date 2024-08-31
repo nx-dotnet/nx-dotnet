@@ -8,6 +8,8 @@
 # dependencies
 node_modules
 build
+# dummy fix for https://github.com/nrwl/nx/issues/20309 and https://github.com/nx-dotnet/nx-dotnet/issues/893
+!packages/core/src/executors/build
 
 # IDEs and editors
 /.idea
