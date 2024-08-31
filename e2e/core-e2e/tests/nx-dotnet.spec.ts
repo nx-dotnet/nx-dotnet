@@ -66,16 +66,10 @@ describe('nx-dotnet e2e', () => {
   });
 
   it('should work with affected', async () => {
-    const ngApp = uniq('ng-app');
     const testApp = uniq('app');
     const testLib = uniq('lib');
 
     runCommand('git checkout -b "affected-tests"', {});
-
-    await runNxCommandAsync(
-      `generate @nx/angular:app ${ngApp} --style css --routing false --no-interactive`,
-      // { cwd: e2eDir, stdio: 'inherit' },
-    );
 
     await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi" --skipSwaggerLib`,
