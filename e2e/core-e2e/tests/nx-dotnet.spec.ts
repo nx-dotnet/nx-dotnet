@@ -10,7 +10,6 @@ import {
   listFiles,
   readFile,
   runCommand,
-  runPackageManagerInstall,
   tmpProjPath,
   uniq,
   updateFile,
@@ -71,17 +70,6 @@ describe('nx-dotnet e2e', () => {
     const testLib = uniq('lib');
 
     runCommand('git checkout -b "affected-tests"', {});
-    updateFile('package.json', (f) => {
-      const json = JSON.parse(f);
-      json.dependencies['@nrwl/angular'] = json.devDependencies['nx'];
-      return JSON.stringify(json);
-    });
-    runPackageManagerInstall();
-
-    await runNxCommandAsync(
-      `generate @nrwl/angular:app ng-app --style css --routing false --no-interactive`,
-      // { cwd: e2eDir, stdio: 'inherit' },
-    );
 
     await runNxCommandAsync(
       `generate @nx-dotnet/core:app ${testApp} --language="C#" --template="webapi" --skipSwaggerLib`,
@@ -503,7 +491,7 @@ function initializeGitRepo(cwd: string) {
   runCommand('git config user.email no-one@some-website.com', {});
   runCommand('git config user.name CI-Bot', {});
   runCommand('git add .', {});
-  runCommand('git commit -m "initial commit"', {});
+  runCommand('git commit -m "initial commit" --no-gpg-sign', {});
 }
 
 function runCommandAsync(
