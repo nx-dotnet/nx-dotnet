@@ -10,7 +10,6 @@ import {
   listFiles,
   readFile,
   runCommand,
-  runPackageManagerInstall,
   tmpProjPath,
   uniq,
   updateFile,
