@@ -1,5 +1,6 @@
-import { ChildProcess, spawn, spawnSync } from 'child_process';
+import { ChildProcess, execFile, spawn, spawnSync } from 'child_process';
 import * as semver from 'semver';
+import { promisify } from 'util';
 
 import {
   convertOptionsToParams,
@@ -328,6 +329,19 @@ export class DotNetClient {
       .filter(Boolean);
   }
 
+  async getProjectReferencesAsync(projectFile: string): Promise<string[]> {
+    const output = await this.spawnAsyncAndGetOutput([
+      'list',
+      projectFile,
+      'reference',
+    ]);
+    return output
+      .split('\n')
+      .slice(2)
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+
   getSdkVersion(): string {
     return this.cliCommand.info.version.toString();
   }
@@ -368,6 +382,31 @@ export class DotNetClient {
       );
     }
     return res.stdout.toString();
+  }
+
+  async spawnAsyncAndGetOutput(params: string[]): Promise<string> {
+    params = params.map((param) =>
+      param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
+    );
+
+    const { stdout } = await promisify(execFile)(
+      this.cliCommand.command,
+      params,
+      {
+        cwd: this.cwd ?? process.cwd(),
+      },
+    ).catch((e) => {
+      if ('code' in e && 'stderr' in e) {
+        throw new Error(
+          `dotnet execution returned status code ${e.code} \n ${e.message}`,
+        );
+      }
+      throw e;
+    });
+    if (stdout.includes('There are no Project to Project')) {
+      return '';
+    }
+    return stdout;
   }
 
   private logAndSpawn(params: string[]): ChildProcess {

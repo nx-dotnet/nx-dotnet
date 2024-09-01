@@ -4,7 +4,5 @@
  */
 
 export default () => {
-  if ((global as any).stopLocalRegistry) {
-    (global as any).stopLocalRegistry();
-  }
+  (global as any).stopLocalRegistry?.();
 };

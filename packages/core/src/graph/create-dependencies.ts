@@ -2,6 +2,7 @@ import {
   CreateDependencies,
   CreateDependenciesContext,
   DependencyType,
+  FileData,
   NxPluginV1,
   ProjectConfiguration,
   ProjectGraphBuilder,
@@ -31,7 +32,9 @@ type CreateDependenciesCompat<T> = {
 
 const dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
 
-export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
+export const createDependencies: CreateDependenciesCompat<
+  NxDotnetConfig
+> = async (
   ctxOrOpts: CreateDependenciesContext | NxDotnetConfig | undefined,
   maybeCtx: CreateDependenciesContext | undefined,
 ) => {
@@ -39,16 +42,18 @@ export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
   // In v17, the signature was updated to pass options first, and context second.
   const ctx: CreateDependenciesContext =
     maybeCtx ?? (ctxOrOpts as CreateDependenciesContext);
-
-  let dependencies: RawProjectGraphDependency[] = [];
   const rootMap = createProjectRootMappings(ctx.projects);
-  for (const source in ctx.filesToProcess.projectFileMap) {
+
+  const parseProject = async (source: string) => {
     const changed = ctx.filesToProcess.projectFileMap[source];
-    for (const file of changed) {
+
+    const getProjectReferences = async (file: FileData) => {
+      const newDeps: RawProjectGraphDependency[] = [];
       const { ext } = parse(file.file);
       if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
-        const references = dotnetClient.getProjectReferences(file.file);
-        const newDeps: RawProjectGraphDependency[] = [];
+        const references = await dotnetClient.getProjectReferencesAsync(
+          file.file,
+        );
         for (const reference of references) {
           const project = resolveReferenceToProject(
             normalizePath(reference),
@@ -69,11 +74,17 @@ export const createDependencies: CreateDependenciesCompat<NxDotnetConfig> = (
             );
           }
         }
-        dependencies = dependencies.concat(newDeps);
       }
-    }
-  }
-  return dependencies;
+      return newDeps;
+    };
+    const getAllProjectReferences = changed.map(getProjectReferences);
+    return Promise.all(getAllProjectReferences).then((d) => d.flat());
+  };
+
+  const parseAllProjects = Object.keys(ctx.filesToProcess.projectFileMap).map(
+    parseProject,
+  );
+  return Promise.all(parseAllProjects).then((d) => d.flat());
 };
 
 export const processProjectGraph: Required<NxPluginV1>['processProjectGraph'] =
