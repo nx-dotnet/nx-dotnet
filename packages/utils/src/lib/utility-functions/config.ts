@@ -137,36 +137,39 @@ export function deepMerge<T extends object>(
     return !!obj && typeof obj === 'object';
   }
 
-  return objects.reduce((agg, obj) => {
-    if (obj === null || obj === undefined) {
-      return agg;
-    }
-
-    Object.keys(obj).forEach((key) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const aggVal = agg[key];
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const nextVal = obj[key];
-
-      if (Array.isArray(aggVal) && Array.isArray(nextVal)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        agg[key] = aggVal.concat(...nextVal);
-      } else if (isObject(aggVal) && isObject(nextVal)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        agg[key] = deepMerge(aggVal, nextVal);
-      } else {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        agg[key] = nextVal;
+  return objects.reduce(
+    (agg, obj) => {
+      if (obj === null || obj === undefined) {
+        return agg;
       }
-    });
 
-    return agg;
-  }, JSON.parse(JSON.stringify(base))) as T;
+      Object.keys(obj).forEach((key) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const aggVal = agg[key];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const nextVal = obj[key];
+
+        if (Array.isArray(aggVal) && Array.isArray(nextVal)) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          agg[key] = aggVal.concat(...nextVal);
+        } else if (isObject(aggVal) && isObject(nextVal)) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          agg[key] = deepMerge(aggVal, nextVal);
+        } else {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          agg[key] = nextVal;
+        }
+      });
+
+      return agg;
+    },
+    JSON.parse(JSON.stringify(base)),
+  ) as T;
 }
 
 export function isNxDotnetConfigV1(

@@ -31,8 +31,8 @@ function generateInterfaceFiles(
       tsInterface.type === 'interface'
         ? tsInterface.properties?.map((prop) => prop.type.replace(/\[\]/g, ''))
         : tsInterface.type === 'array'
-        ? [tsInterface.elements]
-        : []
+          ? [tsInterface.elements]
+          : []
     )?.reduce((necessary, next) => {
       if (
         next !== 'object' &&
