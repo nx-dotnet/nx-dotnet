@@ -1,5 +1,6 @@
-import { ChildProcess, spawn, spawnSync } from 'child_process';
+import { ChildProcess, execFile, spawn, spawnSync } from 'child_process';
 import * as semver from 'semver';
+import { promisify } from 'util';
 
 import {
   convertOptionsToParams,
@@ -26,7 +27,6 @@ import {
 } from '../models';
 import { parseDotnetNewListOutput } from '../utils/parse-dotnet-new-list-output';
 import { LoadedCLI } from './dotnet.factory';
-import { once } from 'node:events';
 
 export class DotNetClient {
   constructor(
@@ -388,31 +388,23 @@ export class DotNetClient {
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
-    const res = spawn(this.cliCommand.command, params, {
-      cwd: this.cwd ?? process.cwd(),
-    });
-    let stdout = '';
-    let stderr = '';
-    res.stdout.setEncoding('utf8').on('data', (data) => {
-      if (data.includes('There are no Project to Project')) {
-        return;
+
+    const { stdout } = await promisify(execFile)(
+      this.cliCommand.command,
+      params,
+      {
+        cwd: this.cwd ?? process.cwd(),
+      },
+    ).catch((e) => {
+      if ('code' in e && 'stderr' in e) {
+        throw new Error(
+          `dotnet execution returned status code ${e.code} \n ${e.message}`,
+        );
       }
-      stdout += data.trim();
+      throw e;
     });
-    res.stderr.setEncoding('utf8').on('data', (data) => {
-      stderr += data.trim();
-    });
-    const [codeOrError] = await Promise.race([
-      once(res, 'close'),
-      once(res, 'error'),
-    ]);
-    if (codeOrError instanceof Error) {
-      throw codeOrError;
-    }
-    if (codeOrError !== 0) {
-      throw new Error(
-        `dotnet execution returned status code ${codeOrError} \n ${stderr}`,
-      );
+    if (stdout.includes('There are no Project to Project')) {
+      return '';
     }
     return stdout;
   }

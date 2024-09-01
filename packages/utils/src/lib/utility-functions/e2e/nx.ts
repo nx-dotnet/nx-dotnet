@@ -8,7 +8,7 @@ export async function readDependenciesFromNxDepGraph(
   project: string,
 ) {
   const depGraphFile = join('tmp', 'dep-graph.json');
-  execSync(`npx nx dep-graph --file ${depGraphFile}`, {
+  execSync(`npx nx graph --file ${depGraphFile}`, {
     cwd: workspaceRoot,
     stdio: 'inherit',
   });
