@@ -82,11 +82,19 @@ async function handleIssueOrPr(
     console.log('---');
     return;
   }
-
-  await client.issues.createComment({
-    owner: 'nx-dotnet',
-    repo: 'nx-dotnet',
-    issue_number: num,
-    body: bodyLines.join('\n'),
-  });
+  try {
+    await client.issues.createComment({
+      owner: 'nx-dotnet',
+      repo: 'nx-dotnet',
+      issue_number: num,
+      body: bodyLines.join('\n'),
+    });
+  } catch {
+    // This could have failed for several reasons, but its not worth
+    // failing the release process because of a changelog comment not
+    // being posted. Possible reasons include:
+    // - The issue is locked
+    // - We are out of API requests
+    // - Github is experiencing issues
+  }
 }
