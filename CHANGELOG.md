@@ -1,3 +1,16 @@
+## 2.4.4 (2024-09-05)
+
+
+### 🩹 Fixes
+
+- **core:** parallelize create dependencies processing for better perf ([#892](https://github.com/nx-dotnet/nx-dotnet/pull/892))
+- **misc:** relax version peerdep for openapi cli ([#889](https://github.com/nx-dotnet/nx-dotnet/pull/889))
+
+### ❤️  Thank You
+
+- Edouard Maleix
+- roldengarm @roldengarm
+
 ## 2.4.2 (2024-07-31)
 
 
