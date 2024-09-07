@@ -1,3 +1,14 @@
+## 2.4.5 (2024-09-07)
+
+
+### 🩹 Fixes
+
+- **core:** avoid terminal popups on windows ([#887](https://github.com/nx-dotnet/nx-dotnet/pull/887))
+
+### ❤️  Thank You
+
+- Denis Bendrikov
+
 ## 2.4.4 (2024-09-05)
 
 
