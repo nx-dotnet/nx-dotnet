@@ -29,7 +29,7 @@ function runNxDotnetOpenAPIGenerator(
       } nx g @nx-dotnet/core:swagger-typescript --openapiJsonPath="${
         options.openapiJsonPath
       }" --outputProject="${options.outputProject}"`,
-      { cwd: workspaceRoot },
+      { cwd: workspaceRoot, windowsHide: true },
       (error, stdout) => {
         if (error) {
           logger.error(error);
@@ -74,7 +74,7 @@ function runOpenAPIGenerator(
         `-o=${outputProjectRoot}`,
         ...(options.openApiGeneratorArgs ?? []),
       ],
-      { shell: true, stdio: 'inherit' },
+      { shell: true, stdio: 'inherit', windowsHide: true },
     );
 
     childProcess.on('error', (error) => {

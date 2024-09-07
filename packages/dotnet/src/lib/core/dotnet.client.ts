@@ -361,6 +361,7 @@ export class DotNetClient {
     const res = spawnSync(this.cliCommand.command, params, {
       cwd: this.cwd ?? process.cwd(),
       stdio: 'inherit',
+      windowsHide: true,
     });
     if (res.status !== 0) {
       throw new Error(`dotnet execution returned status code ${res.status}`);
@@ -375,6 +376,7 @@ export class DotNetClient {
     const res = spawnSync(this.cliCommand.command, params, {
       cwd: this.cwd ?? process.cwd(),
       stdio: 'pipe',
+      windowsHide: true,
     });
     if (res.status !== 0) {
       throw new Error(
@@ -416,6 +418,7 @@ export class DotNetClient {
     return spawn(this.cliCommand.command, params, {
       stdio: 'inherit',
       cwd: this.cwd ?? process.cwd(),
+      windowsHide: true,
     });
   }
 }

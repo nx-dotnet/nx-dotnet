@@ -114,7 +114,9 @@ export default async function runExecutor(
   try {
     const isInstalled = require.resolve('prettier');
     if (isInstalled) {
-      execSync(`npx -y prettier --write ${options.output}`);
+      execSync(`npx -y prettier --write ${options.output}`, {
+        windowsHide: true,
+      });
     }
   } catch {
     // Its not a huge deal if prettier isn't installed or fails...

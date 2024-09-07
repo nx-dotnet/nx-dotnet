@@ -11,6 +11,7 @@ export async function readDependenciesFromNxDepGraph(
   execSync(`npx nx graph --file ${depGraphFile}`, {
     cwd: workspaceRoot,
     stdio: 'inherit',
+    windowsHide: true,
   });
   const absolutePath = join(workspaceRoot, depGraphFile);
   const { graph } = await readJsonFile(absolutePath);
