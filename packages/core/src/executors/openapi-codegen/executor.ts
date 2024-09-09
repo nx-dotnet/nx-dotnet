@@ -70,7 +70,9 @@ function runOpenAPIGenerator(
       'npx',
       [
         'openapi-generator-cli',
+        'generate'
         `-g=${options.openApiGenerator}`,
+        `-i=${options.openapiJsonPath}`,
         `-o=${outputProjectRoot}`,
         ...(options.openApiGeneratorArgs ?? []),
       ],
