@@ -13,6 +13,8 @@ ruleTester.run(RULE_NAME, rule, {
     `spawnSync('dotnet --version', params, { windowsHide: true });`,
     `execFile(file, args, { windowsHide: true });`,
     `execFileSync(file, args, { windowsHide: true });`,
+    `promisify(exec)('dotnet --version', { windowsHide: true })`,
+    `promisify(execFile)(file, args, { windowsHide: true })`,
   ],
   invalid: [
     {
@@ -57,6 +59,22 @@ ruleTester.run(RULE_NAME, rule, {
     },
     {
       code: `execFileSync(file, args);`,
+      errors: [
+        {
+          messageId: 'missingWindowsHide',
+        },
+      ],
+    },
+    {
+      code: `promisify(exec)('dotnet --version', { windowsHide: false })`,
+      errors: [
+        {
+          messageId: 'missingWindowsHide',
+        },
+      ],
+    },
+    {
+      code: `promisify(execFile)(file, args)`,
       errors: [
         {
           messageId: 'missingWindowsHide',
