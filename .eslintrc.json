@@ -18,7 +18,8 @@
               }
             ]
           }
-        ]
+        ],
+        "@nx/workspace-no-terminal-popups": "error"
       }
     },
     {
@@ -27,8 +28,7 @@
       "rules": {
         "eqeqeq": ["error", "smart"],
         "@typescript-eslint/no-extra-semi": "error",
-        "no-extra-semi": "off",
-        "@nx/workspace-no-terminal-popups": "error"
+        "no-extra-semi": "off"
       }
     },
     {

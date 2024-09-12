@@ -1,4 +1,4 @@
-import { ESLintUtils } from '@typescript-eslint/utils';
+import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 
 export const RULE_NAME = 'no-terminal-popups';
 
@@ -27,7 +27,10 @@ export const rule = ESLintUtils.RuleCreator(() => __filename)({
       'spawnSync',
     ]);
 
-    const checkWindowsHide = (fnName: string, args: any[]) => {
+    const checkWindowsHide = (
+      fnName: string,
+      args: TSESTree.CallExpressionArgument[],
+    ) => {
       let optionsArg;
 
       switch (fnName) {
@@ -45,7 +48,7 @@ export const rule = ESLintUtils.RuleCreator(() => __filename)({
 
       if (optionsArg && optionsArg.type === 'ObjectExpression') {
         const hideWindowsProperty = optionsArg.properties.find(
-          (prop: any) =>
+          (prop) =>
             prop.type === 'Property' &&
             prop.key.type === 'Identifier' &&
             prop.key.name === 'windowsHide' &&
@@ -65,7 +68,7 @@ export const rule = ESLintUtils.RuleCreator(() => __filename)({
           childProcessMethods.has(callee.name)
         ) {
           const includeWindowsHide = checkWindowsHide(
-            (node.callee as any).name,
+            callee.name,
             node.arguments,
           );
           if (!includeWindowsHide) {
