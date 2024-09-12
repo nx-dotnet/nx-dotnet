@@ -396,6 +396,7 @@ export class DotNetClient {
       params,
       {
         cwd: this.cwd ?? process.cwd(),
+        windowsHide: true,
       },
     ).catch((e) => {
       if ('code' in e && 'stderr' in e) {
