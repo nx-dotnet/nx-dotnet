@@ -9,6 +9,7 @@ import {
 import { basename, dirname, join, resolve } from 'path';
 import { getWorkspacePackages } from '../utils';
 import { startCleanVerdaccioInstance } from './local-registry/setup';
+import { releasePublish, releaseVersion } from 'nx/release';
 
 const sandboxDirectory = join(__dirname, '../../tmp/sandbox');
 
@@ -21,13 +22,15 @@ export async function setup() {
 
     // Its ok.
   }
-  execSync('ts-node ./tools/scripts/publish-all 99.99.99 local', {
-    env: {
-      ...process.env,
-      NPM_CONFIG_REGISTRY: 'http://localhost:4872',
-      YARN_REGISTRY: 'http://localhost:4872',
+
+  await releaseVersion({
+    specifier: '99.99.99',
+    firstRelease: true,
+    generatorOptionsOverrides: {
+      currentVersionResolver: 'disk',
     },
   });
+  await releasePublish({ registry: 'http://localhost:4872' });
 }
 
 if (require.main === module) {
@@ -38,9 +41,9 @@ if (require.main === module) {
       }
       ensureDirSync(dirname(sandboxDirectory));
       execSync(
-        `npx create-nx-workspace@latest ${basename(
+        `npx --yes create-nx-workspace@latest ${basename(
           sandboxDirectory,
-        )} --preset empty --no-nxCloud --packageManager yarn`,
+        )} --preset apps --nxCloud skip --packageManager yarn`,
         {
           cwd: dirname(sandboxDirectory),
           stdio: 'inherit',
@@ -48,7 +51,7 @@ if (require.main === module) {
       );
       copySync('.npmrc.local', join(sandboxDirectory, '.npmrc'));
       getWorkspacePackages().then((pkgs) => {
-        execSync(`yarn add --dev ${pkgs}`, {
+        execSync(`yarn add --dev ${pkgs.join(' ')}`, {
           cwd: sandboxDirectory,
           stdio: 'inherit',
         });

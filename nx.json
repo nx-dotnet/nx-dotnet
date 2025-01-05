@@ -113,6 +113,9 @@
       "conventionalCommits": true,
       "generatorOptions": {
         "packageRoot": "dist/{projectRoot}"
+      },
+      "git": {
+        "commitMessage": "chore(repo): release {version} [skip ci]"
       }
     },
     "changelog": {
@@ -120,9 +123,6 @@
         "createRelease": "github",
         "renderer": "@nx-dotnet/workspace-plugin/changelog-renderer"
       }
-    },
-    "git": {
-      "commitMessage": "chore(repo): release {version} [skip ci]"
     }
   }
 }
