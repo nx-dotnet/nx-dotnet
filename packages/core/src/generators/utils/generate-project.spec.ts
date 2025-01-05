@@ -5,7 +5,6 @@ import {
   updateNxJson,
   writeJson,
 } from '@nx/devkit';
-import * as devkit from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import {

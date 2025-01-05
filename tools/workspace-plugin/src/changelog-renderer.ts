@@ -1,26 +1,28 @@
-import changelogRenderer from 'nx/release/changelog-renderer';
+import DefaultChangelogRenderer from 'nx/release/changelog-renderer';
 import type { Octokit } from '@octokit/rest';
 
 const dynamicImport = async (path: string) => {
   return new Function(`return import('${path}')`)();
 };
 
-const wrapped: typeof changelogRenderer = async (opts) => {
-  const client: Octokit = await dynamicImport('@octokit/rest').then(
-    (m) =>
-      new m.Octokit({ auth: process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN }),
-  );
-  for (const change of opts.changes ?? []) {
-    for (const ref of change.githubReferences ?? []) {
-      if (ref.type === 'issue' || ref.type === 'pull-request') {
-        await handleIssueOrPr(client, ref.value, opts.releaseVersion);
+export default class extends DefaultChangelogRenderer {
+  override async render(): Promise<string> {
+    const client: Octokit = await dynamicImport('@octokit/rest').then(
+      (m) =>
+        new m.Octokit({
+          auth: process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN,
+        }),
+    );
+    for (const change of this.changes ?? []) {
+      for (const ref of change.githubReferences ?? []) {
+        if (ref.type === 'issue' || ref.type === 'pull-request') {
+          await handleIssueOrPr(client, ref.value, this.changelogEntryVersion);
+        }
       }
     }
+    return await super.render();
   }
-  return changelogRenderer(opts);
-};
-
-export default wrapped;
+}
 
 async function handleIssueOrPr(
   client: Octokit,

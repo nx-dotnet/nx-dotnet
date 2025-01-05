@@ -3,17 +3,17 @@ import {
   CreateDependenciesContext,
   DependencyType,
   FileData,
-  NxPluginV1,
   ProjectConfiguration,
-  ProjectGraphBuilder,
   RawProjectGraphDependency,
   normalizePath,
   workspaceRoot,
 } from '@nx/devkit';
 import { dirname, parse, relative, resolve } from 'node:path';
 
-import { NxDotnetConfig, readConfig } from '@nx-dotnet/utils';
+import { NxDotnetConfig } from '@nx-dotnet/utils';
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
+
+const dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
 
 // Between Nx versions 16.8 and 17, the signature of `CreateDependencies` changed.
 // It used to only consist of the context, but now it also includes the options.
@@ -29,8 +29,6 @@ type CreateDependenciesCompat<T> = {
     ctx: CreateDependenciesContext,
   ): ReturnType<CreateDependencies<T>>;
 };
-
-const dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
 
 export const createDependencies: CreateDependenciesCompat<
   NxDotnetConfig
@@ -86,29 +84,6 @@ export const createDependencies: CreateDependenciesCompat<
   );
   return Promise.all(parseAllProjects).then((d) => d.flat());
 };
-
-export const processProjectGraph: Required<NxPluginV1>['processProjectGraph'] =
-  async (g, ctx) => {
-    const builder = new ProjectGraphBuilder(g);
-    const deps = await createDependencies(readConfig(), {
-      ...ctx,
-      fileMap: {
-        nonProjectFiles: [],
-        projectFileMap: ctx.fileMap,
-      },
-      filesToProcess: {
-        nonProjectFiles: [],
-        projectFileMap: ctx.filesToProcess,
-      },
-      externalNodes: g.externalNodes,
-      projects: ctx.projectsConfigurations.projects,
-      workspaceRoot,
-    });
-    for (const dep of deps) {
-      builder.addDependency(dep.source, dep.target, dep.type, dep.source);
-    }
-    return builder.getUpdatedProjectGraph();
-  };
 
 function createProjectRootMappings(
   projects: Record<string, ProjectConfiguration>,
