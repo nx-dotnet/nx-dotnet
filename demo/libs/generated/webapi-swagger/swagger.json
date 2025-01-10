@@ -11,7 +11,7 @@
         "operationId": "GetWeatherForecast",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
