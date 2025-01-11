@@ -10,6 +10,8 @@ import { basename, dirname, join, resolve } from 'path';
 import { getWorkspacePackages } from '../utils';
 import { startCleanVerdaccioInstance } from './local-registry/setup';
 import { releasePublish, releaseVersion } from 'nx/release';
+import { readFileSync, writeFileSync } from 'fs';
+import { NxJsonConfiguration } from '@nx/devkit';
 
 const sandboxDirectory = join(__dirname, '../../tmp/sandbox');
 
@@ -22,7 +24,16 @@ export async function setup() {
 
     // Its ok.
   }
-
+  // We have to remove the git release configuration from nx.json in order to
+  // use the programmatic release API. Real releases of nx-dotnet use the top
+  // level `nx release` command which requires that `git` is set at the top level.
+  const restoreNxJson = temporarilyPatchJsonFile<NxJsonConfiguration>(
+    'nx.json',
+    (json) => {
+      delete json.release?.['git'];
+      return json;
+    },
+  );
   await releaseVersion({
     specifier: '99.99.99',
     firstRelease: true,
@@ -31,6 +42,7 @@ export async function setup() {
     },
   });
   await releasePublish({ registry: 'http://localhost:4872' });
+  restoreNxJson();
 }
 
 if (require.main === module) {
@@ -62,4 +74,12 @@ if (require.main === module) {
       console.error(err);
       process.exit(1);
     });
+}
+
+function temporarilyPatchJsonFile<T>(path: string, patch: (content: T) => T) {
+  const content = readFileSync(path, 'utf-8');
+  const json = JSON.parse(content);
+  const patched = patch(json);
+  writeFileSync(path, JSON.stringify(patched, null, 2));
+  return () => writeFileSync(path, content);
 }

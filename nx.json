@@ -113,10 +113,10 @@
       "conventionalCommits": true,
       "generatorOptions": {
         "packageRoot": "dist/{projectRoot}"
-      },
-      "git": {
-        "commitMessage": "chore(repo): release {version} [skip ci]"
       }
+    },
+    "git": {
+      "commitMessage": "chore(repo): release {version} [skip ci]"
     },
     "changelog": {
       "workspaceChangelog": {
