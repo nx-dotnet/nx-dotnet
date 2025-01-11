@@ -5,6 +5,7 @@ import * as utils from '@nx-dotnet/utils';
 
 import executor from './executor';
 import { BuildExecutorSchema } from './schema';
+import { ProjectType } from '@nx/workspace';
 
 jest.mock('@nx-dotnet/utils', () => ({
   ...(jest.requireActual('@nx-dotnet/utils') as typeof utils),
@@ -29,7 +30,22 @@ describe('Build Executor', () => {
       cwd: root,
       projectName: 'my-app',
       targetName: 'build',
-      workspace: {
+      projectGraph: {
+        nodes: {
+          ['my-app']: {
+            data: {
+              projectType: ProjectType.Application,
+              name: 'my-app',
+              root: `${root}/apps/my-app`,
+            },
+            type: 'app',
+            name: 'my-app',
+          },
+        },
+        dependencies: {},
+      },
+      nxJsonConfiguration: {},
+      projectsConfigurations: {
         version: 2,
         projects: {
           'my-app': {

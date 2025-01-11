@@ -5,7 +5,9 @@ export function getWorkspaceScope(
   nxJson: NxJsonConfiguration | null,
   rootPackageJson?: PackageJson,
 ) {
-  const { workspaceLayout } = (nxJson ?? {}) as any;
+  const { workspaceLayout } = (nxJson ?? {}) as {
+    workspaceLayout?: { npmScope: string };
+  };
 
   // Prior to Nx 17 npm scope was included here.
   const { npmScope } = workspaceLayout ?? {};

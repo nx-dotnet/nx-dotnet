@@ -10,7 +10,7 @@
   "dependencies": {
     "@nx-dotnet/dotnet": "file:../dotnet",
     "@nx-dotnet/utils": "file:../utils",
-    "@nx/devkit": "19.5.3",
+    "@nx/devkit": "20.3.0",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "minimatch": "3.1.2",
@@ -21,7 +21,7 @@
     "yargs-parser": "^21.0.0"
   },
   "peerDependencies": {
-    "nx": ">=18.0.0 <20.0.0",
+    "nx": ">= 18.0.0 < 21.0.0",
     "@nx/js": ">=16.0.0-beta.1",
     "@openapitools/openapi-generator-cli": "^2.13.4",
     "eslint": ">8.0.0",
@@ -72,5 +72,5 @@
       "@nx-dotnet/dotnet"
     ]
   },
-  "version": "*"
+  "version": "0.0.0"
 }

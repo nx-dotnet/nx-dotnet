@@ -296,7 +296,7 @@ describe('nx-dotnet e2e', () => {
     it('should create specified solution file if specified as string', async () => {
       const app = uniq('app');
       await runNxCommandAsync(
-        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --solutionFile="MyCompany.sln"`,
+        `generate @nx-dotnet/core:app ${app} --language="C#" --template="webapi" --solutionFile="MyCompany.sln" --skip-swagger-lib`,
       );
 
       expect(() =>

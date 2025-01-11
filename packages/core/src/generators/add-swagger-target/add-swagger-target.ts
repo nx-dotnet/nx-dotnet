@@ -17,6 +17,7 @@ import { AddSwaggerJsonExecutorSchema } from './schema';
 import { major } from 'semver';
 import { OpenapiCodegenExecutorSchema } from '../../executors/openapi-codegen/schema';
 import { updateProjectConfiguration } from '../utils/project-configuration';
+import * as path from 'node:path';
 
 type NormalizedOptions = AddSwaggerJsonExecutorSchema & {
   output: string;
@@ -179,8 +180,8 @@ async function generateCodegenProject(
     await libraryGenerator(host, {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ...libraryGeneratorDefaults,
-      name: options.codegenProject,
-      directory: 'generated',
+      name: nameWithDirectory,
+      directory: path.join('libs', 'generated', options.codegenProject),
       unitTestRunner: 'none',
     }),
   );

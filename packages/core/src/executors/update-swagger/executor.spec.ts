@@ -8,6 +8,7 @@ import * as utils from '@nx-dotnet/utils';
 
 import executor, { SWAGGER_CLI_TOOL } from './executor';
 import { UpdateSwaggerJsonExecutorSchema } from './schema';
+import { ProjectType } from '@nx/workspace';
 
 jest.mock('fs');
 
@@ -57,7 +58,22 @@ describe('Update-Swagger Executor', () => {
       cwd: root,
       projectName: 'my-app',
       targetName: 'lint',
-      workspace: {
+      projectGraph: {
+        nodes: {
+          ['my-app']: {
+            data: {
+              projectType: ProjectType.Application,
+              name: 'my-app',
+              root: `${root}/apps/my-app`,
+            },
+            type: 'app',
+            name: 'my-app',
+          },
+        },
+        dependencies: {},
+      },
+      nxJsonConfiguration: {},
+      projectsConfigurations: {
         version: 2,
         projects: {
           'my-app': {
