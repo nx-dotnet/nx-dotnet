@@ -1,3 +1,20 @@
+## 2.5.0 (2025-01-12)
+
+### 🚀 Features
+
+- **core:** update to Nx 20 ([#918](https://github.com/nx-dotnet/nx-dotnet/pull/918))
+
+### 🩹 Fixes
+
+- **core:** updated openapi-codegen command ([#896](https://github.com/nx-dotnet/nx-dotnet/pull/896))
+- **misc:** update versions via lint --fix ([2ccc6be](https://github.com/nx-dotnet/nx-dotnet/commit/2ccc6be))
+
+### ❤️ Thank You
+
+- Craigory Coppola @AgentEnder
+- Ismaïl Ouazzany @Tommy228
+- VipWW @VipWW
+
 ## 2.4.5 (2024-09-07)
 
 
