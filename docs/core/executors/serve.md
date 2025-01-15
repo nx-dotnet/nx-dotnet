@@ -16,13 +16,13 @@ Uses `dotnet watch` to run a .NET app.
 
 Default: `"Debug"`
 
-### framework
-
-- (string): Builds and runs the app using the specified framework. The framework must be specified in the project file.
-
 ### force
 
 - (boolean): Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file.
+
+### framework
+
+- (string): Builds and runs the app using the specified framework. The framework must be specified in the project file.
 
 ### launch-profile
 

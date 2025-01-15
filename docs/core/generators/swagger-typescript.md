@@ -10,10 +10,10 @@ Generate typescript code based on an openapi/swagger specification file
 
 ## Options
 
-### <span class="required">outputProject</span>
-
-- (string): Which project should the typescript be generated inside of?
-
-### <span class="required">openapiJsonPath</span>
+### <span className="required">openapiJsonPath</span>
 
 - (string): Path to the openapi specification file.
+
+### <span className="required">outputProject</span>
+
+- (string): Which project should the typescript be generated inside of?

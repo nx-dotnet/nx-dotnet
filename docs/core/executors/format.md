@@ -10,35 +10,9 @@ Formats and lints a project using the dotnet-format tool
 
 ## Options
 
-### noRestore
+### binarylog
 
-- (boolean): Doesn't execute an implicit restore before formatting
-
-### fixWhitespace
-
-- (boolean): Run whitespace formatting. Run by default when not applying fixes.
-
-### fixStyle
-
-- (string): Run code style analyzers and apply fixes.
-
-### fixAnalyzers
-
-- (string): Run 3rd party analyzers and apply fixes.
-
-### diagnostics
-
-- (string): A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.
-
-- (array): A list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.
-
-### include
-
-- (array): A list of relative file or folder paths to include in formatting. All files are formatted if empty
-
-### exclude
-
-- (array): A list of relative file or folder paths to exclude from formatting.
+- (string): Log all project or solution load information to a binary log file.
 
 ### check
 
@@ -46,20 +20,46 @@ Formats and lints a project using the dotnet-format tool
 
 Default: `true`
 
+### diagnostics
+
+- (string): A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.
+
+- (array): A list of diagnostic ids to use as a filter when fixing code style or 3rd party analyzers.
+
+### exclude
+
+- (array): A list of relative file or folder paths to exclude from formatting.
+
+### fix
+
+- (boolean): Formats files and saves changes to disk. Equivalent to setting --check=false.
+
+### fixAnalyzers
+
+- (string): Run 3rd party analyzers and apply fixes.
+
+### fixStyle
+
+- (string): Run code style analyzers and apply fixes.
+
+### fixWhitespace
+
+- (boolean): Run whitespace formatting. Run by default when not applying fixes.
+
+### include
+
+- (array): A list of relative file or folder paths to include in formatting. All files are formatted if empty
+
+### noRestore
+
+- (boolean): Doesn't execute an implicit restore before formatting
+
 ### report
 
 - (string): Accepts a file path, which if provided, will produce a json report in the given directory.
-
-### binarylog
-
-- (string): Log all project or solution load information to a binary log file.
 
 ### verbosity
 
 - (string): Set the verbosity level.
 
 Default: `"minimal"`
-
-### fix
-
-- (boolean): Formats files and saves changes to disk. Equivalent to setting --check=false.

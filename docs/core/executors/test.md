@@ -10,10 +10,6 @@ Runs test via the dotnet cli
 
 ## Options
 
-### testAdapterPath
-
-- (string): Path to a directory to be searched for additional test adapters. Only .dll files with suffix .TestAdapter.dll are inspected. If not specified, the directory of the test .dll is searched.
-
 ### blame
 
 - (boolean): Runs the tests in blame mode. This option is helpful in isolating problematic tests that cause the test host to crash. When a crash is detected, it creates a sequence file in TestResults/&lt;Guid&gt;/&lt;Guid&gt;\_Sequence.xml that captures the order of tests that were run before the crash.
@@ -22,13 +18,13 @@ Runs test via the dotnet cli
 
 - (boolean): Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system. For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux. Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. Download the tools. Implies --blame. To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the VSTEST_DUMP_FORCEPROCDUMP environment variable to 1.
 
-### blameCrashDumpType
-
-- (string): The type of crash dump to be collected. Implies --blame-crash.
-
 ### blameCrashCollectAlways
 
 - (boolean): Collects a crash dump on expected as well as unexpected test host exit.
+
+### blameCrashDumpType
+
+- (string): The type of crash dump to be collected. Implies --blame-crash.
 
 ### blameHang
 
@@ -47,27 +43,35 @@ Runs test via the dotnet cli
   5400000ms, 5400000mil, 5400000millisecond, 5400000milliseconds
   When no unit is used (for example, 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case. For MSTest, the timeout is used for all test cases. This option is supported on Windows with netcoreapp2.1 and later, on Linux with netcoreapp3.1 and later, and on macOS with net5.0 or later. Implies --blame and --blame-hang.
 
-### configuration
-
-- (string): Defines the build configuration. The default value is Debug, but your project's configuration could override this default SDK setting.
-
 ### collect
 
 - (string): Enables data collector for the test run. For more information, see Monitor and analyze test run.
   To collect code coverage on any platform that is supported by .NET Core, install Coverlet and use the --collect:"XPlat Code Coverage" option.
   On Windows, you can collect code coverage by using the --collect "Code Coverage" option. This option generates a .coverage file, which can be opened in Visual Studio 2019 Enterprise. For more information, see Use code coverage and Customize code coverage analysis.
 
+### configuration
+
+- (string): Defines the build configuration. The default value is Debug, but your project's configuration could override this default SDK setting.
+
 ### diag
 
 - (string): Enables diagnostic mode for the test platform and writes diagnostic messages to the specified file and to files next to it. The process that is logging the messages determines which files are created, such as _.host\_&lt;date&gt;.txt for test host log, and _.datacollector\_&lt;date&gt;.txt for data collector log.
+
+### extraParameters
+
+- (string): Extra command-line arguments that are passed verbatim to the dotnet command.
+
+### filter
+
+- (string): Filters out tests in the current project using the given expression. For more information, see the Filter option details section. For more information and examples on how to use selective unit test filtering, see Running selective unit tests.
 
 ### framework
 
 - (string): Forces the use of dotnet or .NET Framework test host for the test binaries. This option only determines which type of host to use. The actual framework version to be used is determined by the runtimeconfig.json of the test project. When not specified, the TargetFramework assembly attribute is used to determine the type of host. When that attribute is stripped from the .dll, the .NET Framework host is used.
 
-### filter
+### listTests
 
-- (string): Filters out tests in the current project using the given expression. For more information, see the Filter option details section. For more information and examples on how to use selective unit test filtering, see Running selective unit tests.
+- (boolean): List the discovered tests instead of running the tests.
 
 ### logger
 
@@ -97,9 +101,9 @@ Runs test via the dotnet cli
 
 - (string): The .runsettings file to use for running the tests. The TargetPlatform element (x86|x64) has no effect for dotnet test. To run tests that target x86, install the x86 version of .NET Core. The bitness of the dotnet.exe that is on the path is what will be used for running tests. For more information, see the following resources:
 
-### listTests
+### testAdapterPath
 
-- (boolean): List the discovered tests instead of running the tests.
+- (string): Path to a directory to be searched for additional test adapters. Only .dll files with suffix .TestAdapter.dll are inspected. If not specified, the directory of the test .dll is searched.
 
 ### verbosity
 
@@ -108,7 +112,3 @@ Runs test via the dotnet cli
 ### watch
 
 - (boolean): Determines if `dotnet test` or `dotnet watch test` is used to execute tests.
-
-### extraParameters
-
-- (string): Extra command-line arguments that are passed verbatim to the dotnet command.

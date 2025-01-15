@@ -16,13 +16,17 @@ Publishes an app via the `dotnet` cli command.
 
 Default: `"Debug"`
 
-### framework
+### extraParameters
 
-- (string): Publishes the application for the specified target framework. You must specify the target framework in the project file.
+- (string): Extra command-line arguments that are passed verbatim to the dotnet command.
 
 ### force
 
 - (boolean): Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file.
+
+### framework
+
+- (string): Publishes the application for the specified target framework. You must specify the target framework in the project file.
 
 ### noBuild
 
@@ -44,13 +48,17 @@ Default: `"Debug"`
 
 - (string): Specifies the path for the output directory.
 
-### selfContained
+### publishProfile
 
-- (boolean): Publishes the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. Default is true if a runtime identifier is specified and the project is an executable project (not a library project).
+- (string): Specifies the name of the publish profile to use while publishing. Do not include the file path or the file extension. MSBuild by default looks in the Properties/PublishProfiles folder and assumes the pubxml file extension.
 
 ### runtime
 
 - (string): Publishes the application for a given runtime.
+
+### selfContained
+
+- (boolean): Publishes the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. Default is true if a runtime identifier is specified and the project is an executable project (not a library project).
 
 ### verbosity
 
@@ -61,11 +69,3 @@ Default: `"minimal"`
 ### versionSuffix
 
 - (string): Defines the version suffix to replace the asterisk (\*) in the version field of the project file.
-
-### publishProfile
-
-- (string): Specifies the name of the publish profile to use while publishing. Do not include the file path or the file extension. MSBuild by default looks in the Properties/PublishProfiles folder and assumes the pubxml file extension.
-
-### extraParameters
-
-- (string): Extra command-line arguments that are passed verbatim to the dotnet command.

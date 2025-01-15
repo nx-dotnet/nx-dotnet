@@ -10,10 +10,10 @@ Adds a project reference to the host project that points to the source project.
 
 ## Options
 
-### <span class="required">project</span>
+### <span className="required">project</span>
 
 - (string): The project to which the reference is added.
 
-### <span class="required">reference</span>
+### <span className="required">reference</span>
 
 - (string): The project to which the reference points.

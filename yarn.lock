@@ -13183,10 +13183,10 @@ nx@20.3.0:
     "@nx/nx-win32-arm64-msvc" "20.3.0"
     "@nx/nx-win32-x64-msvc" "20.3.0"
 
-nxdoc@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/nxdoc/-/nxdoc-0.2.4.tgz#10e6b89191836a78a700ab5168ecbcbe3516fcaf"
-  integrity sha512-iVe79b31LkNlfNlMapKZuBKYfQkDQJSRW4mUo0jv5mbU7jt45m9QMQWoB3cvzLd1JvWFu7Sfz31wUA4Uo6VNIg==
+nxdoc@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/nxdoc/-/nxdoc-0.3.0.tgz#a2b58af1f5c1caab6df2416ee3595c0f354cb14e"
+  integrity sha512-otuk68UE8sTXz8nGMDFvTFmXilFPubC8ffKhHjXaMyETZ9RzQmzRc9yDyatdd/wwRJocfT4T9ruumdeUK+1K3Q==
   dependencies:
     "@nx/devkit" "19.5.3"
     markdown-factory "^0.1.0"

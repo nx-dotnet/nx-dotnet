@@ -14,16 +14,16 @@ Extract openapi swagger documentation from the webapi
 
 - (string): Where should the swagger output be stored
 
-### swaggerDoc
+### skipInstall
 
-- (string): Which swagger doc should be used?
-
-Default: `"v1"`
+- (boolean): Skips installing Swashbuckle.AspNetCore.Cli. This option should be used if you are managing the installation on your own.
 
 ### startupAssembly
 
 - (string): Path from workspace root to the built api's startup dll file
 
-### skipInstall
+### swaggerDoc
 
-- (boolean): Skips installing Swashbuckle.AspNetCore.Cli. This option should be used if you are managing the installation on your own.
+- (string): Which swagger doc should be used?
+
+Default: `"v1"`

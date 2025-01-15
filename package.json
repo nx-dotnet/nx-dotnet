@@ -106,7 +106,7 @@
     "memfs": "3.4.13",
     "node-fetch": "3.3.0",
     "nx": "20.3.0",
-    "nxdoc": "^0.2.4",
+    "nxdoc": "^0.3.0",
     "openapi-types": "^12.1.0",
     "prettier": "^3.0.3",
     "prettier-2": "npm:prettier@^2",

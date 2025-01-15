@@ -10,11 +10,11 @@ Generate a .NET test project for an existing application or library
 
 ## Options
 
-### <span class="required">targetProject</span>
+### <span className="required">targetProject</span>
 
 - (string): The existing project to generate tests for
 
-### <span class="required">testTemplate</span>
+### <span className="required">testTemplate</span>
 
 - (string): Which template should be used for creating the tests project?
 
@@ -24,17 +24,15 @@ Default: `"nunit"`
 
 - (string): Which language should the project use?
 
-### suffix
-
-- (string): What suffix should be used for the tests project name?
-
-### testProjectName
-
-- (string): What name should be used for the tests project?
-
 ### namespaceName
 
 - (string): The namespace for the project. If not provided, will be generated based on test project name / suffix.
+
+### pathScheme
+
+- (string): Determines if the project should follow NX or dotnet path naming conventions
+
+Default: `"nx"`
 
 ### solutionFile
 
@@ -42,8 +40,10 @@ Default: `"nunit"`
 
 - (boolean): Should the project be added to the default solution file?
 
-### pathScheme
+### suffix
 
-- (string): Determines if the project should follow NX or dotnet path naming conventions
+- (string): What suffix should be used for the tests project name?
 
-Default: `"nx"`
+### testProjectName
+
+- (string): What name should be used for the tests project?

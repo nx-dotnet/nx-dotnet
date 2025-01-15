@@ -10,15 +10,13 @@ Invokes `nx g @nx-dotnet/core:swagger-typescript` with the proper parameters to 
 
 ## Options
 
-### useOpenApiGenerator
+### <span className="required">openapiJsonPath</span>
 
-- (boolean): Use the OpenAPI generator to generate the code
+- (string): Path to OpenAPI spec file
 
-### openApiGeneratorTemplate
+### <span className="required">outputProject</span>
 
-- (string): The template to use for the OpenAPI generator
-
-Default: `"typescript-fetch"`
+- (string): Which project should hold the generated code?
 
 ### openApiGeneratorArgs
 
@@ -26,10 +24,12 @@ Default: `"typescript-fetch"`
 
 Default: `["--global-property=models,apis"]`
 
-### <span class="required">openapiJsonPath</span>
+### openApiGeneratorTemplate
 
-- (string): Path to OpenAPI spec file
+- (string): The template to use for the OpenAPI generator
 
-### <span class="required">outputProject</span>
+Default: `"typescript-fetch"`
 
-- (string): Which project should hold the generated code?
+### useOpenApiGenerator
+
+- (boolean): Use the OpenAPI generator to generate the code

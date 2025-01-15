@@ -10,21 +10,25 @@ Add a nuget reference to a .NET project
 
 ## Options
 
-### <span class="required">project</span>
-
-- (string): The project to which the reference is added.
-
-### <span class="required">packageName</span>
+### <span className="required">packageName</span>
 
 - (string): Which package should be added?
 
-### version
+### <span className="required">project</span>
 
-- (string): The package version to add.
+- (string): The project to which the reference is added.
+
+### allowVersionMismatch
+
+- (boolean): Ignores single version principle for this package across all apps in the workspace
 
 ### framework
 
 - (string): Adds a package reference only when targeting a specific framework.
+
+### noRestore
+
+- (boolean): Adds a package reference without performing a restore preview and compatibility check.
 
 ### packageDirectory
 
@@ -38,10 +42,6 @@ Add a nuget reference to a .NET project
 
 - (string): The URI of the NuGet package source to use during the restore operation.
 
-### noRestore
+### version
 
-- (boolean): Adds a package reference without performing a restore preview and compatibility check.
-
-### allowVersionMismatch
-
-- (boolean): Ignores single version principle for this package across all apps in the workspace
+- (string): The package version to add.

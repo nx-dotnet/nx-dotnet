@@ -10,23 +10,23 @@ Builds an app via the `dotnet` cli command.
 
 ## Options
 
-### framework
-
-- (string): Compiles for a specific framework. The framework must be defined in the project file
-
-### version-suffix
-
-- (string): Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn't set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash.
-
-### <span class="required">configuration</span>
+### <span className="required">configuration</span>
 
 - (string): Defines the build configuration. The default for most projects is Debug, but you can override the build configuration settings in your project
 
 Default: `"Debug"`
 
+### extraParameters
+
+- (string): Extra command-line arguments that are passed verbatim to the dotnet command.
+
 ### force
 
 - (boolean): Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file.
+
+### framework
+
+- (string): Compiles for a specific framework. The framework must be defined in the project file
 
 ### no-dependencies
 
@@ -54,6 +54,6 @@ Default: `"Debug"`
 
 Default: `"minimal"`
 
-### extraParameters
+### version-suffix
 
-- (string): Extra command-line arguments that are passed verbatim to the dotnet command.
+- (string): Sets the value of the $(VersionSuffix) property to use when building the project. This only works if the $(Version) property isn't set. Then, $(Version) is set to the $(VersionPrefix) combined with the $(VersionSuffix), separated by a dash.

@@ -10,13 +10,13 @@ Moves `{projectName}` to `{destination}`. Renames the Nx project to match the ne
 
 ## Options
 
-### <span class="required">projectName</span>
-
-- (string): Name of the project to move
-
-### <span class="required">destination</span>
+### <span className="required">destination</span>
 
 - (string): Where should it be moved to?
+
+### <span className="required">projectName</span>
+
+- (string): Name of the project to move
 
 ### relativeToRoot
 
