@@ -77,7 +77,7 @@ Check out our [Contributors Guide](CONTRIBUTING.md)
 
 ## Further help
 
-Visit the [Documentation](https://nx-dotnet.com/docs) to learn more.
+Visit the [Documentation](https://nx-dotnet.com) to learn more.
 
 ## ☁ Nx Cloud
 
