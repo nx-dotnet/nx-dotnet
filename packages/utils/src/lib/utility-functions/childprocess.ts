@@ -12,7 +12,7 @@ export function isChildProcess(obj: any): obj is cp.ChildProcess {
 /**
  * Windows-safe implementation of execSync that avoids EBADF errors
  * when running under Nx with isolated plugins.
- * 
+ *
  * Security note: This function should only be used with trusted command inputs.
  * Do not pass unsanitized user input directly to this function.
  */
@@ -58,7 +58,7 @@ export function safeExecSync(
  * A safer alternative to safeExecSync when you need to execute a specific command
  * with arguments. This uses execFileSync which doesn't spawn a shell, reducing
  * the risk of command injection.
- * 
+ *
  * @param file The executable to run
  * @param args The arguments to pass to the executable
  * @param options Options for the child process
@@ -72,7 +72,7 @@ export function safeExecFileSync(
   if (!file || typeof file !== 'string' || !file.trim()) {
     throw new Error('Invalid executable: File path cannot be empty');
   }
-  
+
   return cp.execFileSync(file, args, options);
 }
 
