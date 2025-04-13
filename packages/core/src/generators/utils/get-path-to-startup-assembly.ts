@@ -32,9 +32,12 @@ export function buildStartupAssemblyPath(
       .replace('{projectRoot}', project.root),
   );
   if (!existsSync(outputDirectory)) {
-    safeExecSync(`${getPackageManagerCommand().exec} nx ${target} ${projectName}`, {
-      windowsHide: true,
-    });
+    safeExecSync(
+      `${getPackageManagerCommand().exec} nx ${target} ${projectName}`,
+      {
+        windowsHide: true,
+      },
+    );
   }
   const dllName = basename(csProjFilePath).replace(
     /(?:\.csproj|\.vbproj|\.fsproj)$/,

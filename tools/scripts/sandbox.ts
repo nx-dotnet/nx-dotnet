@@ -8,7 +8,10 @@ import {
 } from 'fs-extra';
 import { basename, dirname, join, resolve } from 'path';
 import { getWorkspacePackages } from '../utils';
-import { startCleanVerdaccioInstance, killVerdaccioInstance } from './local-registry/setup';
+import {
+  startCleanVerdaccioInstance,
+  killVerdaccioInstance,
+} from './local-registry/setup';
 import { releasePublish, releaseVersion } from 'nx/release';
 import { readFileSync, writeFileSync } from 'fs';
 import { NxJsonConfiguration } from '@nx/devkit';
@@ -18,23 +21,23 @@ const sandboxDirectory = join(__dirname, '../../tmp/sandbox');
 
 export async function setup() {
   copySync('.npmrc.local', '.npmrc');
-  
+
   // Kill any existing Verdaccio instance first
   killVerdaccioInstance();
-  
+
   // Add a small delay before starting a new instance
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   try {
     // Try to start Verdaccio with improved error handling
-    console.log("Starting Verdaccio local registry...");
+    console.log('Starting Verdaccio local registry...');
     await startCleanVerdaccioInstance();
-    console.log("Verdaccio started successfully");
+    console.log('Verdaccio started successfully');
   } catch (E) {
-    console.error("Error starting Verdaccio:", E);
-    console.log("Continuing without local registry...");
+    console.error('Error starting Verdaccio:', E);
+    console.log('Continuing without local registry...');
   }
-  
+
   try {
     await releaseVersion({
       specifier: '99.99.99',
@@ -48,8 +51,8 @@ export async function setup() {
     });
     await releasePublish({ registry: 'http://localhost:4872' });
   } catch (error) {
-    console.error("Error during release process:", error);
-    console.log("Continuing with sandbox creation...");
+    console.error('Error during release process:', error);
+    console.log('Continuing with sandbox creation...');
   }
 }
 
@@ -67,7 +70,7 @@ if (require.main === module) {
         )} --preset apps --nxCloud skip --packageManager yarn`,
         {
           cwd: dirname(sandboxDirectory),
-          stdio: 'inherit'
+          stdio: 'inherit',
         },
       );
       copySync('.npmrc.local', join(sandboxDirectory, '.npmrc'));
@@ -75,7 +78,7 @@ if (require.main === module) {
         console.log('Installing workspace packages...');
         safeExecSync(`yarn add --dev ${pkgs.join(' ')}`, {
           cwd: sandboxDirectory,
-          stdio: 'inherit'
+          stdio: 'inherit',
         });
         console.log('Sandbox created at', resolve(sandboxDirectory));
       });
