@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+import { safeExecSync } from '@nx-dotnet/utils';
 
 /**
  * get CLI command line runner
@@ -16,7 +17,8 @@ export function dotnetFactory(): LoadedCLI {
   // return the command line for local or global dotnet
   // check if dotnet is installed
   try {
-    const version = execSync('dotnet --version', { windowsHide: true })
+    // Use safeExecSync to prevent EBADF errors on Windows when running with NX_ISOLATED_PLUGINS=true
+    const version = safeExecSync('dotnet --version', { windowsHide: true })
       .toString('utf-8')
       .trim();
     return {

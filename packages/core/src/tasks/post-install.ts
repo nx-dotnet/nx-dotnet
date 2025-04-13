@@ -1,7 +1,8 @@
 import { execSync } from 'child_process';
+import { safeExecSync } from '@nx-dotnet/utils';
 
 try {
-  const version = execSync('dotnet --version', { windowsHide: true })
+  const version = safeExecSync('dotnet --version', { windowsHide: true })
     .toString('utf-8')
     .trim();
   console.info(

@@ -170,7 +170,16 @@ describe('nx-dotnet generate-project', () => {
   it('should forward args to dotnet new', async () => {
     options.__unparsed__ = ['--foo', 'bar'];
     options.args = ['--help'];
+    
+    // Create a custom mock for the dotnet client that returns a proper result
     const dotnetClient = new DotNetClient(mockDotnetFactory());
+    
+    // Mock the logAndExecute method to prevent the actual execution
+    // and make it return a successful result instead
+    jest.spyOn(dotnetClient, 'logAndExecute').mockImplementation(() => {
+      return undefined; // Mock successful execution with no return value
+    });
+    
     jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([
       {
         shortNames: ['classlib'],
@@ -185,6 +194,7 @@ describe('nx-dotnet generate-project', () => {
         tags: [],
       },
     ]);
+    
     const spy = jest.spyOn(dotnetClient, 'new');
     await GenerateProject(tree, options, dotnetClient, 'library');
     const [, , additionalArguments] = spy.mock.calls[spy.mock.calls.length - 1];

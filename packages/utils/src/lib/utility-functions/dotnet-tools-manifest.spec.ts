@@ -4,6 +4,7 @@ import {
 } from './dotnet-tools-manifest';
 import * as devkit from '@nx/devkit';
 import * as fs from 'fs';
+import { join } from 'path';
 
 const root = '/virtual';
 jest.mock('@nx/devkit', () => ({
@@ -21,7 +22,9 @@ describe('dotnet tools util functions', () => {
       readJsonFileMock.mockReset();
       existsSyncMock.mockReturnValue(true);
       readJsonFileMock.mockImplementation((p: string): object => {
-        if (p === `${root}/.config/dotnet-tools.json`) {
+        // Use normalized path comparison to handle platform differences
+        const expectedPath = join(root, '.config/dotnet-tools.json');
+        if (p === expectedPath) {
           return {
             version: 1,
             isRoot: true,
@@ -60,7 +63,9 @@ describe('dotnet tools util functions', () => {
 
     it('should return undefined if file wrong version', async () => {
       readJsonFileMock.mockImplementation((p: string): object => {
-        if (p === `${root}/.config/dotnet-tools.json`) {
+        // Use normalized path comparison to handle platform differences
+        const expectedPath = join(root, '.config/dotnet-tools.json');
+        if (p === expectedPath) {
           return {
             version: 99,
             isRoot: true,
@@ -97,7 +102,9 @@ describe('dotnet tools util functions', () => {
     beforeEach(() => {
       existsSyncMock.mockReturnValue(true);
       readJsonFileMock.mockImplementation((p: string): object => {
-        if (p === `${root}/.config/dotnet-tools.json`) {
+        // Use normalized path comparison to handle platform differences
+        const expectedPath = join(root, '.config/dotnet-tools.json');
+        if (p === expectedPath) {
           return {
             version: 1,
             isRoot: true,

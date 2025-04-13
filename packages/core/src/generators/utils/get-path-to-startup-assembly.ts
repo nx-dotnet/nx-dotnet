@@ -10,6 +10,7 @@ import { execSync } from 'child_process';
 import { sync } from 'fast-glob';
 import { existsSync } from 'fs';
 import { basename, relative, resolve } from 'path';
+import { safeExecSync } from '@nx-dotnet/utils';
 
 export function buildStartupAssemblyPath(
   projectName: string,
@@ -31,7 +32,7 @@ export function buildStartupAssemblyPath(
       .replace('{projectRoot}', project.root),
   );
   if (!existsSync(outputDirectory)) {
-    execSync(`${getPackageManagerCommand().exec} nx ${target} ${projectName}`, {
+    safeExecSync(`${getPackageManagerCommand().exec} nx ${target} ${projectName}`, {
       windowsHide: true,
     });
   }
