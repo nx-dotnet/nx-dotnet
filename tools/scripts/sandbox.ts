@@ -64,7 +64,7 @@ if (require.main === module) {
       }
       ensureDirSync(dirname(sandboxDirectory));
       console.log('Creating new Nx workspace...');
-      safeExecSync(
+      execSync(
         `npx --yes create-nx-workspace@latest ${basename(
           sandboxDirectory,
         )} --preset apps --nxCloud skip --packageManager yarn`,
