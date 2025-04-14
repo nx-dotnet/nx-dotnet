@@ -62,7 +62,7 @@ export function safeExecSync(
 
   // Check if we're on Windows and running with isolated plugins
   const isWindows = os.platform() === 'win32';
-  const isIsolatedPlugins = process.env.NX_ISOLATED_PLUGINS === 'true';
+  const isIsolatedPlugins = process.env.NX_ISOLATED_PLUGINS !== 'false';
 
   // Parse the command to use execFileSync when possible
   const { file, args } = parseCommand(command);
