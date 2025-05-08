@@ -10,7 +10,6 @@
   "dependencies": {
     "@nx-dotnet/dotnet": "file:../dotnet",
     "@nx-dotnet/utils": "file:../utils",
-    "@nx/devkit": "21.0.2",
     "fast-glob": "3.2.12",
     "inquirer": "^8.2.0",
     "minimatch": "3.1.2",
@@ -21,7 +20,6 @@
     "yargs-parser": "^21.0.0"
   },
   "peerDependencies": {
-    "nx": ">=21.0.0",
     "@openapitools/openapi-generator-cli": "^2.13.4",
     "eslint": ">8.0.0",
     "prettier": ">=2.0.0"
