@@ -17,7 +17,9 @@
       "inputs": [
         "production",
         "^production",
-        { "env": "NX_DOTNET_NEXT_VERSION" }
+        {
+          "env": "NX_DOTNET_NEXT_VERSION"
+        }
       ],
       "cache": true
     },
@@ -111,9 +113,8 @@
     "version": {
       "preVersionCommand": "yarn nx run-many -t build --exclude demo-*",
       "conventionalCommits": true,
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}"
-      }
+      "preserveLocalDependencyProtocols": false,
+      "manifestRootsToUpdate": ["dist/{projectRoot}"]
     },
     "git": {
       "commitMessage": "chore(repo): release {version} [skip ci]"
