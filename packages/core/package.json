@@ -20,6 +20,7 @@
     "yargs-parser": "^21.0.0"
   },
   "peerDependencies": {
+    "nx": ">= 20.0.0 < 23.0.0",
     "@openapitools/openapi-generator-cli": "^2.13.4",
     "eslint": ">8.0.0",
     "prettier": ">=2.0.0"
