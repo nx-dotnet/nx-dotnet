@@ -7,7 +7,8 @@
     "rimraf": "^3.0.2",
     "xmldoc": "^1.1.2",
     "tslib": "^2.5.0",
-    "semver": "7.6.3"
+    "semver": "7.6.3",
+    "@nx/devkit": "21.0.3"
   },
   "peerDependencies": {},
   "license": "MIT",
