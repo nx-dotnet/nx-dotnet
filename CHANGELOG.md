@@ -1,3 +1,13 @@
+# 3.0.0 (2025-05-29)
+
+### 🩹 Fixes
+
+- **docs-site:** links on site index should work ([b62e894](https://github.com/nx-dotnet/nx-dotnet/commit/b62e894))
+
+### ❤️ Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## 2.5.0 (2025-01-12)
 
 ### 🚀 Features
