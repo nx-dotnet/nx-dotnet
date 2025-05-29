@@ -26,6 +26,10 @@ jobs:
       NX_RUN_GROUP: ${{ github.run_id }}-v${{matrix.dotnet_version}}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{matrix.dotnet_version}}
