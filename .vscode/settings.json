@@ -35,5 +35,6 @@
     }
   ],
   "liveServer.settings.port": 5501,
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json"],
+  "nxConsole.generateAiAgentRules": true
 }
