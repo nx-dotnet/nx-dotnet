@@ -50,7 +50,7 @@ export default async function (
       schema.suffix,
     );
 
-  if (!isNxCrystalEnabled()) {
+  if (!isNxCrystalEnabled(host)) {
     addProjectConfiguration(host, testProjectName, {
       root: testRoot,
       projectType: 'library',
