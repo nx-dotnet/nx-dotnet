@@ -57,3 +57,4 @@ Thumbs.db
 
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+nx-dotnet.sln
