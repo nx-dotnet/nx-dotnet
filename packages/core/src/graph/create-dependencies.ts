@@ -40,6 +40,28 @@ export const createDependencies: CreateDependenciesCompat<
   // In v17, the signature was updated to pass options first, and context second.
   const ctx: CreateDependenciesContext =
     maybeCtx ?? (ctxOrOpts as CreateDependenciesContext);
+
+  // Early return if no project files to process to avoid infinite loops
+  if (
+    !ctx.filesToProcess.projectFileMap ||
+    Object.keys(ctx.filesToProcess.projectFileMap).length === 0
+  ) {
+    return [];
+  }
+
+  // Check if there are any .NET project files to process
+  const hasDotnetProjects = Object.values(ctx.filesToProcess.projectFileMap)
+    .flat()
+    .some((file) => {
+      const { ext } = parse(file.file);
+      return ['.csproj', '.fsproj', '.vbproj'].includes(ext);
+    });
+
+  // Early return if no .NET projects found
+  if (!hasDotnetProjects) {
+    return [];
+  }
+
   const rootMap = createProjectRootMappings(ctx.projects);
 
   const parseProject = async (source: string) => {

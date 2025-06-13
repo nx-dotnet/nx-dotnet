@@ -385,31 +385,40 @@ export class DotNetClient {
     }
     return res.stdout.toString();
   }
-
   async spawnAsyncAndGetOutput(params: string[]): Promise<string> {
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
 
-    const { stdout } = await promisify(execFile)(
-      this.cliCommand.command,
-      params,
-      {
-        cwd: this.cwd ?? process.cwd(),
-        windowsHide: true,
-      },
-    ).catch((e) => {
-      if ('code' in e && 'stderr' in e) {
-        throw new Error(
-          `dotnet execution returned status code ${e.code} \n ${e.message}`,
-        );
+    try {
+      const { stdout } = await promisify(execFile)(
+        this.cliCommand.command,
+        params,
+        {
+          cwd: this.cwd ?? process.cwd(),
+          windowsHide: true,
+          timeout: 10000, // 10 second timeout to prevent hanging
+        },
+      ).catch((e) => {
+        if ('code' in e && 'stderr' in e) {
+          throw new Error(
+            `dotnet execution returned status code ${e.code} \n ${e.message}`,
+          );
+        }
+        throw e;
+      });
+      if (stdout.includes('There are no Project to Project')) {
+        return '';
       }
-      throw e;
-    });
-    if (stdout.includes('There are no Project to Project')) {
+      return stdout;
+    } catch (error) {
+      // Log warning instead of throwing to prevent breaking project graph calculation
+      console.warn(
+        `Warning: Failed to execute dotnet command: ${this.cliCommand.command} ${params.join(' ')}`,
+        error,
+      );
       return '';
     }
-    return stdout;
   }
 
   private logAndSpawn(params: string[]): ChildProcess {
