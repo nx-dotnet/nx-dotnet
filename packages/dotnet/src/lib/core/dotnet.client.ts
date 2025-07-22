@@ -397,7 +397,8 @@ export class DotNetClient {
         {
           cwd: this.cwd ?? process.cwd(),
           windowsHide: true,
-          timeout: 10000, // 10 second timeout to prevent hanging
+          timeout: 10000,
+          killSignal: 'SIGKILL',
         },
       ).catch((e) => {
         if ('code' in e && 'stderr' in e) {

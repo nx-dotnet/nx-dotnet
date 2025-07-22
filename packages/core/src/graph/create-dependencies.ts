@@ -64,47 +64,82 @@ export const createDependencies: CreateDependenciesCompat<
 
   const rootMap = createProjectRootMappings(ctx.projects);
 
-  const parseProject = async (source: string) => {
-    const changed = ctx.filesToProcess.projectFileMap[source];
+  // Wrap the entire dependency resolution in a timeout to prevent infinite loops
+  const dependencyResolutionPromise = (async () => {
+    const parseProject = async (source: string) => {
+      const changed = ctx.filesToProcess.projectFileMap[source];
 
-    const getProjectReferences = async (file: FileData) => {
-      const newDeps: RawProjectGraphDependency[] = [];
-      const { ext } = parse(file.file);
-      if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
-        const references = await dotnetClient.getProjectReferencesAsync(
-          file.file,
-        );
-        for (const reference of references) {
-          const project = resolveReferenceToProject(
-            normalizePath(reference),
-            file.file,
-            rootMap,
-            ctx,
-          );
-          if (project) {
-            newDeps.push({
-              source,
-              target: project,
-              type: DependencyType.static,
-              sourceFile: file.file,
-            });
-          } else {
+      const getProjectReferences = async (file: FileData) => {
+        const newDeps: RawProjectGraphDependency[] = [];
+        const { ext } = parse(file.file);
+        if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
+          try {
+            const references = await dotnetClient.getProjectReferencesAsync(
+              file.file,
+            );
+            for (const reference of references) {
+              // Skip empty, null, or undefined references
+              if (
+                !reference ||
+                typeof reference !== 'string' ||
+                reference.trim() === ''
+              ) {
+                continue;
+              }
+
+              const project = resolveReferenceToProject(
+                normalizePath(reference),
+                file.file,
+                rootMap,
+                ctx,
+              );
+              if (project) {
+                newDeps.push({
+                  source,
+                  target: project,
+                  type: DependencyType.static,
+                  sourceFile: file.file,
+                });
+              } else {
+                console.warn(
+                  `Unable to resolve project for reference ${reference} in ${file.file}`,
+                );
+              }
+            }
+          } catch (error) {
             console.warn(
-              `Unable to resolve project for reference ${reference} in ${file.file}`,
+              `Failed to get project references for ${file.file}:`,
+              error,
             );
           }
         }
-      }
-      return newDeps;
+        return newDeps;
+      };
+      const getAllProjectReferences = changed.map(getProjectReferences);
+      return Promise.all(getAllProjectReferences).then((d) => d.flat());
     };
-    const getAllProjectReferences = changed.map(getProjectReferences);
-    return Promise.all(getAllProjectReferences).then((d) => d.flat());
-  };
 
-  const parseAllProjects = Object.keys(ctx.filesToProcess.projectFileMap).map(
-    parseProject,
+    const parseAllProjects = Object.keys(ctx.filesToProcess.projectFileMap).map(
+      parseProject,
+    );
+    return Promise.all(parseAllProjects).then((d) => d.flat());
+  })();
+
+  // Add a timeout to the entire operation to prevent infinite loops
+  const timeoutPromise = new Promise<RawProjectGraphDependency[]>(
+    (_, reject) => {
+      setTimeout(() => {
+        reject(new Error('Dependency resolution timed out after 30 seconds'));
+      }, 30000);
+    },
   );
-  return Promise.all(parseAllProjects).then((d) => d.flat());
+
+  try {
+    return await Promise.race([dependencyResolutionPromise, timeoutPromise]);
+  } catch (error) {
+    console.warn('Failed to resolve .NET project dependencies:', error);
+    return [];
+  }
 };
 
 function createProjectRootMappings(
@@ -147,6 +182,26 @@ export function resolveReferenceToProject(
   rootMap: Record<string, string>,
   context: { workspaceRoot: string },
 ) {
-  const resolved = resolve(context.workspaceRoot, dirname(source), reference);
+  // Normalize the reference path (convert Windows paths to Unix style)
+  const normalizedReference = normalizePath(reference);
+
+  // If the reference is already "absolute" (doesn't start with ./ or ../),
+  // treat it as relative to workspace root
+  let resolved: string;
+  if (
+    normalizedReference.startsWith('./') ||
+    normalizedReference.startsWith('../')
+  ) {
+    // Relative reference - resolve from the source file's directory
+    resolved = resolve(
+      context.workspaceRoot,
+      dirname(source),
+      normalizedReference,
+    );
+  } else {
+    // "Absolute" reference - relative to workspace root
+    resolved = resolve(context.workspaceRoot, normalizedReference);
+  }
+
   return findProjectForPath(relative(context.workspaceRoot, resolved), rootMap);
 }
