@@ -15,6 +15,13 @@ import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
 let dotnetClient: DotNetClient | null = null;
 
+/**
+ * Reset the dotnet client cache - used for testing
+ */
+export function resetDotnetClient(): void {
+  dotnetClient = null;
+}
+
 // Between Nx versions 16.8 and 17, the signature of `CreateDependencies` changed.
 // It used to only consist of the context, but now it also includes the options.
 // The options were inserted as the first parameter, and the context was moved to the second.

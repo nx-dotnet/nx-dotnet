@@ -9,6 +9,7 @@ import { NxDotnetConfig } from '@nx-dotnet/utils';
 import {
   createDependencies,
   resolveReferenceToProject,
+  resetDotnetClient,
 } from './create-dependencies';
 
 // Mock the entire @nx-dotnet/dotnet module before any imports
@@ -18,13 +19,13 @@ const mockDotnetFactory = jest.fn();
 
 jest.mock('@nx-dotnet/dotnet', () => ({
   ...jest.requireActual('@nx-dotnet/dotnet'),
-  DotNetClient: (...args: unknown[]) => {
+  DotNetClient: jest.fn().mockImplementation((...args: unknown[]) => {
     mockDotNetClient(...args);
     return {
       getProjectReferencesAsync: (...refArgs: unknown[]) =>
         mockGetProjectReferencesAsync(...refArgs),
     };
-  },
+  }),
   dotnetFactory: (...args: unknown[]) => mockDotnetFactory(...args),
 }));
 
@@ -35,6 +36,11 @@ describe('createDependencies', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockGetProjectReferencesAsync.mockReset();
+    resetDotnetClient(); // Reset the dotnet client cache for each test
+
+    // Set up default mock behavior
+    mockDotnetFactory.mockReturnValue({} as any); // Mock dotnet instance
+    mockGetProjectReferencesAsync.mockResolvedValue([]);
 
     mockProjects = {
       'my-app': {
@@ -554,11 +560,23 @@ describe('createDependencies', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
+      resetDotnetClient(); // Reset the dotnet client cache for each test
       console.warn = jest.fn();
+
+      // Reset all mock implementations to ensure clean state
+      mockDotnetFactory.mockReset();
+      mockDotNetClient.mockReset();
+      mockGetProjectReferencesAsync.mockReset();
+
+      // Set up the mocks properly
       mockDotnetFactory.mockReturnValue({
         command: 'dotnet',
         info: { global: true, version: '6.0.100' },
       });
+      mockDotNetClient.mockImplementation(() => ({
+        getProjectReferencesAsync: mockGetProjectReferencesAsync,
+      }));
+      mockGetProjectReferencesAsync.mockResolvedValue([]);
     });
 
     afterEach(() => {
@@ -650,6 +668,7 @@ describe('createDependencies', () => {
         project2: [{ file: 'apps/app2/App2.csproj', hash: 'hash2' }],
       };
 
+      // Reset the mock setup since the nested beforeEach clears mocks
       mockGetProjectReferencesAsync.mockResolvedValue([]);
 
       const result = await createDependencies(mockContext, undefined);
