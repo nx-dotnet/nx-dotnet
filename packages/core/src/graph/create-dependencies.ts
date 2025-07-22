@@ -88,7 +88,7 @@ export const createDependencies: CreateDependenciesCompat<
               }
 
               const project = resolveReferenceToProject(
-                normalizePath(reference),
+                reference,
                 file.file,
                 rootMap,
                 ctx,
@@ -128,9 +128,12 @@ export const createDependencies: CreateDependenciesCompat<
   // Add a timeout to the entire operation to prevent infinite loops
   const timeoutPromise = new Promise<RawProjectGraphDependency[]>(
     (_, reject) => {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         reject(new Error('Dependency resolution timed out after 30 seconds'));
       }, 30000);
+
+      // Use unref() to prevent the timeout from keeping the process alive
+      timeoutId.unref();
     },
   );
 
@@ -182,8 +185,9 @@ export function resolveReferenceToProject(
   rootMap: Record<string, string>,
   context: { workspaceRoot: string },
 ) {
-  // Normalize the reference path (convert Windows paths to Unix style)
+  // Normalize both paths to handle Windows backslashes consistently
   const normalizedReference = normalizePath(reference);
+  const normalizedSource = normalizePath(source);
 
   // If the reference is already "absolute" (doesn't start with ./ or ../),
   // treat it as relative to workspace root
@@ -195,7 +199,7 @@ export function resolveReferenceToProject(
     // Relative reference - resolve from the source file's directory
     resolved = resolve(
       context.workspaceRoot,
-      dirname(source),
+      dirname(normalizedSource),
       normalizedReference,
     );
   } else {
@@ -203,5 +207,8 @@ export function resolveReferenceToProject(
     resolved = resolve(context.workspaceRoot, normalizedReference);
   }
 
-  return findProjectForPath(relative(context.workspaceRoot, resolved), rootMap);
+  return findProjectForPath(
+    normalizePath(relative(context.workspaceRoot, resolved)),
+    rootMap,
+  );
 }
