@@ -26,9 +26,27 @@ import { getWorkspaceScope } from '../generators/utils/get-scope';
 import type { PackageJson } from 'nx/src/utils/package-json';
 import { tryReadJsonFile } from '../generators/utils/try-read-json';
 
-export const projectFilePatterns = readConfig().inferProjects
-  ? ['*.csproj', '*.fsproj', '*.vbproj']
-  : [];
+let cachedProjectFilePatterns: string[] | null = null;
+
+export function getProjectFilePatterns(): string[] {
+  if (cachedProjectFilePatterns !== null) {
+    return cachedProjectFilePatterns;
+  }
+  try {
+    cachedProjectFilePatterns = readConfig().inferProjects
+      ? ['*.csproj', '*.fsproj', '*.vbproj']
+      : [];
+  } catch (error) {
+    console.warn('Failed to read nx-dotnet config:', error);
+    cachedProjectFilePatterns = [];
+  }
+  return cachedProjectFilePatterns;
+}
+
+// For testing purposes - reset the cache
+export function resetProjectFilePatterns(): void {
+  cachedProjectFilePatterns = null;
+}
 
 export function parseName(
   projectFile: string,
@@ -205,7 +223,7 @@ export function isFileIgnored(
 }
 
 export const createNodesV2: CreateNodesV2<NxDotnetConfigV2> = [
-  `**/{${projectFilePatterns.join(',')}}`,
+  `**/{${getProjectFilePatterns().join(',')}}`,
   (
     files,
     // We read the config in the function to ensure it's always up to date / compatible.
@@ -223,7 +241,7 @@ export const createNodesV2: CreateNodesV2<NxDotnetConfigV2> = [
 
 // Used in Nx 16.8+
 export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
-  `**/{${projectFilePatterns.join(',')}}`,
+  `**/{${getProjectFilePatterns().join(',')}}`,
   (
     file: string,
     // We read the config in the function to ensure it's always up to date / compatible.

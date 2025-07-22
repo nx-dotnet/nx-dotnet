@@ -23,9 +23,29 @@ const noop = () => void 0;
 export async function initGenerator(
   host: Tree,
   _: unknown, // Nx will populate this with options, which are currently unused.
-  dotnetClient = new DotNetClient(dotnetFactory()),
+  dotnetClient?: DotNetClient,
 ) {
   const tasks: GeneratorCallback[] = [];
+
+  // Lazy initialization of dotnet client only when needed
+  let lazySafeClient: DotNetClient | null = null;
+  const getSafeClient = (): DotNetClient | null => {
+    if (lazySafeClient) return lazySafeClient;
+    if (dotnetClient) {
+      lazySafeClient = dotnetClient;
+      return lazySafeClient;
+    }
+    try {
+      lazySafeClient = new DotNetClient(dotnetFactory());
+      return lazySafeClient;
+    } catch (error) {
+      console.warn(
+        'Failed to initialize .NET client in init generator:',
+        error,
+      );
+      return null;
+    }
+  };
 
   // Prior to Nx 17, nx-dotnet had a custom config file.
   if (major(NX_VERSION) < 17) {
@@ -49,7 +69,7 @@ export async function initGenerator(
   updateNxJson(host, nxJson);
 
   // Setups up the .config/dotnet-tools.json for managing local .NET tools.
-  initToolManifest(host, dotnetClient);
+  initToolManifest(host, getSafeClient());
 
   // Creates Directory.Build.* to customize default C# builds.
   initBuildCustomization(host);
@@ -95,9 +115,13 @@ function updateNxJson(host: Tree, nxJson: NxJsonConfiguration | null) {
   }
 }
 
-function initToolManifest(host: Tree, dotnetClient: DotNetClient) {
+function initToolManifest(host: Tree, dotnetClient: DotNetClient | null) {
   const initialized = host.exists('.config/dotnet-tools.json');
   if (!initialized) {
+    if (!dotnetClient) {
+      logger.warn('Skipping tool manifest creation: .NET client not available');
+      return;
+    }
     logger.log('Tool Manifest created for managing local .NET tools');
     runDotnetNew(host, dotnetClient, 'tool-manifest', {});
   }

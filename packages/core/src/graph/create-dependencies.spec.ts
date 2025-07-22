@@ -13,14 +13,19 @@ import {
 
 // Mock the entire @nx-dotnet/dotnet module before any imports
 const mockGetProjectReferencesAsync = jest.fn();
+const mockDotNetClient = jest.fn();
+const mockDotnetFactory = jest.fn();
 
 jest.mock('@nx-dotnet/dotnet', () => ({
   ...jest.requireActual('@nx-dotnet/dotnet'),
-  DotNetClient: jest.fn().mockImplementation(() => ({
-    getProjectReferencesAsync: (...args: unknown[]) =>
-      mockGetProjectReferencesAsync(...args),
-  })),
-  dotnetFactory: jest.fn(),
+  DotNetClient: (...args: unknown[]) => {
+    mockDotNetClient(...args);
+    return {
+      getProjectReferencesAsync: (...refArgs: unknown[]) =>
+        mockGetProjectReferencesAsync(...refArgs),
+    };
+  },
+  dotnetFactory: (...args: unknown[]) => mockDotnetFactory(...args),
 }));
 
 describe('createDependencies', () => {
@@ -541,6 +546,164 @@ describe('createDependencies', () => {
           },
         ),
       ).toEqual('my-lib');
+    });
+  });
+
+  describe('lazy dotnet client initialization', () => {
+    const originalConsoleWarn = console.warn;
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      console.warn = jest.fn();
+      mockDotnetFactory.mockReturnValue({
+        command: 'dotnet',
+        info: { global: true, version: '6.0.100' },
+      });
+    });
+
+    afterEach(() => {
+      console.warn = originalConsoleWarn;
+    });
+
+    it('should not initialize dotnet client when no project files exist', async () => {
+      mockContext.filesToProcess.projectFileMap = {};
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(mockDotnetFactory).not.toHaveBeenCalled();
+    });
+
+    it('should not initialize dotnet client when no .NET project files exist', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        'my-project': [
+          { file: 'apps/my-app/src/index.ts', hash: 'hash1' },
+          { file: 'apps/my-app/package.json', hash: 'hash2' },
+        ],
+      };
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(mockDotnetFactory).not.toHaveBeenCalled();
+    });
+
+    it('should initialize dotnet client lazily only when .NET projects are found', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        'my-project': [{ file: 'apps/my-app/MyApp.csproj', hash: 'hash1' }],
+      };
+
+      mockGetProjectReferencesAsync.mockResolvedValue([]);
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(mockDotnetFactory).toHaveBeenCalledTimes(1);
+      expect(mockDotnetFactory).toHaveBeenCalledWith();
+      expect(mockDotNetClient).toHaveBeenCalledTimes(1);
+      expect(mockDotNetClient).toHaveBeenCalledWith(
+        expect.any(Object),
+        workspaceRoot,
+      );
+    });
+
+    it('should handle dotnet client initialization failure gracefully', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        'my-project': [{ file: 'apps/my-app/MyApp.csproj', hash: 'hash1' }],
+      };
+
+      mockDotnetFactory.mockImplementation(() => {
+        throw new Error('dotnet not installed');
+      });
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(console.warn).toHaveBeenCalledWith(
+        'Failed to initialize .NET client:',
+        expect.any(Error),
+      );
+    });
+
+    it('should handle dotnet client factory returning invalid value', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        'my-project': [{ file: 'apps/my-app/MyApp.csproj', hash: 'hash1' }],
+      };
+
+      // Mock DotNetClient constructor to throw an error
+      mockDotNetClient.mockImplementation(() => {
+        throw new Error('Invalid CLI configuration');
+      });
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(console.warn).toHaveBeenCalledWith(
+        'Failed to initialize .NET client:',
+        expect.any(Error),
+      );
+    });
+
+    it('should reuse dotnet client instance across multiple project processing', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        project1: [{ file: 'apps/app1/App1.csproj', hash: 'hash1' }],
+        project2: [{ file: 'apps/app2/App2.csproj', hash: 'hash2' }],
+      };
+
+      mockGetProjectReferencesAsync.mockResolvedValue([]);
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      // dotnetFactory should only be called once for lazy initialization
+      expect(mockDotnetFactory).toHaveBeenCalledTimes(1);
+      // DotNetClient constructor should only be called once
+      expect(mockDotNetClient).toHaveBeenCalledTimes(1);
+      // But getProjectReferencesAsync should be called for each .NET project
+      expect(mockGetProjectReferencesAsync).toHaveBeenCalledTimes(2);
+    });
+
+    it('should handle null dotnet client in getProjectReferences gracefully', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        'my-project': [{ file: 'apps/my-app/MyApp.csproj', hash: 'hash1' }],
+      };
+
+      // Make dotnet client initialization fail
+      mockDotnetFactory.mockImplementation(() => {
+        throw new Error('dotnet CLI not found');
+      });
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(console.warn).toHaveBeenCalledWith(
+        'Failed to initialize .NET client:',
+        expect.any(Error),
+      );
+    });
+
+    it('should warn when dotnet client is not initialized during reference processing', async () => {
+      mockContext.filesToProcess.projectFileMap = {
+        'my-project': [{ file: 'apps/my-app/MyApp.csproj', hash: 'hash1' }],
+      };
+
+      // Mock successful factory call but make client creation fail later
+      mockDotnetFactory.mockReturnValue({
+        command: 'dotnet',
+        info: { global: true, version: '6.0.100' },
+      });
+
+      mockDotNetClient.mockImplementation(() => {
+        throw new Error('Client creation failed');
+      });
+
+      const result = await createDependencies(mockContext, undefined);
+
+      expect(result).toEqual([]);
+      expect(console.warn).toHaveBeenCalledWith(
+        'Failed to initialize .NET client:',
+        expect.any(Error),
+      );
     });
   });
 });

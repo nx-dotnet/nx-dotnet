@@ -13,7 +13,7 @@ import { dirname, parse, relative, resolve } from 'node:path';
 import { NxDotnetConfig } from '@nx-dotnet/utils';
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
-const dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
+let dotnetClient: DotNetClient | null = null;
 
 // Between Nx versions 16.8 and 17, the signature of `CreateDependencies` changed.
 // It used to only consist of the context, but now it also includes the options.
@@ -66,6 +66,16 @@ export const createDependencies: CreateDependenciesCompat<
 
   // Wrap the entire dependency resolution in a timeout to prevent infinite loops
   const dependencyResolutionPromise = (async () => {
+    // Lazy initialization of dotnet client only when we have .NET projects
+    if (!dotnetClient) {
+      try {
+        dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
+      } catch (error) {
+        console.warn('Failed to initialize .NET client:', error);
+        return [];
+      }
+    }
+
     const parseProject = async (source: string) => {
       const changed = ctx.filesToProcess.projectFileMap[source];
 
@@ -73,6 +83,10 @@ export const createDependencies: CreateDependenciesCompat<
         const newDeps: RawProjectGraphDependency[] = [];
         const { ext } = parse(file.file);
         if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
+          if (!dotnetClient) {
+            console.warn('Dotnet client not initialized');
+            return newDeps;
+          }
           try {
             const references = await dotnetClient.getProjectReferencesAsync(
               file.file,
