@@ -2,6 +2,7 @@ import { ExecutorContext } from '@nx/devkit';
 import * as devkit from '@nx/devkit';
 
 import * as fs from 'fs';
+import * as path from 'path';
 
 import { DotNetClient, mockDotnetFactory } from '@nx-dotnet/dotnet';
 import * as utils from '@nx-dotnet/utils';
@@ -126,11 +127,11 @@ describe('Update-Swagger Executor', () => {
     ).toHaveBeenCalledWith('swagger', [
       'tofile',
       '--output',
-      `${root}/libs/generated/my-app-swagger/swagger.json`,
-      `${root}/dist/apps/my-app/1.dll`,
+      path.resolve(`${root}/libs/generated/my-app-swagger/swagger.json`),
+      path.resolve(`${root}/dist/apps/my-app/1.dll`),
       'v1',
     ]);
-    expect(dotnetClient.cwd).toEqual(`${root}/apps/my-app`);
+    expect(dotnetClient.cwd).toEqual(path.resolve(`${root}/apps/my-app`));
     expect(res.success).toBeTruthy();
   });
 

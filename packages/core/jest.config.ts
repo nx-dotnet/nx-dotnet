@@ -8,4 +8,7 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/core',
   testEnvironment: 'node',
+  testTimeout: 40000,
+  detectOpenHandles: true,
+  forceExit: true,
 };

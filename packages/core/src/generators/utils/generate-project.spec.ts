@@ -6,6 +6,7 @@ import {
   writeJson,
 } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import * as cp from 'child_process';
 
 import {
   DotNetClient,
@@ -171,6 +172,12 @@ describe('nx-dotnet generate-project', () => {
     options.__unparsed__ = ['--foo', 'bar'];
     options.args = ['--help'];
     const dotnetClient = new DotNetClient(mockDotnetFactory());
+
+    // Mock spawnSync to return proper status code
+    jest.spyOn(cp, 'spawnSync').mockReturnValue({
+      status: 0,
+    } as cp.SpawnSyncReturns<Buffer>);
+
     jest.spyOn(dotnetClient, 'listInstalledTemplates').mockReturnValue([
       {
         shortNames: ['classlib'],
