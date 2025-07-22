@@ -8,6 +8,4 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/core',
   testEnvironment: 'node',
-  // Set timeout for individual tests (in milliseconds)
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };
