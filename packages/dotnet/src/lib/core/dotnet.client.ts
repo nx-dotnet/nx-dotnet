@@ -351,6 +351,9 @@ export class DotNetClient {
   }
 
   public logAndExecute(params: string[]): void {
+    if(this.cliCommand.available === false) {
+      throw new Error('dotnet CLI is not available. Please ensure dotnet is installed and available in your PATH.');
+    }
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
@@ -369,6 +372,9 @@ export class DotNetClient {
   }
 
   private spawnAndGetOutput(params: string[]): string {
+    if(this.cliCommand.available === false) {
+      throw new Error('dotnet CLI is not available. Please ensure dotnet is installed and available in your PATH.');
+    }
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
@@ -387,6 +393,9 @@ export class DotNetClient {
   }
 
   async spawnAsyncAndGetOutput(params: string[]): Promise<string> {
+    if(this.cliCommand.available === false) {
+      throw new Error('dotnet CLI is not available. Please ensure dotnet is installed and available in your PATH.');
+    }
     params = params.map((param) =>
       param.replace(/\$(\w+)/, (_, varName) => process.env[varName] ?? ''),
     );
@@ -413,6 +422,9 @@ export class DotNetClient {
   }
 
   private logAndSpawn(params: string[]): ChildProcess {
+    if(this.cliCommand.available === false) {
+      throw new Error('dotnet CLI is not available. Please ensure dotnet is installed and available in your PATH.');
+    }
     console.log(
       `Executing Command: ${this.cliCommand.command} "${params.join('" "')}"`,
     );

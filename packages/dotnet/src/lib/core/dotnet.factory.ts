@@ -20,6 +20,7 @@ export function dotnetFactory(): LoadedCLI {
       .toString('utf-8')
       .trim();
     return {
+      available: true,
       command: 'dotnet',
       info: {
         global: true,
@@ -30,19 +31,26 @@ export function dotnetFactory(): LoadedCLI {
     console.error(
       'dotnet not installed. Local support not yet added https://github.com/AgentEnder/nx-dotnet/issues/3',
     );
+    return {
+      available: false,
+    }
   }
 }
 
 export function mockDotnetFactory(version?: string): LoadedCLI {
   return {
+    available: true,
     command: 'echo',
     info: { global: true, version: version ?? '6.0.100' },
   };
 }
 
 export type LoadedCLI = {
+  available: true;
   command: string;
   info: { global: boolean; version: string | number };
+} | {
+  available: false;
 };
 
 export type DotnetFactory = () => LoadedCLI;
