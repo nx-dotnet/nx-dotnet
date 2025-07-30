@@ -343,6 +343,9 @@ export class DotNetClient {
   }
 
   getSdkVersion(): string {
+    if(this.cliCommand.available === false) {
+      throw new Error('dotnet CLI is not available. Please ensure dotnet is installed and available in your PATH.');
+    }
     return this.cliCommand.info.version.toString();
   }
 
