@@ -105,7 +105,11 @@ function writeFileFromTree(tree: Tree, path: string): () => void {
         ]);
       }
     }
-    writeFileSync(diskPath, treeContents);
+    if (treeContents instanceof Buffer) {
+      writeFileSync(diskPath, Uint8Array.from(treeContents));
+    } else {
+      writeFileSync(diskPath, treeContents as any);
+    }
   } else {
     console.log('No contents found in tree for', path, tree.root);
   }
@@ -113,7 +117,12 @@ function writeFileFromTree(tree: Tree, path: string): () => void {
     onDiskContents ? 'restore ' + diskPath : 'remove ' + diskPath,
     () => {
       if (onDiskContents) {
-        writeFileSync(diskPath, onDiskContents);
+        // Fix: writeFileSync expects string or ArrayBufferView, not Buffer
+        if (onDiskContents instanceof Buffer) {
+          writeFileSync(diskPath, Uint8Array.from(onDiskContents));
+        } else {
+          writeFileSync(diskPath, onDiskContents as any);
+        }
       } else {
         rmSync(diskPath);
       }
