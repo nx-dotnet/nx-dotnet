@@ -86,7 +86,7 @@ describe('dotnet client', () => {
         noRestore: true,
         configuration: 'Release',
       });
-      expect(spawnSyncSpy).toBeCalledTimes(1);
+      expect(spawnSyncSpy).toHaveBeenCalledTimes(1);
       expect(spawnSyncSpy.mock.calls[0][1]).toMatchInlineSnapshot(`
         [
           "publish",
