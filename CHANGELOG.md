@@ -1,3 +1,13 @@
+## 3.0.2 (2025-08-22)
+
+### 🩹 Fixes
+
+- **core:** bump dep versions in packages ([9c4d1fc](https://github.com/nx-dotnet/nx-dotnet/commit/9c4d1fc))
+
+### ❤️ Thank You
+
+- Craigory Coppola @AgentEnder
+
 ## 3.0.1 (2025-08-22)
 
 ### 🩹 Fixes
