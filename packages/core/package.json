@@ -18,8 +18,8 @@
     "tslib": "^2.5.0",
     "xmldoc": "^1.1.2",
     "yargs-parser": "^21.0.0",
-    "@nx/devkit": "21.0.3",
-    "@nx/js": "21.0.3"
+    "@nx/devkit": "21.4.1",
+    "@nx/js": "21.4.1"
   },
   "peerDependencies": {
     "nx": ">= 20.0.0 < 23.0.0",

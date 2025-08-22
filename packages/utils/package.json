@@ -8,7 +8,7 @@
     "xmldoc": "^1.1.2",
     "tslib": "^2.5.0",
     "semver": "7.6.3",
-    "@nx/devkit": "21.0.3"
+    "@nx/devkit": "21.4.1"
   },
   "peerDependencies": {},
   "license": "MIT",
