@@ -211,7 +211,7 @@ describe('Update-Swagger Executor', () => {
     expect(
       (dotnetClient as jest.Mocked<DotNetClient>).installTool,
     ).not.toHaveBeenCalled();
-    expect(readToolVersionSpy).not.toBeCalled();
+    expect(readToolVersionSpy).not.toHaveBeenCalled();
     expect(res.success).toBeTruthy();
   });
 });
