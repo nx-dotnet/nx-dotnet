@@ -1,3 +1,13 @@
+## 3.0.1 (2025-08-22)
+
+### 🩹 Fixes
+
+- **core:** bump to latest nx 21 patch that widens peer dep range ([857099b](https://github.com/nx-dotnet/nx-dotnet/commit/857099b))
+
+### ❤️ Thank You
+
+- Craigory Coppola @AgentEnder
+
 # 3.0.0 (2025-05-29)
 
 ### 🩹 Fixes
