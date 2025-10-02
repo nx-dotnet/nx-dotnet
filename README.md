@@ -15,7 +15,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=security_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=bugs)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=code_smells)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=ncloc)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet)
 
 > [!NOTE]  
-> Looking for @nx-dotnet/nx-ghpages or @nx-dotnet/nxdoc? They have moved. `@nx-dotnet/nx-ghpages` is now published as `nx-github-pages` and `@nx-dotnet/nxdoc` is now published as `nxdoc`. Their source code has moved to their own repos, [nx-github-pages](https://github.com/agentender/nx-github-pages) and [nxdoc](https://github.com/agententender/nxdoc).
+> Looking for @nx-dotnet/nx-ghpages or @nx-dotnet/nxdoc? They have moved. `@nx-dotnet/nx-ghpages` is now published as `nx-github-pages` and `@nx-dotnet/nxdoc` is now published as `nxdoc`. Their source code has moved to their own repos, [nx-github-pages](https://github.com/agentender/nx-github-pages) and [nxdoc](https://github.com/agentender/nxdoc).
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
