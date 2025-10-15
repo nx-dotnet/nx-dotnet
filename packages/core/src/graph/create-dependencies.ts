@@ -13,6 +13,11 @@ import { dirname, parse, relative, resolve } from 'node:path';
 import { NxDotnetConfig } from '@nx-dotnet/utils';
 import { DotNetClient, dotnetFactory } from '@nx-dotnet/dotnet';
 
+import {
+  getProjectAnalysis,
+  resolveProjectReference,
+} from './msbuild-analyzer';
+
 const dotnetClient = new DotNetClient(dotnetFactory(), workspaceRoot);
 
 // Between Nx versions 16.8 and 17, the signature of `CreateDependencies` changed.
@@ -49,9 +54,26 @@ export const createDependencies: CreateDependenciesCompat<
       const newDeps: RawProjectGraphDependency[] = [];
       const { ext } = parse(file.file);
       if (['.csproj', '.fsproj', '.vbproj'].includes(ext)) {
-        const references = await dotnetClient.getProjectReferencesAsync(
-          file.file,
-        );
+        // Try to use cached analyzer results first
+        let references: string[] = [];
+        try {
+          const analysis = getProjectAnalysis(file.file);
+          if (analysis) {
+            // Use analyzer results
+            references = analysis.projectReferences.map((ref) =>
+              resolveProjectReference(ref, file.file),
+            );
+          } else {
+            // Fall back to dotnet client
+            references = await dotnetClient.getProjectReferencesAsync(
+              file.file,
+            );
+          }
+        } catch (error) {
+          // If analyzer fails, fall back to dotnet client
+          references = await dotnetClient.getProjectReferencesAsync(file.file);
+        }
+
         for (const reference of references) {
           const project = resolveReferenceToProject(
             normalizePath(reference),

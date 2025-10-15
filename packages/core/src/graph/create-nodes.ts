@@ -16,6 +16,12 @@ import { NxDotnetConfigV2, ResolvedConfig, readConfig } from '@nx-dotnet/utils';
 import minimatch = require('minimatch');
 
 import {
+  analyzeProjects,
+  getProjectAnalysis,
+  ProjectAnalysis,
+} from './msbuild-analyzer';
+
+import {
   GetBuildExecutorConfiguration,
   GetLintExecutorConfiguration,
   GetServeExecutorConfig,
@@ -86,6 +92,7 @@ export function createProjectDefinition(
   nxDotnetConfig: ResolvedConfig,
   nxJson: NxJsonConfiguration | null,
   rootPackageJson: PackageJson,
+  analysisResult?: ProjectAnalysis,
 ):
   | (ProjectConfiguration & Required<Pick<ProjectConfiguration, 'root'>>)
   | null {
@@ -98,10 +105,14 @@ export function createProjectDefinition(
     return null;
   }
 
-  if (
-    projectFileContents.includes('Microsoft.NET.Test.Sdk') &&
-    inferredTargets.test
-  ) {
+  // Use analyzer results if available, otherwise fall back to file contents
+  const isTestProject = analysisResult
+    ? analysisResult.packageReferences.some(
+        (ref) => ref.Include === 'Microsoft.NET.Test.Sdk',
+      )
+    : projectFileContents.includes('Microsoft.NET.Test.Sdk');
+
+  if (isTestProject && inferredTargets.test) {
     const { targetName, ...extraOptions } =
       typeof inferredTargets.test === 'string'
         ? { targetName: inferredTargets.test }
@@ -154,12 +165,21 @@ export const registerProjectTargets = (
   projectFile: string,
   opts = readConfig(),
 ) => {
+  // Try to get analyzer results from cache
+  let analysisResult: ProjectAnalysis | undefined;
+  try {
+    analysisResult = getProjectAnalysis(projectFile);
+  } catch (error) {
+    // Analyzer not available or failed, will fall back to file contents
+  }
+
   const project = createProjectDefinition(
     projectFile,
     readFileSync(join(workspaceRoot, projectFile), 'utf-8'),
     opts,
     tryReadJsonFile('nx.json') ?? {},
     tryReadJsonFile('package.json'),
+    analysisResult,
   );
   return project?.targets ?? {};
 };
@@ -212,9 +232,27 @@ export const createNodesV2: CreateNodesV2<NxDotnetConfigV2> = [
     opts,
     maybeCtx,
   ) => {
+    const options = readConfig();
+
+    // Filter out ignored files
+    const projectFiles = files.filter((file) => !isFileIgnored(file, options));
+
+    if (projectFiles.length === 0) {
+      return [];
+    }
+
+    // Analyze all projects at once and cache the results
+    try {
+      analyzeProjects(projectFiles);
+    } catch (error) {
+      // If analyzer fails, fall back to file-based analysis
+      console.warn('[nx-dotnet] msbuild-analyzer failed, falling back to file-based analysis:', error);
+    }
+
+    // Now use createNodesFromFiles which will use the cached results
     return createNodesFromFiles<NxDotnetConfigV2 | undefined>(
       createNodes[1],
-      files,
+      projectFiles,
       opts,
       maybeCtx,
     );
@@ -237,12 +275,21 @@ export const createNodes: CreateNodesCompat<NxDotnetConfigV2> = [
       return {};
     }
 
+    // Try to get analyzer results from cache
+    let analysisResult: ProjectAnalysis | undefined;
+    try {
+      analysisResult = getProjectAnalysis(file);
+    } catch (error) {
+      // Analyzer not available or failed, will fall back to file contents
+    }
+
     const project = createProjectDefinition(
       file,
       readFileSync(join(context.workspaceRoot, file), 'utf-8'),
       options,
       context.nxJsonConfiguration,
       tryReadJsonFile(join(context.workspaceRoot, 'package.json')),
+      analysisResult,
     );
 
     if (!project) {
