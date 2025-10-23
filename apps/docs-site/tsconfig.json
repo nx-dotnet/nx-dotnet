@@ -3,7 +3,7 @@
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "types": ["remark-parse"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
