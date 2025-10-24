@@ -2,7 +2,17 @@
   <image src="https://raw.githubusercontent.com/nx-dotnet/nx-dotnet/master/assets/color.svg" alt="nx-dotnet logo"/>
 </p>
 
-# NxDotnet
+# ⚠️ NxDotnet is Deprecated
+
+> [!IMPORTANT] > **@nx-dotnet/core is no longer maintained.** Please migrate to the official [@nx/dotnet](https://nx.dev/nx-api/dotnet) plugin (available in Nx 22+).
+>
+> - ✅ **Officially supported** by the Nx team
+> - ✅ **More reliable** with custom MSBuild analyzer
+> - ✅ **Always compatible** with the latest Nx releases
+>
+> **[View Migration Guide →](https://nx.dev/docs/technologies/dotnet/guides/migrate-from-nx-dotnet-core)**
+
+---
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
@@ -10,12 +20,31 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Join the chat at https://gitter.im/nx-dotnet-plugin/community](https://badges.gitter.im/nx-dotnet-plugin/community.svg)](https://gitter.im/nx-dotnet-plugin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Run CI checks](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/nx-dotnet/nx-dotnet/actions/workflows/main.yml)
-
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=security_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=bugs)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=code_smells)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nx-dotnet_nx-dotnet&metric=ncloc)](https://sonarcloud.io/dashboard?id=nx-dotnet_nx-dotnet)
-
-> [!NOTE]  
+> [!NOTE]
 > Looking for @nx-dotnet/nx-ghpages or @nx-dotnet/nxdoc? They have moved. `@nx-dotnet/nx-ghpages` is now published as `nx-github-pages` and `@nx-dotnet/nxdoc` is now published as `nxdoc`. Their source code has moved to their own repos, [nx-github-pages](https://github.com/agentender/nx-github-pages) and [nxdoc](https://github.com/agentender/nxdoc).
+
+---
+
+## Quick Migration to @nx/dotnet
+
+The official Nx plugin provides better performance and stability. Migration takes less than 10 minutes:
+
+```bash
+# Install & initialize the official plugin
+nx add @nx/dotnet
+
+# Remove old packages
+npm uninstall @nx-dotnet/core @nx-dotnet/dotnet @nx-dotnet/utils
+
+# Clear cache
+nx reset
+```
+
+**[Full Migration Guide →](https://nx.dev/docs/technologies/dotnet/guides/migrate-from-nx-dotnet-core)**
+
+---
+
+## Legacy Documentation (Historical Reference)
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
