@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './DeprecationModal.module.css';
 
 const STORAGE_KEY = 'nx-dotnet-deprecation-dismissed';
@@ -6,12 +6,19 @@ const STORAGE_KEY = 'nx-dotnet-deprecation-dismissed';
 export function DeprecationModal() {
   const [isVisible, setIsVisible] = useState(false);
 
+  const isSearchCrawler = useMemo(
+    () =>
+      /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent),
+    [],
+  );
+
   useEffect(() => {
     // Only run in browser environment
     if (typeof window === 'undefined') return;
 
     // Check if user has already dismissed the modal
-    const dismissed = window.localStorage.getItem(STORAGE_KEY);
+    const dismissed =
+      window.localStorage.getItem(STORAGE_KEY) || isSearchCrawler;
     if (!dismissed) {
       // Show modal after a short delay for better UX
       const timer = setTimeout(() => {
