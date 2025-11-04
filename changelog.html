@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-changelog" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.4.0">
+<title data-rh="true">Changelog | nx-dotnet</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://nx-dotnet.com/changelog"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Changelog | nx-dotnet"><meta data-rh="true" name="description" content="3.0.2 (2025-08-22)"><meta data-rh="true" property="og:description" content="3.0.2 (2025-08-22)"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://nx-dotnet.com/changelog"><link data-rh="true" rel="alternate" href="https://nx-dotnet.com/changelog" hreflang="en"><link data-rh="true" rel="alternate" href="https://nx-dotnet.com/changelog" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://QLZWVNS55W-dsn.algolia.net" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" title="nx-dotnet" href="/opensearch.xml"><link rel="stylesheet" href="/assets/css/styles.6b74c95d.css">
+<script src="/assets/js/runtime~main.35a439cd.js" defer="defer"></script>
+<script src="/assets/js/main.86042f3e.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div class="banner_mh6T"><div class="content_sN4q"><span class="icon_WAjM">⚠️</span><span class="text_G3zd"><strong>@nx-dotnet/core is deprecated.</strong> <a href="https://nx.dev/docs/technologies/dotnet/guides/migrate-from-nx-dotnet-core" target="_blank" rel="noopener noreferrer" class="link_hJWc">Migrate to @nx/dotnet →</a></span></div></div><div role="region" aria-label="Skip to main content"><a class="skipToContent_G6ar" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/nx-dotnet-logo-dark.svg" alt="nx-dotnet Logo" class="themedComponent_DHUr themedComponent--light_DIHH"><img src="/img/nx-dotnet-logo-light.svg" alt="nx-dotnet Logo" class="themedComponent_DHUr themedComponent--dark_Bv2M"></div><b class="navbar__title text--truncate">nx-dotnet</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/">Docs</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/nx-dotnet/nx-dotnet" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-github-link" aria-label="GitHub repository" title="nx-dotnet on Github"></a><div class="toggle_OLSw colorModeToggle_Hg9V"><button class="clean-btn toggleButton_wYmb toggleButtonDisabled_vaDU" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_Sxwe"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_Yem1"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_bmvg"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_UyTV"><div class="docsWrapper_XLvK"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_z1FD" type="button"></button><div class="docRoot_HciC"><aside class="theme-doc-sidebar-container docSidebarContainer_e5ai"><div class="sidebarViewport_N8x0"><div class="sidebar_vJCc"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_qiME"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/">Our Plugins</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" href="/changelog">Changelog</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/core">@nx-dotnet/core</a><button aria-label="Expand sidebar category &#x27;@nx-dotnet/core&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_namt"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_YAwJ"><div class="docItemContainer_Rv5Z"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_zCmv" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_JFrk"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Changelog</span><meta itemprop="position" content="1"></li></ul></nav><div class="tocCollapsible_O_Qc theme-doc-toc-mobile tocMobile_tjDr"><button type="button" class="clean-btn tocCollapsibleButton_htYj">On this page</button></div><div class="theme-doc-markdown markdown"><h1 id="changelog">Changelog</h1>
+<h2 id="302-2025-08-22">3.0.2 (2025-08-22)</h2>
+<h3 id="-fixes">🩹 Fixes</h3>
+<ul>
+<li><strong>core:</strong> bump dep versions in packages (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9c4d1fc">9c4d1fc</a>)</li>
+</ul>
+<h3 id="️-thank-you">❤️ Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h2 id="301-2025-08-22">3.0.1 (2025-08-22)</h2>
+<h3 id="-fixes-1">🩹 Fixes</h3>
+<ul>
+<li><strong>core:</strong> bump to latest nx 21 patch that widens peer dep range (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/857099b">857099b</a>)</li>
+</ul>
+<h3 id="️-thank-you-1">❤️ Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h1 id="300-2025-05-29">3.0.0 (2025-05-29)</h1>
+<h3 id="-fixes-2">🩹 Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> links on site index should work (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b62e894">b62e894</a>)</li>
+</ul>
+<h3 id="️-thank-you-2">❤️ Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h2 id="250-2025-01-12">2.5.0 (2025-01-12)</h2>
+<h3 id="-features">🚀 Features</h3>
+<ul>
+<li><strong>core:</strong> update to Nx 20 (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/918">#918</a>)</li>
+</ul>
+<h3 id="-fixes-3">🩹 Fixes</h3>
+<ul>
+<li><strong>core:</strong> updated openapi-codegen command (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/896">#896</a>)</li>
+<li><strong>misc:</strong> update versions via lint --fix (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2ccc6be">2ccc6be</a>)</li>
+</ul>
+<h3 id="️-thank-you-3">❤️ Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+<li>Ismaïl Ouazzany <a href="https://github.com/Tommy228"><strong>@Tommy228</strong></a></li>
+<li>VipWW <a href="https://github.com/VipWW"><strong>@VipWW</strong></a></li>
+</ul>
+<h2 id="245-2024-09-07">2.4.5 (2024-09-07)</h2>
+<h3 id="-fixes-4">🩹 Fixes</h3>
+<ul>
+<li><strong>core:</strong> avoid terminal popups on windows (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/887">#887</a>)</li>
+</ul>
+<h3 id="️--thank-you">❤️  Thank You</h3>
+<ul>
+<li>Denis Bendrikov</li>
+</ul>
+<h2 id="244-2024-09-05">2.4.4 (2024-09-05)</h2>
+<h3 id="-fixes-5">🩹 Fixes</h3>
+<ul>
+<li><strong>core:</strong> parallelize create dependencies processing for better perf (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/892">#892</a>)</li>
+<li><strong>misc:</strong> relax version peerdep for openapi cli (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/889">#889</a>)</li>
+</ul>
+<h3 id="️--thank-you-1">❤️  Thank You</h3>
+<ul>
+<li>Edouard Maleix</li>
+<li>roldengarm <a href="https://github.com/roldengarm"><strong>@roldengarm</strong></a></li>
+</ul>
+<h2 id="242-2024-07-31">2.4.2 (2024-07-31)</h2>
+<h3 id="-fixes-6">🩹 Fixes</h3>
+<ul>
+<li><strong>core:</strong> compose paths to fix some windows tests (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/881">#881</a>)</li>
+</ul>
+<h3 id="️--thank-you-2">❤️  Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h2 id="241-2024-07-30">2.4.1 (2024-07-30)</h2>
+<h3 id="-fixes-7">🩹 Fixes</h3>
+<ul>
+<li><strong>repo:</strong> published packages should include resolved versions (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/879">#879</a>)</li>
+</ul>
+<h3 id="️--thank-you-3">❤️  Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h2 id="240-2024-07-29">2.4.0 (2024-07-29)</h2>
+<h3 id="-features-1">🚀 Features</h3>
+<ul>
+<li><strong>nx-ghpages:</strong> intuit directory and remote when possible (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/875">#875</a>)</li>
+</ul>
+<h3 id="️--thank-you-4">❤️  Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h2 id="232-2024-07-28">2.3.2 (2024-07-28)</h2>
+<h3 id="-fixes-8">🩹 Fixes</h3>
+<ul>
+<li><strong>dotnet:</strong> serve should work with dotnet 8 (<a href="https://github.com/nx-dotnet/nx-dotnet/pull/873">#873</a>)</li>
+<li><strong>repo:</strong> use yarn in release workflow (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ebfae21">ebfae21</a>)</li>
+</ul>
+<h3 id="️--thank-you-5">❤️  Thank You</h3>
+<ul>
+<li>Craigory Coppola <a href="https://github.com/AgentEnder"><strong>@AgentEnder</strong></a></li>
+</ul>
+<h2 id="231-2024-07-28"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.3.0...v2.3.1">2.3.1</a> (2024-07-28)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> read dependencies via dotnet list reference (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/071f5576107952ecafbad5c0e50f01e00664ed38">071f557</a>)</li>
+<li><strong>core:</strong> read js lib defaults when generating js lib (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c8bac900f83204028b1e2e1ebd00108937074674">c8bac90</a>)</li>
+<li><strong>core:</strong> version suffix is a string (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/80bcb04c342a9467be1de003115b53307fcfab73">80bcb04</a>)</li>
+</ul>
+<h2 id="230-2024-07-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.2.0...v2.3.0">2.3.0</a> (2024-07-27)</h2>
+<h3 id="bug-fixes-1">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> remove warning &quot;Project &#x27;xxx&#x27; contains extension with invalid name (type).&quot; (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/831">#831</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/4c19278ce430cfc6409fb736ab50ccd41de31bfa">4c19278</a>)</li>
+<li><strong>nx-ghpages:</strong> syncWithBaseBranch should be a boolean option (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/1306ceb47ee3811c32f905a9a4864ea7fb2212c4">1306ceb</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>core:</strong> update to nx 19 (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/857">#857</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d349830c274243ebd703807e1e0c4abdc4c3e590">d349830</a>)</li>
+<li><strong>nx-ghpages:</strong> add support for passing GH_TOKEN or GITHUB_TOKEN via env to auth with remote (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/0fe2d02acf043f70d369a7d230a29e7b8154aa85">0fe2d02</a>)</li>
+<li><strong>nx-ghpages:</strong> add support for writing CNAME file (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3a098f08dc0987d0ccbc637fd385ed3dad499f10">3a098f0</a>)</li>
+<li><strong>nx-ghpages:</strong> add syncGitOptions to provide extra flags to the command when syncing changes (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e015a985724bcf7c0fcfe1c37868b4098883f189">e015a98</a>)</li>
+</ul>
+<h2 id="220-2024-01-31"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.2...v2.2.0">2.2.0</a> (2024-01-31)</h2>
+<h3 id="bug-fixes-2">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> remove restriction of configuration (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/823">#823</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/49b341ff81fde6f815f4a75f06d552907a79b8ae">49b341f</a>)</li>
+<li><strong>dotnet:</strong> prevent &quot;false&quot; being incorrectly passed to dotnet command (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/818">#818</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/0945571169dac0df375d1381daa36bee46e14647">0945571</a>)</li>
+</ul>
+<h3 id="features-1">Features</h3>
+<ul>
+<li>add options to sync the <code>gh-pages</code> branch with the base branch … (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/815">#815</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d9fff6795b26df42bde5198d2d5cb2f8a1e527bf">d9fff67</a>)</li>
+<li><strong>core:</strong> update inference configuration (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/822">#822</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6085c500dd17612217334d20a6b53786d8896396">6085c50</a>)</li>
+</ul>
+<h2 id="212-2023-11-29"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.1...v2.1.2">2.1.2</a> (2023-11-29)</h2>
+<h3 id="bug-fixes-3">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> do not use --verify-no-changes false for linting (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/802">#802</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9026fcff4b6b5630a04d209275e422ce9d777263">9026fcf</a>)</li>
+</ul>
+<h2 id="211-2023-10-31"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.1.0...v2.1.1">2.1.1</a> (2023-10-31)</h2>
+<h3 id="bug-fixes-4">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> update localization files (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/795">#795</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7213b67ff01eb2a8e1ca1b98d3fee564e25c9f42">7213b67</a>)</li>
+</ul>
+<h2 id="210-2023-10-25"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.2...v2.1.0">2.1.0</a> (2023-10-25)</h2>
+<h3 id="bug-fixes-5">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> should be able to pass extra args to generated libraries (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/788">#788</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2d2cb5bb5b1d2f3ea9398c89a1be119133516333">2d2cb5b</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/783">#783</a></li>
+</ul>
+<h3 id="features-2">Features</h3>
+<ul>
+<li><strong>core:</strong> better configuration options for target inference (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/787">#787</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8a7b9a171c120320c04895320148e3b13635c029">8a7b9a1</a>)</li>
+</ul>
+<h2 id="202-2023-10-24"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.1...v2.0.2">2.0.2</a> (2023-10-24)</h2>
+<h3 id="bug-fixes-6">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> options should be read correctly for project inference (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/785">#785</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/0e5b73dd385751b171b6ee6aa5f27f1961a347c9">0e5b73d</a>)</li>
+<li><strong>dotnet:</strong> correct flag passed to client to verify no changes (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/786">#786</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/eab2d487718d98d6289e3882ff01dd8d1ef3eee2">eab2d48</a>)</li>
+</ul>
+<h2 id="201-2023-10-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v2.0.0...v2.0.1">2.0.1</a> (2023-10-20)</h2>
+<h3 id="bug-fixes-7">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> createDependencies should work on windows (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/782">#782</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/472fedca4b8d1a01ce97973fa94126b8f882ef50">472fedc</a>)</li>
+</ul>
+<h2 id="200-2023-10-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.23.0...v2.0.0">2.0.0</a> (2023-10-20)</h2>
+<h3 id="bug-fixes-8">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> move generator not updating paths correctly (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/767">#767</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6398a06709d49c8b137c19ab48124a0e714b04a9">6398a06</a>)</li>
+</ul>
+<h3 id="features-3">Features</h3>
+<ul>
+<li><strong>core:</strong> migrate to v16 and nx plugin API v2 (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/763">#763</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/4451e8adf96b4d5cc4284f24a3fc59b2d250cbf9">4451e8a</a>)</li>
+<li><strong>core:</strong> nx 17 support (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/778">#778</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/33344cd461426e7a12db2572b039246e17eb39d2">33344cd</a>)</li>
+<li><strong>core:</strong> support allSourceTags (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/768">#768</a>) and wildcards in check-module-boundaries.js (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/771">#771</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b55c597a0ad3b81f272af213fe0b57e1d2554999">b55c597</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li><strong>core:</strong> Drops Nx v15 support</li>
+</ul>
+<h2 id="1230-2023-09-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.22.0...v1.23.0">1.23.0</a> (2023-09-20)</h2>
+<h3 id="bug-fixes-9">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add slash to use exact path (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/685">#685</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/687">#687</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/1a87d83e65e60e977028a531ef6acb922424d8fd">1a87d83</a>)</li>
+<li><strong>core:</strong> codegen should not import self and default to required reference types (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/761">#761</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/231055688035fd4df41a090f70d1497b442f5373">2310556</a>)</li>
+<li><strong>core:</strong> obey path in solution-file parameter when generating projects (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/762">#762</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/29c234de25467f7693c63ecc206dc90c5b2155d0">29c234d</a>)</li>
+<li><strong>core:</strong> support new name for enforce-module-boundaries eslint rule (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/742">#742</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/24eb831567906ef20febeaadacac886f2a4c7835">24eb831</a>)</li>
+<li><strong>core:</strong> update-swagger executor always reinstalls tool (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/757">#757</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/63cf4b43cd92b9943c8c8cab85d61ba83e223674">63cf4b4</a>)</li>
+<li><strong>dotnet:</strong> update args handling for dotnet format (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/678">#678</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/772303e62e3e8661e101146132f2af180a949767">772303e</a>)</li>
+</ul>
+<h3 id="features-4">Features</h3>
+<ul>
+<li><strong>core:</strong> add argument forwarding to dotnet new (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/722">#722</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cdc36543c7f1c4551a69466619a0e0e8039b7e82">cdc3654</a>)</li>
+<li><strong>core:</strong> make swagger tool run in project directory (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/758">#758</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/12d89ac38f62f64c43a303a9063b46e9e5ecfb6b">12d89ac</a>)</li>
+</ul>
+<h2 id="1220-2023-04-12"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.1...v1.22.0">1.22.0</a> (2023-04-12)</h2>
+<h3 id="bug-fixes-10">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> import-projects should add project.json file for new projects (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/675">#675</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/69068af91400ba3a33ac64208e60f589cc2fe9f7">69068af</a>)</li>
+</ul>
+<h3 id="features-5">Features</h3>
+<ul>
+<li><strong>core:</strong> add preset generator (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/676">#676</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/57725ead33165092ac81859f494559667f35fb7d">57725ea</a>)</li>
+</ul>
+<h2 id="1211-2023-03-22"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.21.0...v1.21.1">1.21.1</a> (2023-03-22)</h2>
+<h3 id="bug-fixes-11">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> use for of on loop on project Map (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/661">#661</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c9d31d75baf28399810df8dccfbc34d07bd2b5e1">c9d31d7</a>)</li>
+</ul>
+<h2 id="1210-2023-03-18"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.20.0...v1.21.0">1.21.0</a> (2023-03-18)</h2>
+<h3 id="features-6">Features</h3>
+<ul>
+<li><strong>core:</strong> extra parameters support for run tool (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/658">#658</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/fe4bc147254f310f6404774d78dea9a86227a6ac">fe4bc14</a>)</li>
+</ul>
+<h2 id="1200-2023-03-10"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.1...v1.20.0">1.20.0</a> (2023-03-10)</h2>
+<h3 id="bug-fixes-12">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add <a href="https://github.com/trumbitta/nx-plugin-openapi"><strong>@trumbitta/nx-plugin-openapi</strong></a> via the Tree (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c2f27811d06ecd1b989b37cd6d4dccd39421d6ec">c2f2781</a>)</li>
+<li><strong>core:</strong> app generation should work in encapuslated Nx workspaces (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/13c0a2ca50c1119f26bb1f841b3dcdf1a9e91f15">13c0a2c</a>)</li>
+<li><strong>core:</strong> app swaggerLib generation should work using dotnet pathScheme (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/645">#645</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6443e32351dea9a048f2641aada5ce29db81b65b">6443e32</a>)</li>
+<li><strong>core:</strong> check glob for array length (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/647">#647</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8033f762b0faeb0010999d2764235a0c8d39e57b">8033f76</a>)</li>
+<li><strong>core:</strong> handle null npm scope properly (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/455199a7a3999de3e4ab52ef9c2da84d17868674">455199a</a>)</li>
+<li><strong>core:</strong> prevent stale cache entries from breaking swagger on dotnet upgrades (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/633">#633</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/71f6893fc1d1e2105ae67eb94da0010a3b217a24">71f6893</a>)</li>
+<li><strong>core:</strong> remove dependency on memfs and properly specify nx-plugin-openapi as optional peer dep (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cf8f8c3e15ddb87d3a3c873a7b078a9d4496ffca">cf8f8c3</a>)</li>
+<li><strong>core:</strong> remove dependency on workspace package.json (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d95a3ff972a767e956f960dbd998d97260137a09">d95a3ff</a>)</li>
+</ul>
+<h3 id="features-7">Features</h3>
+<ul>
+<li><strong>core:</strong> nx 15.8.0 support (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/897e1a0c6008f40cd035924a3af27fc8aa44d715">897e1a0</a>)</li>
+</ul>
+<h2 id="1191-2023-02-04"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.19.0...v1.19.1">1.19.1</a> (2023-02-04)</h2>
+<h3 id="bug-fixes-13">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> adjust gitignore to support generation with directory (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/599">#599</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b3856e0f04811fa06bda6870fa4058a908d715a5">b3856e0</a>)</li>
+<li><strong>core:</strong> remove orphaned publish-local (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/611">#611</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7985e1496f226e187eb9c58c5e8dc86e3250d29e">7985e14</a>)</li>
+</ul>
+<h2 id="1190-2023-02-01"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.1...v1.19.0">1.19.0</a> (2023-02-01)</h2>
+<h3 id="bug-fixes-14">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> install not ran after generating a webapi with useNxPluginOpenAPI (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/601">#601</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/15e4db5a0b2388f6a90d7943855fbce66a46fc34">15e4db5</a>)</li>
+<li><strong>core:</strong> make eslint optional dependency (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/608">#608</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/37054699d4c77b0abe5818e272df8e6a4cae1f34">3705469</a>)</li>
+</ul>
+<h3 id="features-8">Features</h3>
+<ul>
+<li><strong>core:</strong> add support for notDependOnLibsWithTags module boundaries (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/592">#592</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/483086b40308156984bd463bdb28799a260292cd">483086b</a>)</li>
+</ul>
+<h2 id="1181-2023-01-26"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.18.0...v1.18.1">1.18.1</a> (2023-01-26)</h2>
+<h3 id="bug-fixes-15">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> build intermediates need to be captured by cache for DTE / parallel builds (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/596">#596</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cdea76e4b52e85071d7354bf3580bac742e68353">cdea76e</a>)</li>
+<li><strong>core:</strong> resolve startupAssembly to ensure it is always an absolute path (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/595">#595</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2ea25704b65c0079bfc363f3d470b35bccfbca68">2ea2570</a>)</li>
+</ul>
+<h2 id="1180-2023-01-17"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.17.0...v1.18.0">1.18.0</a> (2023-01-17)</h2>
+<h3 id="features-9">Features</h3>
+<ul>
+<li><strong>core:</strong> support nx-plugin-openapi for more advanced openapi generation (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/589">#589</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ee1c7b1918c37be2880a6b5e252019972c2eaeff">ee1c7b1</a>)</li>
+</ul>
+<h2 id="1170-2023-01-14"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.3...v1.17.0">1.17.0</a> (2023-01-14)</h2>
+<h3 id="features-10">Features</h3>
+<ul>
+<li><strong>core:</strong> add move generator (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/588">#588</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d2a1d85c29f5024503b5d76d142b1281cc084f9f">d2a1d85</a>)</li>
+<li><strong>core:</strong> enable codegen setup by default for webapis (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/587">#587</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/fe639d767261a9a938b76628a1746f992e0e8be1">fe639d7</a>)</li>
+</ul>
+<h2 id="1163-2022-12-19"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.2...v1.16.3">1.16.3</a> (2022-12-19)</h2>
+<h3 id="bug-fixes-16">Bug Fixes</h3>
+<ul>
+<li><strong>utils:</strong> should be able to find csproj files that start with dot (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/580">#580</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/253971c674ef55cfa5c573e89506f5c411f39105">253971c</a>)</li>
+</ul>
+<h2 id="1162-2022-11-11"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.1...v1.16.2">1.16.2</a> (2022-11-11)</h2>
+<h3 id="bug-fixes-17">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> check-module-boundaries should work if single quotes not consumed by shell (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3870b5500761a12aaaf77f18e6ea975802a9ce7f">3870b55</a>)</li>
+<li><strong>core:</strong> normalize paths in Directory.Build.targets (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e8bf1bc44adc144e16173085d42c4b5aefe41a81">e8bf1bc</a>)</li>
+</ul>
+<h2 id="1161-2022-11-11"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.16.0...v1.16.1">1.16.1</a> (2022-11-11)</h2>
+<h3 id="bug-fixes-18">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> allow open solutions with Visual Studio (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/563">#563</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/042a9db62ed57a7d16d684d4ef40a88cc58fba30">042a9db</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/548">#548</a></li>
+<li><strong>core:</strong> usage of MSBuildProjectDirRelativePath should handle paths with white space (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/a939c4b3ced68c1c3234b624355b9b57d9706860">a939c4b</a>)</li>
+</ul>
+<h2 id="1160-2022-11-03"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.15.0...v1.16.0">1.16.0</a> (2022-11-03)</h2>
+<h3 id="bug-fixes-19">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> check-module-boundaries should not log undefined as project name(<a href="https://github.com/nx-dotnet/nx-dotnet/issues/561">#561</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5d1bea33f0f7e001e274784746382d4a4d67e2e7">5d1bea3</a>)</li>
+<li><strong>core:</strong> import-projects generator shouldn&#x27;t fail (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8c2188dc7cdacfc038765caf8a44c5b3d8c3b524">8c2188d</a>)</li>
+<li><strong>core:</strong> nx v15 prefers output paths that start with {workspaceRoot} (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/90b3aab2856af4f50107a506b4c3a41bbbc6b6a3">90b3aab</a>)</li>
+</ul>
+<h3 id="features-11">Features</h3>
+<ul>
+<li><strong>core:</strong> allow disabling project inference from config file (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2c8eeebe927e548630b6fc4692a9969c6510ec8d">2c8eeeb</a>)</li>
+</ul>
+<h2 id="1150-2022-10-18"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.14.0...v1.15.0">1.15.0</a> (2022-10-18)</h2>
+<h3 id="bug-fixes-20">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> getProjectFilesForProject should consider project root in addition to source root (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/543">#543</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/374e30f2be1f6ede5ac4c4145cbe33f6b75738af">374e30f</a>)</li>
+</ul>
+<h3 id="features-12">Features</h3>
+<ul>
+<li><strong>nx-ghpages:</strong> add option to customize commit message to <code>gh-pages</code> (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/542">#542</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cff00e04be43581a323c3f6f0f0a6f1769d1f76e">cff00e0</a>)</li>
+</ul>
+<h2 id="1140-2022-10-05"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.4...v1.14.0">1.14.0</a> (2022-10-05)</h2>
+<h3 id="features-13">Features</h3>
+<ul>
+<li><strong>core:</strong> adding templates with default output path properties to init generator (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/526">#526</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c57fbd33dec87fe882617a8b39bc11e91d937615">c57fbd3</a>)</li>
+</ul>
+<h2 id="1134-2022-09-07"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.3...v1.13.4">1.13.4</a> (2022-09-07)</h2>
+<h3 id="bug-fixes-21">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> .sqlproj is a valid project extension (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/523">#523</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5d4f2d6a273c1d1060a1db2c03e6a58d693b7175">5d4f2d6</a>)</li>
+</ul>
+<h2 id="1133-2022-09-06"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.2...v1.13.3">1.13.3</a> (2022-09-06)</h2>
+<h3 id="bug-fixes-22">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add extraParameters support to build and test executors (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/514">#514</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c6c648db4f7067c6668771a064bfc0c330d39386">c6c648d</a>)</li>
+</ul>
+<h2 id="1132-2022-08-29"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.1...v1.13.2">1.13.2</a> (2022-08-29)</h2>
+<h3 id="bug-fixes-23">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> remove duplicate imports generated by swagger-typescript (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/502">#502</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/0fc17d459f6ad805a199f51368dbfab080c5ac8f">0fc17d4</a>)</li>
+</ul>
+<h2 id="1131-2022-08-19"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.13.0...v1.13.1">1.13.1</a> (2022-08-19)</h2>
+<h3 id="bug-fixes-24">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> <a href="https://github.com/nrwl/js"><strong>@nrwl/js</strong></a> is required for library generation (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/484">#484</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/13e2c93d17486c497b362e69959553223d0d7591">13e2c93</a>)</li>
+<li><strong>core:</strong> use strict proj glob pattern (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/495">#495</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/97201684cdbd91578047c4aceaf6ac6078cc7db7">9720168</a>)</li>
+</ul>
+<h2 id="1130-2022-07-29"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.12.0...v1.13.0">1.13.0</a> (2022-07-29)</h2>
+<h3 id="bug-fixes-25">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> skip-swagger-lib should be true while experimental (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/92cd2d8a8be554de74091761404be4fa2901f63a">92cd2d8</a>)</li>
+</ul>
+<h3 id="features-14">Features</h3>
+<ul>
+<li><strong>core:</strong> added pathScheme for project generators (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/464">#464</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ded5eb8ad789d1cc3e71b729507a50d6146a1ae9">ded5eb8</a>)</li>
+<li><strong>core:</strong> generate typescript models from swagger/openapi project (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/447">#447</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cd56d1c4e08a632462cc5354f0965ffe8684a9b4">cd56d1c</a>)</li>
+</ul>
+<h2 id="1120-2022-06-08"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.11.0...v1.12.0">1.12.0</a> (2022-06-08)</h2>
+<h3 id="bug-fixes-26">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> compatibility with Nx 14.2+ (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/1bb134b6367b0d6da1950204b2eb2879764bd1e3">1bb134b</a>)</li>
+</ul>
+<h3 id="features-15">Features</h3>
+<ul>
+<li><strong>core:</strong> allow tool installation to be skipped for update-swagger (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d1044f6eb5080beec8d1b31eed2c8610d85c825d">d1044f6</a>)</li>
+</ul>
+<h2 id="1110-2022-05-31"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.1...v1.11.0">1.11.0</a> (2022-05-31)</h2>
+<h3 id="features-16">Features</h3>
+<ul>
+<li><strong>core:</strong> executor to generate swagger json (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/437">#437</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6c33d1a9bd87a900a4c7818e21fb0945e1fa2a9b">6c33d1a</a>)</li>
+</ul>
+<h2 id="1101-2022-05-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.10.0...v1.10.1">1.10.1</a> (2022-05-20)</h2>
+<h3 id="bug-fixes-27">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> remove workaround for broken dotnet format builtin (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/443">#443</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e0f04ebfdd7addc4b5aac3a4662959f356a9562e">e0f04eb</a>)</li>
+</ul>
+<h2 id="1100-2022-05-18"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.12...v1.10.0">1.10.0</a> (2022-05-18)</h2>
+<h3 id="features-17">Features</h3>
+<ul>
+<li><strong>core:</strong> update prompt for installed template to present available options (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/436">#436</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5a941ae0ac4c4a30290604a23ce3b0e1bed89619">5a941ae</a>)</li>
+</ul>
+<h2 id="1912-2022-04-25"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.11...v1.9.12">1.9.12</a> (2022-04-25)</h2>
+<h3 id="bug-fixes-28">Bug Fixes</h3>
+<ul>
+<li><strong>dotnet:</strong> dotnet watch --project ... test should work (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/426">#426</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/1575dda3ffa96ad956bfd75e4cd283188bb6fb5b">1575dda</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/425">#425</a></li>
+</ul>
+<h2 id="1911-2022-04-21"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.10...v1.9.11">1.9.11</a> (2022-04-21)</h2>
+<h3 id="bug-fixes-29">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> replace glob with fast-glob to speed up dep-graph calculation (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/414">#414</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5db4ca97b15be49080ff1e18e2fa016d7c86deec">5db4ca9</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/410">#410</a></li>
+<li><strong>dotnet:</strong> expand env vars in cli parameters (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/422">#422</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c2db0cd3700d29aef682b3be482dcb82d262b0b6">c2db0cd</a>)</li>
+</ul>
+<h2 id="1910-2022-04-13"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.9...v1.9.10">1.9.10</a> (2022-04-13)</h2>
+<h3 id="bug-fixes-30">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> fall back to root if source root null (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/408">#408</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/53bdc173874817488897bd6adba186c18da57c81">53bdc17</a>)</li>
+<li><strong>core:</strong> resolved package version not provided (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/407">#407</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9bbc7c1144f4fb2dfa4722b9b4d3c6466ca5189d">9bbc7c1</a>)</li>
+<li><strong>core:</strong> test executor should fail properly (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/411">#411</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e2db293473655494b0a775da0def84d6b1fd841c">e2db293</a>)</li>
+</ul>
+<h2 id="199-2022-04-01"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.8...v1.9.9">1.9.9</a> (2022-04-01)</h2>
+<h3 id="bug-fixes-31">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> post-install shouldn&#x27;t depend on nx packages (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/07811c76dbf6ba7be048ad4e12c41e577ac4864b">07811c7</a>)</li>
+</ul>
+<h2 id="198-2022-04-01"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.7...v1.9.8">1.9.8</a> (2022-04-01)</h2>
+<h3 id="bug-fixes-32">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> update nx to not publish *.ts files (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3fa88c4cb104db37f9c918a98226480915da33b6">3fa88c4</a>)</li>
+</ul>
+<h2 id="197-2022-03-25"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.6...v1.9.7">1.9.7</a> (2022-03-25)</h2>
+<h3 id="bug-fixes-33">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> allow opt-out of project inference (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/402">#402</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/84bde4ce485225345f0e1d3faf8e06169bdcf32d">84bde4c</a>)</li>
+<li><strong>dotnet:</strong> update handling of extraParameters to be compatible with spawn (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/403">#403</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/65f0c48c46f4f5b3da2022ce51e26d6aaae6b306">65f0c48</a>)</li>
+</ul>
+<h2 id="196-2022-03-10"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.5...v1.9.6">1.9.6</a> (2022-03-10)</h2>
+<h3 id="bug-fixes-34">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add workaround for broken .NET format command in v6+ (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/397">#397</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2d0965744b1abd574a511168a5b0ae92a7eeed21">2d09657</a>)</li>
+</ul>
+<h2 id="195-2022-03-03"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.4...v1.9.5">1.9.5</a> (2022-03-03)</h2>
+<h3 id="bug-fixes-35">Bug Fixes</h3>
+<ul>
+<li><strong>dotnet:</strong> should work with paths that contain spaces (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/392">#392</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/fa8635518a5cd6cb0c262dc8926b8d32bfa894ca">fa86355</a>)</li>
+</ul>
+<h2 id="194-2022-03-01"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.3...v1.9.4">1.9.4</a> (2022-03-01)</h2>
+<h3 id="bug-fixes-36">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> process project graph shouldn&#x27;t throw if not a .NET project (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/390">#390</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/4d51ea06d70307b8907a10adb26ca12ea7b0c886">4d51ea0</a>)</li>
+</ul>
+<h2 id="193-2022-03-01"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.2...v1.9.3">1.9.3</a> (2022-03-01)</h2>
+<h3 id="bug-fixes-37">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> infer-projects should work with nx daemon (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/383">#383</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/acf47cfaab6c6a125be6fb8205733c639977a203">acf47cf</a>)</li>
+</ul>
+<h2 id="192-2022-02-28"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.1...v1.9.2">1.9.2</a> (2022-02-28)</h2>
+<h3 id="bug-fixes-38">Bug Fixes</h3>
+<ul>
+<li><strong>dotnet:</strong> project with spaces do not bug out the command (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/379">#379</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/dd4e16b109b51aba296c5faf9ce9d0c6fa4929c3">dd4e16b</a>)</li>
+</ul>
+<h2 id="191-2022-02-15"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.9.0...v1.9.1">1.9.1</a> (2022-02-15)</h2>
+<h3 id="bug-fixes-39">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> fix deployment script (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b3052a1b4f6ee2feccb8154747fbd261955dd48c">b3052a1</a>)</li>
+</ul>
+<h2 id="190-2022-02-15"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.8.0...v1.9.0">1.9.0</a> (2022-02-15)</h2>
+<h3 id="bug-fixes-40">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> dependencies should be added to graph when running under nx daemon</li>
+</ul>
+<h3 id="features-18">Features</h3>
+<ul>
+<li><strong>core:</strong> support for Nx project inference</li>
+</ul>
+<h2 id="180-2021-12-14"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.1...v1.8.0">1.8.0</a> (2021-12-14)</h2>
+<h3 id="bug-fixes-41">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add test projects to solution (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9090b997c4cd3a2409b1a4d119a4445a4a5eb3e1">9090b99</a>)</li>
+<li><strong>core:</strong> aliases were not being picked up when generating projects w/ solution files (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/56c770a673413f3c832060f6f90d6fc6f67f2644">56c770a</a>)</li>
+</ul>
+<h3 id="features-19">Features</h3>
+<ul>
+<li><strong>core:</strong> support for nx incremental builds (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6739a6ba5d2aa7181f46704c705b1f72811c648e">6739a6b</a>)</li>
+</ul>
+<h2 id="171-2021-12-11"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.7.0...v1.7.1">1.7.1</a> (2021-12-11)</h2>
+<h3 id="bug-fixes-42">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> prebuild script fails if no module boundaries rule is present (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/bff34d05ec577129ffd52017c6f6abd625a81ae2">bff34d0</a>)</li>
+</ul>
+<h2 id="170-2021-11-29"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.6.0...v1.7.0">1.7.0</a> (2021-11-29)</h2>
+<h3 id="features-20">Features</h3>
+<ul>
+<li><strong>core:</strong> support for workspace solution files (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/254">#254</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ec342ae2699b7ca5fad0aee717d67ded3c0a9524">ec342ae</a>)</li>
+</ul>
+<h2 id="160-2021-10-22"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.2...v1.6.0">1.6.0</a> (2021-10-22)</h2>
+<h3 id="features-21">Features</h3>
+<ul>
+<li><strong>core:</strong> support nx v13 (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/226">#226</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3524ef9ad1abcb4b7762d4c0294d015a5925245e">3524ef9</a>)</li>
+</ul>
+<h2 id="152-2021-10-19"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.1...v1.5.2">1.5.2</a> (2021-10-19)</h2>
+<h3 id="bug-fixes-43">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> remove extra space in <code>dotnet run --project</code> (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/bf67bf36630a38028197655033e0f22aa5ff7b08">bf67bf3</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/223">#223</a></li>
+</ul>
+<h2 id="151-2021-10-15"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.5.0...v1.5.1">1.5.1</a> (2021-10-15)</h2>
+<h3 id="bug-fixes-44">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> nx lint {project} should work when cwd !== appRootPath (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/216">#216</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9fac32125852d4e5c6d05056351e3a8065759968">9fac321</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/215">#215</a></li>
+</ul>
+<h2 id="150-2021-10-15"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.3...v1.5.0">1.5.0</a> (2021-10-15)</h2>
+<h3 id="features-22">Features</h3>
+<ul>
+<li><strong>core:</strong> <a href="https://github.com/nx-dotnet/core"><strong>@nx-dotnet/core</strong></a>:serve<!-- --> can be ran with --watch false (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/210">#210</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9fd60e4f2b6d94ebcea9eef6253897cb367ba0e7">9fd60e4</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/151">#151</a></li>
+<li><strong>core:</strong> check for .net sdk install on package add (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/212">#212</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2ec5de9c32dafee4970b016bb5e8eeb1896e8906">2ec5de9</a>)</li>
+<li><strong>core:</strong> project references with reference output assembly=false are implicit deps (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/211">#211</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/34f87ee6fb9ba5b9407ee9da3aa2c16e663fa617">34f87ee</a>)</li>
+</ul>
+<h2 id="143-2021-10-14"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.2...v1.4.3">1.4.3</a> (2021-10-14)</h2>
+<h3 id="bug-fixes-45">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> Check SDK and tool installation before running format command (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/204">#204</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3ad62910ad5d4146bcc8e8b85196fd18d9e37da2">3ad6291</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/179">#179</a> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/202">#202</a></li>
+</ul>
+<h2 id="142-2021-09-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.1...v1.4.2">1.4.2</a> (2021-09-27)</h2>
+<h3 id="bug-fixes-46">Bug Fixes</h3>
+<ul>
+<li>use exact project paths (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/143">#143</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7a3c5e9bb00a893508cf47a3f1e0979108b75d78">7a3c5e9</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/125">#125</a></li>
+</ul>
+<h2 id="141-2021-09-15"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.4.0...v1.4.1">1.4.1</a> (2021-09-15)</h2>
+<h3 id="bug-fixes-47">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> npm prepare script may be removed (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b8e88fa317c7b23f0cebaf301410dce708991fb7">b8e88fa</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/101">#101</a></li>
+<li><strong>core:</strong> publish output config should be relative to workspace root (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/30a7a265d508df1dd50818dbd02d94b4ed871c6d">30a7a26</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/100">#100</a></li>
+</ul>
+<h2 id="140-2021-09-10"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.2...v1.4.0">1.4.0</a> (2021-09-10)</h2>
+<h3 id="features-23">Features</h3>
+<ul>
+<li><strong>core:</strong> ability to import projects into the nx configuration (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8be8446f27791c95c040a43003fa45d96e6d080f">8be8446</a>)</li>
+</ul>
+<h2 id="132-2021-08-26"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.1...v1.3.2">1.3.2</a> (2021-08-26)</h2>
+<h3 id="bug-fixes-48">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> serve + test --watch executor should not exit immediately (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/848420231d0a094bd05918124a85e1440577efd3">8484202</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/96">#96</a></li>
+</ul>
+<h2 id="131-2021-08-24"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.3.0...v1.3.1">1.3.1</a> (2021-08-24)</h2>
+<h3 id="bug-fixes-49">Bug Fixes</h3>
+<ul>
+<li>use test project name in msbuild task (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cc29ea9a4b3b4b76a928b051e5badcf17cf2a2a4">cc29ea9</a>)</li>
+</ul>
+<h2 id="130-2021-08-23"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.2.0...v1.3.0">1.3.0</a> (2021-08-23)</h2>
+<h3 id="bug-fixes-50">Bug Fixes</h3>
+<ul>
+<li>display project tag instead of [object Object] (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2dea7fcada490888dae1a3984ca00db1e7dc95d2">2dea7fc</a>)</li>
+<li><strong>core:</strong> use fully qualified project name in msbuild task (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2c543102d47f42638cbb20597c965cde85527b7f">2c54310</a>)</li>
+</ul>
+<h3 id="features-24">Features</h3>
+<ul>
+<li><strong>core:</strong> pickup <code>global.json</code> overrides at the project level (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/49ce6bc5727a9c9789b701784363f582f0ee09ab">49ce6bc</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/87">#87</a> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/86">#86</a></li>
+</ul>
+<h2 id="120-2021-08-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.4...v1.2.0">1.2.0</a> (2021-08-20)</h2>
+<h3 id="features-25">Features</h3>
+<ul>
+<li><strong>core:</strong> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/81">#81</a> support for nx-enforce-module-boundaries (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3fc92fdfb99e9c2dd01a0b05e4fd1b1bca2b2437">3fc92fd</a>)</li>
+<li><strong>core:</strong> ability to load module boundaries from nx-dotnet config (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2618b5d5722035f3b20916ea4baf92d04e417ede">2618b5d</a>)</li>
+</ul>
+<h2 id="114-2021-08-13"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.3...v1.1.4">1.1.4</a> (2021-08-13)</h2>
+<h3 id="bug-fixes-51">Bug Fixes</h3>
+<ul>
+<li>update missing sections of misc. package.json files (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/dbcf9bdac038d9701322635e0e6e06013d66499e">dbcf9bd</a>)</li>
+</ul>
+<h2 id="113-2021-08-11"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.2...v1.1.3">1.1.3</a> (2021-08-11)</h2>
+<h3 id="bug-fixes-52">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> prepush hook for docs changes (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/cfc92c1e065cf5b9555a759c5933e99fc674f574">cfc92c1</a>)</li>
+</ul>
+<h2 id="112-2021-08-11"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.1...v1.1.2">1.1.2</a> (2021-08-11)</h2>
+<h3 id="bug-fixes-53">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> docs changes should be committed back to repo (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/10e2936193092b7d35820bb967e9a220dc8843f9">10e2936</a>)</li>
+</ul>
+<h2 id="111-2021-08-11"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.1.0...v1.1.1">1.1.1</a> (2021-08-11)</h2>
+<h3 id="bug-fixes-54">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> docs changes should be committed back into repo (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d7731524ab9169c791fe28d18874d100b1e57904">d773152</a>)</li>
+</ul>
+<h2 id="110-2021-08-10"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.2...v1.1.0">1.1.0</a> (2021-08-10)</h2>
+<h3 id="features-26">Features</h3>
+<ul>
+<li><strong>core:</strong> added support for test project name suffix (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/78">#78</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9f8f03cfb36c1a9becaafc602531baec9f51e0f0">9f8f03c</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/77">#77</a></li>
+</ul>
+<h2 id="102-2021-08-04"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.1...v1.0.2">1.0.2</a> (2021-08-04)</h2>
+<h3 id="bug-fixes-55">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> test project generator should add project reference correctly (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b5bc27dffef7ce1f6a671e0149ca6e41281fb91b">b5bc27d</a>)</li>
+</ul>
+<h2 id="101-2021-08-04"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v1.0.0...v1.0.1">1.0.1</a> (2021-08-04)</h2>
+<h3 id="bug-fixes-56">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> dep-graph affected should work (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/76">#76</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/2e56afc9b46e11ad1fb1ef5ea7767e1923fac0a0">2e56afc</a>)</li>
+</ul>
+<h2 id="100-2021-07-30"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.15.0...v1.0.0">1.0.0</a> (2021-07-30)</h2>
+<h3 id="bug-fixes-57">Bug Fixes</h3>
+<ul>
+<li>compatibility with nx 12.6+ (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d393b3a241b73bb65c904b18fb98b1dd9d657241">d393b3a</a>)</li>
+</ul>
+<h3 id="breaking-changes-1">BREAKING CHANGES</h3>
+<ul>
+<li>Minimum Nx version is 12.6, if using the dep-graph plugin.</li>
+</ul>
+<p>Co-authored-by: Leon Chi &lt;<a href="mailto:leon.chi@serko.com"><a href="mailto:leon.chi@serko.com">leon.chi@serko.com</a></a>&gt;</p>
+<p>Co-authored-by: Craigory Coppola &lt;<a href="mailto:craigorycoppola@gmail.com"><a href="mailto:craigorycoppola@gmail.com">craigorycoppola@gmail.com</a></a>&gt;</p>
+<h2 id="0150-2021-07-12"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.14.0...v0.15.0">0.15.0</a> (2021-07-12)</h2>
+<h3 id="features-27">Features</h3>
+<ul>
+<li><strong>core:</strong> Add generator option for standalone projects (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/71">#71</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8db11d4f9fa799a90e6e27de1cc9cc6eec87451c">8db11d4</a>)</li>
+</ul>
+<h2 id="0140-2021-07-05"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.13.0...v0.14.0">0.14.0</a> (2021-07-05)</h2>
+<h3 id="features-28">Features</h3>
+<ul>
+<li><strong>core:</strong> add test project generator (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/69">#69</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7f7084f1c4809acf9278a8dafbf255ba34c5ab0b">7f7084f</a>)</li>
+</ul>
+<h2 id="0130-2021-06-23"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.12.0...v0.13.0">0.13.0</a> (2021-06-23)</h2>
+<h3 id="features-29">Features</h3>
+<ul>
+<li><strong>nxdoc:</strong> support for docusaurus@2.0.0-beta.1 (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3be3d4803aec74178433296667f70e68aa7a9646">3be3d48</a>)</li>
+</ul>
+<h2 id="0120-2021-06-21"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.11.0...v0.12.0">0.12.0</a> (2021-06-21)</h2>
+<h3 id="bug-fixes-58">Bug Fixes</h3>
+<ul>
+<li><strong>nx-ghpages:</strong> deploy executor should work (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7d29f246dd887b710acd4e1a1929be127e88b257">7d29f24</a>)</li>
+</ul>
+<h3 id="features-30">Features</h3>
+<ul>
+<li><strong>nx-ghpages:</strong> initial work (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/621627df1c34a5520bb0d7dcaaa178368c54ecec">621627d</a>)</li>
+</ul>
+<h2 id="0110-2021-05-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.3...v0.11.0">0.11.0</a> (2021-05-27)</h2>
+<h3 id="bug-fixes-59">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> Remove extra separator from project names (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/61">#61</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/049367cd38a40b41d296d2eaab7d19ca61c93c69">049367c</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/60">#60</a></li>
+</ul>
+<h3 id="features-31">Features</h3>
+<ul>
+<li><strong>docs-site:</strong> support for docsearch (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/62">#62</a>) [skip ci] (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6d09f31de4cb97881325fc4978589adcde3280bf">6d09f31</a>)</li>
+</ul>
+<h2 id="0103-2021-05-24"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.2...v0.10.3">0.10.3</a> (2021-05-24)</h2>
+<h3 id="bug-fixes-60">Bug Fixes</h3>
+<ul>
+<li><strong>nxdoc:</strong> nxdocs fails to run if any file does not have getting started text (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/f6b800fb05b8231570a32b63d22d149ccf632cfc">f6b800f</a>)</li>
+<li><strong>nxdoc:</strong> template for oneOf includes extra bullet point (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ce0687d1ee7bc0a59f29fc8f280cf64ba354912a">ce0687d</a>)</li>
+</ul>
+<h2 id="0102-2021-05-24"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.1...v0.10.2">0.10.2</a> (2021-05-24)</h2>
+<h3 id="bug-fixes-61">Bug Fixes</h3>
+<ul>
+<li><strong>nxdoc:</strong> anyOf is not officially supported by nx, but oneOf is (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/70f484f31720979a8233aeb34162f48515bc2e5e">70f484f</a>)</li>
+</ul>
+<h2 id="0101-2021-05-24"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.10.0...v0.10.1">0.10.1</a> (2021-05-24)</h2>
+<h3 id="bug-fixes-62">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> correct docusaurus config (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c47956766c354381a857cb29edc7c618d0d1fa2e">c479567</a>)</li>
+</ul>
+<h2 id="0100-2021-05-23"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.10.0">0.10.0</a> (2021-05-23)</h2>
+<h3 id="bug-fixes-63">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> invalid baseUrl with custom domain (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5cf6c70fc57a0e4a2af1542419a12e969f62ffb7">5cf6c70</a>)</li>
+<li><strong>nxdoc:</strong> include generator / executor description in detail file (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b0bf6015ee25555d23f839237d0edb241257c55c">b0bf601</a>)</li>
+</ul>
+<h3 id="features-32">Features</h3>
+<ul>
+<li><strong>nx-docs:</strong> support for oneOf in schema.json files (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7ab15c61122605204047758ca565f4760498f255">7ab15c6</a>)</li>
+<li><strong>nxdoc:</strong> include getting started text (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/db3ec625d5998d96aed82edbbd2c2d017a7ea3be">db3ec62</a>)</li>
+<li><strong>nxdoc:</strong> mark required properties (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8b8b01c87d8446ac7ec42b029825fb76463e7523">8b8b01c</a>)</li>
+</ul>
+<h2 id="092-2021-05-23"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.1...v0.9.2">0.9.2</a> (2021-05-23)</h2>
+<h3 id="bug-fixes-64">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> invalid baseUrl with custom domain (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5cf6c70fc57a0e4a2af1542419a12e969f62ffb7">5cf6c70</a>)</li>
+</ul>
+<h2 id="091-2021-05-23"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.9.0...v0.9.1">0.9.1</a> (2021-05-23)</h2>
+<h3 id="bug-fixes-65">Bug Fixes</h3>
+<ul>
+<li><strong>docs-site:</strong> deploy on commit to master (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e259a28c5df552a3c85fa7b154c47fe2fc19ed61">e259a28</a>)</li>
+</ul>
+<h2 id="090-2021-05-23"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.2...v0.9.0">0.9.0</a> (2021-05-23)</h2>
+<h3 id="features-33">Features</h3>
+<ul>
+<li><strong>docs-site:</strong> setup docusaurus site (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/57">#57</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/a268c7090c9ea5ad669ad9f080a42a6c42fec704">a268c70</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/53">#53</a></li>
+</ul>
+<h2 id="082-2021-05-21"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.1...v0.8.2">0.8.2</a> (2021-05-21)</h2>
+<h3 id="bug-fixes-66">Bug Fixes</h3>
+<ul>
+<li><strong>nxdoc:</strong> generators do not appear in index if no executors are present (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c019467a6ed4dad72da26c52e208e1be374a7d7d">c019467</a>)</li>
+</ul>
+<h2 id="081-2021-05-21"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.8.0...v0.8.1">0.8.1</a> (2021-05-21)</h2>
+<h3 id="bug-fixes-67">Bug Fixes</h3>
+<ul>
+<li><strong>nxdoc:</strong> invalid generators.json (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b3b03be0134df68e603ee1cf6a3401662f67b6cb">b3b03be</a>)</li>
+</ul>
+<h2 id="080-2021-05-21"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.1...v0.8.0">0.8.0</a> (2021-05-21)</h2>
+<h3 id="features-34">Features</h3>
+<ul>
+<li><strong>nxdoc:</strong> scaffold plugin + generate-docs v1 (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/80b03681908fa6ba374d935af463f9f79aeca3a9">80b0368</a>)</li>
+<li><strong>repo:</strong> docs generator prints options (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/bddc5b58e2946c83a1c452ea8e68b6abf0a6608a">bddc5b5</a>)</li>
+<li><strong>repo:</strong> schematic to generate docs <a href="https://github.com/nx-dotnet/nx-dotnet/issues/53">#53</a> (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/a7828c5eddc238d85e6bf56590d47c9cc71b4d5a">a7828c5</a>)</li>
+</ul>
+<h2 id="071-2021-05-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.7.0...v0.7.1">0.7.1</a> (2021-05-20)</h2>
+<h3 id="bug-fixes-68">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> format files after successful migration (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c92814a9b906b2370a4ffd90a4fe3282c61828e8">c92814a</a>)</li>
+<li><strong>core:</strong> rename migrations key to nx-migrations (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c6993b96207b06e7d0ec8a6b252d19a5670ed0fd">c6993b9</a>)</li>
+<li><strong>repo:</strong> e2e tests run in CI again (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/f7ed139d499673848ddde0f4b8936f7652f9eaec">f7ed139</a>)</li>
+</ul>
+<h2 id="070-2021-05-20"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.2...v0.7.0">0.7.0</a> (2021-05-20)</h2>
+<h3 id="features-35">Features</h3>
+<ul>
+<li><strong>core:</strong> add lint config to generated projects (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d320ce8579d62b2953d8646ae2bf4eec11018820">d320ce8</a>)</li>
+<li><strong>core:</strong> add migration to add lint target (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e391744c3cd261c6dc462a68335dfd602b928b58">e391744</a>)</li>
+<li><strong>core:</strong> add new executor for dotnet-format (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/92afd051527cf00cbbfe20c9a1d9b1e6e5bd6140">92afd05</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/13">#13</a></li>
+</ul>
+<h2 id="062-2021-05-19"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.1...v0.6.2">0.6.2</a> (2021-05-19)</h2>
+<h3 id="bug-fixes-69">Bug Fixes</h3>
+<ul>
+<li><strong>utils:</strong> forEachDependantProject should work on Unix (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/96cbc33ec6b5e9d0492fba4902ee76938230b146">96cbc33</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/43">#43</a></li>
+</ul>
+<h2 id="061-2021-05-19"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.6.0...v0.6.1">0.6.1</a> (2021-05-19)</h2>
+<h3 id="bug-fixes-70">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add unused options parameter for restore (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c8b033403b1ba7d1365526dc5306338912adcf4c">c8b0334</a>)</li>
+</ul>
+<h2 id="060-2021-05-19"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.2...v0.6.0">0.6.0</a> (2021-05-19)</h2>
+<h3 id="bug-fixes-71">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> add unused options parameter (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c434d32bc4d145bbf5fe417fa9fe5fabed25fc31">c434d32</a>)</li>
+<li><strong>core:</strong> pass client through to init schematic (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/59089474f4d4c2378715a07d5629f802b0513cee">5908947</a>)</li>
+</ul>
+<h3 id="features-36">Features</h3>
+<ul>
+<li><strong>core:</strong> add a generator for dotnet restore (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/96082a1ae582acb8d0fe3bb9ab45adcd112ce398">96082a1</a>)</li>
+<li><strong>core:</strong> add restore to prepare script during init (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/c2b1c236d6a556f920f0d96f1197daaf92c6c35f">c2b1c23</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/44">#44</a></li>
+<li><strong>core:</strong> create tool manifest during init (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/996aaee4d76beeb3068edb60a6dde3daebe53a55">996aaee</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/44">#44</a></li>
+<li><strong>dotnet:</strong> add a method to install local tools (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6ab5d4ae115f9c8419c14c2bb86879dd3f72764e">6ab5d4a</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/44">#44</a></li>
+</ul>
+<h2 id="052-2021-05-18"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.1...v0.5.2">0.5.2</a> (2021-05-18)</h2>
+<h3 id="bug-fixes-72">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> dep-graph with various directory separators (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/3beccb468e17053ee6c121f408c83cb4c1dafb1d">3beccb4</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/43">#43</a></li>
+</ul>
+<h2 id="051-2021-05-06"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.5.0...v0.5.1">0.5.1</a> (2021-05-06)</h2>
+<h3 id="bug-fixes-73">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/38">#38</a> - Misc fixes for .gitignore updates (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/40">#40</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/5f2d5c9407927992398df3d3827256da952ab3e5">5f2d5c9</a>)</li>
+<li><strong>core:</strong> sync command should list package names (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/41">#41</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8bdc66aaf02e2c18c051a5ebf6da99e6438ae318">8bdc66a</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/39">#39</a></li>
+</ul>
+<h2 id="050-2021-05-06"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.2...v0.5.0">0.5.0</a> (2021-05-06)</h2>
+<h3 id="features-37">Features</h3>
+<ul>
+<li><strong>core:</strong> add executor for dotnet publish <a href="https://github.com/nx-dotnet/nx-dotnet/issues/33">#33</a> (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/36">#36</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ac8c89825bfcdd9cd2432e1325bfc2a83255652e">ac8c898</a>)</li>
+</ul>
+<h2 id="042-2021-05-05"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.1...v0.4.2">0.4.2</a> (2021-05-05)</h2>
+<h3 id="bug-fixes-74">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/34">#34</a> remove spec files from built plugin (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/f07504625a62ea79afb48b5d3c390ace8202e2ea">f075046</a>)</li>
+<li><strong>core:</strong> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/35">#35</a> dry run is not passed to dotnet new (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8e0b3986ad4f5f780bd28f0f69ef5502bb75e2d7">8e0b398</a>)</li>
+</ul>
+<h2 id="041-2021-05-03"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.4.0...v0.4.1">0.4.1</a> (2021-05-03)</h2>
+<h3 id="bug-fixes-75">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> test projects not generating (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/28d3d1ef14ba41169cb33a73bb4de8fda2da13c0">28d3d1e</a>)</li>
+</ul>
+<h2 id="040-2021-05-01"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0...v0.4.0">0.4.0</a> (2021-05-01)</h2>
+<h3 id="bug-fixes-76">Bug Fixes</h3>
+<ul>
+<li><strong>repo:</strong> update .releaserc to commit package.json version back (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/36d2f30af70c864ad689123486a3471622a8cd01">36d2f30</a>)</li>
+</ul>
+<h3 id="features-38">Features</h3>
+<ul>
+<li><strong>core:</strong> schematic for adding npm package <a href="https://github.com/nx-dotnet/nx-dotnet/issues/5">#5</a> (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/4f37be7065d351539fe22c30d94866382693ed3f">4f37be7</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/6">#6</a></li>
+<li><strong>core:</strong> support for single version principle <a href="https://github.com/nx-dotnet/nx-dotnet/issues/6">#6</a> (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/32">#32</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/8e60a131d2e6522c3ad01788ab06cdf234d99cf3">8e60a13</a>)</li>
+</ul>
+<h2 id="030-2021-04-28"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.1...v0.3.0">0.3.0</a> (2021-04-28)</h2>
+<h3 id="bug-fixes-77">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> <a href="https://github.com/nx-dotnet/nx-dotnet/issues/20">#20</a> test template arg cannot be passed from command line (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/e9e47e01e227f458cef41c3511bba69032dcf449">e9e47e0</a>)</li>
+<li><strong>repo:</strong> semantic-release not updating package.json (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9273001d385a3e1da1ed4edcc8411641b5c2e280">9273001</a>)</li>
+</ul>
+<h3 id="features-39">Features</h3>
+<ul>
+<li><strong>core:</strong> dotnet test support <a href="https://github.com/nx-dotnet/nx-dotnet/issues/20">#20</a> (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/02ceed0ae846d6a75de03f4fae5c4cb814ca2742">02ceed0</a>)</li>
+</ul>
+<h2 id="021-2021-04-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.2.1">0.2.1</a> (2021-04-27)</h2>
+<h3 id="bug-fixes-78">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> include serve target only for applications (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/30">#30</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d3a54cefbd937f2817a676a7d0f3bd449a6f8ced">d3a54ce</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/28">#28</a></li>
+<li><strong>core:</strong> output paths still use windows separator on linux / mac (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ed1c53af9f703106dbc3abec87424ae149c14feb">ed1c53a</a>)</li>
+<li><strong>core:</strong> use full project path in output directory (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/7748f9cf509d067bbc21867253d1d38bd2795264">7748f9c</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/27">#27</a></li>
+</ul>
+<h3 id="features-40">Features</h3>
+<ul>
+<li><strong>repo:</strong> enable semantic-release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/298c5afd6c8bf4e09af60a83dfb5bc97a302eaf4">298c5af</a>)</li>
+</ul>
+<h2 id="030-dev2-2021-04-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.3.0-dev.1...v0.3.0-dev.2">0.3.0-dev.2</a> (2021-04-27)</h2>
+<h3 id="bug-fixes-79">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> include serve target only for applications (<a href="https://github.com/nx-dotnet/nx-dotnet/issues/30">#30</a>) (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9e4438e2ebe591ee93fa43d33f5adf0ca50685aa">9e4438e</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/28">#28</a></li>
+</ul>
+<h2 id="030-dev1-2021-04-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0...v0.3.0-dev.1">0.3.0-dev.1</a> (2021-04-27)</h2>
+<h3 id="bug-fixes-80">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> misc (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/76618298474f555d4fb950fdbe69b8a2c65539f5">7661829</a>)</li>
+<li><strong>core:</strong> output paths still use windows separator on linux / mac (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b729fed5116feaeae7bcc13c35aceeed1dbfe16c">b729fed</a>)</li>
+<li><strong>core:</strong> packages not published by last CI run (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d07b9f306677110c491da2c9a2eb075d79835c1a">d07b9f3</a>)</li>
+<li><strong>core:</strong> use full project path in output directory (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d9e5988e5fbc0cfac15c3b5808bcce27835cfeb3">d9e5988</a>), closes <a href="https://github.com/nx-dotnet/nx-dotnet/issues/27">#27</a></li>
+<li><strong>repo:</strong> deployment errors (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/0d92c4408ecc4e49a30544b927771cd8329f6b1e">0d92c44</a>)</li>
+</ul>
+<h3 id="features-41">Features</h3>
+<ul>
+<li><strong>ci:</strong> fix publish script (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/4c6e91ab6e9450542f7bbce5c81a5ad482a5aea1">4c6e91a</a>)</li>
+<li><strong>core:</strong> fix CD (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/9d5b787af0537946f640820c003e70275df4bda6">9d5b787</a>)</li>
+<li><strong>core:</strong> fix deployments (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/561f462e288c3a6eae35683ff8e5e6eeae0b73f1">561f462</a>)</li>
+<li><strong>core:</strong> semantic-release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/799dc557d168dbc8fa5cf2741d99c12c1ddbaa54">799dc55</a>)</li>
+<li><strong>core:</strong> tag nx-dotnet projects (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6442d94dd82e30d0b6537e97eddbcccedd799ef9">6442d94</a>)</li>
+<li><strong>core:</strong> test sr deployment (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/fbc5bbf6665a91b44356a518452650596aad3292">fbc5bbf</a>)</li>
+<li><strong>repo:</strong> enable semantic-release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/12c223b1ee87137deee7dc9703203c4a8454c200">12c223b</a>)</li>
+<li><strong>repo:</strong> semantic-release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/895eb22b15c1078687b68ec63b1d2d577a642ecd">895eb22</a>)</li>
+<li><strong>repo:</strong> update gh actions for semantic release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ed933e977780c6680c6d99ce1a6097aaa1e1b7ea">ed933e9</a>)</li>
+<li><strong>utils:</strong> update jsdocs (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/83bec448776d01de4c4b38b63501a3f075f1f488">83bec44</a>)</li>
+</ul>
+<h2 id="020-2021-04-27"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0">0.2.0</a> (2021-04-27)</h2>
+<h3 id="features-42">Features</h3>
+<ul>
+<li><strong>core:</strong> test sr deployment (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/fbc5bbf6665a91b44356a518452650596aad3292">fbc5bbf</a>)</li>
+</ul>
+<h2 id="020-dev2-2021-04-26"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.2.0-dev.1...v0.2.0-dev.2">0.2.0-dev.2</a> (2021-04-26)</h2>
+<h3 id="bug-fixes-81">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> output paths still use windows separator on linux / mac (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/b729fed5116feaeae7bcc13c35aceeed1dbfe16c">b729fed</a>)</li>
+<li><strong>core:</strong> packages not published by last CI run (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/d07b9f306677110c491da2c9a2eb075d79835c1a">d07b9f3</a>)</li>
+</ul>
+<h3 id="features-43">Features</h3>
+<ul>
+<li><strong>ci:</strong> fix publish script (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/4c6e91ab6e9450542f7bbce5c81a5ad482a5aea1">4c6e91a</a>)</li>
+<li><strong>core:</strong> tag nx-dotnet projects (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/6442d94dd82e30d0b6537e97eddbcccedd799ef9">6442d94</a>)</li>
+</ul>
+<h2 id="020-dev1-2021-04-26"><a href="https://github.com/nx-dotnet/nx-dotnet/compare/v0.1.4...v0.2.0-dev.1">0.2.0-dev.1</a> (2021-04-26)</h2>
+<h3 id="features-44">Features</h3>
+<ul>
+<li><strong>core:</strong> Set output path in generated project files (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/96b48f80054cef14e6185d123b86f96b5f463cb9">96b48f8</a>)</li>
+<li><strong>repo:</strong> enable semantic-release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/12c223b1ee87137deee7dc9703203c4a8454c200">12c223b</a>)</li>
+<li><strong>repo:</strong> Update build script to utilize Nx&#x27;s capabilities regarding package.json patching. (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ee80435dad5226f111208c98cd83cc4e3ae66b58">ee80435</a>)</li>
+<li><strong>repo:</strong> update gh actions for semantic release (<a href="https://github.com/nx-dotnet/nx-dotnet/commit/ed933e977780c6680c6d99ce1a6097aaa1e1b7ea">ed933e9</a>)</li>
+</ul></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Our Plugins</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/core"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Getting Started</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_TN1Q thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a class="table-of-contents__link toc-highlight" href="/changelog#302-2025-08-22">3.0.2 (2025-08-22)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️-thank-you">❤️ Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#301-2025-08-22">3.0.1 (2025-08-22)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-1">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️-thank-you-1">❤️ Thank You</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-2">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️-thank-you-2">❤️ Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#250-2025-01-12">2.5.0 (2025-01-12)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-features">🚀 Features</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-3">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️-thank-you-3">❤️ Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#245-2024-09-07">2.4.5 (2024-09-07)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-4">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️--thank-you">❤️  Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#244-2024-09-05">2.4.4 (2024-09-05)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-5">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️--thank-you-1">❤️  Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#242-2024-07-31">2.4.2 (2024-07-31)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-6">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️--thank-you-2">❤️  Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#241-2024-07-30">2.4.1 (2024-07-30)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-7">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️--thank-you-3">❤️  Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#240-2024-07-29">2.4.0 (2024-07-29)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-features-1">🚀 Features</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️--thank-you-4">❤️  Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#232-2024-07-28">2.3.2 (2024-07-28)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#-fixes-8">🩹 Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#️--thank-you-5">❤️  Thank You</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#231-2024-07-28">2.3.1 (2024-07-28)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#230-2024-07-27">2.3.0 (2024-07-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-1">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#220-2024-01-31">2.2.0 (2024-01-31)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-2">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-1">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#212-2023-11-29">2.1.2 (2023-11-29)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-3">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#211-2023-10-31">2.1.1 (2023-10-31)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-4">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#210-2023-10-25">2.1.0 (2023-10-25)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-5">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-2">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#202-2023-10-24">2.0.2 (2023-10-24)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-6">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#201-2023-10-20">2.0.1 (2023-10-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-7">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#200-2023-10-20">2.0.0 (2023-10-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-8">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-3">Features</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#breaking-changes">BREAKING CHANGES</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1230-2023-09-20">1.23.0 (2023-09-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-9">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-4">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1220-2023-04-12">1.22.0 (2023-04-12)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-10">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-5">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1211-2023-03-22">1.21.1 (2023-03-22)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-11">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1210-2023-03-18">1.21.0 (2023-03-18)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-6">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1200-2023-03-10">1.20.0 (2023-03-10)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-12">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-7">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1191-2023-02-04">1.19.1 (2023-02-04)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-13">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1190-2023-02-01">1.19.0 (2023-02-01)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-14">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-8">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1181-2023-01-26">1.18.1 (2023-01-26)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-15">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1180-2023-01-17">1.18.0 (2023-01-17)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-9">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1170-2023-01-14">1.17.0 (2023-01-14)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-10">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1163-2022-12-19">1.16.3 (2022-12-19)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-16">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1162-2022-11-11">1.16.2 (2022-11-11)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-17">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1161-2022-11-11">1.16.1 (2022-11-11)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-18">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1160-2022-11-03">1.16.0 (2022-11-03)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-19">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-11">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1150-2022-10-18">1.15.0 (2022-10-18)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-20">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-12">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1140-2022-10-05">1.14.0 (2022-10-05)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-13">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1134-2022-09-07">1.13.4 (2022-09-07)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-21">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1133-2022-09-06">1.13.3 (2022-09-06)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-22">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1132-2022-08-29">1.13.2 (2022-08-29)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-23">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1131-2022-08-19">1.13.1 (2022-08-19)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-24">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1130-2022-07-29">1.13.0 (2022-07-29)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-25">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-14">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1120-2022-06-08">1.12.0 (2022-06-08)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-26">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-15">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1110-2022-05-31">1.11.0 (2022-05-31)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-16">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1101-2022-05-20">1.10.1 (2022-05-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-27">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1100-2022-05-18">1.10.0 (2022-05-18)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-17">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1912-2022-04-25">1.9.12 (2022-04-25)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-28">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1911-2022-04-21">1.9.11 (2022-04-21)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-29">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#1910-2022-04-13">1.9.10 (2022-04-13)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-30">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#199-2022-04-01">1.9.9 (2022-04-01)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-31">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#198-2022-04-01">1.9.8 (2022-04-01)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-32">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#197-2022-03-25">1.9.7 (2022-03-25)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-33">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#196-2022-03-10">1.9.6 (2022-03-10)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-34">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#195-2022-03-03">1.9.5 (2022-03-03)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-35">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#194-2022-03-01">1.9.4 (2022-03-01)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-36">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#193-2022-03-01">1.9.3 (2022-03-01)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-37">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#192-2022-02-28">1.9.2 (2022-02-28)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-38">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#191-2022-02-15">1.9.1 (2022-02-15)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-39">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#190-2022-02-15">1.9.0 (2022-02-15)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-40">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-18">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#180-2021-12-14">1.8.0 (2021-12-14)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-41">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-19">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#171-2021-12-11">1.7.1 (2021-12-11)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-42">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#170-2021-11-29">1.7.0 (2021-11-29)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-20">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#160-2021-10-22">1.6.0 (2021-10-22)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-21">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#152-2021-10-19">1.5.2 (2021-10-19)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-43">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#151-2021-10-15">1.5.1 (2021-10-15)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-44">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#150-2021-10-15">1.5.0 (2021-10-15)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-22">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#143-2021-10-14">1.4.3 (2021-10-14)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-45">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#142-2021-09-27">1.4.2 (2021-09-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-46">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#141-2021-09-15">1.4.1 (2021-09-15)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-47">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#140-2021-09-10">1.4.0 (2021-09-10)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-23">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#132-2021-08-26">1.3.2 (2021-08-26)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-48">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#131-2021-08-24">1.3.1 (2021-08-24)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-49">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#130-2021-08-23">1.3.0 (2021-08-23)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-50">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-24">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#120-2021-08-20">1.2.0 (2021-08-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-25">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#114-2021-08-13">1.1.4 (2021-08-13)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-51">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#113-2021-08-11">1.1.3 (2021-08-11)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-52">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#112-2021-08-11">1.1.2 (2021-08-11)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-53">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#111-2021-08-11">1.1.1 (2021-08-11)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-54">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#110-2021-08-10">1.1.0 (2021-08-10)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-26">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#102-2021-08-04">1.0.2 (2021-08-04)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-55">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#101-2021-08-04">1.0.1 (2021-08-04)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-56">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#100-2021-07-30">1.0.0 (2021-07-30)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-57">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#breaking-changes-1">BREAKING CHANGES</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0150-2021-07-12">0.15.0 (2021-07-12)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-27">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0140-2021-07-05">0.14.0 (2021-07-05)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-28">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0130-2021-06-23">0.13.0 (2021-06-23)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-29">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0120-2021-06-21">0.12.0 (2021-06-21)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-58">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-30">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0110-2021-05-27">0.11.0 (2021-05-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-59">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-31">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0103-2021-05-24">0.10.3 (2021-05-24)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-60">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0102-2021-05-24">0.10.2 (2021-05-24)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-61">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0101-2021-05-24">0.10.1 (2021-05-24)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-62">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#0100-2021-05-23">0.10.0 (2021-05-23)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-63">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-32">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#092-2021-05-23">0.9.2 (2021-05-23)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-64">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#091-2021-05-23">0.9.1 (2021-05-23)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-65">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#090-2021-05-23">0.9.0 (2021-05-23)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-33">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#082-2021-05-21">0.8.2 (2021-05-21)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-66">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#081-2021-05-21">0.8.1 (2021-05-21)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-67">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#080-2021-05-21">0.8.0 (2021-05-21)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-34">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#071-2021-05-20">0.7.1 (2021-05-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-68">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#070-2021-05-20">0.7.0 (2021-05-20)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-35">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#062-2021-05-19">0.6.2 (2021-05-19)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-69">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#061-2021-05-19">0.6.1 (2021-05-19)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-70">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#060-2021-05-19">0.6.0 (2021-05-19)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-71">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-36">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#052-2021-05-18">0.5.2 (2021-05-18)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-72">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#051-2021-05-06">0.5.1 (2021-05-06)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-73">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#050-2021-05-06">0.5.0 (2021-05-06)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-37">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#042-2021-05-05">0.4.2 (2021-05-05)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-74">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#041-2021-05-03">0.4.1 (2021-05-03)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-75">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#040-2021-05-01">0.4.0 (2021-05-01)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-76">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-38">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#030-2021-04-28">0.3.0 (2021-04-28)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-77">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-39">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#021-2021-04-27">0.2.1 (2021-04-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-78">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-40">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#030-dev2-2021-04-27">0.3.0-dev.2 (2021-04-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-79">Bug Fixes</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#030-dev1-2021-04-27">0.3.0-dev.1 (2021-04-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-80">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-41">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#020-2021-04-27">0.2.0 (2021-04-27)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-42">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#020-dev2-2021-04-26">0.2.0-dev.2 (2021-04-26)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#bug-fixes-81">Bug Fixes</a></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-43">Features</a></li></ul></li><li><a class="table-of-contents__link toc-highlight" href="/changelog#020-dev1-2021-04-26">0.2.0-dev.1 (2021-04-26)</a><ul><li><a class="table-of-contents__link toc-highlight" href="/changelog#features-44">Features</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/core">@nx-dotnet/core</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://stackoverflow.com/questions/tagged/nx-dotnet" target="_blank" rel="noopener noreferrer" class="footer__link-item">Stack Overflow<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_awgD"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://gitter.im/nx-dotnet-plugin/community" target="_blank" rel="noopener noreferrer" class="footer__link-item">Gitter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_awgD"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/nx-dotnet/nx-dotnet" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_awgD"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 nx-dotnet. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
